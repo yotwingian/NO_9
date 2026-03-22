@@ -11,7 +11,7 @@ np-fysik/
 ├── fysik_kraft_rorelse.html
 ├── fysik_materia_varme.html
 ├── fysik_tryck.html
-├── fysik_arbete_energi_effekt.html
+├── fysik_arbete_energi.html
 ├── fysik_ljud_ljus.html
 ├── fysik_karnfysik.html
 ├── fysik_universum.html
@@ -95,7 +95,7 @@ buildQuiz();
 | fysik_kraft_rorelse.html         | fysik_kraft_rorelse           |
 | fysik_materia_varme.html         | fysik_materia_varme           |
 | fysik_tryck.html                 | fysik_tryck                   |
-| fysik_arbete_energi_effekt.html  | fysik_arbete_energi_effekt    |
+| fysik_arbete_energi.html        | fysik_arbete_energi            |
 | fysik_ljud_ljus.html             | fysik_ljud_ljus               |
 | fysik_karnfysik.html             | fysik_karnfysik               |
 | fysik_universum.html             | fysik_universum               |
