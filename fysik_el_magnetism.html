@@ -26,6 +26,10 @@
     --orange-light: rgba(251, 146, 60, 0.14);
     --yellow-light: rgba(255, 210, 63, 0.1);
     --warn: #ffd23f;
+    --good: var(--green);
+    --mono: ui-monospace, 'Cascadia Code', monospace;
+    --card2: #161b2a;
+    --border2: #2d3a55;
     --shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
     --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.45);
     --radius: 10px;
@@ -155,104 +159,124 @@
   }
   .section-intro strong { font-weight: 700; }
 
-  /* ── FLASHCARDS ──────────────────────────── */
-  .flashcard-controls {
+  /* ── FLASHCARDS (samma struktur som kärnfysik) ──────────────────────────── */
+  .card-meta {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
+    margin-bottom: 1rem;
   }
-  .fc-counter {
-    font-size: 14px;
+  .card-meta-left {
+    font-family: var(--mono);
+    font-size: 0.7rem;
     color: var(--muted);
-    font-weight: 600;
   }
-  .fc-progress {
-    flex: 1;
-    height: 6px;
-    background: var(--border);
-    border-radius: 3px;
-    min-width: 80px;
+  .card-progress-dots {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    max-width: 320px;
+    justify-content: flex-end;
   }
-  .fc-progress-fill {
-    height: 100%;
-    background: var(--accent);
-    border-radius: 3px;
-    transition: width .3s;
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border2);
+    transition: background 0.2s;
   }
+  .dot.good { background: var(--good); }
+  .dot.skip { background: var(--warn); }
+  .dot.current { background: var(--accent); box-shadow: 0 0 6px var(--accent); }
 
   .flashcard-scene {
     perspective: 1000px;
+    width: 100%;
+    max-width: 680px;
     height: 220px;
-    margin-bottom: 20px;
+    margin: 0 auto 1.5rem;
     cursor: pointer;
   }
-  .flashcard {
+  .flashcard-inner {
     width: 100%;
     height: 100%;
     position: relative;
     transform-style: preserve-3d;
-    transition: transform .5s cubic-bezier(.4,0,.2,1);
+    transition: transform 0.45s cubic-bezier(.4,0,.2,1);
   }
-  .flashcard.flipped { transform: rotateY(180deg); }
-  .fc-face {
+  .flashcard-inner.flipped { transform: rotateY(180deg); }
+
+  .card-side {
     position: absolute;
     inset: 0;
     backface-visibility: hidden;
-    border-radius: var(--radius);
+    -webkit-backface-visibility: hidden;
+    border-radius: 14px;
+    border: 1px solid var(--border);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 28px 32px;
+    padding: 2rem;
     text-align: center;
-    box-shadow: var(--shadow-lg);
   }
-  .fc-front {
-    background: var(--card);
-    border: 2px solid var(--border);
-  }
-  .fc-back {
-    background: linear-gradient(135deg, #051525, #0a2040);
-    color: #fff;
-    border: 2px solid rgba(58, 142, 255, 0.35);
+  .card-front { background: var(--card); }
+  .card-back {
+    background: var(--card2);
     transform: rotateY(180deg);
   }
-  .fc-category {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: .08em;
+  .card-side-label {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 10px;
-  }
-  .fc-back .fc-category { color: var(--accent2); }
-  .fc-question {
-    font-family: 'Lora', serif;
-    font-size: 19px;
-    font-weight: 600;
-    line-height: 1.4;
-    color: var(--text);
-  }
-  .fc-back .fc-question { color: #fff; font-size: 17px; }
-  .fc-hint { font-size: 13px; color: var(--muted); margin-top: 12px; }
-  .fc-back .fc-hint { color: rgba(0, 212, 255, 0.9); }
-  .fc-tap-hint {
-    position: absolute;
-    bottom: 12px;
-    right: 16px;
-    font-size: 12px;
     color: var(--muted);
+    margin-bottom: 1rem;
   }
+  .card-front .card-side-label { color: var(--accent); }
+  .card-text {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--text);
+    white-space: pre-line;
+  }
+  .card-back .card-text {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: #cbd5e1;
+  }
+  .card-hint { margin-top: 1rem; font-size: 0.72rem; color: var(--muted); }
 
-  .fc-nav {
+  .card-actions {
     display: flex;
+    gap: 0.75rem;
     justify-content: center;
-    align-items: center;
-    gap: 12px;
+    margin-bottom: 2.5rem;
     flex-wrap: wrap;
   }
+  .card-btn {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.55rem 1.3rem;
+    border-radius: 8px;
+    border: 1px solid var(--border2);
+    background: var(--card2);
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .card-btn:hover { color: var(--text); border-color: #3a4562; }
+  .card-btn.good { border-color: var(--good); color: var(--good); background: rgba(6, 214, 160, 0.07); }
+  .card-btn.good:hover { background: rgba(6, 214, 160, 0.15); }
+  .card-btn.skip { border-color: var(--warn); color: var(--warn); background: rgba(255, 210, 63, 0.07); }
+  .card-btn.skip:hover { background: rgba(255, 210, 63, 0.15); }
+
   .btn {
     font-family: 'Source Sans 3', sans-serif;
     font-size: 14px;
@@ -287,29 +311,6 @@
     border-color: var(--red);
   }
   .btn-sm { font-size: 13px; padding: 7px 14px; }
-
-  .fc-category-filter {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-  }
-  .filter-chip {
-    font-size: 12px;
-    font-weight: 600;
-    padding: 4px 12px;
-    border-radius: 20px;
-    border: 1.5px solid var(--border);
-    background: var(--card);
-    cursor: pointer;
-    transition: all .15s;
-    color: var(--muted);
-  }
-  .filter-chip:hover, .filter-chip.active {
-    border-color: var(--accent);
-    background: rgba(58, 142, 255, 0.15);
-    color: var(--accent2);
-  }
 
   /* ── FÖRSTÅELSE ──────────────────────────── */
   .question-card {
@@ -602,7 +603,7 @@
   @media (max-width: 600px) {
     .tabs { gap: 0; overflow-x: auto; padding-bottom: 0; }
     .tab-btn { font-size: 13px; padding: 9px 12px; }
-    .fc-question { font-size: 16px; }
+    .card-text { font-size: 0.95rem; }
     .q-text { font-size: 16px; }
     h1 { font-size: 17px; }
   }
@@ -662,49 +663,30 @@
     </div>
   </div>
 
-  <div class="fc-category-filter" id="fcFilter">
-    <span class="filter-chip active" onclick="filterCards('all', this)">Alla kort</span>
-    <span class="filter-chip" onclick="filterCards('grundbegrepp', this)">Grundbegrepp</span>
-    <span class="filter-chip" onclick="filterCards('kretsar', this)">Kretsar &amp; koppling</span>
-    <span class="filter-chip" onclick="filterCards('sakerhetheten', this)">Elsäkerhet</span>
-    <span class="filter-chip" onclick="filterCards('magnetism', this)">Magnetism</span>
-    <span class="filter-chip" onclick="filterCards('generatorer', this)">Generator &amp; transformator</span>
-  </div>
-
-  <div class="flashcard-controls">
-    <span class="fc-counter" id="fcCounter">1 / 28</span>
-    <div class="fc-progress"><div class="fc-progress-fill" id="fcProgressFill"></div></div>
-    <button class="btn btn-outline btn-sm" onclick="shuffleCards()">🔀 Blanda</button>
+  <div class="card-meta">
+    <div class="card-meta-left">Kort <span id="cardIdx">1</span> av <span id="cardTotal">28</span> &nbsp;·&nbsp; <span id="cardGoodCount">0</span> kan jag ✓</div>
+    <div class="card-progress-dots" id="dotRow"></div>
   </div>
 
   <div class="flashcard-scene" onclick="flipCard()">
-    <div class="flashcard" id="flashcard">
-      <div class="fc-face fc-front">
-        <div class="fc-category" id="fcCat"></div>
-        <div class="fc-question" id="fcQ">Laddar...</div>
-        <div class="fc-hint" id="fcHint"></div>
-        <div class="fc-tap-hint">👆 Klicka för att vända</div>
+    <div class="flashcard-inner" id="fcInner">
+      <div class="card-side card-front">
+        <div class="card-side-label">Begrepp — klicka för att vända</div>
+        <div class="card-text" id="fcFront">...</div>
+        <div class="card-hint" id="fcHint"></div>
       </div>
-      <div class="fc-face fc-back">
-        <div class="fc-category" id="fcCatBack">Svar</div>
-        <div class="fc-question" id="fcA"></div>
-        <div class="fc-hint" id="fcExtra"></div>
-        <div class="fc-tap-hint">👆 Klicka för att vända</div>
+      <div class="card-side card-back">
+        <div class="card-side-label">Förklaring</div>
+        <div class="card-text" id="fcBack">...</div>
       </div>
     </div>
   </div>
 
-  <div class="fc-nav">
-    <button class="btn btn-outline" onclick="prevCard()">← Föregående</button>
-    <button class="btn btn-red btn-sm" id="btnWrong" onclick="markCard(false)">✗ Kunde inte</button>
-    <button class="btn btn-green btn-sm" id="btnCorrect" onclick="markCard(true)">✓ Kunde!</button>
-    <button class="btn btn-primary" onclick="nextCard()">Nästa →</button>
-  </div>
-
-  <div style="margin-top:20px; display:flex; justify-content:center; gap:16px; font-size:14px; color:var(--muted);">
-    <span>✅ Kan: <strong id="fcGood">0</strong></span>
-    <span>❌ Öva mer: <strong id="fcBad">0</strong></span>
-    <span>⬜ Osedd: <strong id="fcUnseen" style="color:var(--accent)">28</strong></span>
+  <div class="card-actions">
+    <button class="card-btn" onclick="prevCard()">← Föregående</button>
+    <button class="card-btn skip" onclick="markCard('skip')">↺ Repeteras</button>
+    <button class="card-btn good" onclick="markCard('good')">✓ Kan jag!</button>
+    <button class="card-btn" onclick="nextCard()">Nästa →</button>
   </div>
 
 </div>
@@ -1171,78 +1153,56 @@ const allCards = [
 // ══════════════════════════════════════════
 // FLASHCARD LOGIC
 // ══════════════════════════════════════════
-let deck = [...allCards];
-let currentIdx = 0;
-let cardStates = {}; // 'good', 'bad', or undefined
-
-function shuffle(arr) {
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-}
-
-function filterCards(cat, el) {
-  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-  el.classList.add('active');
-  deck = cat === 'all' ? [...allCards] : allCards.filter(c => c.cat === cat);
-  currentIdx = 0;
-  renderCard();
-}
-
-function shuffleCards() {
-  shuffle(deck);
-  currentIdx = 0;
-  document.getElementById('flashcard').classList.remove('flipped');
-  renderCard();
-}
+const cardStates = {};
+allCards.forEach((_, i) => { cardStates[i] = 'unseen'; });
+let currentCard = 0;
+let isFlipped = false;
 
 function renderCard() {
-  const card = deck[currentIdx];
-  if (!card) return;
-  document.getElementById('fcCat').textContent = card.catLabel;
-  document.getElementById('fcCatBack').textContent = card.catLabel + ' — Svar';
-  document.getElementById('fcQ').textContent = card.q;
-  document.getElementById('fcHint').textContent = card.hint ? '💡 Ledtråd: ' + card.hint : '';
-  document.getElementById('fcA').textContent = card.a;
-  document.getElementById('fcExtra').textContent = '';
-  document.getElementById('fcCounter').textContent = (currentIdx + 1) + ' / ' + deck.length;
-  const pct = deck.length > 1 ? (currentIdx / (deck.length - 1)) * 100 : 100;
-  document.getElementById('fcProgressFill').style.width = pct + '%';
-  updateFcStats();
+  const card = allCards[currentCard];
+  document.getElementById('fcFront').textContent = card.q;
+  document.getElementById('fcBack').textContent = card.a;
+  document.getElementById('fcHint').textContent = '[ ' + card.catLabel + ' ]';
+  document.getElementById('cardIdx').textContent = currentCard + 1;
+  document.getElementById('cardTotal').textContent = allCards.length;
+  document.getElementById('fcInner').classList.remove('flipped');
+  isFlipped = false;
+  renderDots();
+  updateMainProgress();
+}
+
+function renderDots() {
+  const row = document.getElementById('dotRow');
+  row.innerHTML = '';
+  allCards.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot';
+    if (i === currentCard) d.classList.add('current');
+    else if (cardStates[i] === 'good') d.classList.add('good');
+    else if (cardStates[i] === 'skip') d.classList.add('skip');
+    row.appendChild(d);
+  });
+  document.getElementById('cardGoodCount').textContent = Object.values(cardStates).filter(v => v === 'good').length;
 }
 
 function flipCard() {
-  document.getElementById('flashcard').classList.toggle('flipped');
+  isFlipped = !isFlipped;
+  document.getElementById('fcInner').classList.toggle('flipped', isFlipped);
+}
+
+function markCard(state) {
+  cardStates[currentCard] = state;
+  nextCard();
 }
 
 function prevCard() {
-  document.getElementById('flashcard').classList.remove('flipped');
-  currentIdx = (currentIdx - 1 + deck.length) % deck.length;
+  currentCard = (currentCard - 1 + allCards.length) % allCards.length;
   renderCard();
 }
 
 function nextCard() {
-  document.getElementById('flashcard').classList.remove('flipped');
-  currentIdx = (currentIdx + 1) % deck.length;
+  currentCard = (currentCard + 1) % allCards.length;
   renderCard();
-}
-
-function markCard(correct) {
-  const card = deck[currentIdx];
-  cardStates[card.q] = correct ? 'good' : 'bad';
-  updateFcStats();
-  nextCard();
-}
-
-function updateFcStats() {
-  let good = 0, bad = 0;
-  Object.values(cardStates).forEach(v => { if (v === 'good') good++; else bad++; });
-  const unseen = allCards.length - good - bad;
-  document.getElementById('fcGood').textContent = good;
-  document.getElementById('fcBad').textContent = bad;
-  document.getElementById('fcUnseen').textContent = Math.max(0, unseen);
-  updateMainProgress();
 }
 
 // ══════════════════════════════════════════
@@ -1346,7 +1306,16 @@ function restoreProgress() {
   if (!raw) return;
   try {
     const data = JSON.parse(raw);
-    if (data.cardStates) Object.entries(data.cardStates).forEach(([k,v]) => { cardStates[k] = v; });
+    if (data.cardStates) {
+      Object.entries(data.cardStates).forEach(([k, v]) => {
+        const i = Number(k);
+        if (i >= 0 && i < allCards.length && !Number.isNaN(i)) {
+          if (v === 'good') cardStates[i] = 'good';
+          else if (v === 'skip' || v === 'bad') cardStates[i] = 'skip';
+          else cardStates[i] = 'unseen';
+        }
+      });
+    }
     if (data.fAnswered)  Object.entries(data.fAnswered).forEach(([k,v])  => { fAnswered[k] = v; });
   } catch(e) {}
 }
