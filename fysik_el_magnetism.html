@@ -83,6 +83,30 @@
   }
   .header h1 span { color: var(--accent); }
   .header p { font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
+  .back-link {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'JetBrains Mono', var(--mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    text-decoration: none;
+    margin-bottom: 0.75rem;
+    padding: 0.45rem 0.85rem;
+    border-radius: 8px;
+    border: 1px solid var(--border2);
+    background: rgba(255, 255, 255, 0.04);
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+  }
+  .back-link:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: rgba(255, 255, 255, 0.07);
+  }
 
   .progress-wrap {
     padding: 0.9rem 1.5rem;
@@ -673,6 +697,7 @@
 <body>
 
 <div class="header">
+  <a href="index.html" class="back-link">← Tillbaka till översikten</a>
   <div class="chapter-tag">NP Fysik åk 9 · Kapitel 1</div>
   <h1>Elektricitet <span>&amp; Magnetism</span></h1>
   <p>Ohms lag · Kretsar · Serie &amp; parallell · Transformator · Generator</p>

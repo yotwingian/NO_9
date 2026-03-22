@@ -23,6 +23,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 .header h1{font-family:'Inter','Outfit',sans-serif;font-size:1.9rem;font-weight:700;color:var(--text);margin-bottom:.3rem;line-height:1.15}
 .header h1 span{color:var(--accent2)}
 .header p{font-size:.85rem;color:var(--muted);line-height:1.5}
+.back-link{position:relative;z-index:2;display:inline-flex;align-items:center;gap:.4rem;font-family:'JetBrains Mono',var(--mono);font-size:.72rem;font-weight:600;letter-spacing:.04em;color:var(--muted);text-decoration:none;margin-bottom:.75rem;padding:.45rem .85rem;border-radius:8px;border:1px solid var(--border2);background:rgba(255,255,255,.04);transition:color .15s,border-color .15s,background .15s}.back-link:hover{color:var(--accent);border-color:var(--accent);background:rgba(255,255,255,.07)}
 
 .progress-wrap{padding:.9rem 1.5rem;background:var(--card);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:1rem;position:relative;z-index:1}
 .progress-bar-bg{flex:1;height:6px;background:var(--border2);border-radius:3px;overflow:hidden}
@@ -174,6 +175,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 <body>
 
 <div class="header">
+  <a href="index.html" class="back-link">← Tillbaka till översikten</a>
   <div class="chapter-tag">NP Fysik åk 9 · Kapitel 5</div>
   <h1>Arbete, Energi <span>&amp; Effekt</span></h1>
   <p>W = F·s · Enkla maskiner · Gyllene regeln · Läges-/rörelseenergi · P = W/t</p>
