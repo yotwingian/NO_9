@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Universum – NP Fysik åk 9</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+:root {
+  --bg: #080a12;
+  --card: #0f1120;
+  --card2: #141828;
+  --border: #1e2438;
+  --border2: #252d46;
+  --text: #e2e8f0;
+  --muted: #64748b;
+  --accent: #a855f7;
+  --accent2: #c084fc;
+  --good: #22c55e;
+  --bad: #ef4444;
+  --warn: #eab308;
+  --blue: #3b82f6;
+  --mono: 'JetBrains Mono', monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* Starfield */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 12% 18%, rgba(255,255,255,0.55) 0%, transparent 100%),
+    radial-gradient(1px 1px at 33% 72%, rgba(255,255,255,0.35) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 54% 12%, rgba(255,255,255,0.45) 0%, transparent 100%),
+    radial-gradient(1px 1px at 74% 48%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 87% 82%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 9%  88%, rgba(255,255,255,0.25) 0%, transparent 100%),
+    radial-gradient(1px 1px at 91% 27%, rgba(255,255,255,0.35) 0%, transparent 100%),
+    radial-gradient(1px 1px at 47% 57%, rgba(255,255,255,0.2) 0%, transparent 100%),
+    radial-gradient(1px 1px at 63% 91%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 27% 42%, rgba(255,255,255,0.2) 0%, transparent 100%),
+    radial-gradient(1px 1px at 5%  55%, rgba(255,255,255,0.15) 0%, transparent 100%),
+    radial-gradient(1px 1px at 79% 10%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 41% 95%, rgba(255,255,255,0.2) 0%, transparent 100%),
+    radial-gradient(1px 1px at 68% 35%, rgba(255,255,255,0.3) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Header ── */
+.header {
+  background: linear-gradient(135deg, #0f0520 0%, #080a12 60%);
+  border-bottom: 1px solid var(--border);
+  padding: 2rem 1.5rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+.header::before {
+  content: '🌌';
+  position: absolute;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 6rem;
+  opacity: 0.08;
+  pointer-events: none;
+}
+.chapter-tag {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.header h1 {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.3rem;
+}
+.header h1 span { color: var(--accent); }
+.header p { font-size: 0.85rem; color: var(--muted); }
+
+/* ── Progress ── */
+.progress-wrap {
+  padding: 0.9rem 1.5rem;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+  z-index: 1;
+}
+.progress-bar-bg {
+  flex: 1;
+  height: 6px;
+  background: var(--border2);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.progress-bar-fg {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  border-radius: 3px;
+  transition: width 0.4s ease;
+  width: 0%;
+}
+#progressText {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* ── Tabs ── */
+.tabs {
+  display: flex;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  scrollbar-width: none;
+  position: relative;
+  z-index: 1;
+}
+.tabs::-webkit-scrollbar { display: none; }
+.tab-btn {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.85rem 1.4rem;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.tab-btn:hover { color: var(--text); }
+.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+.tab-count {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  background: var(--border2);
+  padding: 0.1rem 0.4rem;
+  border-radius: 10px;
+}
+.tab-btn.active .tab-count { background: rgba(168,85,247,0.2); color: var(--accent); }
+
+/* ── Sections ── */
+.section { display: none; max-width: 820px; margin: 0 auto; padding: 2rem 1.5rem; position: relative; z-index: 1; }
+.section.active { display: block; }
+
+/* ── Info boxes ── */
+.infobox {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.2rem 1.4rem;
+  margin-bottom: 1.5rem;
+}
+.infobox-title {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.8rem;
+}
+.infobox p { font-size: 0.85rem; color: var(--muted); line-height: 1.75; }
+.infobox strong { color: var(--text); }
+
+/* ── Distance table ── */
+.dist-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.83rem;
+  margin-bottom: 1.5rem;
+}
+.dist-table th {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 0.5rem 0.8rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.dist-table td {
+  padding: 0.65rem 0.8rem;
+  border-bottom: 1px solid rgba(30,36,56,0.6);
+  color: var(--text);
+  vertical-align: top;
+}
+.dist-table tr:hover td { background: rgba(255,255,255,0.02); }
+.dist-val {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--accent2);
+}
+
+/* ── Flashcards ── */
+.card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.card-meta-left {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+.card-progress-dots {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  max-width: 320px;
+  justify-content: flex-end;
+}
+.dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--border2);
+  transition: background 0.2s;
+}
+.dot.good { background: var(--good); }
+.dot.skip { background: var(--warn); }
+.dot.current { background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+
+.flashcard-scene {
+  perspective: 1000px;
+  width: 100%;
+  max-width: 680px;
+  height: 220px;
+  margin: 0 auto 1.5rem;
+  cursor: pointer;
+}
+.flashcard-inner {
+  width: 100%; height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.45s cubic-bezier(.4,0,.2,1);
+}
+.flashcard-inner.flipped { transform: rotateY(180deg); }
+.card-side {
+  position: absolute; inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+}
+.card-front { background: var(--card); }
+.card-back { background: var(--card2); transform: rotateY(180deg); }
+.card-side-label {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+.card-front .card-side-label { color: var(--accent); }
+.card-text { font-size: 1rem; font-weight: 600; line-height: 1.5; color: var(--text); }
+.card-back .card-text { font-size: 0.88rem; font-weight: 400; color: #cbd5e1; }
+.card-hint { margin-top: 1rem; font-size: 0.72rem; color: var(--muted); }
+
+.card-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+}
+.card-btn {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem; font-weight: 500;
+  padding: 0.55rem 1.3rem;
+  border-radius: 8px;
+  border: 1px solid var(--border2);
+  background: var(--card2);
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex; align-items: center; gap: 0.4rem;
+}
+.card-btn:hover { color: var(--text); border-color: #3a4562; }
+.card-btn.good { border-color: var(--good); color: var(--good); background: rgba(34,197,94,0.07); }
+.card-btn.good:hover { background: rgba(34,197,94,0.15); }
+.card-btn.skip { border-color: var(--warn); color: var(--warn); background: rgba(234,179,8,0.07); }
+.card-btn.skip:hover { background: rgba(234,179,8,0.15); }
+
+/* ── Stellar lifecycle ── */
+.lifecycle {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.3rem;
+  margin-bottom: 1.5rem;
+}
+.lifecycle-title {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+.lc-path {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 0.7rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid var(--border);
+}
+.lc-path:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.lc-label {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-right: 0.3rem;
+  min-width: 90px;
+  text-transform: uppercase;
+}
+.lc-step {
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.25rem 0.7rem;
+  border-radius: 6px;
+  background: var(--card2);
+  border: 1px solid var(--border2);
+  color: var(--text);
+  white-space: nowrap;
+}
+.lc-step.hl { border-color: rgba(168,85,247,0.5); color: var(--accent2); }
+.lc-step.end { border-color: rgba(168,85,247,0.3); color: #d8b4fe; background: rgba(168,85,247,0.05); }
+.lc-arrow { color: var(--muted); font-size: 0.8rem; }
+
+/* ── Quiz ── */
+.f-question {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.4rem;
+  margin-bottom: 1rem;
+  transition: border-color 0.2s;
+}
+.f-question.answered-correct { border-color: rgba(34,197,94,0.4); }
+.f-question.answered-wrong   { border-color: rgba(239,68,68,0.3); }
+.f-num { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); margin-bottom: 0.5rem; letter-spacing: 0.1em; }
+.f-qtext { font-size: 0.92rem; font-weight: 600; line-height: 1.5; margin-bottom: 1.1rem; }
+.f-opts { display: flex; flex-direction: column; gap: 0.45rem; }
+.f-opt {
+  display: flex; align-items: flex-start; gap: 0.7rem;
+  padding: 0.65rem 0.9rem;
+  background: var(--card2);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.84rem; color: var(--muted);
+  text-align: left; width: 100%;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.12s;
+}
+.f-opt:hover:not(:disabled) { color: var(--text); border-color: #3a4562; background: rgba(255,255,255,0.03); }
+.f-opt .opt-letter { font-family: var(--mono); font-size: 0.7rem; font-weight: 600; color: var(--accent); min-width: 1.1rem; margin-top: 0.1rem; }
+.f-opt.correct { border-color: var(--good); background: rgba(34,197,94,0.08); color: #86efac; }
+.f-opt.wrong   { border-color: var(--bad); background: rgba(239,68,68,0.08); color: #fca5a5; }
+.f-opt:disabled { cursor: default; }
+.f-feedback { display: none; margin-top: 0.8rem; padding: 0.7rem 0.9rem; border-radius: 8px; font-size: 0.82rem; line-height: 1.55; }
+.f-feedback.show { display: block; }
+.f-feedback.correct-fb { background: rgba(34,197,94,0.07); border: 1px solid rgba(34,197,94,0.25); color: #86efac; }
+.f-feedback.wrong-fb   { background: rgba(239,68,68,0.07); border: 1px solid rgba(239,68,68,0.2); color: #fca5a5; }
+.quiz-summary { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 0.5rem; }
+.quiz-score { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); }
+.reset-btn {
+  font-family: var(--mono); font-size: 0.65rem;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid var(--border2); background: transparent; color: var(--muted);
+  border-radius: 5px; cursor: pointer; letter-spacing: 0.08em; transition: all 0.15s;
+}
+.reset-btn:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ── Resonemang ── */
+.res-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 1.2rem; overflow: hidden; }
+.res-header { display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 1.4rem; cursor: pointer; user-select: none; gap: 1rem; }
+.res-header:hover { background: rgba(255,255,255,0.02); }
+.res-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; flex: 1; }
+.res-chevron { color: var(--muted); font-size: 0.8rem; transition: transform 0.25s; flex-shrink: 0; }
+.res-body { display: none; padding: 0 1.4rem 1.4rem; border-top: 1px solid var(--border); }
+.res-body.show { display: block; }
+.res-scenario { font-size: 0.84rem; color: var(--muted); line-height: 1.7; margin: 1rem 0; padding: 0.8rem 1rem; background: var(--card2); border-radius: 8px; border-left: 3px solid var(--border2); }
+.res-task { font-size: 0.88rem; font-weight: 600; color: var(--text); margin-bottom: 1rem; line-height: 1.5; }
+.level-block { margin-bottom: 0.8rem; }
+.level-label { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.2rem 0.6rem; border-radius: 4px; display: inline-block; margin-bottom: 0.4rem; }
+.lvl-e { background: rgba(34,197,94,0.12); color: var(--good); border: 1px solid rgba(34,197,94,0.25); }
+.lvl-c { background: rgba(59,130,246,0.12); color: #93c5fd; border: 1px solid rgba(59,130,246,0.25); }
+.lvl-a { background: rgba(168,85,247,0.12); color: #d8b4fe; border: 1px solid rgba(168,85,247,0.25); }
+.level-block p { font-size: 0.83rem; color: var(--muted); line-height: 1.65; padding-left: 0.5rem; }
+
+/* ── NP ── */
+.np-intro { background: rgba(168,85,247,0.06); border: 1px solid rgba(168,85,247,0.2); border-radius: 10px; padding: 0.9rem 1.1rem; margin-bottom: 1.5rem; font-size: 0.82rem; color: #d8b4fe; line-height: 1.6; }
+.np-question { background: var(--card); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 1.2rem; overflow: hidden; }
+.np-qheader { display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 1.4rem; cursor: pointer; gap: 1rem; }
+.np-qheader:hover { background: rgba(255,255,255,0.02); }
+.np-year { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; color: var(--accent); background: rgba(168,85,247,0.1); padding: 0.2rem 0.6rem; border-radius: 4px; white-space: nowrap; }
+.np-qtitle { font-size: 0.9rem; font-weight: 600; flex: 1; line-height: 1.4; }
+.np-body { display: none; padding: 0 1.4rem 1.4rem; border-top: 1px solid var(--border); }
+.np-body.show { display: block; }
+.np-scenario { font-size: 0.84rem; color: var(--muted); line-height: 1.75; margin: 1rem 0; padding: 0.9rem 1.1rem; background: var(--card2); border-radius: 8px; border-left: 3px solid var(--accent); }
+.np-task { font-size: 0.88rem; font-weight: 600; color: var(--text); margin: 0.8rem 0 1rem; line-height: 1.5; }
+.np-tip { font-size: 0.78rem; color: #93c5fd; line-height: 1.6; margin-top: 0.5rem; padding: 0.6rem 0.8rem; background: rgba(59,130,246,0.06); border: 1px solid rgba(59,130,246,0.15); border-radius: 6px; }
+
+@media (max-width: 600px) {
+  .header h1 { font-size: 1.5rem; }
+  .section { padding: 1.5rem 1rem; }
+  .flashcard-scene { height: 200px; }
+  .lc-label { min-width: 70px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="chapter-tag">NP Fysik åk 9 · Kapitel 8</div>
+  <h1>Uni<span>versum</span></h1>
+  <p>Solsystemet · Rymdobjekt · Stjärnors liv · Big Bang · Världsbilder · Ljusår &amp; Avstånd</p>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-wrap">
+  <div class="progress-bar-bg"><div class="progress-bar-fg" id="mainProgress"></div></div>
+  <span id="progressText">0 av 0 klara</span>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('begrepp',event)">🃏 Begrepp <span class="tab-count" id="tc-begrepp">24</span></button>
+  <button class="tab-btn" onclick="showTab('forsta',event)">💡 Förståelse <span class="tab-count">12</span></button>
+  <button class="tab-btn" onclick="showTab('resonemang',event)">🧠 Resonemang <span class="tab-count">4</span></button>
+  <button class="tab-btn" onclick="showTab('np',event)">📋 NP-frågor <span class="tab-count">4</span></button>
+</div>
+
+<!-- ════════════════════════════════
+     TAB 1: BEGREPP
+════════════════════════════════ -->
+<div class="section active" id="sec-begrepp">
+
+  <div class="infobox">
+    <div class="infobox-title">📏 Viktiga avstånd — ofta på NP!</div>
+    <p>
+      <strong>Solen → Jorden:</strong> ~150 miljoner km = 1 AU ≈ <strong>8 ljusminuter</strong><br>
+      <strong>Närmaste stjärna</strong> (Proxima Centauri): ≈ <strong>4,2 ljusår</strong><br>
+      <strong>Vintergatans centrum:</strong> ≈ <strong>26 000 ljusår</strong><br>
+      <strong>Andromedagalaxen:</strong> ≈ <strong>2 500 000 ljusår</strong><br><br>
+      <strong>Ljusår</strong> = sträckan ljuset färdas på ett år ≈ 9,46 × 10¹² km (ca 9 500 miljarder km).
+    </p>
+  </div>
+
+  <!-- Stjärnans livscykel -->
+  <div class="lifecycle">
+    <div class="lifecycle-title">⭐ Stjärnans livscykel</div>
+    <div class="lc-path">
+      <span class="lc-label">Sol-typ:</span>
+      <span class="lc-step hl">Nebulosa</span><span class="lc-arrow">→</span>
+      <span class="lc-step hl">Stjärna (fusion)</span><span class="lc-arrow">→</span>
+      <span class="lc-step hl">Röd jätte</span><span class="lc-arrow">→</span>
+      <span class="lc-step">Planetarisk nebulosa</span><span class="lc-arrow">→</span>
+      <span class="lc-step end">Vit dvärg</span>
+    </div>
+    <div class="lc-path">
+      <span class="lc-label">Massiv:</span>
+      <span class="lc-step hl">Nebulosa</span><span class="lc-arrow">→</span>
+      <span class="lc-step hl">Stjärna (fusion)</span><span class="lc-arrow">→</span>
+      <span class="lc-step hl">Röd superjätte</span><span class="lc-arrow">→</span>
+      <span class="lc-step" style="border-color:#ef4444;color:#fca5a5">Supernova</span><span class="lc-arrow">→</span>
+      <span class="lc-step end">Neutronstjärna / Svart hål</span>
+    </div>
+  </div>
+
+  <!-- Flashcards -->
+  <div class="card-meta">
+    <div class="card-meta-left">Kort <span id="cardIdx">1</span> av <span id="cardTotal">24</span> &nbsp;·&nbsp; <span id="cardGoodCount">0</span> kan jag ✓</div>
+    <div class="card-progress-dots" id="dotRow"></div>
+  </div>
+
+  <div class="flashcard-scene" onclick="flipCard()">
+    <div class="flashcard-inner" id="fcInner">
+      <div class="card-side card-front">
+        <div class="card-side-label">Begrepp — klicka för att vända</div>
+        <div class="card-text" id="fcFront">...</div>
+        <div class="card-hint" id="fcHint"></div>
+      </div>
+      <div class="card-side card-back">
+        <div class="card-side-label">Förklaring</div>
+        <div class="card-text" id="fcBack">...</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-actions">
+    <button class="card-btn" onclick="prevCard()">← Föregående</button>
+    <button class="card-btn skip" onclick="markCard('skip')">↺ Repeteras</button>
+    <button class="card-btn good" onclick="markCard('good')">✓ Kan jag!</button>
+    <button class="card-btn" onclick="nextCard()">Nästa →</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     TAB 2: FÖRSTÅELSE
+════════════════════════════════ -->
+<div class="section" id="sec-forsta">
+  <div class="quiz-summary">
+    <span class="quiz-score" id="quizScore">Rätt: 0 / 0</span>
+    <button class="reset-btn" onclick="resetQuiz()">↺ Börja om</button>
+  </div>
+  <div id="quizContainer"></div>
+</div>
+
+<!-- ════════════════════════════════
+     TAB 3: RESONEMANG
+════════════════════════════════ -->
+<div class="section" id="sec-resonemang">
+
+  <div class="infobox" style="margin-bottom:1.5rem">
+    <div class="infobox-title">💡 Resonemang i två led</div>
+    <p>
+      Nivå E = ett korrekt faktapåstående.<br>
+      Nivå C = ett led: <em>påstående → konsekvens</em>.<br>
+      Nivå A = två led: <em>påstående → konsekvens 1 → konsekvens 2</em>, med naturvetenskapliga begrepp.
+    </p>
+  </div>
+
+  <!-- Resonemang 1 -->
+  <div class="res-card">
+    <div class="res-header" onclick="toggleRes('r1')">
+      <div class="res-title">🌍 Geocentrisk vs heliocentrisk världsbild</div>
+      <div class="res-chevron" id="ch-r1">▼</div>
+    </div>
+    <div class="res-body" id="r1">
+      <div class="res-scenario">
+        Under antiken trodde de flesta att jorden var universums centrum och att solen, planeterna och stjärnorna kretsade runt den. Kopernikus föreslog 1543 att solen istället stod i centrum.
+      </div>
+      <div class="res-task">Förklara skillnaden mellan geocentrisk och heliocentrisk världsbild, och resonera i två led kring varför det var svårt att acceptera den heliocentriska modellen.</div>
+      <div class="level-block">
+        <span class="level-label lvl-e">Nivå E</span>
+        <p>Geocentrisk = jorden i centrum. Heliocentrisk = solen i centrum. Det var svårt att acceptera för att det stred mot vad man trodde.</p>
+      </div>
+      <div class="level-block">
+        <span class="level-label lvl-c">Nivå C</span>
+        <p>Geocentrisk världsbild (Ptolemaios) hade stöd av kyrkan och passade den tidens observation att stjärnorna verkade röra sig runt jorden → att ifrågasätta den var farligt och provocerande. Galilei bekräftade heliocentrismen med teleskopobservationer men dömdes av inkvisitionen.</p>
+      </div>
+      <div class="level-block">
+        <span class="level-label lvl-a">Nivå A</span>
+        <p>Geocentrisk världsbild var socialt och religiöst förankrad → att hävda att jorden inte var centrum innebar att utmana kyrkans auktoritet, vilket kunde leda till förföljelse. Dessutom verkade det "självklart" att solen rörde sig eftersom vi ser den gå upp och ner → utan teleskop och matematiska modeller (Keplers lagar) fanns inga observerbara bevis för heliocentrismen, vilket försvårade vetenskaplig acceptans.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Resonemang 2 -->
+  <div class="res-card">
+    <div class="res-header" onclick="toggleRes('r2')">
+      <div class="res-title">⭐ Solens framtid som röd jätte</div>
+      <div class="res-chevron" id="ch-r2">▼</div>
+    </div>
+    <div class="res-body" id="r2">
+      <div class="res-scenario">
+        Om ca 5 miljarder år beräknas solen ha förbrukat sitt väteförråd i kärnan. Solen kommer då att expandera till en röd jätte och sedan krympa till en vit dvärg.
+      </div>
+      <div class="res-task">Förklara vad som händer med solen och solsystemet när solen blir en röd jätte. Resonera i två led.</div>
+      <div class="level-block">
+        <span class="level-label lvl-e">Nivå E</span>
+        <p>Solen expanderar och blir en röd jätte. Det blir varmare i solsystemet.</p>
+      </div>
+      <div class="level-block">
+        <span class="level-label lvl-c">Nivå C</span>
+        <p>När vätebränslet i kärnan tar slut slutar fusionen att trycka ut → gravitationen tar över och kärnan krymper medan de yttre lagren expanderar kraftigt → solen sväller till en röd jätte och sväljer de inre planeterna inklusive troligen Merkurius och Venus.</p>
+      </div>
+      <div class="level-block">
+        <span class="level-label lvl-a">Nivå A</span>
+        <p>Fusionens strålningstryck balanserar gravitationen i en normal stjärna → när vätet i kärnan tar slut rubbas balansen och kärnan kollapsar under sin egen tyngd, vilket frigör energi och blåser upp de yttre skikten till en röd jätte vars radie kan nå jordens omloppsbana. Jordens temperatur stiger dramatiskt → oceanerna kokar bort, atmosfären försvinner och ytan smälter → planeten blir obeboelig långt innan den faktiskt sväljs.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Resonemang 3 -->
+  <div class="res-card">
+    <div class="res-header" onclick="toggleRes('r3')">
+      <div class="res-title">💥 Big Bang och universums expansion</div>
+      <div class="res-chevron" id="ch-r3">▼</div>
+    </div>
+    <div class="res-body" id="r3">
+      <div class="res-scenario">
+        Astronomer har observerat att galaxer rör sig bort från oss — och ju längre bort de är, desto snabbare verkar de röra sig. Den kosmiska bakgrundsstrålningen är ett svagt mikrovågssken som fyller hela universum.
+      </div>
+      <div class="res-task">Förklara Big Bang-teorin och resonera i två led kring vilket bevis observationen av galax-rörelsen och bakgrundsstrålningen ger för teorin.</div>
+      <div class="level-block">
+        <span class="level-label lvl-e">Nivå E</span>
+        <p>Big Bang innebär att universum skapades i en stor explosion för ca 13,8 miljarder år sedan och har expanderat sedan dess.</p>
+      </div>
+      <div class="level-block">
+        <span class="level-label lvl-c">Nivå C</span>
+        <p>Om universum expanderar nu → måste det ha börjat i en liten punkt för länge sedan (Big Bang). Att galaxer rör sig bort stöder detta → om man "spelar filmen baklänges" samlas allt i en punkt.</p>
+      </div>
+      <div class="level-block">
+        <span class="level-label lvl-a">Nivå A</span>
+        <p>Galaxernas rörelse bort från oss (Hubbles lag) visar att rymden själv expanderar → om man extrapolerar bakåt i tid konvergerar allt till ett extremt hett och tätt tillstånd för ca 13,8 miljarder år sedan. Den kosmiska bakgrundsstrålningen är kvarlevan av det ursprungliga ljuset från ca 380 000 år efter Big Bang, när universum svalnat tillräckligt för att atomer kunde bildas → strålningens jämna fördelning och temperatur (~2,7 K) stämmer precis med Big Bang-modellens förutsägelse.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Resonemang 4 -->
+  <div class="res-card">
+    <div class="res-header" onclick="toggleRes('r4')">
+      <div class="res-title">🔭 Exoplaneter och förutsättningar för liv</div>
+      <div class="res-chevron" id="ch-r4">▼</div>
+    </div>
+    <div class="res-body" id="r4">
+      <div class="res-scenario">
+        Astronomer har bekräftat tusentals exoplaneter — planeter runt andra stjärnor. Några befinner sig i den så kallade "beboeliga zonen" där flytande vatten kan existera.
+      </div>
+      <div class="res-task">Resonera i två led kring varför det är svårt att bekräfta om det finns liv på exoplaneter, och vad upptäckten av exoplaneter i beboeliga zonen ändå betyder.</div>
+      <div class="level-block">
+        <span class="level-label lvl-e">Nivå E</span>
+        <p>Exoplaneter är väldigt långt bort och svåra att studera. Att hitta planeter i beboeliga zonen ökar chansen att hitta liv.</p>
+      </div>
+      <div class="level-block">
+        <span class="level-label lvl-c">Nivå C</span>
+        <p>Exoplaneter är ljusår bort → att skicka rymdsonder dit är omöjligt med dagens teknik, och att detektera biosignaturer (t.ex. syre i atmosfären) kräver extremt känsliga teleskop. Men planeter i beboeliga zonen visar att förutsättningarna för vatten och liv kan finnas → ökar sannolikheten att liv inte är unikt för jorden.</p>
+      </div>
+      <div class="level-block">
+        <span class="level-label lvl-a">Nivå A</span>
+        <p>Exoplaneter detekteras indirekt (transit- eller radialhastighetmetoden) och ljuset tar tusentals år att nå oss → vi observerar planeten som den var förr i tiden, inte nu, och kan inte skicka prober. Dessutom är "bebyggelighet" mer än avstånd: en planet behöver rätt atmosfär, magnetfält och kemisk sammansättning. Trots detta innebär mångfalden av exoplaneter i beboeliga zoner statistiskt att miljontals kandidater finns i Vintergatan → det förändrar det vetenskapliga och filosofiska samtalet om livets ursprung och mångfald i universum.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════
+     TAB 4: NP-FRÅGOR
+════════════════════════════════ -->
+<div class="section" id="sec-np">
+
+  <div class="np-intro">
+    📋 Dessa frågor är hämtade direkt från eller utformade i stil med riktiga Nationella Prov. Öppna frågorna och försök svara i flera led — E, C och A visas när du öppnar.
+  </div>
+
+  <!-- NP 1 -->
+  <div class="np-question">
+    <div class="np-qheader" onclick="toggleNP('np1')">
+      <span class="np-year">NP 2016 · Delprov A1</span>
+      <div class="np-qtitle">Rangordna astronomiska objekt från minst till störst</div>
+      <div class="res-chevron" id="ch-np1">▼</div>
+    </div>
+    <div class="np-body" id="np1">
+      <div class="np-scenario">
+        Rangordna de astronomiska objekten A–D utifrån deras storlek. Börja med det minsta objektet.<br><br>
+        A. Solen &nbsp;&nbsp; B. Jorden &nbsp;&nbsp; C. Galax &nbsp;&nbsp; D. Meteorid
+      </div>
+      <div class="np-task">Skriv rätt ordning, minst → störst.</div>
+      <div class="level-block" style="margin-top:0.8rem">
+        <span class="level-label lvl-e">Korrekt svar</span>
+        <p><strong>D → B → A → C</strong> &nbsp; (Meteorid → Jorden → Solen → Galax)</p>
+      </div>
+      <div class="np-tip">💡 Meteorid är en liten bit sten/metall i rymden (meter-storlek). Galaxen innehåller hundratals miljarder stjärnor — den är enormt mycket större än solen.</div>
+    </div>
+  </div>
+
+  <!-- NP 2 -->
+  <div class="np-question">
+    <div class="np-qheader" onclick="toggleNP('np2')">
+      <span class="np-year">NP 2017 · Delprov A1</span>
+      <div class="np-qtitle">Kombinera astronomiska objekt med avstånd</div>
+      <div class="res-chevron" id="ch-np2">▼</div>
+    </div>
+    <div class="np-body" id="np2">
+      <div class="np-scenario">
+        Solen, Andromedagalaxen och Vintergatans centrum befinner sig olika långt från jorden.<br><br>
+        <strong>Objekt:</strong> 1. Solen &nbsp; 2. Andromedagalaxen &nbsp; 3. Vintergatans centrum<br>
+        <strong>Avstånd:</strong> A. Cirka 30 000 ljusår &nbsp; B. Cirka 8 ljusminuter &nbsp; C. Cirka 2 000 000 ljusår
+      </div>
+      <div class="np-task">Kombinera rätt objekt med rätt avstånd.</div>
+      <div class="level-block" style="margin-top:0.8rem">
+        <span class="level-label lvl-e">Korrekt svar</span>
+        <p>1–B (Solen ≈ 8 ljusminuter) &nbsp;|&nbsp; 2–C (Andromedagalaxen ≈ 2 000 000 ljusår) &nbsp;|&nbsp; 3–A (Vintergatans centrum ≈ 30 000 ljusår)</p>
+      </div>
+      <div class="np-tip">💡 Notera: Vintergatans centrum är längre bort än solen men mycket närmre än Andromedagalaxen. Vi befinner oss i utkanten av Vintergatan.</div>
+    </div>
+  </div>
+
+  <!-- NP 3 -->
+  <div class="np-question">
+    <div class="np-qheader" onclick="toggleNP('np3')">
+      <span class="np-year">NP 2018 · Delprov A1</span>
+      <div class="np-qtitle">Välj korrekt påstående om stjärnor (fyra rutor)</div>
+      <div class="res-chevron" id="ch-np3">▼</div>
+    </div>
+    <div class="np-body" id="np3">
+      <div class="np-scenario">
+        I provet finns fyra rutor med påståenden A–H om stjärnor. Varje ruta innehåller ett korrekt och ett felaktigt påstående. Välj ett korrekt alternativ ur varje ruta.
+      </div>
+      <div class="np-task">Typexempel på påståenden — vilka är korrekta?</div>
+      <div style="display:flex; flex-direction:column; gap:0.8rem; margin-top:0.8rem;">
+        <div style="background:var(--card2); border:1px solid var(--border2); border-radius:8px; padding:0.8rem 1rem; font-size:0.83rem;">
+          <strong style="color:var(--accent2)">Ruta 1:</strong> <span style="color:var(--muted)">A) Solen är den största stjärnan i universum &nbsp;|&nbsp; B) Solen är en genomsnittlig stjärna i Vintergatan</span><br>
+          <span style="color:var(--good)">✅ Korrekt: B</span> — Solen är en genomsnittlig gul dvärg. Det finns stjärnor miljoner gånger ljusstarkare.
+        </div>
+        <div style="background:var(--card2); border:1px solid var(--border2); border-radius:8px; padding:0.8rem 1rem; font-size:0.83rem;">
+          <strong style="color:var(--accent2)">Ruta 2:</strong> <span style="color:var(--muted)">A) En nebulosa är kvarlevan av en exploderad stjärna &nbsp;|&nbsp; B) En nebulosa är ett moln av gas och stoft där nya stjärnor kan bildas</span><br>
+          <span style="color:var(--good)">✅ Korrekt: B</span> — Nebulosa = stjärnornas "vagga". (Kvarlevor kallas planetarisk nebulosa eller supernovarester.)
+        </div>
+        <div style="background:var(--card2); border:1px solid var(--border2); border-radius:8px; padding:0.8rem 1rem; font-size:0.83rem;">
+          <strong style="color:var(--accent2)">Ruta 3:</strong> <span style="color:var(--muted)">A) Vit dvärg är slutstadiet för en massiv stjärna &nbsp;|&nbsp; B) Vit dvärg är slutstadiet för en sol-liknande stjärna</span><br>
+          <span style="color:var(--good)">✅ Korrekt: B</span> — Massiva stjärnor slutar som neutronstjärna eller svart hål, inte vit dvärg.
+        </div>
+        <div style="background:var(--card2); border:1px solid var(--border2); border-radius:8px; padding:0.8rem 1rem; font-size:0.83rem;">
+          <strong style="color:var(--accent2)">Ruta 4:</strong> <span style="color:var(--muted)">A) Fusionsenergi i stjärnor omvandlar helium till väte &nbsp;|&nbsp; B) Fusionsenergi i stjärnor omvandlar väte till helium</span><br>
+          <span style="color:var(--good)">✅ Korrekt: B</span> — Fusion = väte smälter samman till helium + energi frigörs (E=mc²).
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NP 4 -->
+  <div class="np-question">
+    <div class="np-qheader" onclick="toggleNP('np4')">
+      <span class="np-year">NP-typ · Universums uppbyggnad</span>
+      <div class="np-qtitle">Välj fyra korrekta påståenden om universums uppbyggnad och utveckling</div>
+      <div class="res-chevron" id="ch-np4">▼</div>
+    </div>
+    <div class="np-body" id="np4">
+      <div class="np-scenario">
+        En vanlig NP-uppgift presenterar åtta påståenden om universum och ber dig välja fyra korrekta — ett ur varje ruta.
+      </div>
+      <div class="np-task">Träna på att avgöra om följande påståenden är korrekta eller felaktiga:</div>
+      <div style="display:flex; flex-direction:column; gap:0.6rem; margin-top:0.8rem; font-size:0.83rem;">
+        <div style="display:flex; align-items:flex-start; gap:0.6rem; padding:0.6rem 0.8rem; background:rgba(34,197,94,0.06); border:1px solid rgba(34,197,94,0.2); border-radius:7px;">
+          <span style="color:var(--good); min-width:1.2rem;">✅</span>
+          <span style="color:var(--text)">Universum uppstod för ca 13,8 miljarder år sedan i det vi kallar Big Bang.</span>
+        </div>
+        <div style="display:flex; align-items:flex-start; gap:0.6rem; padding:0.6rem 0.8rem; background:rgba(239,68,68,0.06); border:1px solid rgba(239,68,68,0.2); border-radius:7px;">
+          <span style="color:var(--bad); min-width:1.2rem;">❌</span>
+          <span style="color:var(--muted)">Universum expanderar mot ett centrum — Big Bang skedde på en viss plats i rymden.</span>
+        </div>
+        <div style="display:flex; align-items:flex-start; gap:0.6rem; padding:0.6rem 0.8rem; background:rgba(34,197,94,0.06); border:1px solid rgba(34,197,94,0.2); border-radius:7px;">
+          <span style="color:var(--good); min-width:1.2rem;">✅</span>
+          <span style="color:var(--text)">Galaxer rör sig bort från varandra vilket tyder på att universum expanderar.</span>
+        </div>
+        <div style="display:flex; align-items:flex-start; gap:0.6rem; padding:0.6rem 0.8rem; background:rgba(239,68,68,0.06); border:1px solid rgba(239,68,68,0.2); border-radius:7px;">
+          <span style="color:var(--bad); min-width:1.2rem;">❌</span>
+          <span style="color:var(--muted)">Solen befinner sig i centrum av Vintergatan.</span>
+        </div>
+        <div style="display:flex; align-items:flex-start; gap:0.6rem; padding:0.6rem 0.8rem; background:rgba(34,197,94,0.06); border:1px solid rgba(34,197,94,0.2); border-radius:7px;">
+          <span style="color:var(--good); min-width:1.2rem;">✅</span>
+          <span style="color:var(--text)">En stjärna med solens massa slutar sitt liv som en vit dvärg.</span>
+        </div>
+        <div style="display:flex; align-items:flex-start; gap:0.6rem; padding:0.6rem 0.8rem; background:rgba(239,68,68,0.06); border:1px solid rgba(239,68,68,0.2); border-radius:7px;">
+          <span style="color:var(--bad); min-width:1.2rem;">❌</span>
+          <span style="color:var(--muted)">Ljusår är en tidsenhet som mäter hur länge en stjärna lyser.</span>
+        </div>
+      </div>
+      <div class="np-tip" style="margin-top:0.8rem;">💡 Vanligt felval: "Big Bang skedde på ett visst ställe" — fel! Rymden själv expanderade, det finns inget centrum att peka på.</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const STORAGE_KEY = 'fysik_universum';
+// ── Flashcard data ──
+const allCards = [
+  // SOLSYSTEMET
+  { cat: 'Solsystemet', q: 'Vad är skillnaden mellan en planet och en dvärgplanet?', a: 'En planet kretsar runt solen, är rundad av sin gravitation OCH har rensat sin omloppsbana från andra objekt. En dvärgplanet uppfyller inte det sista kravet. Pluto är en dvärgplanet.' },
+  { cat: 'Solsystemet', q: 'Var finns asteroidbältet?', a: 'Mellan Mars och Jupiter. Innehåller miljontals klippblock av sten och metall som inte formade en planet på grund av Jupiters gravitation.' },
+  { cat: 'Solsystemet', q: 'Vad är ett ljusår?', a: 'Sträckan ljuset färdas på ett år ≈ 9 460 miljarder km (9,46 × 10¹² km). Används för att mäta avstånd i rymden.' },
+  { cat: 'Solsystemet', q: 'Hur långt är det från Solen till Jorden i ljustid?', a: 'Ca 8 ljusminuter (150 miljoner km = 1 AU). Ljuset tar alltså 8 minuter att nå oss.' },
+  // RYMDOBJEKT
+  { cat: 'Rymdobjekt', q: 'Vad är en asteroid?', a: 'Stora klippblock av sten/metall som rör sig i rymden, framförallt i asteroidbältet mellan Mars och Jupiter.' },
+  { cat: 'Rymdobjekt', q: 'Vad är skillnaden mellan meteoroid, meteor och meteorit?', a: 'Meteoroid: litet fragment i rymden. Meteor: brinner upp i atmosfären ("stjärnfall"). Meteorit: meteor som överlever och träffar jordens yta.' },
+  { cat: 'Rymdobjekt', q: 'Vad är en komet?', a: 'En komet är en isberg av is och stoft med en elliptisk bana runt solen. Nära solen avdunstar isen och bildar en ljus svans.' },
+  { cat: 'Rymdobjekt', q: 'Vad är en galax?', a: 'Enormt system av miljarder stjärnor, gas, stoft och mörk materia bundna av gravitation. Vår galax heter Vintergatan och innehåller ca 100–400 miljarder stjärnor.' },
+  { cat: 'Rymdobjekt', q: 'Vad är en exoplanet?', a: 'En planet som kretsar runt en annan stjärna än vår sol. Tusentals är bekräftade med teleskop.' },
+  // STJÄRNORS LIV
+  { cat: 'Stjärnors liv', q: 'Var bildas stjärnor?', a: 'I nebulosor — enorma moln av gas (mestadels väte) och stoft i rymden. Gravitationen drar samman gasen tills trycket och temperaturen är tillräckligt höga för kärnfusion.' },
+  { cat: 'Stjärnors liv', q: 'Vad är kärnfusion i en stjärna?', a: 'Väte-kärnor smälter samman till helium under extremt tryck och temperatur i stjärnans kärna. Frigör enorm energi (E=mc²) som lyser ut som ljus och värme.' },
+  { cat: 'Stjärnors liv', q: 'Vad är en röd jätte?', a: 'Fas i stjärnans åldrande när vätet i kärnan tar slut: kärnan krymper, yttre skikt expanderar kraftigt och kyls → ljusare men rödare. Solen blir en röd jätte om ca 5 miljarder år.' },
+  { cat: 'Stjärnors liv', q: 'Vad är en vit dvärg?', a: 'Resterna av en sol-liknande stjärna efter att den tappat sina yttre skikt. Liten (~jordens storlek), väldigt tät och het. Inga fler fusionsreaktioner — svalnar långsamt.' },
+  { cat: 'Stjärnors liv', q: 'Vad är en supernova?', a: 'Explosiv död av en massiv stjärna. Kärnan kollapsar och de yttre lagren kastas ut i en explosion som kan vara lika ljus som en hel galax under kort tid.' },
+  { cat: 'Stjärnors liv', q: 'Vad är en neutronstjärna?', a: 'Extremt kompakt rest av en supernova. Så tät att en tesked väger miljarder ton. Kan rotera hundratals gånger per sekund (pulsar).' },
+  { cat: 'Stjärnors liv', q: 'Vad är ett svart hål?', a: 'Rest av den allra tyngsta supernovas. Gravitationen är så stark att inte ens ljus kan undkomma. Bildas när kärnan är tyngre än ca 3 solmassor.' },
+  // VÄRLDSBILDER & UNIVERSUM
+  { cat: 'Världsbilder & Universum', q: 'Vad är heliocentrisk världsbild?', a: 'Solen i centrum, planeterna kretsar runt den. Föreslagen av Kopernikus 1543, bekräftad av Galilei och Kepler. Den moderna vetenskapliga modellen.' },
+  { cat: 'Världsbilder & Universum', q: 'Vad är geocentrisk världsbild?', a: 'Jorden i centrum, solen och planeterna kretsar runt jorden. Ptolemaios modell från antiken. Avvisad av vetenskapen på 1600-talet.' },
+  { cat: 'Världsbilder & Universum', q: 'Vad är Big Bang?', a: 'Universum uppstod för ca 13,8 miljarder år sedan från ett extremt hett och tätt tillstånd. Sedan dess expanderar universum. Bevis: galaxers rörelse bort från oss + kosmisk bakgrundsstrålning.' },
+  { cat: 'Världsbilder & Universum', q: 'Hur vet vi att universum expanderar?', a: 'Galaxer rör sig bort från oss — ju längre bort, desto snabbare (Hubbles lag). Ljuset från dem är rödförskjutet = dopplereffekten för ljus.' },
+  { cat: 'Världsbilder & Universum', q: 'Vad är mörk materia?', a: 'Osynlig materia som inte sänder ut eller absorberar ljus men påverkar galaxers rörelse via gravitation. Utgör ca 27% av universums energiinnehåll. Ännu inte direkt detekterad.' },
+  // AVSTÅND
+  { cat: 'Avstånd', q: 'Hur långt bort är Andromedagalaxen?', a: 'Ca 2,5 miljoner ljusår — den närmaste stora galaxen till Vintergatan. Det ljus vi ser från Andromeda lämnade den för 2,5 miljoner år sedan.' },
+  { cat: 'Avstånd', q: 'Hur långt bort är Vintergatans centrum?', a: 'Ca 26 000 ljusår. Vi befinner oss i utkanten av Vintergatan, inte i centrum.' },
+  { cat: 'Avstånd', q: 'Vad är 1 AU?', a: 'Astronomisk enhet = jordens medelavstånd från solen ≈ 150 miljoner km. Används för avstånd inom solsystemet.' },
+];
+
+// ── Quiz data ──
+const quizItems = [
+  {
+    q: 'Rangordna från minst till störst: Galax, Solen, Meteoroid, Jorden (NP 2016)',
+    opts: ['Meteoroid → Solen → Jorden → Galax', 'Meteoroid → Jorden → Solen → Galax', 'Solen → Meteoroid → Galax → Jorden', 'Galax → Solen → Meteoroid → Jorden'],
+    correct: 1,
+    fb: 'Meteoroid (meter-storlek) → Jorden (planet) → Solen (stjärna ≈ 1,4 miljoner km diameter) → Galax (100+ miljarder stjärnor). Exakt NP 2016-fråga!'
+  },
+  {
+    q: 'Hur långt bort är solen från jorden? (NP 2017)',
+    opts: ['Cirka 4 ljusår', 'Cirka 8 ljusminuter', 'Cirka 30 000 ljusår', 'Cirka 2 000 000 ljusår'],
+    correct: 1,
+    fb: '≈ 150 miljoner km = 8 ljusminuter. Det tog ljuset 8 minuter att nå oss när det lämnade solen. Exakt NP 2017-fakta!'
+  },
+  {
+    q: 'Vad händer med en sol-liknande stjärna när vätebränslet i kärnan tar slut?',
+    opts: ['Den exploderar i en supernova', 'Den kollapsar direkt till ett svart hål', 'Den sväller till en röd jätte och slutar sedan som vit dvärg', 'Den krymper direkt till en neutronstjärna'],
+    correct: 2,
+    fb: 'Sol-liknande stjärna: röd jätte → planetarisk nebulosa → vit dvärg. Massiva stjärnor (>8 solmassor) exploderar som supernova → neutronstjärna/svart hål.'
+  },
+  {
+    q: 'Vad är skillnaden mellan meteor och meteorit?',
+    opts: ['Meteor är större än meteorit', 'Meteor brinner upp i atmosfären, meteorit träffar jordens yta', 'Meteorit är ett annat namn för asteroid', 'Meteor är ett objekt i asteroidbältet'],
+    correct: 1,
+    fb: 'Meteoroid (i rymden) → Meteor (brinner upp i atmosfären = "stjärnfall") → Meteorit (överlever och landar på jorden).'
+  },
+  {
+    q: 'Vad är heliocentrisk världsbild?',
+    opts: ['Solen kretsar runt jorden', 'Allt kretsar runt Vintergatan', 'Planeterna kretsar runt solen', 'Månen är i universums centrum'],
+    correct: 2,
+    fb: 'Heliocentrisk (helios = sol på grekiska) = solen i centrum. Kopernikus föreslog detta 1543. Bekräftades av Galileis teleskopobservationer och Keplers matematiska lagar.'
+  },
+  {
+    q: 'Vad är Big Bang?',
+    opts: ['En stor explosion i mitten av universum', 'Universum uppstod ur ett extremt hett och tätt tillstånd för ca 13,8 miljarder år sedan', 'Kollisionen mellan Vintergatan och Andromedagalaxen', 'En periodisk händelse som sker var 14:e miljard år'],
+    correct: 1,
+    fb: 'Big Bang var ingen explosion i rymden — rymden själv expanderade från ett extremt hett tillstånd. Det finns inget centrum. Universum har expanderat (och svalnat) sedan dess.'
+  },
+  {
+    q: 'Var bildas nya stjärnor?',
+    opts: ['I svarta hål', 'I asteroidbältet', 'I nebulosor — moln av gas och stoft', 'I vita dvärgars omgivning'],
+    correct: 2,
+    fb: 'Nebulosor är enorma moln av väte och stoft. Gravitationen drar samman gasen → trycket och temperaturen ökar → kärnfusion startar → en ny stjärna föds.'
+  },
+  {
+    q: 'Vad är en exoplanet?',
+    opts: ['En planet som lämnat solsystemet', 'En dvärgplanet bortom Neptunus', 'En planet som kretsar runt en annan stjärna än vår sol', 'En måne runt en gasjätte'],
+    correct: 2,
+    fb: 'Exo = utanför. Exoplanet = planet runt en annan stjärna. Tusentals är bekräftade. Några befinner sig i "beboeliga zonen" där flytande vatten kan finnas.'
+  },
+  {
+    q: 'Vad är en neutronstjärna?',
+    opts: ['En stjärna som enbart består av neutroner i neutronsskal', 'En extremt tät rest av en supernova där trycket tvingat protoner och elektroner att bilda neutroner', 'En ung stjärna i fusionsstadiet', 'En mörk kalla stjärna utan fusion'],
+    correct: 1,
+    fb: 'Vid supernovakollapsen trycks protoner och elektroner samman till neutroner. Resultatet är en otroligt tät boll — stadsstorlek men med mer massa än solen. Kan rotera hundratals gånger/sekund.'
+  },
+  {
+    q: 'Varför ser vi Andromedagalaxen 2,5 miljoner år bakåt i tiden?',
+    opts: ['Galaxen rör sig sakta', 'Ljuset tar 2,5 miljoner år att nå oss från Andromeda', 'Teleskop kan inte se nutid', 'Universum expanderar bakåt i tid'],
+    correct: 1,
+    fb: 'Ljusets hastighet är ändlig (~300 000 km/s). Ljuset från Andromeda tog 2,5 miljoner år att nå oss → vi ser galaxen som den såg ut för 2,5 miljoner år sedan.'
+  },
+  {
+    q: 'Hur vet astronomer att universum expanderar?',
+    opts: ['Stjärnor blir dimmare med tid', 'Alla galaxer rör sig bort från oss — rödforskyutning av deras ljus (Hubbles lag)', 'Temperaturen i rymden stiger', 'Gravitationen minskar med tid'],
+    correct: 1,
+    fb: 'Rödförskjutning = ljuset sträcks ut när källan rör sig bort (dopplereffekten för ljus). Ju längre bort en galax är, desto fortare rör den sig bort → universum expanderar.'
+  },
+  {
+    q: 'Vad är mörk materia?',
+    opts: ['Svarta hål som inte syns', 'Osynlig materia utan ljus vars gravitation påverkar galaxers rörelse', 'Gas och stoft mellan stjärnor', 'Döda stjärnor som svalnat'],
+    correct: 1,
+    fb: 'Mörk materia interagerar inte med ljus men påverkar gravitation. Utan den skulle galaxer snurra isär. Utgör ca 27% av universum. Vad det faktiskt är vet vi inte ännu.'
+  },
+];
+
+// ── State ──
+const cardStates = {};
+allCards.forEach((_, i) => cardStates[i] = 'unseen');
+let currentCard = 0;
+let isFlipped = false;
+const fAnswered = {};
+let quizCorrect = 0;
+let quizAnswered = 0;
+
+// ── Navigation ──
+function showTab(name, e) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('sec-' + name).classList.add('active');
+  if (e) e.currentTarget.classList.add('active');
+}
+
+// ── Flashcards ──
+function renderCard() {
+  const card = allCards[currentCard];
+  document.getElementById('fcFront').textContent = card.q;
+  document.getElementById('fcBack').textContent = card.a;
+  document.getElementById('fcHint').textContent = '[ ' + card.cat + ' ]';
+  document.getElementById('cardIdx').textContent = currentCard + 1;
+  document.getElementById('cardTotal').textContent = allCards.length;
+  document.getElementById('fcInner').classList.remove('flipped');
+  isFlipped = false;
+  renderDots();
+  updateMainProgress();
+}
+
+function renderDots() {
+  const row = document.getElementById('dotRow');
+  row.innerHTML = '';
+  allCards.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot';
+    if (i === currentCard) d.classList.add('current');
+    else if (cardStates[i] === 'good') d.classList.add('good');
+    else if (cardStates[i] === 'skip') d.classList.add('skip');
+    row.appendChild(d);
+  });
+  document.getElementById('cardGoodCount').textContent = Object.values(cardStates).filter(v => v === 'good').length;
+}
+
+function flipCard() {
+  isFlipped = !isFlipped;
+  document.getElementById('fcInner').classList.toggle('flipped', isFlipped);
+}
+
+function markCard(state) { cardStates[currentCard] = state; nextCard(); }
+function nextCard() { currentCard = (currentCard + 1) % allCards.length; renderCard(); }
+function prevCard() { currentCard = (currentCard - 1 + allCards.length) % allCards.length; renderCard(); }
+
+// ── Quiz ──
+function buildQuiz() {
+  const c = document.getElementById('quizContainer');
+  c.innerHTML = '';
+  quizItems.forEach((item, qi) => {
+    const div = document.createElement('div');
+    div.className = 'f-question';
+    div.id = 'fq-' + qi;
+    const letters = ['A','B','C','D'];
+    const optsHtml = item.opts.map((o, oi) =>
+      `<button class="f-opt" id="fo-${qi}-${oi}" onclick="answerQuiz(${qi},${oi})">
+        <span class="opt-letter">${letters[oi]}</span>${o}
+      </button>`
+    ).join('');
+    div.innerHTML = `
+      <div class="f-num">Fråga ${qi+1} av ${quizItems.length}</div>
+      <div class="f-qtext">${item.q}</div>
+      <div class="f-opts">${optsHtml}</div>
+      <div class="f-feedback" id="ff-${qi}"></div>
+    `;
+    c.appendChild(div);
+  });
+}
+
+function applyRestoredQuiz() {
+  quizCorrect = 0;
+  quizAnswered = 0;
+  for (let qi = 0; qi < quizItems.length; qi++) {
+    if (fAnswered[qi] === undefined) continue;
+    const item = quizItems[qi];
+    const isRight = fAnswered[qi];
+    for (let i = 0; i < item.opts.length; i++) {
+      const btn = document.getElementById('fo-' + qi + '-' + i);
+      if (!btn) continue;
+      btn.disabled = true;
+      if (i === item.correct) btn.classList.add('correct');
+    }
+    const fb = document.getElementById('ff-' + qi);
+    if (fb) {
+      fb.className = 'f-feedback show ' + (isRight ? 'correct-fb' : 'wrong-fb');
+      fb.textContent = (isRight ? '✅ Rätt! ' : '❌ Fel. ') + item.fb;
+    }
+    const fq = document.getElementById('fq-' + qi);
+    if (fq) fq.classList.add(isRight ? 'answered-correct' : 'answered-wrong');
+    if (isRight) quizCorrect++;
+    quizAnswered++;
+  }
+  document.getElementById('quizScore').textContent = `Rätt: ${quizCorrect} / ${quizAnswered}`;
+}
+
+function answerQuiz(qi, oi) {
+  if (fAnswered[qi] !== undefined) return;
+  const item = quizItems[qi];
+  fAnswered[qi] = (oi === item.correct);
+  const isRight = oi === item.correct;
+  for (let i = 0; i < item.opts.length; i++) {
+    const btn = document.getElementById('fo-' + qi + '-' + i);
+    btn.disabled = true;
+    if (i === item.correct) btn.classList.add('correct');
+    else if (i === oi) btn.classList.add('wrong');
+  }
+  const fb = document.getElementById('ff-' + qi);
+  fb.className = 'f-feedback show ' + (isRight ? 'correct-fb' : 'wrong-fb');
+  fb.textContent = (isRight ? '✅ Rätt! ' : '❌ Fel. ') + item.fb;
+  document.getElementById('fq-' + qi).classList.add(isRight ? 'answered-correct' : 'answered-wrong');
+  if (isRight) quizCorrect++;
+  quizAnswered++;
+  document.getElementById('quizScore').textContent = `Rätt: ${quizCorrect} / ${quizAnswered}`;
+  updateMainProgress();
+}
+
+function resetQuiz() {
+  Object.keys(fAnswered).forEach(k => delete fAnswered[k]);
+  quizCorrect = 0;
+  quizAnswered = 0;
+  buildQuiz();
+  applyRestoredQuiz();
+  updateMainProgress();
+}
+
+// ── Toggles ──
+function toggleRes(id) {
+  const body = document.getElementById(id);
+  const ch = document.getElementById('ch-' + id);
+  body.classList.toggle('show');
+  ch.textContent = body.classList.contains('show') ? '▲' : '▼';
+}
+function toggleNP(id) {
+  const body = document.getElementById(id);
+  const ch = document.getElementById('ch-' + id);
+  body.classList.toggle('show');
+  ch.textContent = body.classList.contains('show') ? '▲' : '▼';
+}
+
+// ── Progress ──
+function updateMainProgress() {
+  const good   = Object.values(cardStates).filter(v => v === 'good').length;
+  const fRight = Object.values(fAnswered).filter(v => v === true).length;
+  const total  = allCards.length + quizItems.length;
+  const pct    = Math.min(100, Math.round(((good + fRight) / total) * 100));
+  document.getElementById('mainProgress').style.width = pct + '%';
+  document.getElementById('progressText').textContent = (good + fRight) + ' av ' + total + ' klara';
+  localStorage.setItem(STORAGE_KEY + '_progress', JSON.stringify({
+    pct, good, fRight, total,
+    cardStates: Object.assign({}, cardStates),
+    fAnswered:  Object.assign({}, fAnswered),
+  }));
+}
+
+function restoreProgress() {
+  const raw = localStorage.getItem(STORAGE_KEY + '_progress');
+  if (!raw) return;
+  try {
+    const data = JSON.parse(raw);
+    if (data.cardStates) Object.entries(data.cardStates).forEach(([k,v]) => { cardStates[k] = v; });
+    if (data.fAnswered)  Object.entries(data.fAnswered).forEach(([k,v])  => { fAnswered[k] = v; });
+  } catch(e) {}
+}
+
+// ── Init ──
+restoreProgress();
+renderCard();
+buildQuiz();
+applyRestoredQuiz();
+</script>
+</body>
+</html>

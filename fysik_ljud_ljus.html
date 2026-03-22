@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ljud & Ljus — NP Fysik åk 9</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#070d12;--surface:#0e1a22;--card:#162230;--border:#1e3040;
+  --accent:#00e5ff;--accent2:#76ff7a;--accent3:#ffb347;
+  --bad:#ff4d6d;--text:#d8eef8;--muted:#4a7080;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+.header{background:linear-gradient(135deg,#010d12 0%,#003344 50%,#070d12 100%);padding:32px 24px 24px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.header::before{content:'🔊';position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:80px;opacity:.1}
+.header::after{content:'💡';position:absolute;right:110px;top:28%;font-size:50px;opacity:.09}
+.badge{display:inline-block;background:var(--accent);color:#000;font-size:11px;font-weight:700;letter-spacing:2px;padding:4px 10px;border-radius:4px;margin-bottom:10px;text-transform:uppercase}
+.header h1{font-size:clamp(22px,5vw,36px);font-weight:900;letter-spacing:-1px}
+.header h1 span{color:var(--accent2)}
+.subtitle{color:var(--muted);margin-top:6px;font-size:14px}
+
+.progress-bar{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin:20px 16px 0}
+.prog-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:13px}
+.prog-label span:last-child{font-family:'JetBrains Mono',monospace;color:var(--accent);font-size:12px}
+.prog-track{height:8px;background:var(--border);border-radius:99px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:99px;transition:width .5s ease;width:0%}
+
+.tabs{display:flex;gap:4px;padding:16px;overflow-x:auto;border-bottom:1px solid var(--border);background:var(--surface)}
+.tab-btn{flex-shrink:0;padding:8px 16px;border:1px solid var(--border);background:transparent;color:var(--muted);border-radius:8px;cursor:pointer;font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;transition:all .2s}
+.tab-btn:hover{color:var(--text);border-color:var(--accent)}
+.tab-btn.active{background:var(--accent);color:#000;border-color:var(--accent)}
+
+.section{display:none;padding:16px;max-width:720px;margin:0 auto}
+.section.active{display:block}
+
+/* SPLIT REFERENCE BOXES */
+.ref-box{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px;margin-bottom:16px}
+.ref-box h3{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.ref-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ref-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px}
+.ri-head{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px}
+.ri-main{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;margin-bottom:4px}
+.ri-desc{font-size:11px;color:var(--text);line-height:1.5}
+.chip{display:inline-block;background:rgba(0,229,255,.12);border:1px solid rgba(0,229,255,.25);border-radius:5px;padding:2px 7px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);margin:2px}
+
+/* WAVE VIS */
+.wave-box{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px;margin-bottom:16px}
+.wave-box h3{font-size:12px;font-weight:700;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.wave-compare{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.wave-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center}
+.wave-svg{width:100%;height:50px;margin:6px 0}
+.wc-name{font-weight:700;font-size:13px;margin-bottom:3px}
+.wc-desc{font-size:11px;color:var(--muted);line-height:1.4}
+
+/* OPTICS BOX */
+.optics-box{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px;margin-bottom:16px}
+.optics-box h3{font-size:12px;font-weight:700;color:var(--accent2);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.optics-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.og-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:11px;text-align:center}
+.og-icon{font-size:22px;margin-bottom:5px}
+.og-name{font-size:12px;font-weight:700;margin-bottom:3px}
+.og-desc{font-size:10px;color:var(--muted);line-height:1.4}
+.refraction-rule{background:rgba(118,255,122,.08);border:1px solid rgba(118,255,122,.25);border-radius:10px;padding:11px 14px;margin-top:10px;font-size:12px;color:#b0ffb3;line-height:1.6}
+
+/* CARDS */
+.stats-row{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 16px;flex:1;min-width:80px;text-align:center}
+.stat-val{font-size:24px;font-weight:900;font-family:'JetBrains Mono',monospace}
+.stat-lbl{font-size:10px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:1px}
+.deck-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:16px 0 8px}
+.card-wrap{perspective:1000px;margin-bottom:14px}
+.card-inner{position:relative;width:100%;min-height:155px;transform-style:preserve-3d;transition:transform .5s ease;cursor:pointer}
+.card-inner.flipped{transform:rotateY(180deg)}
+.card-front,.card-back{position:absolute;top:0;left:0;width:100%;min-height:155px;backface-visibility:hidden;border-radius:14px;padding:20px;display:flex;flex-direction:column;justify-content:center}
+.card-front{background:var(--card);border:1px solid var(--border)}
+.card-back{background:linear-gradient(135deg,#02151f,#042535);border:1px solid var(--accent);transform:rotateY(180deg)}
+.card-tag{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.card-q{font-size:16px;font-weight:700;line-height:1.3}
+.card-a{font-size:13px;line-height:1.65;color:#a0e8f8}
+.card-hint{font-size:11px;color:var(--muted);margin-top:4px}
+.btn-row{display:flex;gap:8px;margin-top:8px}
+.btn-know{flex:1;background:rgba(118,255,122,.12);border:1px solid var(--accent2);color:var(--accent2);padding:9px;border-radius:9px;cursor:pointer;font-family:'Outfit',sans-serif;font-weight:700;font-size:13px;transition:all .2s}
+.btn-know:hover{background:rgba(118,255,122,.25)}
+.btn-again{flex:1;background:rgba(255,77,109,.1);border:1px solid var(--bad);color:var(--bad);padding:9px;border-radius:9px;cursor:pointer;font-family:'Outfit',sans-serif;font-weight:700;font-size:13px}
+.card-nav{display:flex;align-items:center;justify-content:space-between;margin-top:6px;font-size:12px;color:var(--muted)}
+.btn-nav{background:var(--card);border:1px solid var(--border);color:var(--text);padding:6px 14px;border-radius:8px;cursor:pointer;font-family:'Outfit',sans-serif;font-size:12px}
+
+/* FÖRSTÅELSE */
+.fq-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:12px}
+.fq-num{font-size:11px;font-weight:700;letter-spacing:1px;color:var(--muted);text-transform:uppercase;margin-bottom:5px}
+.fq-q{font-weight:700;font-size:14px;line-height:1.5;margin-bottom:10px}
+.fq-opts{display:flex;flex-direction:column;gap:5px}
+.fq-opt{background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:9px 13px;cursor:pointer;font-size:13px;text-align:left;color:var(--text);font-family:'Outfit',sans-serif;transition:all .2s;width:100%}
+.fq-opt:hover:not(:disabled){border-color:var(--accent);background:rgba(0,229,255,.06)}
+.fq-opt.correct{background:rgba(118,255,122,.12);border-color:var(--accent2);color:var(--accent2)}
+.fq-opt.wrong{background:rgba(255,77,109,.1);border-color:var(--bad);color:var(--bad)}
+.fq-feedback{margin-top:8px;padding:9px 13px;border-radius:9px;font-size:12px;line-height:1.5;display:none}
+.fq-feedback.show{display:block}
+.fq-feedback.ok{background:rgba(118,255,122,.08);border-left:3px solid var(--accent2);color:#b0ffb3}
+.fq-feedback.err{background:rgba(255,77,109,.08);border-left:3px solid var(--bad);color:#ffb3c1}
+
+/* RESONEMANG / NP */
+.res-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:14px}
+.res-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 8px;border-radius:4px;margin-bottom:8px}
+.res-badge.np{background:rgba(0,229,255,.15);color:var(--accent)}
+.res-badge.res{background:rgba(255,179,71,.15);color:var(--accent3)}
+.res-q{font-weight:700;font-size:14px;line-height:1.5;margin-bottom:10px}
+.res-context{background:var(--surface);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:10px 13px;margin-bottom:12px;font-size:12px;color:#a0d8f0;line-height:1.6}
+.res-steps{display:flex;flex-direction:column;gap:7px;margin-bottom:10px}
+.res-step{background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:10px 13px}
+.res-step label{font-size:11px;font-weight:700;color:var(--muted);display:block;margin-bottom:5px;letter-spacing:1px;text-transform:uppercase}
+.res-textarea{width:100%;background:transparent;border:none;color:var(--text);font-family:'Outfit',sans-serif;font-size:13px;resize:none;outline:none;min-height:55px;line-height:1.6}
+.btn-model{background:transparent;border:1px solid var(--accent);color:var(--accent);padding:7px 15px;border-radius:8px;cursor:pointer;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;transition:all .2s}
+.btn-model:hover{background:rgba(0,229,255,.08)}
+.model-ans{margin-top:10px;background:rgba(0,229,255,.04);border:1px solid rgba(0,229,255,.18);border-radius:9px;padding:13px;font-size:12px;line-height:1.6;display:none}
+.model-ans.show{display:block}
+.model-ans h4{color:var(--accent);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:7px}
+.grade-row{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
+.grade{font-size:11px;font-weight:700;padding:3px 9px;border-radius:5px}
+.grade-e{background:rgba(0,229,255,.15);color:var(--accent)}
+.grade-c{background:rgba(255,179,71,.15);color:var(--accent3)}
+.grade-a{background:rgba(118,255,122,.15);color:var(--accent2)}
+
+.np-card{background:linear-gradient(135deg,#020e16,#041825);border:1px solid rgba(0,229,255,.3);border-radius:14px;padding:20px;margin-bottom:14px}
+.np-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.np-logo{background:var(--accent);color:#000;font-weight:900;font-size:11px;padding:4px 8px;border-radius:5px;letter-spacing:1px}
+.np-year{color:var(--muted);font-size:12px}
+.np-q{font-weight:700;font-size:14px;line-height:1.5;margin-bottom:10px}
+
+@media(max-width:480px){.ref-grid{grid-template-columns:1fr}.wave-compare{grid-template-columns:1fr}.optics-grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="badge">Kapitel 6 av 9</div>
+  <h1>Ljud <span>&amp; Ljus</span></h1>
+  <p class="subtitle">Frekvens · Decibel · Ultraljud · Reflektion · Brytning · Linser · Spektrum · EM-strålning</p>
+</div>
+
+<div class="progress-bar">
+  <div class="prog-label"><span>Din framgång</span><span id="progressText">0 av 50 klara</span></div>
+  <div class="prog-track"><div class="prog-fill" id="mainProgress"></div></div>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('begrepp',event)">🃏 Begrepp</button>
+  <button class="tab-btn" onclick="showTab('forstaaelse',event)">💡 Förståelse</button>
+  <button class="tab-btn" onclick="showTab('resonemang',event)">🧠 Resonemang</button>
+  <button class="tab-btn" onclick="showTab('np',event)">📋 NP-Frågor</button>
+</div>
+
+<!-- ===== BEGREPP ===== -->
+<div class="section active" id="sec-begrepp">
+  <div class="stats-row" style="margin-top:14px">
+    <div class="stat"><div class="stat-val" id="cGood" style="color:var(--accent2)">0</div><div class="stat-lbl">Kan</div></div>
+    <div class="stat"><div class="stat-val" id="cLeft" style="color:var(--accent)">26</div><div class="stat-lbl">Kvar</div></div>
+    <div class="stat"><div class="stat-val" id="cPct" style="color:var(--accent3)">0%</div><div class="stat-lbl">Klart</div></div>
+  </div>
+
+  <!-- LJUD REFERENS -->
+  <div class="wave-box">
+    <h3>🔊 Ljud — vågor &amp; frekvens</h3>
+    <div class="wave-compare">
+      <div class="wave-card">
+        <div class="wc-name" style="color:var(--accent)">Hög ton (hög frekvens)</div>
+        <svg class="wave-svg" viewBox="0 0 200 50"><path d="M0,25 Q12,5 25,25 Q37,45 50,25 Q62,5 75,25 Q87,45 100,25 Q112,5 125,25 Q137,45 150,25 Q162,5 175,25 Q187,45 200,25" fill="none" stroke="#00e5ff" stroke-width="2"/></svg>
+        <div class="wc-desc">Kort våglängd · Många svängningar/s<br>Ex: flöjt, fågelsång, barnröst</div>
+      </div>
+      <div class="wave-card">
+        <div class="wc-name" style="color:var(--accent3)">Låg ton (låg frekvens)</div>
+        <svg class="wave-svg" viewBox="0 0 200 50"><path d="M0,25 Q25,2 50,25 Q75,48 100,25 Q125,2 150,25 Q175,48 200,25" fill="none" stroke="#ffb347" stroke-width="2"/></svg>
+        <div class="wc-desc">Lång våglängd · Få svängningar/s<br>Ex: basgitarr, åska, mansröst</div>
+      </div>
+    </div>
+    <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:5px;font-size:12px">
+      <span class="chip">Hörbara: 20–20 000 Hz</span>
+      <span class="chip">Infraljud: &lt;20 Hz</span>
+      <span class="chip">Ultraljud: &gt;20 000 Hz</span>
+      <span class="chip">Ljud kräver medium (ej vakuum)</span>
+      <span class="chip">Ljud i luft ≈ 340 m/s</span>
+    </div>
+  </div>
+
+  <!-- LJUS REFERENS -->
+  <div class="optics-box">
+    <h3>💡 Ljus — optik &amp; linser</h3>
+    <div class="optics-grid">
+      <div class="og-item">
+        <div class="og-icon">🔲</div>
+        <div class="og-name">Plan spegel</div>
+        <div class="og-desc">Infallsvinkel = reflektionsvinkel. Virtuell, upprätt bild.</div>
+      </div>
+      <div class="og-item">
+        <div class="og-icon">🥣</div>
+        <div class="og-name">Konkav spegel</div>
+        <div class="og-desc">Samlar ljus mot brännpunkt. Ex: strålkastare, teleskop.</div>
+      </div>
+      <div class="og-item">
+        <div class="og-icon">🔮</div>
+        <div class="og-name">Konvex spegel</div>
+        <div class="og-desc">Sprider ljus. Bred överblick. Ex: butiksspegel, sidospegel.</div>
+      </div>
+      <div class="og-item">
+        <div class="og-icon">🔍</div>
+        <div class="og-name">Konvex lins</div>
+        <div class="og-desc">Samlar (konvergerar) ljus. Förstoring. Ex: förstoringsglas, farsynthet.</div>
+      </div>
+      <div class="og-item">
+        <div class="og-icon">👓</div>
+        <div class="og-name">Konkav lins</div>
+        <div class="og-desc">Sprider (divergerar) ljus. Förminskar. Ex: glasögon för närsynthet.</div>
+      </div>
+      <div class="og-item">
+        <div class="og-icon">🌈</div>
+        <div class="og-name">Spektrum</div>
+        <div class="og-desc">Vitt ljus bryts i prisma → regnbågens färger. Varje färg = olika våglängd.</div>
+      </div>
+    </div>
+    <div class="refraction-rule">
+      <strong>Reflektionslagen:</strong> infallsvinkel = reflektionsvinkel (mätt från normalen)<br>
+      <strong>Brytning:</strong> ljus byter riktning när det passerar gräns mellan medier (t.ex. luft→glas). Ljuset böjs mot normalen i tätare medium.<br>
+      <strong>Totalreflektion:</strong> om infallsvinkeln överstiger kritiska vinkeln → allt ljus reflekteras. Princip för fiberoptik.
+    </div>
+  </div>
+
+  <!-- EM SPEKTRUM -->
+  <div class="ref-box">
+    <h3 style="color:var(--accent3)">⚡ Elektromagnetisk strålning — spektrum</h3>
+    <div style="display:flex;gap:3px;flex-wrap:nowrap;overflow-x:auto;padding:4px 0;margin-bottom:8px">
+      <div style="background:#6600cc;border-radius:6px;padding:7px 8px;text-align:center;min-width:70px;flex:1">
+        <div style="font-size:10px;font-weight:700;color:#d4a0ff">Gammastr.</div>
+        <div style="font-size:9px;color:#888;margin-top:2px">Kortast vågl.</div>
+      </div>
+      <div style="background:#004488;border-radius:6px;padding:7px 8px;text-align:center;min-width:70px;flex:1">
+        <div style="font-size:10px;font-weight:700;color:#88ccff">Röntgen</div>
+        <div style="font-size:9px;color:#888;margin-top:2px">Genomlyser</div>
+      </div>
+      <div style="background:#003355;border-radius:6px;padding:7px 8px;text-align:center;min-width:70px;flex:1">
+        <div style="font-size:10px;font-weight:700;color:#aaddff">UV</div>
+        <div style="font-size:9px;color:#888;margin-top:2px">Solbränna</div>
+      </div>
+      <div style="background:linear-gradient(135deg,#220044,#004400);border-radius:6px;padding:7px 8px;text-align:center;min-width:80px;flex:1.5">
+        <div style="font-size:10px;font-weight:700;color:#fff">Synligt ljus</div>
+        <div style="font-size:9px;color:#ccc;margin-top:2px">400–700 nm</div>
+      </div>
+      <div style="background:#331100;border-radius:6px;padding:7px 8px;text-align:center;min-width:70px;flex:1">
+        <div style="font-size:10px;font-weight:700;color:#ffaa66">IR</div>
+        <div style="font-size:9px;color:#888;margin-top:2px">Värmestr.</div>
+      </div>
+      <div style="background:#221500;border-radius:6px;padding:7px 8px;text-align:center;min-width:70px;flex:1">
+        <div style="font-size:10px;font-weight:700;color:#ffdd99">Mikrovågor</div>
+        <div style="font-size:9px;color:#888;margin-top:2px">Radar, ugn</div>
+      </div>
+      <div style="background:#1a1400;border-radius:6px;padding:7px 8px;text-align:center;min-width:70px;flex:1">
+        <div style="font-size:10px;font-weight:700;color:#ffe566">Radiovågor</div>
+        <div style="font-size:9px;color:#888;margin-top:2px">Längst vågl.</div>
+      </div>
+    </div>
+    <p style="font-size:11px;color:var(--muted)">Alla EM-vågor rör sig med ljusets hastighet i vakuum (c ≈ 300 000 km/s) och behöver inget medium.</p>
+  </div>
+
+  <div class="deck-label">Begrepp — klicka för att vända</div>
+  <div id="cardArea"></div>
+  <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:4px">Tryck på kortet för att se svaret</div>
+  <div class="card-nav">
+    <button class="btn-nav" onclick="prevCard()">← Föregående</button>
+    <span id="cardCounter" style="font-family:'JetBrains Mono',monospace;font-size:12px">1 / 26</span>
+    <button class="btn-nav" onclick="nextCard()">Nästa →</button>
+  </div>
+</div>
+
+<!-- ===== FÖRSTÅELSE ===== -->
+<div class="section" id="sec-forstaaelse">
+  <div class="stats-row" style="margin-top:14px">
+    <div class="stat"><div class="stat-val" id="fScore" style="color:var(--accent2)">0</div><div class="stat-lbl">Rätt</div></div>
+    <div class="stat"><div class="stat-val" id="fPct" style="color:var(--accent3)">0%</div><div class="stat-lbl">Klart</div></div>
+  </div>
+
+  <div class="fq-card"><div class="fq-num">Fråga 1 — Ljud</div>
+    <div class="fq-q">Varför hörs inget ljud i rymden trots att det sker enorma explosioner?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAns(this,false,'F1')">Explosionerna är för långt borta</button>
+      <button class="fq-opt" onclick="fAns(this,true,'F1')">Ljud är en tryckvåg som kräver materia (medium) — rymden är vakuum</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F1')">Ljudvågor rör sig för långsamt för att nå oss</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F1')">Rymdens temperatur stoppar ljudvågor</button>
+    </div>
+    <div class="fq-feedback" id="fb-F1"></div>
+  </div>
+
+  <div class="fq-card"><div class="fq-num">Fråga 2 — Ljud</div>
+    <div class="fq-q">Luis blåser i en liten och en stor glasflaska. Den lilla ger en ljus ton. Varför?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAns(this,false,'F2')">Glaset är tunnare i den lilla flaskan</button>
+      <button class="fq-opt" onclick="fAns(this,true,'F2')">Kortare luftkolumn → kortare våglängd → högre frekvens → ljusare ton</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F2')">Den lilla flaskan rymmer mer luft per ytenhet</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F2')">Luften i den lilla flaskan är varmare och rör sig snabbare</button>
+    </div>
+    <div class="fq-feedback" id="fb-F2"></div>
+  </div>
+
+  <div class="fq-card"><div class="fq-num">Fråga 3 — Ljud</div>
+    <div class="fq-q">Vad är ultraljud och ge ett användningsområde?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAns(this,false,'F3')">Ljud under 20 Hz — används i subwoofrar</button>
+      <button class="fq-opt" onclick="fAns(this,true,'F3')">Ljud över 20 000 Hz (ohörbart) — används i fosterdiagnostik och ekolod</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F3')">Ljud som rör sig snabbare än 340 m/s</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F3')">Mycket högt ljud (>120 dB) som kan skada hörseln</button>
+    </div>
+    <div class="fq-feedback" id="fb-F3"></div>
+  </div>
+
+  <div class="fq-card"><div class="fq-num">Fråga 4 — Ljud</div>
+    <div class="fq-q">Vad mäter decibel (dB)?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAns(this,false,'F4')">Tonens frekvens (höjd)</button>
+      <button class="fq-opt" onclick="fAns(this,true,'F4')">Ljudets styrka/intensitet — amplitudens storlek. 0 dB = hörtröskel, 120 dB = smärtgräns.</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F4')">Antal svängningar per sekund</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F4')">Ljudets hastighet i olika medier</button>
+    </div>
+    <div class="fq-feedback" id="fb-F4"></div>
+  </div>
+
+  <div class="fq-card"><div class="fq-num">Fråga 5 — Ljus</div>
+    <div class="fq-q">Infallsvinkeln mot en plan spegel är 35°. Hur stor är reflektionsvinkeln?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAns(this,false,'F5')">70°</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F5')">55°</button>
+      <button class="fq-opt" onclick="fAns(this,true,'F5')">35° — infallsvinkel = reflektionsvinkel (alltid, mätt från normalen)</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F5')">90°</button>
+    </div>
+    <div class="fq-feedback" id="fb-F5"></div>
+  </div>
+
+  <div class="fq-card"><div class="fq-num">Fråga 6 — Ljus</div>
+    <div class="fq-q">En konvex lins används som förstoringsglas. Vilken typ av lins behövs för en närsynthet-person?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAns(this,false,'F6')">Konvex lins — den förstärker bilden ytterligare</button>
+      <button class="fq-opt" onclick="fAns(this,true,'F6')">Konkav lins — den sprider ljuset så fokus hamnar på näthinnan istället för framför</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F6')">Plan spegel — den korrigerar vinkeln</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F6')">Konvex spegel — den ger en bredare syn</button>
+    </div>
+    <div class="fq-feedback" id="fb-F6"></div>
+  </div>
+
+  <div class="fq-card"><div class="fq-num">Fråga 7 — Ljus</div>
+    <div class="fq-q">Varför verkar ett sugrör "bruten" när det sticks ner i ett glas vatten?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAns(this,false,'F7')">Vattnet trycker böjer ljuset mekaniskt</button>
+      <button class="fq-opt" onclick="fAns(this,true,'F7')">Ljuset bryts (ändrar riktning) när det passerar från vatten till luft — olika optisk täthet</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F7')">Röret reflekteras av vattenytan</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F7')">Vattnet absorberar en del av ljuset från röret</button>
+    </div>
+    <div class="fq-feedback" id="fb-F7"></div>
+  </div>
+
+  <div class="fq-card"><div class="fq-num">Fråga 8 — Ljus</div>
+    <div class="fq-q">Hur fungerar fiberoptik?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAns(this,false,'F8')">Elektriska signaler leds längs glasfibrer</button>
+      <button class="fq-opt" onclick="fAns(this,true,'F8')">Ljus studsar fram via totalreflektion längs insidan av glasfibern — inget läcker ut</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F8')">Ljuset bryts kontinuerligt av glasfiberns krökning</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F8')">Fibern är fylld med flytande glas som leder ljuset</button>
+    </div>
+    <div class="fq-feedback" id="fb-F8"></div>
+  </div>
+
+  <div class="fq-card"><div class="fq-num">Fråga 9 — Ljus</div>
+    <div class="fq-q">Varför ser vi regnbågen efter ett regn med sol?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAns(this,false,'F9')">Regndropparna reflekterar solens färger direkt</button>
+      <button class="fq-opt" onclick="fAns(this,true,'F9')">Vitt solljus bryts och dispergeras i regndropparna — olika våglängder bryts olika mycket → spektrum</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F9')">Molnen filtrerar bort alla färger utom de synliga</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F9')">Luftens temperaturskiktning separerar färgerna</button>
+    </div>
+    <div class="fq-feedback" id="fb-F9"></div>
+  </div>
+
+  <div class="fq-card"><div class="fq-num">Fråga 10 — EM-strålning</div>
+    <div class="fq-q">Varför kan ljusvågor nå oss från solen men inte ljudvågor?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAns(this,false,'F10')">Ljusvågor rör sig snabbare och hinner fram</button>
+      <button class="fq-opt" onclick="fAns(this,true,'F10')">EM-vågor (ljus) behöver inget medium — färdas genom vakuum. Ljud är tryckvågor och kräver materia.</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F10')">Solen producerar inga ljudvågor</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F10')">Atmosfären blockerar alla ljudvågor utifrån</button>
+    </div>
+    <div class="fq-feedback" id="fb-F10"></div>
+  </div>
+
+  <div class="fq-card"><div class="fq-num">Fråga 11 — Ljus</div>
+    <div class="fq-q">Konkav lins vs. konvex lins — vilken samlar ljus till en brännpunkt?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAns(this,false,'F11')">Konkav lins — den böjer ljuset inåt</button>
+      <button class="fq-opt" onclick="fAns(this,true,'F11')">Konvex lins — den konvergerar (samlar) parallella ljusstrålar till brännpunkten</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F11')">Båda samlar ljus men på olika avstånd</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F11')">Plan lins — den håller strålarna parallella</button>
+    </div>
+    <div class="fq-feedback" id="fb-F11"></div>
+  </div>
+
+  <div class="fq-card"><div class="fq-num">Fråga 12 — Ljud &amp; ljus</div>
+    <div class="fq-q">Hur mäter man avstånd till månen? Och havsbottnen?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAns(this,false,'F12')">Månen: ljudvågor · Hav: ljusvågor</button>
+      <button class="fq-opt" onclick="fAns(this,true,'F12')">Månen: ljusvågor (vakuum, EM-strålning) · Hav: ljudvågor/ekolod (vatten är medium för ljud)</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F12')">Båda: radar (radiovågor)</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F12')">Månen: radiovågor · Hav: infraljud</button>
+    </div>
+    <div class="fq-feedback" id="fb-F12"></div>
+  </div>
+</div>
+
+<!-- ===== RESONEMANG ===== -->
+<div class="section" id="sec-resonemang">
+
+  <div class="res-card">
+    <span class="res-badge np">NP 2016</span>
+    <div class="res-q">🔬 Ultraljud — möjlighet och risk</div>
+    <div class="res-context">Ultraljud (frekvenser över 20 000 Hz) används till fosterdiagnostik och ekolod. Uppge en möjlighet och en risk med ett av användningsområdena, och förklara hur de påverkar människors levnadsvillkor.</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <label>Välj ett användningsområde och beskriv möjligheten</label>
+        <textarea class="res-textarea" placeholder="Ex: Fosterdiagnostik — vad kan man se/göra?"></textarea>
+      </div>
+      <div class="res-step">
+        <label>Beskriv en risk med samma användning</label>
+        <textarea class="res-textarea" placeholder="Vad kan gå fel eller ha negativa konsekvenser?"></textarea>
+      </div>
+      <div class="res-step">
+        <label>Hur påverkar möjligheten/risken levnadsvillkoren?</label>
+        <textarea class="res-textarea" placeholder="Koppla till samhälle, hälsa, ekonomi..."></textarea>
+      </div>
+    </div>
+    <button class="btn-model" onclick="showModel('ultra')">Visa modellsvar</button>
+    <div class="model-ans" id="ma-ultra">
+      <h4>✅ Modellsvar</h4>
+      <p><strong>Fosterdiagnostik:</strong><br>
+      Möjlighet: Ultraljud kan avbilda foster utan joniserande strålning → läkare kan se om fostret utvecklas normalt, identifiera missbildningar tidigt och planera förlossning. Förbättrar levnadsvillkor: fler barn föds friska, komplikationer förebyggs, ger trygghet för föräldrar.<br><br>
+      Risk: Felaktiga diagnoser (falskt alarm) → onödig oro eller onödiga ingrepp. Kan leda till etiska dilemman (selektiv abort). Eller: om tekniken missbrukas för könsselektion i vissa kulturer → påverkar samhällsstrukturen negativt.</p>
+      <p style="margin-top:6px"><strong>Ekolod:</strong><br>
+      Möjlighet: Mäter djup och hittar fiskstim → effektivare fiske → mer mat, bättre ekonomi för fiskare.<br>
+      Risk: Ultraljudet kan störa marina djur (valar, delfiner) som orienterar sig med ekolokalisering → påverkar deras levnadsvillkor och ekosystemet.</p>
+      <div class="grade-row">
+        <span class="grade grade-e">E: En möjlighet och en risk nämns</span>
+        <span class="grade grade-c">C: Kopplar till levnadsvillkor</span>
+        <span class="grade grade-a">A: Tydlig kedja i flera led, båda perspektiv välmotiverade</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="res-card">
+    <span class="res-badge np">NP 2018</span>
+    <div class="res-q">🌙 Ljusvågor till månen — ljudvågor till havsbotten?</div>
+    <div class="res-context">För att mäta stora avstånd används antingen ljusvågor eller ljudvågor. Förklara vilket som används till månen respektive havsbotten och varför.</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <label>Månen — ljusvågor eller ljudvågor? Varför?</label>
+        <textarea class="res-textarea" placeholder="Tänk på vad som finns (eller inte finns) mellan Jorden och Månen..."></textarea>
+      </div>
+      <div class="res-step">
+        <label>Havsbotten — ljusvågor eller ljudvågor? Varför?</label>
+        <textarea class="res-textarea" placeholder="Vad är skillnaden i medium här?"></textarea>
+      </div>
+    </div>
+    <button class="btn-model" onclick="showModel('manen')">Visa modellsvar</button>
+    <div class="model-ans" id="ma-manen">
+      <h4>✅ Modellsvar (NP 2018)</h4>
+      <p><strong>Månen → Ljusvågor (laserpulser/radar):</strong> Rymden mellan Jorden och Månen är vakuum — inget material finns. Ljud är mekaniska tryckvågor och kräver ett medium för att fortplantas. EM-strålning (ljus, radar) behöver inget medium och kan resa genom vakuum → enda alternativet.</p>
+      <p style="margin-top:6px"><strong>Havsbotten → Ljudvågor (ekolod/sonar):</strong> Havet är fyllt med vatten — ett utmärkt medium för ljud (ljud rör sig ca 1 500 m/s i vatten, snabbare än i luft). Ljuset däremot absorberas och sprids snabbt i vatten på stora djup → fungerar inte på långa avstånd. Ekolod: sänder ut ultraljudspuls, mäter tid till eko → beräknar djup.</p>
+      <div class="grade-row">
+        <span class="grade grade-e">E: Rätt val för respektive</span>
+        <span class="grade grade-c">C: Motiverar med vakuum resp. vatten</span>
+        <span class="grade grade-a">A: Fullständig förklaring: EM behöver ej medium / ljud kräver medium + konsekvens</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="res-card">
+    <span class="res-badge np">NP 2017</span>
+    <div class="res-q">🚲 Cykelbelysning — vilken lins ger bredast ljussken?</div>
+    <div class="res-context">En cykelbelysning finns med konvex lins, konkav lins eller plan lins. Beroende på vilken lins som används blir ljusskenet framför cykeln olika brett.</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <label>a) Hypotes — vilken lins ger bredast ljussken? Motivera med optik.</label>
+        <textarea class="res-textarea" placeholder="Konvex samlar, konkav sprider... vilken ger bredast sken?"></textarea>
+      </div>
+      <div class="res-step">
+        <label>b) Beskriv hur undersökningen kan genomföras steg för steg</label>
+        <textarea class="res-textarea" placeholder="Material, metod, vad hålls konstant, hur mäts resultatet?" style="min-height:80px"></textarea>
+      </div>
+    </div>
+    <button class="btn-model" onclick="showModel('cykel')">Visa modellsvar</button>
+    <div class="model-ans" id="ma-cykel">
+      <h4>✅ Modellsvar (NP 2017)</h4>
+      <p><strong>a) Hypotes:</strong> Konkav lins ger bredast ljussken. En konkav lins divergerar (sprider) ljusstrålar utåt → ljusskenet sprids brett. En konvex lins konvergerar ljuset mot en brännpunkt → smalt, koncentrerat sken. Plan lins påverkar inte ljusets riktning nämnvärt.</p>
+      <p style="margin-top:6px"><strong>b) Metod:</strong>
+      1. Montera en lampa (ljuskälla) i cykelbelysningens hållare.<br>
+      2. Sätt i konvex lins, tänd lampan, mät bredden av ljusskenet på en vägg på 1 meters avstånd (markera kanterna med tejp).<br>
+      3. Byt till konkav lins, upprepa mätningen på exakt samma avstånd.<br>
+      4. Byt till plan lins, upprepa.<br>
+      Kontrollvariabler: samma lampa, samma avstånd, samma mätkategori. Avläsning: bredaste markeringen = bredast sken.</p>
+      <div class="grade-row">
+        <span class="grade grade-e">E: Konkav nämns, enkel metod</span>
+        <span class="grade grade-c">C: Motiverar med divergens/konvergens</span>
+        <span class="grade grade-a">A: Fullständig hypotes + systematisk metod med kontrollvariabler</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="res-card">
+    <span class="res-badge res">Resonemang</span>
+    <div class="res-q">👁️ Närsynthet vs. översynthet — förklara och rätta med rätt lins</div>
+    <div class="res-context">Mattias ser suddigt på långt håll (närsynthet). Fatima ser suddigt på nära håll (översynthet). Båda behöver glasögon.</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <label>Förklara vad som händer i ögat vid närsynthet</label>
+        <textarea class="res-textarea" placeholder="Var hamnar fokus? Framför eller bakom näthinnan?"></textarea>
+      </div>
+      <div class="res-step">
+        <label>Vilken lins behöver Mattias, vilken behöver Fatima?</label>
+        <textarea class="res-textarea" placeholder="Konkav eller konvex — och varför för var och en?"></textarea>
+      </div>
+    </div>
+    <button class="btn-model" onclick="showModel('ogon')">Visa modellsvar</button>
+    <div class="model-ans" id="ma-ogon">
+      <h4>✅ Modellsvar</h4>
+      <p><strong>Närsynthet (Mattias):</strong> Ögat är för långt eller linsen för kraftig → ljus från avlägsna föremål fokuseras framför näthinnan → suddigt på långt håll.<br>Åtgärd: konkav (spridande) lins → sprider ljuset lite innan det träffar ögat → fokus flyttas bakåt till näthinnan.</p>
+      <p style="margin-top:6px"><strong>Översynthet (Fatima):</strong> Ögat är för kort eller linsen för svag → ljus från nära föremål fokuseras bakom näthinnan → suddigt på nära håll.<br>Åtgärd: konvex (samlande) lins → samlar ljuset lite extra → fokus flyttas framåt till näthinnan.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== NP-FRÅGOR ===== -->
+<div class="section" id="sec-np">
+  <div style="margin-top:14px;margin-bottom:14px;background:rgba(0,229,255,.06);border:1px solid rgba(0,229,255,.2);border-radius:11px;padding:12px;font-size:13px;line-height:1.6;color:#a0d8f0">
+    <strong>🎯 Riktiga NP-frågor</strong> från 2016, 2017 och 2018 — motivera alltid med begrepp!
+  </div>
+
+  <div class="np-card">
+    <div class="np-header"><span class="np-logo">NP 2016</span><span class="np-year">Delprov A1 · Fråga 11</span></div>
+    <div class="np-q">Ultraljud är ljud som har frekvenser över 20 000 Hz. Utgå från fosterdiagnostik eller ekolod — uppge en möjlighet och en risk, och förklara hur de påverkar människors levnadsvillkor.</div>
+    <div class="res-steps" style="margin-top:10px">
+      <div class="res-step"><label>Ditt svar</label>
+        <textarea class="res-textarea" placeholder="Möjlighet: ... Risk: ... Levnadsvillkor: ..." style="min-height:90px"></textarea>
+      </div>
+    </div>
+    <button class="btn-model" onclick="showModel('np1')">Visa exempelsvar (E/C/A)</button>
+    <div class="model-ans" id="ma-np1">
+      <h4>✅ Exempelsvar</h4>
+      <p><strong>E:</strong> "Fosterdiagnostik: man kan se om barnet är friskt (möjlighet). Risk: man kanske oroar sig i onödan."</p>
+      <p style="margin-top:6px"><strong>C:</strong> "Möjlighet: ultraljud visar fostrets organ utan skadlig strålning → läkare kan tidigt se om något är fel → bättre levnadsvillkor (fler friska födslar). Risk: feldiagnos → onödig oro eller fel behandlingsbeslut."</p>
+      <p style="margin-top:6px"><strong>A:</strong> Resonemang i minst 2 led för varje aspekt. Ex: "Ekolod möjliggör att mäta havsbottens topografi → fiskebåtar hittar fiskstim effektivare → mer mat produceras → förbättrar levnadsvillkor i fiskeberoende samhällen. Risk: ultraljud kan störa valar som navigerar med ekolokalisering → de simmar vilse → kan stranda → biologisk mångfald hotas → påverkar marina ekosystem."</p>
+    </div>
+  </div>
+
+  <div class="np-card">
+    <div class="np-header"><span class="np-logo">NP 2017</span><span class="np-year">Delprov A1 · Fråga 5</span></div>
+    <div class="np-q">Luis blåser i två tomma glasflaskor med samma form men med olika storlek. Det blir en ljus ton i den mindre flaskan och en mörk ton i den större. Motivera varför med kunskaper om våglängd eller frekvens.</div>
+    <div class="fq-opts" style="margin-top:8px">
+      <button class="fq-opt" onclick="fAns(this,false,'NP2')">A. Större flaska → kortare luftkolumn → högre frekvens → ljusare ton</button>
+      <button class="fq-opt" onclick="fAns(this,true,'NP2')">B. Mindre flaska → kortare luftkolumn → kortare våglängd → högre frekvens → ljusare ton</button>
+      <button class="fq-opt" onclick="fAns(this,false,'NP2')">C. Glaset vibrerar snabbare i den lilla flaskan</button>
+      <button class="fq-opt" onclick="fAns(this,false,'NP2')">D. Luften komprimeras mer i den lilla flaskan → högre tryck → ljusare ton</button>
+    </div>
+    <div class="fq-feedback" id="fb-NP2"></div>
+  </div>
+
+  <div class="np-card">
+    <div class="np-header"><span class="np-logo">NP 2018</span><span class="np-year">Delprov A1 · Fråga 9</span></div>
+    <div class="np-q">För att mäta stora avstånd kan ljusvågor eller ljudvågor användas. Vilket används till Månen och vilket till havsbotten? Förklara varför.</div>
+    <div class="res-steps" style="margin-top:10px">
+      <div class="res-step"><label>Ditt svar</label>
+        <textarea class="res-textarea" placeholder="Månen: ... för att ... Havsbotten: ... för att ..." style="min-height:80px"></textarea>
+      </div>
+    </div>
+    <button class="btn-model" onclick="showModel('np3')">Visa modellsvar</button>
+    <div class="model-ans" id="ma-np3">
+      <h4>✅ Modellsvar</h4>
+      <p><strong>Månen:</strong> Ljusvågor (laserpulser). Rymden är vakuum — ljud kräver ett medium och kan inte fortplantas. EM-strålning (ljus) behöver inget medium.</p>
+      <p style="margin-top:6px"><strong>Havsbotten:</strong> Ljudvågor (ekolod/sonar). Havsvatten är ett bra medium för ljud (ca 1 500 m/s). Ljuset absorberas snabbt av vatten på djupa avstånd och fungerar inte.</p>
+    </div>
+  </div>
+
+  <div class="np-card">
+    <div class="np-header"><span class="np-logo">NP 2017</span><span class="np-year">Delprov A3 · Fråga 16</span></div>
+    <div class="np-q">Vilken cykelbelysning ger bredast ljussken: konvex, konkav eller plan lins? Skriv en hypotes och en undersökningsmetod.</div>
+    <div class="res-steps" style="margin-top:10px">
+      <div class="res-step"><label>a) Hypotes med motivering</label>
+        <textarea class="res-textarea" placeholder="Vilken lins och varför? Koppla till konvergens/divergens..."></textarea>
+      </div>
+      <div class="res-step"><label>b) Undersökningsmetod steg för steg</label>
+        <textarea class="res-textarea" placeholder="Material, utförande, kontrollvariabler, avläsning..." style="min-height:80px"></textarea>
+      </div>
+    </div>
+    <button class="btn-model" onclick="showModel('np4')">Visa modellsvar</button>
+    <div class="model-ans" id="ma-np4">
+      <h4>✅ Modellsvar</h4>
+      <p><strong>a) Hypotes:</strong> Konkav lins ger bredast sken. Den divergerar (sprider) ljuset utåt. Konvex lins konvergerar mot brännpunkt → smalt. Plan lins påverkar knappt riktningen.</p>
+      <p style="margin-top:6px"><strong>b) Metod:</strong> 1) Montera identisk lampa i cykellyktans hållare. 2) Sätt i konvex lins, tänd, mät ljusknets bredd på vägg i 1 m avstånd. 3) Byt till konkav lins, mät. 4) Byt till plan, mät. Kontrollvariabler: samma lampa, avstånd, mätpunkt. Bredast markering = bredast sken.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const STORAGE_KEY = 'fysik_ljud_ljus';
+const quizItems = Array(16).fill(null);
+const allCards=[
+  // LJUD
+  {tag:'Ljud',q:'Vad är en ljudvåg?',a:'En mekanisk tryckvåg — molekylerna i ett medium trycks samman och sträcks ut omväxlande. Ljud kräver ett medium (luft, vatten, fasta ämnen). Sprids ej i vakuum.',hint:'Tryckvåg, kräver medium'},
+  {tag:'Ljud',q:'Vad menas med frekvens?',a:'Antal svängningar per sekund. Enhet: Hertz (Hz). Hög frekvens = hög ton. Låg frekvens = låg ton.\nHörbara: 20–20 000 Hz.',hint:'Hz = svängningar/s'},
+  {tag:'Ljud',q:'Vad är skillnaden mellan infraljud och ultraljud?',a:'Infraljud: frekvens < 20 Hz. Ohörbart. Ex: jordbävningar, elefanter.\nUltraljud: frekvens > 20 000 Hz. Ohörbart. Ex: fosterdiagnostik, ekolod, fladdermöss.',hint:'Infra = under, Ultra = över'},
+  {tag:'Ljud',q:'Vad mäter decibel (dB)?',a:'Ljudstyrka/intensitet (amplitudens storlek). Logaritmisk skala.\n0 dB = hörtröskel\n30 dB = tyst rum\n60 dB = samtal\n85 dB = skaderisk\n120 dB = smärtgräns',hint:'Styrka, inte frekvens'},
+  {tag:'Ljud',q:'Vad är eko?',a:'Reflekterat ljud. Ljudvågen studsar mot en hård yta och återvänder. Används i ekolod: tid till eko × ljudhastighet / 2 = avstånd.',hint:'Reflektion av ljud'},
+  {tag:'Ljud',q:'Hur snabbt rör sig ljud i luft?',a:'Ca 340 m/s vid rumstemperatur. I vatten: ca 1 500 m/s. I stål: ca 5 000 m/s. Ljud rör sig snabbare i tätare medium.',hint:'Luft: 340 m/s · Vatten: 1500 m/s'},
+  {tag:'Ljud',q:'Vad är buller?',a:'Oönskat eller störande ljud. Kan orsaka hörselskada vid >85 dB under lång tid. Förebyggs med hörselskydd, bullerväggar, tyst teknik.',hint:'Skadligt >85 dB'},
+  {tag:'Ljud',q:'Hur används ultraljud i ekolod?',a:'En sändare skickar ut ultraljudspulser. Pulsen reflekteras mot havsbotten och registreras. Tid × ljudhastighet / 2 = djup. Används på ubåtar, fiskebåtar, sjömätning.',hint:'Tid × 1500/2 = djup'},
+  // LJUS
+  {tag:'Ljus',q:'Vad är reflektionslagen?',a:'Infallsvinkel = reflektionsvinkel. Båda mäts från normalen (vinkelrätt mot ytan). Gäller för alla spegelreflektioner.',hint:'i = r, mätt från normalen'},
+  {tag:'Ljus',q:'Vad är brytning av ljus?',a:'Ljuset ändrar riktning när det passerar gränsen mellan två medier med olika optisk täthet (ex. luft→glas). I tätare medium bryts ljuset mot normalen.',hint:'Sugrör i vatten ser bruten ut'},
+  {tag:'Ljus',q:'Vad är totalreflektion?',a:'Sker när ljus träffar en gräns från ett tätare till ett glesare medium, och infallsvinkeln överstiger den kritiska vinkeln. Allt ljus reflekteras — inget brytes igenom.',hint:'Princip för fiberoptik'},
+  {tag:'Ljus',q:'Hur fungerar en konvex lins?',a:'Samlar (konvergerar) parallella ljusstrålar till brännpunkten. Tjockast i mitten. Ex: förstoringsglas, kameraobjektiv, ögats lins. Korrigerar översynthet.',hint:'Samlande, tjock i mitten'},
+  {tag:'Ljus',q:'Hur fungerar en konkav lins?',a:'Sprider (divergerar) ljusstrålar — strålarna böjs utåt. Tunnast i mitten. Bilden blir förminskar. Ex: glasögon för närsynthet, kikare.',hint:'Spridande, tunn i mitten'},
+  {tag:'Ljus',q:'Vad är närsynthet och hur korrigeras det?',a:'Närsynthet: ögat för långt/linsen för kraftig → fokus hamnar framför näthinnan → suddigt på avstånd.\nKorrigeras med konkav (spridande) lins.',hint:'Fokus framför näthinnan → konkav lins'},
+  {tag:'Ljus',q:'Vad är en brännpunkt?',a:'Den punkt där parallella ljusstrålar samlas efter att ha passerat en konvex lins eller reflekterats i en konkav spegel. Avståndet från linsen/spegeln = brännvidd.',hint:'Där ljuset samlas'},
+  {tag:'Ljus',q:'Vad är fiberoptik?',a:'Glasfibrer leder ljus via totalreflektion längs fiberns insida. Ljuset studsar fram utan att läcka ut. Används i internet (bredband), medicinska instrument (endoskop).',hint:'Totalreflektion längs glasfiber'},
+  {tag:'Ljus',q:'Varför uppstår en regnbåge?',a:'Vitt solljus träffar regndropparna, bryts in, reflekteras inuti droppen och bryts ut igen. Olika våglängder (färger) bryts olika mycket → spektrum (röd–violett).',hint:'Dispersion i regndropparna'},
+  {tag:'EM-strålning',q:'Vad är elektromagnetisk strålning?',a:'Energi som transporteras som vågrörelse av elektriska och magnetiska fält. Behöver inget medium. Rör sig med c ≈ 300 000 km/s i vakuum.\nEx: radiovågor, IR, synligt ljus, UV, röntgen, gammastrålar.',hint:'Behöver ej medium, hastighet = c'},
+  {tag:'EM-strålning',q:'Nämn EM-spektrumets delar i ordning',a:'Lägst frekvens → Högst frekvens:\nRadiovågor → Mikrovågor → IR → Synligt ljus → UV → Röntgen → Gammastrålar\n(Längst våglängd → Kortast våglängd)',hint:'Radio → Mikro → IR → Ljus → UV → Röntgen → Gamma'},
+  {tag:'EM-strålning',q:'Vad är fotoner?',a:'Ljuspartiklar — de minsta energipaket av elektromagnetisk strålning. Ljusets dubbelnatur: både våg och partikel (foton). Hög frekvens = hög fotonenergi.',hint:'Ljusets "korn"'},
+  {tag:'Ljus',q:'Vad är skillnaden mellan plan, konkav och konvex spegel?',a:'Plan: rak spegelyta, rak bild i samma storlek (ex: badrumssspegel).\nKonkav: ihålig, samlar ljus (ex: sminkspegel, strålkastare).\nKonvex: välvd utåt, sprider ljus, bredare synfält (ex: butiksspegel, bils sidospegel).',hint:'Plan=rak · Konkav=ihålig · Konvex=välvd'},
+  {tag:'Ljud',q:'Varför hör man dunder efter blixten?',a:'Blixt och åska sker samtidigt. Ljuset (EM) färdas nästan ögonblickligt (300 000 km/s). Ljudet (340 m/s) tar längre tid. Tidsförskjutningen × 340 = avstånd till blixten.',hint:'Ljus: 300 000 km/s · Ljud: 340 m/s'},
+  {tag:'Ljus',q:'Vad är laser?',a:'Koherent, monokromatisk (en våglängd) och kollimerad (parallell) ljusstråle. Används i: CD/DVD-läsare, kirurgi, mätning, kommunikation, streckkodsläsare.',hint:'Koherent = alla i fas'},
+  {tag:'EM-strålning',q:'Hur skiljer sig IR-strålning från synligt ljus?',a:'IR (infraröd) strålning har längre våglängd än synligt ljus → vi kan inte se den men känner den som värme. Alla varma föremål avger IR. Ex: värmekamera, fjärrkontroll.',hint:'Värmestrålning, längre våglängd'},
+  {tag:'Ljus',q:'Vad är ett spektrum?',a:'En spridning av EM-strålning efter våglängd. Vitt ljus i prisma → synligt spektrum: rött (700nm) → orange → gult → grönt → blått → violett (400nm). Solen avger hela EM-spektrumet.',hint:'Regnbågens färger = synligt spektrum'},
+  {tag:'Ljus',q:'Vad är normalen (i optiken)?',a:'En tänkt linje vinkelrät mot en reflekterande/brytande yta vid den punkt där ljusstrålen träffar. Infalls- och reflektionsvinklar mäts alltid relativt normalen.',hint:'Vinkelrät mot ytan'},
+];
+
+let cIdx=0; const cardStates={};
+function renderCard(){
+  const c=allCards[cIdx];
+  const fl=cardStates[cIdx]==='flipped'||cardStates[cIdx]==='good'||cardStates[cIdx]==='bad';
+  document.getElementById('cardArea').innerHTML=`
+    <div class="card-wrap"><div class="card-inner ${fl?'flipped':''}" onclick="flipCard()">
+      <div class="card-front"><div class="card-tag">${c.tag}</div><div class="card-q">${c.q}</div>${c.hint?`<div class="card-hint">💡 ${c.hint}</div>`:''}</div>
+      <div class="card-back"><div class="card-tag" style="color:var(--accent)">Svar</div><div class="card-a">${c.a.replace(/\n/g,'<br>')}</div></div>
+    </div></div>
+    ${fl?`<div class="btn-row"><button class="btn-know" onclick="markCard('good')">✓ Kan det!</button><button class="btn-again" onclick="markCard('bad')">↺ Igen</button></div>`:''}`;
+  document.getElementById('cardCounter').textContent=`${cIdx+1} / ${allCards.length}`;
+  updateCardStats();
+}
+function flipCard(){if(cardStates[cIdx]==='good')return;cardStates[cIdx]='flipped';renderCard()}
+function prevCard(){cIdx=(cIdx-1+allCards.length)%allCards.length;renderCard()}
+function nextCard(){cIdx=(cIdx+1)%allCards.length;renderCard()}
+function markCard(s){cardStates[cIdx]=s;if(s==='good')setTimeout(()=>{nextCard()},300);else renderCard()}
+function updateCardStats(){
+  const g=Object.values(cardStates).filter(v=>v==='good').length;
+  document.getElementById('cGood').textContent=g;
+  document.getElementById('cLeft').textContent=allCards.length-g;
+  document.getElementById('cPct').textContent=Math.round((g/allCards.length)*100)+'%';
+  updateMainProgress();
+}
+
+const fbData={
+  F1:{ok:'✅ Rätt! Ljud är mekaniska tryckvågor — kan bara fortplantas i materia. Vakuum = inget medium → inget ljud.',err:'❌ Fel. Ljud kräver ett medium (luft, vatten, fast). Rymden är vakuum → inga ljudvågor kan fortplantas.'},
+  F2:{ok:'✅ Rätt! Kortare luftkolumn i liten flaska → kortare våglängd → fler svängningar per sekund (högre Hz) → ljusare/högre ton.',err:'❌ Fel. Kortare luftkolumn = kortare våglängd = högre frekvens = ljusare ton. Glasets tjocklek spelar inte roll.'},
+  F3:{ok:'✅ Rätt! Ultraljud > 20 000 Hz, ohörbart för människor. Fosterdiagnostik och ekolod är klassiska användningsområden.',err:'❌ Fel. Ultraljud = frekvenser ÖVER 20 000 Hz (ohörbara). Infraljud är under 20 Hz.'},
+  F4:{ok:'✅ Rätt! dB mäter styrka/intensitet. Logaritmisk skala: 0 dB = hörtröskel, 120 dB = smärtgräns.',err:'❌ Fel. Decibel mäter ljudstyrka/intensitet, inte frekvens (ton) eller hastighet.'},
+  F5:{ok:'✅ Rätt! Reflektionslagen: infallsvinkel = reflektionsvinkel, alltid mätt från normalen.',err:'❌ Fel. Reflektionslagen: infallsvinkel = reflektionsvinkel = 35°. Mäts från normalen (vinkelrät mot ytan).'},
+  F6:{ok:'✅ Rätt! Närsynthet: fokus framför näthinnan → konkav lins sprider ljuset → fokus flyttas bakåt till rätt position.',err:'❌ Fel. Närsynthet korrigeras med konkav (spridande) lins. Konvex lins används för översynthet.'},
+  F7:{ok:'✅ Rätt! Ljuset bryts (ändrar riktning) vid gränsytan vatten–luft eftersom de har olika optisk täthet.',err:'❌ Fel. Sugröret ser brutet ut på grund av ljusets brytning vid gränsen vatten/luft — inte reflektion.'},
+  F8:{ok:'✅ Rätt! Totalreflektion: ljuset studsar längs fiberns insida utan att läcka ut. Möjliggör snabb datakommunikation.',err:'❌ Fel. Fiberoptik bygger på totalreflektion — ljuset studsar fram längs glasfiberns insida. Inga elektriska signaler.'},
+  F9:{ok:'✅ Rätt! Dispersion: vita solljuset bryts i regndropparna, olika färger (våglängder) bryts olika → spektrum visas.',err:'❌ Fel. Regnbågen skapas via brytning + dispersion. Vitt ljus splittras i sina våglängder av regndropparna.'},
+  F10:{ok:'✅ Rätt! EM-strålning (ljus) är vågrörelse som inte kräver medium → kan resa genom vakuum. Ljud kräver materia.',err:'❌ Fel. EM-strålning behöver inget medium och kan resa genom vakuum. Ljud är mekanisk våg och kräver materia.'},
+  F11:{ok:'✅ Rätt! Konvex lins konvergerar (samlar) parallella strålar till brännpunkten. Konkav lins divergerar (sprider).',err:'❌ Fel. Konvex lins samlar ljus till brännpunkten. Konkav lins sprider ljuset.'},
+  F12:{ok:'✅ Rätt! Månen: ljusvågor (vakuum → EM). Havsbotten: ekolod/ljudvågor (vatten = medium för ljud).',err:'❌ Fel. Månen = ljusvågor (vakuum, EM). Hav = ljudvågor/ekolod (vatten är medium för ljud).'},
+  NP2:{ok:'✅ Rätt! Kortare luftkolumn i liten flaska → kortare våglängd → högre frekvens → ljusare ton.',err:'❌ Fel. Svaret är B. Det är luftkolonnens längd som bestämmer frekvensen. Kortare kolumn = kortare våglängd = högre frekvens = ljusare ton.'},
+};
+
+const fAnswered={};
+function fAns(btn,correct,id){
+  if(fAnswered[id]!==undefined)return;
+  fAnswered[id]=correct;
+  btn.parentElement.querySelectorAll('.fq-opt').forEach(o=>o.disabled=true);
+  btn.classList.add(correct?'correct':'wrong');
+  const fb=document.getElementById('fb-'+id);
+  if(fb){fb.textContent=correct?fbData[id].ok:fbData[id].err;fb.className='fq-feedback show '+(correct?'ok':'err');}
+  if(correct){
+    const s=document.getElementById('fScore');if(s)s.textContent=Object.values(fAnswered).filter(v=>v===true).length;
+    const p=document.getElementById('fPct');if(p){const t=Object.keys(fAnswered).length;p.textContent=Math.round((Object.values(fAnswered).filter(v=>v===true).length/t)*100)+'%';}
+  }
+  updateMainProgress();
+}
+
+function showModel(id){document.getElementById('ma-'+id).classList.toggle('show')}
+function showTab(name,e){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('sec-'+name).classList.add('active');
+  if(e)e.currentTarget.classList.add('active');
+}
+function updateMainProgress() {
+  const good   = Object.values(cardStates).filter(v => v === 'good').length;
+  const fRight = Object.values(fAnswered).filter(v => v === true).length;
+  const total  = allCards.length + quizItems.length;
+  const pct    = Math.min(100, Math.round(((good + fRight) / total) * 100));
+  document.getElementById('mainProgress').style.width = pct + '%';
+  document.getElementById('progressText').textContent = (good + fRight) + ' av ' + total + ' klara';
+  localStorage.setItem(STORAGE_KEY + '_progress', JSON.stringify({
+    pct, good, fRight, total,
+    cardStates: Object.assign({}, cardStates),
+    fAnswered:  Object.assign({}, fAnswered),
+  }));
+}
+
+function restoreProgress() {
+  const raw = localStorage.getItem(STORAGE_KEY + '_progress');
+  if (!raw) return;
+  try {
+    const data = JSON.parse(raw);
+    if (data.cardStates) Object.entries(data.cardStates).forEach(([k,v]) => { cardStates[k] = v; });
+    if (data.fAnswered)  Object.entries(data.fAnswered).forEach(([k,v])  => { fAnswered[k] = v; });
+  } catch(e) {}
+}
+
+restoreProgress();
+renderCard();
+</script>
+</body>
+</html>

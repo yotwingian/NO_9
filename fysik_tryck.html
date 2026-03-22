@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tryck — NP Fysik åk 9</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0b0f1a;
+  --surface: #131825;
+  --card: #1c2235;
+  --border: #273050;
+  --accent: #3a8eff;
+  --accent2: #00d4ff;
+  --accent3: #06d6a0;
+  --bad: #ff4d6d;
+  --warn: #ffd23f;
+  --text: #dde3f5;
+  --muted: #6b7599;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+.header{background:linear-gradient(135deg,#020e2a 0%,#0a1f4e 50%,#0b0f1a 100%);padding:32px 24px 24px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.header::before{content:'🌊';position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:90px;opacity:.1}
+.header::after{content:'🔵';position:absolute;right:110px;top:28%;font-size:40px;opacity:.08}
+.badge{display:inline-block;background:var(--accent);color:#fff;font-size:11px;font-weight:700;letter-spacing:2px;padding:4px 10px;border-radius:4px;margin-bottom:10px;text-transform:uppercase}
+.header h1{font-size:clamp(24px,5vw,38px);font-weight:900;letter-spacing:-1px}
+.header h1 span{color:var(--accent2)}
+.subtitle{color:var(--muted);margin-top:6px;font-size:14px}
+
+.progress-bar{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin:20px 16px 0}
+.prog-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:13px}
+.prog-label span:last-child{font-family:'JetBrains Mono',monospace;color:var(--accent);font-size:12px}
+.prog-track{height:8px;background:var(--border);border-radius:99px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:99px;transition:width .5s ease;width:0%}
+
+.tabs{display:flex;gap:4px;padding:16px;overflow-x:auto;border-bottom:1px solid var(--border);background:var(--surface)}
+.tab-btn{flex-shrink:0;padding:8px 16px;border:1px solid var(--border);background:transparent;color:var(--muted);border-radius:8px;cursor:pointer;font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;transition:all .2s}
+.tab-btn:hover{color:var(--text);border-color:var(--accent)}
+.tab-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+.section{display:none;padding:16px;max-width:720px;margin:0 auto}
+.section.active{display:block}
+
+/* FORMULAS BOX */
+.formula-box{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:20px}
+.formula-box h3{font-size:13px;font-weight:700;color:var(--accent2);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px}
+.formula-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.formula-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center}
+.formula-main{font-family:'JetBrains Mono',monospace;font-size:17px;font-weight:700;color:var(--accent2);margin-bottom:4px}
+.formula-name{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.formula-explain{font-size:12px;color:var(--text);line-height:1.5}
+
+/* ARKIMEDES BOX */
+.ark-box{background:linear-gradient(135deg,#051525,#0a2040);border:1px solid rgba(58,142,255,.3);border-radius:16px;padding:20px;margin-bottom:20px}
+.ark-box h3{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.ark-row{display:flex;gap:10px;flex-wrap:wrap}
+.ark-case{flex:1;min-width:140px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center}
+.ark-icon{font-size:28px;margin-bottom:6px}
+.ark-cond{font-size:12px;font-weight:700;margin-bottom:4px}
+.ark-desc{font-size:11px;color:var(--muted);line-height:1.4}
+
+/* PRESSURE VIS */
+.pressure-vis{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:20px}
+.pressure-vis h3{font-size:13px;font-weight:700;color:var(--warn);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px}
+.depth-bars{display:flex;flex-direction:column;gap:6px}
+.depth-bar{display:flex;align-items:center;gap:10px;font-size:12px}
+.depth-label{width:80px;color:var(--muted);text-align:right;flex-shrink:0}
+.depth-fill{height:20px;border-radius:4px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .5s}
+.depth-val{color:var(--accent2);font-family:'JetBrains Mono',monospace;font-size:11px;white-space:nowrap}
+
+/* FLASHCARDS */
+.stats-row{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 16px;flex:1;min-width:80px;text-align:center}
+.stat-val{font-size:24px;font-weight:900;font-family:'JetBrains Mono',monospace}
+.stat-lbl{font-size:10px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:1px}
+.deck-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:20px 0 8px}
+
+.card-wrap{perspective:1000px;margin-bottom:20px}
+.card-inner{position:relative;width:100%;min-height:160px;transform-style:preserve-3d;transition:transform .5s ease;cursor:pointer}
+.card-inner.flipped{transform:rotateY(180deg)}
+.card-front,.card-back{position:absolute;top:0;left:0;width:100%;min-height:160px;backface-visibility:hidden;border-radius:16px;padding:24px;display:flex;flex-direction:column;justify-content:center}
+.card-front{background:var(--card);border:1px solid var(--border)}
+.card-back{background:linear-gradient(135deg,#051525,#091e40);border:1px solid var(--accent);transform:rotateY(180deg)}
+.card-tag{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.card-q{font-size:18px;font-weight:700;line-height:1.3}
+.card-a{font-size:15px;line-height:1.6;color:#a8d4ff}
+.card-hint{font-size:11px;color:var(--muted);margin-top:4px}
+.btn-row{display:flex;gap:8px;margin-top:8px}
+.btn-know{flex:1;background:rgba(6,214,160,.15);border:1px solid var(--accent3);color:var(--accent3);padding:10px;border-radius:10px;cursor:pointer;font-family:'Outfit',sans-serif;font-weight:700;font-size:13px;transition:all .2s}
+.btn-know:hover{background:rgba(6,214,160,.3)}
+.btn-again{flex:1;background:rgba(255,77,109,.12);border:1px solid var(--bad);color:var(--bad);padding:10px;border-radius:10px;cursor:pointer;font-family:'Outfit',sans-serif;font-weight:700;font-size:13px;transition:all .2s}
+.btn-again:hover{background:rgba(255,77,109,.25)}
+.card-nav{display:flex;align-items:center;justify-content:space-between;margin-top:6px;font-size:12px;color:var(--muted)}
+.btn-nav{background:var(--card);border:1px solid var(--border);color:var(--text);padding:6px 14px;border-radius:8px;cursor:pointer;font-family:'Outfit',sans-serif;font-size:12px}
+
+/* FÖRSTÅELSE */
+.fq-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:14px}
+.fq-num{font-size:11px;font-weight:700;letter-spacing:1px;color:var(--muted);text-transform:uppercase;margin-bottom:6px}
+.fq-q{font-weight:700;font-size:15px;line-height:1.5;margin-bottom:12px}
+.fq-opts{display:flex;flex-direction:column;gap:6px}
+.fq-opt{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px;cursor:pointer;font-size:13px;text-align:left;color:var(--text);font-family:'Outfit',sans-serif;transition:all .2s;width:100%}
+.fq-opt:hover:not(:disabled){border-color:var(--accent);background:rgba(58,142,255,.08)}
+.fq-opt.correct{background:rgba(6,214,160,.15);border-color:var(--accent3);color:var(--accent3)}
+.fq-opt.wrong{background:rgba(255,77,109,.12);border-color:var(--bad);color:var(--bad)}
+.fq-feedback{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:13px;line-height:1.5;display:none}
+.fq-feedback.show{display:block}
+.fq-feedback.ok{background:rgba(6,214,160,.1);border-left:3px solid var(--accent3);color:#a0f0d5}
+.fq-feedback.err{background:rgba(255,77,109,.1);border-left:3px solid var(--bad);color:#ffb3c1}
+
+/* RÄKNA */
+.calc-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:14px}
+.calc-q{font-weight:700;font-size:15px;margin-bottom:14px;line-height:1.5}
+.calc-input{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.calc-inp{background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:9px 14px;font-family:'JetBrains Mono',monospace;font-size:14px;width:130px;outline:none}
+.calc-inp:focus{border-color:var(--accent)}
+.calc-unit{color:var(--muted);font-size:13px}
+.btn-check{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:9px 18px;cursor:pointer;font-family:'Outfit',sans-serif;font-weight:700;font-size:13px}
+.calc-result{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:13px;display:none}
+.calc-result.show{display:block}
+.calc-result.ok{background:rgba(6,214,160,.1);border-left:3px solid var(--accent3);color:#a0f0d5}
+.calc-result.err{background:rgba(255,77,109,.1);border-left:3px solid var(--bad);color:#ffb3c1}
+.formula-chip{background:rgba(58,142,255,.15);border:1px solid rgba(58,142,255,.3);border-radius:6px;padding:3px 9px;font-family:'JetBrains Mono',monospace;font-size:13px;display:inline-block;margin:2px;color:var(--accent2)}
+
+/* RESONEMANG */
+.res-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;margin-bottom:16px}
+.res-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 8px;border-radius:4px;margin-bottom:10px}
+.res-badge.np{background:rgba(58,142,255,.2);color:var(--accent)}
+.res-badge.res{background:rgba(255,210,63,.2);color:var(--warn)}
+.res-q{font-weight:700;font-size:15px;line-height:1.5;margin-bottom:12px}
+.res-context{background:var(--surface);border-left:3px solid var(--accent2);border-radius:0 8px 8px 0;padding:12px 14px;margin-bottom:14px;font-size:13px;color:#a8d4ff;line-height:1.6}
+.res-steps{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.res-step{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.res-step label{font-size:12px;font-weight:700;color:var(--muted);display:block;margin-bottom:6px;letter-spacing:1px;text-transform:uppercase}
+.res-textarea{width:100%;background:transparent;border:none;color:var(--text);font-family:'Outfit',sans-serif;font-size:13px;resize:none;outline:none;min-height:60px;line-height:1.6}
+.btn-model{background:transparent;border:1px solid var(--accent2);color:var(--accent2);padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;transition:all .2s}
+.btn-model:hover{background:rgba(0,212,255,.1)}
+.model-ans{margin-top:10px;background:rgba(0,212,255,.05);border:1px solid rgba(0,212,255,.2);border-radius:10px;padding:14px;font-size:13px;line-height:1.6;display:none}
+.model-ans.show{display:block}
+.model-ans h4{color:var(--accent2);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.grade-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.grade{font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px}
+.grade-e{background:rgba(58,142,255,.2);color:var(--accent)}
+.grade-c{background:rgba(255,210,63,.2);color:var(--warn)}
+.grade-a{background:rgba(6,214,160,.2);color:var(--accent3)}
+
+/* NP */
+.np-card{background:linear-gradient(135deg,#050f25,#0b1530);border:1px solid rgba(58,142,255,.35);border-radius:16px;padding:22px;margin-bottom:16px}
+.np-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.np-logo{background:var(--accent);color:#fff;font-weight:900;font-size:11px;padding:4px 8px;border-radius:6px;letter-spacing:1px}
+.np-year{color:var(--muted);font-size:12px}
+.np-q{font-weight:700;font-size:15px;line-height:1.5;margin-bottom:12px}
+
+@media(max-width:480px){.formula-grid{grid-template-columns:1fr}.ark-row{flex-direction:column}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="badge">Kapitel 4 av 9</div>
+  <h1>Tryck <span>&amp; Lyftkraft</span></h1>
+  <p class="subtitle">Tryckformeln · Arkimedes princip · Lufttryck · Övertryck/undertryck · Vakuum</p>
+</div>
+
+<div class="progress-bar">
+  <div class="prog-label">
+    <span>Din framgång</span>
+    <span id="progressText">0 av 47 klara</span>
+  </div>
+  <div class="prog-track"><div class="prog-fill" id="mainProgress"></div></div>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('begrepp',event)">🃏 Begrepp</button>
+  <button class="tab-btn" onclick="showTab('forstaaelse',event)">💡 Förståelse</button>
+  <button class="tab-btn" onclick="showTab('rakna',event)">🔢 Räkna</button>
+  <button class="tab-btn" onclick="showTab('resonemang',event)">🧠 Resonemang</button>
+  <button class="tab-btn" onclick="showTab('np',event)">📋 NP-Frågor</button>
+</div>
+
+<!-- ===== BEGREPP ===== -->
+<div class="section active" id="sec-begrepp">
+
+  <div class="stats-row" style="margin-top:16px">
+    <div class="stat"><div class="stat-val" id="cGood" style="color:var(--accent3)">0</div><div class="stat-lbl">Kan</div></div>
+    <div class="stat"><div class="stat-val" id="cLeft" style="color:var(--accent)">20</div><div class="stat-lbl">Kvar</div></div>
+    <div class="stat"><div class="stat-val" id="cPct" style="color:var(--accent2)">0%</div><div class="stat-lbl">Klart</div></div>
+  </div>
+
+  <!-- FORMULAS -->
+  <div class="formula-box">
+    <h3>📐 Nyckelformler</h3>
+    <div class="formula-grid">
+      <div class="formula-item">
+        <div class="formula-name">Tryck</div>
+        <div class="formula-main">p = F / A</div>
+        <div class="formula-explain">p = tryck (Pa)<br>F = kraft (N)<br>A = area (m²)</div>
+      </div>
+      <div class="formula-item">
+        <div class="formula-name">Vätsketryck</div>
+        <div class="formula-main">p = ρ · g · h</div>
+        <div class="formula-explain">ρ = densitet (kg/m³)<br>g ≈ 10 m/s²<br>h = djup (m)</div>
+      </div>
+      <div class="formula-item">
+        <div class="formula-name">Lyftkraft</div>
+        <div class="formula-main">F<sub>L</sub> = ρ<sub>v</sub> · V · g</div>
+        <div class="formula-explain">= vikten av undanträngd vätska<br>Arkimedes princip</div>
+      </div>
+      <div class="formula-item">
+        <div class="formula-name">Densitet</div>
+        <div class="formula-main">ρ = m / V</div>
+        <div class="formula-explain">ρ < ρ<sub>vätska</sub> → flyter<br>ρ > ρ<sub>vätska</sub> → sjunker</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ARKIMEDES -->
+  <div class="ark-box">
+    <h3>⚖️ Arkimedes princip — flyta eller sjunka?</h3>
+    <div class="ark-row">
+      <div class="ark-case">
+        <div class="ark-icon">🪵</div>
+        <div class="ark-cond" style="color:var(--accent3)">ρ_föremål &lt; ρ_vätska</div>
+        <div class="ark-desc">Lyftkraft &gt; tyngdkraft<br><strong>→ Flyter</strong><br>Ex: trä i vatten</div>
+      </div>
+      <div class="ark-case">
+        <div class="ark-icon">🚢</div>
+        <div class="ark-cond" style="color:var(--accent2)">ρ_föremål = ρ_vätska</div>
+        <div class="ark-desc">Lyftkraft = tyngdkraft<br><strong>→ Svävar</strong><br>Ex: ubåt i balans</div>
+      </div>
+      <div class="ark-case">
+        <div class="ark-icon">⚓</div>
+        <div class="ark-cond" style="color:var(--bad)">ρ_föremål &gt; ρ_vätska</div>
+        <div class="ark-desc">Lyftkraft &lt; tyngdkraft<br><strong>→ Sjunker</strong><br>Ex: järn i vatten</div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-top:12px;text-align:center">Lyftkraften = vikten av den <em>undanträngda</em> vätskan. Ju saltare vätska → tätare → större lyftkraft.</p>
+  </div>
+
+  <!-- DJUP-TRYCK VISUALISERING -->
+  <div class="pressure-vis">
+    <h3>🌊 Trycket ökar med djupet (p = ρgh, vatten ρ=1000 kg/m³)</h3>
+    <div class="depth-bars">
+      <div class="depth-bar"><span class="depth-label">Ytan (0 m)</span><div class="depth-fill" style="width:5%"></div><span class="depth-val">~0 Pa</span></div>
+      <div class="depth-bar"><span class="depth-label">1 m</span><div class="depth-fill" style="width:10%"></div><span class="depth-val">10 000 Pa</span></div>
+      <div class="depth-bar"><span class="depth-label">5 m</span><div class="depth-fill" style="width:30%"></div><span class="depth-val">50 000 Pa</span></div>
+      <div class="depth-bar"><span class="depth-label">10 m</span><div class="depth-fill" style="width:55%"></div><span class="depth-val">100 000 Pa</span></div>
+      <div class="depth-bar"><span class="depth-label">20 m</span><div class="depth-fill" style="width:80%"></div><span class="depth-val">200 000 Pa</span></div>
+      <div class="depth-bar"><span class="depth-label">~10 m</span><div class="depth-fill" style="width:100%;background:linear-gradient(90deg,#ff4d6d,#ff8c00)"></div><span class="depth-val">= 1 atm extra!</span></div>
+    </div>
+    <p style="font-size:11px;color:var(--muted);margin-top:8px">Normalt lufttryck ≈ 101 325 Pa ≈ 1013 hPa. På 10 m djup i vatten: trycket är dubbelt.</p>
+  </div>
+
+  <div class="deck-label">Begrepp — klicka för att vända</div>
+  <div id="cardArea"></div>
+  <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:4px">Tryck på kortet för att se svaret</div>
+  <div class="card-nav">
+    <button class="btn-nav" onclick="prevCard()">← Föregående</button>
+    <span id="cardCounter" style="font-family:'JetBrains Mono',monospace;font-size:12px">1 / 20</span>
+    <button class="btn-nav" onclick="nextCard()">Nästa →</button>
+  </div>
+</div>
+
+<!-- ===== FÖRSTÅELSE ===== -->
+<div class="section" id="sec-forstaaelse">
+  <div class="stats-row" style="margin-top:16px">
+    <div class="stat"><div class="stat-val" id="fScore" style="color:var(--accent3)">0</div><div class="stat-lbl">Rätt</div></div>
+    <div class="stat"><div class="stat-val" id="fPct" style="color:var(--accent2)">0%</div><div class="stat-lbl">Klart</div></div>
+  </div>
+
+  <div class="fq-card">
+    <div class="fq-num">Fråga 1</div>
+    <div class="fq-q">En nål kan tränga igenom ett äpple lättare än ett finger med samma kraft. Varför?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAns(this,false,'F1')">Nålen är tyngre och har större kraft</button>
+      <button class="fq-opt" onclick="fAns(this,true,'F1')">Nålen har mycket liten area → mycket högt tryck (p = F/A)</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F1')">Nålen är skarpare och skär sönder molekylerna</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F1')">Fingret absorberar mer kraft via huden</button>
+    </div>
+    <div class="fq-feedback" id="fb-F1"></div>
+  </div>
+
+  <div class="fq-card">
+    <div class="fq-num">Fråga 2</div>
+    <div class="fq-q">Varför är det lättare att simma i Döda havet (salthalt ~30%) än i Östersjön (~0,8%)?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAns(this,false,'F2')">Döda havet är varmare och kroppen sväller</button>
+      <button class="fq-opt" onclick="fAns(this,true,'F2')">Saltvatten har högre densitet → större lyftkraft på kroppen</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F2')">Salt minskar vattnets viskositet och gör det lättare att röra sig</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F2')">Lyftkraften är densamma oavsett salthalt</button>
+    </div>
+    <div class="fq-feedback" id="fb-F2"></div>
+  </div>
+
+  <div class="fq-card">
+    <div class="fq-num">Fråga 3</div>
+    <div class="fq-q">Vad händer med trycket om du dyker från ytan till 10 meters djup i en sjö?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAns(this,false,'F3')">Trycket halveras</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F3')">Trycket förblir oförändrat</button>
+      <button class="fq-opt" onclick="fAns(this,true,'F3')">Trycket ökar — vattenpelaren ovanför ger extra tryck (p = ρgh)</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F3')">Trycket minskar eftersom lufttrycket inte når dit</button>
+    </div>
+    <div class="fq-feedback" id="fb-F3"></div>
+  </div>
+
+  <div class="fq-card">
+    <div class="fq-num">Fråga 4</div>
+    <div class="fq-q">Hur fungerar en ubåt som vill sänka sig djupare?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAns(this,false,'F4')">Den ökar sin massa genom att ta in mer bränsle</button>
+      <button class="fq-opt" onclick="fAns(this,true,'F4')">Den fyller ballasttankar med vatten → densiteten ökar → lyftkraft < tyngdkraft → sjunker</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F4')">Den minskar sin volym genom att krympa skrovet</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F4')">Den använder propellrar för att trycka ner sig</button>
+    </div>
+    <div class="fq-feedback" id="fb-F4"></div>
+  </div>
+
+  <div class="fq-card">
+    <div class="fq-num">Fråga 5</div>
+    <div class="fq-q">Varför kan ett stort stålskepp flyta trots att stål är tätare (ρ ≈ 7 800 kg/m³) än vatten?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAns(this,false,'F5')">Stål flyter alltid om det är tillräckligt tunt</button>
+      <button class="fq-opt" onclick="fAns(this,true,'F5')">Skrovet omsluter luftfyllda utrymmen → hela skeppets genomsnittsdensitet < vattnets densitet</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F5')">Havsvatten har lägre densitet än sötvatten och bär upp stål</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F5')">Skeppet rör sig hela tiden och håller sig uppe via lyftkraft från rörelsen</button>
+    </div>
+    <div class="fq-feedback" id="fb-F5"></div>
+  </div>
+
+  <div class="fq-card">
+    <div class="fq-num">Fråga 6</div>
+    <div class="fq-q">Varför känner man mer tryck mot öronen när man dyker djupt?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAns(this,false,'F6')">Vatten har fler molekyler som slår mot trumhinnan</button>
+      <button class="fq-opt" onclick="fAns(this,true,'F6')">Vattenpelaren ovanför är tyngre på djupet → högre vätsketryck → trycker mot trumhinnan</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F6')">Lufttrycket inuti örat ökar vid djupdykning</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F6')">Det är temperaturen som ändras och påverkar trumhinnan</button>
+    </div>
+    <div class="fq-feedback" id="fb-F6"></div>
+  </div>
+
+  <div class="fq-card">
+    <div class="fq-num">Fråga 7</div>
+    <div class="fq-q">Vad är vakuum?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAns(this,false,'F7')">Ett utrymme fyllt med kväve</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F7')">Lufttrycket vid jordens yta</button>
+      <button class="fq-opt" onclick="fAns(this,true,'F7')">Ett utrymme (nästan) helt utan materia — trycket är noll eller nära noll</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F7')">Undertryck som uppstår i rör</button>
+    </div>
+    <div class="fq-feedback" id="fb-F7"></div>
+  </div>
+
+  <div class="fq-card">
+    <div class="fq-num">Fråga 8</div>
+    <div class="fq-q">En sprutflaska skapar undertryck när man drar ut kolven. Vad händer då med vätskan?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAns(this,false,'F8')">Vätskan trycks nedåt av tyngdkraften</button>
+      <button class="fq-opt" onclick="fAns(this,true,'F8')">Atmosfärstrycket utanför är högre än undertrycket inuti → vätskan trycks upp in i röret</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F8')">Vätskan dras upp av magnetiska krafter</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F8')">Undertrycket suger aktivt på vätskan</button>
+    </div>
+    <div class="fq-feedback" id="fb-F8"></div>
+  </div>
+
+  <div class="fq-card">
+    <div class="fq-num">Fråga 9</div>
+    <div class="fq-q">Varför är lufttrycket lägre på ett högt berg än vid havsytan?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAns(this,false,'F9')">Temperaturen är lägre på berget, vilket minskar trycket</button>
+      <button class="fq-opt" onclick="fAns(this,true,'F9')">Det finns färre luftmolekyler ovanför — lägre luftpelare → lägre tryck</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F9')">Bergets yta reflekterar luften uppåt</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F9')">Gravitationen är svagare på höga höjder</button>
+    </div>
+    <div class="fq-feedback" id="fb-F9"></div>
+  </div>
+
+  <div class="fq-card">
+    <div class="fq-num">Fråga 10</div>
+    <div class="fq-q">Vad menas med övertryck i ett däck?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAns(this,false,'F10')">Trycket är lägre inuti däcket än utanför</button>
+      <button class="fq-opt" onclick="fAns(this,true,'F10')">Trycket inuti däcket är högre än det omgivande lufttrycket</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F10')">Däcket innehåller mer luft än vad som ryms</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F10')">Övertryck och lufttryck är samma sak</button>
+    </div>
+    <div class="fq-feedback" id="fb-F10"></div>
+  </div>
+
+  <div class="fq-card">
+    <div class="fq-num">Fråga 11</div>
+    <div class="fq-q">Du lyfter ett föremål under vatten med en fjädervåg. Det visar 5 N. I luft visade det 8 N. Hur stor är lyftkraften?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAns(this,false,'F11')">5 N</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F11')">8 N</button>
+      <button class="fq-opt" onclick="fAns(this,true,'F11')">3 N — lyftkraft = tyngd i luft minus mätt tyngd i vätska</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F11')">13 N</button>
+    </div>
+    <div class="fq-feedback" id="fb-F11"></div>
+  </div>
+
+  <div class="fq-card">
+    <div class="fq-num">Fråga 12</div>
+    <div class="fq-q">Varför används hektopascal (hPa) istället för Pascal (Pa) för lufttryck i meteorologi?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAns(this,false,'F12')">hPa är mer exakt än Pa</button>
+      <button class="fq-opt" onclick="fAns(this,true,'F12')">Normalt lufttryck ≈ 101 325 Pa är ett stort tal — hPa ger smidigare siffror (~1013 hPa)</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F12')">Pa kan inte mäta gaser, bara vätskor</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F12')">hPa mäter relativ luftfuktighet</button>
+    </div>
+    <div class="fq-feedback" id="fb-F12"></div>
+  </div>
+</div>
+
+<!-- ===== RÄKNA ===== -->
+<div class="section" id="sec-rakna">
+  <div style="margin-top:16px;margin-bottom:16px;background:rgba(58,142,255,.08);border:1px solid rgba(58,142,255,.25);border-radius:12px;padding:14px;font-size:13px;line-height:1.8;color:#a8d4ff">
+    <strong>📐 Formler att använda:</strong><br>
+    <span class="formula-chip">p = F / A</span> tryck (Pa) = kraft (N) / area (m²)<br>
+    <span class="formula-chip">p = ρ · g · h</span> vätsketryck; g = 10 m/s²<br>
+    <span class="formula-chip">ρ = m / V</span> densitet<br>
+    <span class="formula-chip">F_L = ρ_v · V · g</span> lyftkraft
+  </div>
+
+  <div class="calc-card">
+    <div class="fq-num">Räkneuppgift 1</div>
+    <div class="calc-q">En låda (10 kg) vilar på ett bord. Lådan har bottenytan 0,5 m². Tyngdkraften är 100 N. Hur stort är trycket mot bordet?</div>
+    <div class="calc-input">
+      <input type="number" class="calc-inp" id="r1" placeholder="?" step="1">
+      <span class="calc-unit">Pa</span>
+      <button class="btn-check" onclick="chk('r1',200,'r1-res','✅ Rätt! p = F/A = 100/0,5 = 200 Pa','❌ Fel. p = F/A = 100 N ÷ 0,5 m² = 200 Pa',5)">Kontrollera</button>
+    </div>
+    <div class="calc-result" id="r1-res"></div>
+  </div>
+
+  <div class="calc-card">
+    <div class="fq-num">Räkneuppgift 2</div>
+    <div class="calc-q">Du vill ha trycket 300 Pa med en area på 0,02 m². Hur stor kraft behövs?</div>
+    <div class="calc-input">
+      <input type="number" class="calc-inp" id="r2" placeholder="?" step="0.1">
+      <span class="calc-unit">N</span>
+      <button class="btn-check" onclick="chk('r2',6,'r2-res','✅ Rätt! F = p · A = 300 × 0,02 = 6 N','❌ Fel. F = p · A = 300 Pa × 0,02 m² = 6 N',0.2)">Kontrollera</button>
+    </div>
+    <div class="calc-result" id="r2-res"></div>
+  </div>
+
+  <div class="calc-card">
+    <div class="fq-num">Räkneuppgift 3</div>
+    <div class="calc-q">Hur stort är vätsketrycket 5 meter ner i en sjö? (ρ_vatten = 1000 kg/m³, g = 10 m/s²)</div>
+    <div class="calc-input">
+      <input type="number" class="calc-inp" id="r3" placeholder="?" step="100">
+      <span class="calc-unit">Pa</span>
+      <button class="btn-check" onclick="chk('r3',50000,'r3-res','✅ Rätt! p = ρgh = 1000 × 10 × 5 = 50 000 Pa','❌ Fel. p = ρ·g·h = 1000 × 10 × 5 = 50 000 Pa',500)">Kontrollera</button>
+    </div>
+    <div class="calc-result" id="r3-res"></div>
+  </div>
+
+  <div class="calc-card">
+    <div class="fq-num">Räkneuppgift 4</div>
+    <div class="calc-q">En träkub (V = 0,001 m³) ligger i vatten. Lyftkraften? (ρ_vatten = 1000 kg/m³, g = 10)</div>
+    <div class="calc-input">
+      <input type="number" class="calc-inp" id="r4" placeholder="?" step="0.1">
+      <span class="calc-unit">N</span>
+      <button class="btn-check" onclick="chk('r4',10,'r4-res','✅ Rätt! F_L = ρ·V·g = 1000 × 0,001 × 10 = 10 N','❌ Fel. F_L = ρ_vatten · V · g = 1000 × 0,001 × 10 = 10 N',0.2)">Kontrollera</button>
+    </div>
+    <div class="calc-result" id="r4-res"></div>
+  </div>
+
+  <div class="calc-card">
+    <div class="fq-num">Räkneuppgift 5</div>
+    <div class="calc-q">Föremålet väger 15 N i luft och 9 N i vatten. Hur stor är lyftkraften?</div>
+    <div class="calc-input">
+      <input type="number" class="calc-inp" id="r5" placeholder="?" step="0.1">
+      <span class="calc-unit">N</span>
+      <button class="btn-check" onclick="chk('r5',6,'r5-res','✅ Rätt! F_L = 15 − 9 = 6 N','❌ Fel. Lyftkraft = tyngd i luft − tyngd i vätska = 15 − 9 = 6 N',0.1)">Kontrollera</button>
+    </div>
+    <div class="calc-result" id="r5-res"></div>
+  </div>
+</div>
+
+<!-- ===== RESONEMANG ===== -->
+<div class="section" id="sec-resonemang">
+
+  <div class="res-card">
+    <span class="res-badge np">NP-liknande</span>
+    <div class="res-q">🚢 Fartyget och salthalterna — hur påverkas lasten?</div>
+    <div class="res-context">Ett fartyg åker mellan hav med olika salthalt. Havens olika salthalter avgör hur mycket last som fartyget kan frakta. Förklara med hjälp av vattnets densitet och lyftkraft.</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <label>Steg 1 — Saltvatten vs. sötvatten: vad skiljer i densitet?</label>
+        <textarea class="res-textarea" placeholder="Vad gör saltet med vattnet?"></textarea>
+      </div>
+      <div class="res-step">
+        <label>Steg 2 — Hur påverkas lyftkraften?</label>
+        <textarea class="res-textarea" placeholder="F_L = ρ·V·g — vad händer när ρ ändras?"></textarea>
+      </div>
+      <div class="res-step">
+        <label>Steg 3 — Slutsats: var kan fartyget frakta mer last?</label>
+        <textarea class="res-textarea" placeholder="I saltvatten eller sötvatten?"></textarea>
+      </div>
+    </div>
+    <button class="btn-model" onclick="showModel('fartyg')">Visa modellsvar</button>
+    <div class="model-ans" id="ma-fartyg">
+      <h4>✅ Modellsvar (NP-nivå)</h4>
+      <p><strong>Steg 1:</strong> Salt höjer vattnets densitet. Saltvatten (t.ex. Medelhavet, ρ ≈ 1 025 kg/m³) är tätare än sötvatten (ρ = 1 000 kg/m³).</p>
+      <p style="margin-top:6px"><strong>Steg 2:</strong> Lyftkraften beräknas via F_L = ρ_vätska · V · g. Ju högre densitet hos vätskan → desto större lyftkraft på fartyget (för samma nedsänkt volym).</p>
+      <p style="margin-top:6px"><strong>Steg 3:</strong> I saltvatten är lyftkraften större → fartyget flyter högre (djupgåendet minskar). Det kan då lasta mer utan att sjunka. I sötvatten är lyftkraften mindre → fartyget sjunker djupare → måste lasta av last för att inte gå under.</p>
+      <div class="grade-row">
+        <span class="grade grade-e">E: Saltvatten ger mer lyftkraft</span>
+        <span class="grade grade-c">C: Kopplar till densitet och lyftkraft</span>
+        <span class="grade grade-a">A: Fullständig kedja: salt → densitet → F_L = ρVg → fartyget flyter högre → mer last</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="res-card">
+    <span class="res-badge res">Resonemang</span>
+    <div class="res-q">🩰 Höga klackar vs. platta skor — vem skapar mer tryck mot golvet?</div>
+    <div class="res-context">En person väger 60 kg (tyngd = 600 N). Hon kan välja mellan platta skor (bärarea 200 cm²) eller stilettklackar (klackens area 1 cm²).</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <label>Beräkna trycket för klacken (area = 1 cm² = 0,0001 m²)</label>
+        <textarea class="res-textarea" placeholder="p = F/A = ?"></textarea>
+      </div>
+      <div class="res-step">
+        <label>Jämför och förklara konsekvensen (parkettgolv, snö, mjukt underlag)</label>
+        <textarea class="res-textarea" placeholder="Varför sjunker klacken igenom snö men inte platta skor?"></textarea>
+      </div>
+    </div>
+    <button class="btn-model" onclick="showModel('klack')">Visa modellsvar</button>
+    <div class="model-ans" id="ma-klack">
+      <h4>✅ Modellsvar</h4>
+      <p><strong>Klack:</strong> p = F/A = 600 / 0,0001 = 6 000 000 Pa = 6 MPa — enormt tryck!</p>
+      <p style="margin-top:6px"><strong>Platt sko:</strong> p = 600 / 0,02 = 30 000 Pa — 200× lägre tryck.</p>
+      <p style="margin-top:6px"><strong>Konsekvens:</strong> Stilettklacken koncentrerar hela kroppstyngden på 1 cm² → kan skada parkettgolv, sjunker igenom snö/mjuk jord. Platta skor fördelar kraften över stor area → lägre tryck → skadar inte underlaget. Samma kraft, helt olika tryck beroende på area.</p>
+    </div>
+  </div>
+
+  <div class="res-card">
+    <span class="res-badge res">Resonemang</span>
+    <div class="res-q">🎈 Varför stiger en luftballong och hur kan piloten styra höjden?</div>
+    <div class="res-context">En varmluftsballong kan stiga, hålla konstant höjd eller sjunka. Piloten kan värma luften inuti eller öppna en ventil och släppa ut varm luft.</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <label>Varför stiger ballongen? (koppla till densitet och lyftkraft)</label>
+        <textarea class="res-textarea" placeholder="Jämför densiteten hos varm och kall luft..."></textarea>
+      </div>
+      <div class="res-step">
+        <label>Hur sjunker piloten kontrollerat?</label>
+        <textarea class="res-textarea" placeholder="Vad händer när varm luft släpps ut?"></textarea>
+      </div>
+    </div>
+    <button class="btn-model" onclick="showModel('ballong')">Visa modellsvar</button>
+    <div class="model-ans" id="ma-ballong">
+      <h4>✅ Modellsvar</h4>
+      <p><strong>Stiger:</strong> Brännaren värmer luften inuti → den expanderar → densiteten sjunker. Ballongen + varm luft får lägre genomsnittsdensitet än omgivande kall luft → lyftkraften överstiger tyngdkraften → stiger (Arkimedes princip).</p>
+      <p style="margin-top:6px"><strong>Sjunker:</strong> Piloten öppnar ventilen → varm luft strömmar ut, ersätts av kallare → densiteten ökar → ballongen + last blir tyngre → sjunker kontrollerat.</p>
+      <p style="margin-top:6px"><strong>Konstant höjd:</strong> Lyftkraft = tyngdkraft. Piloten justerar brännaren för att hålla rätt lufttemperatur.</p>
+    </div>
+  </div>
+
+  <div class="res-card">
+    <span class="res-badge np">NP-liknande</span>
+    <div class="res-q">🌊 Varför kan man inte dricka vatten med sugrör på Månen?</div>
+    <div class="res-context">På Månen finns inget atmosfärstryck. En astronaut försöker dricka juice ur ett slutet förpackning med sugrör.</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <label>Förklara hur ett sugrör fungerar på Jorden</label>
+        <textarea class="res-textarea" placeholder="Vad händer med trycket inuti röret? Vad driver vätskan upp?"></textarea>
+      </div>
+      <div class="res-step">
+        <label>Varför fungerar det inte utan atmosfärstryck?</label>
+        <textarea class="res-textarea" placeholder="Vad saknas på Månen?"></textarea>
+      </div>
+    </div>
+    <button class="btn-model" onclick="showModel('sugrör')">Visa modellsvar</button>
+    <div class="model-ans" id="ma-sugrör">
+      <h4>✅ Modellsvar</h4>
+      <p><strong>På Jorden:</strong> Sugning skapar undertryck inuti röret. Atmosfärens tryck (≈101 325 Pa) på vätskan utanför är högre → trycket driver vätskan upp i röret. Det är inte "sugkraften" som lyfter — det är lufttrycket som trycker upp.</p>
+      <p style="margin-top:6px"><strong>På Månen:</strong> Det finns inget atmosfärstryck. Inget tryck verkar på vätskan utifrån → inget kan trycka upp den i röret → sugrör fungerar inte. Astronauter dricker från slutna trycksatta förpackningar istället.</p>
+      <div class="grade-row">
+        <span class="grade grade-e">E: Nämner att lufttryck saknas</span>
+        <span class="grade grade-c">C: Förklarar att lufttrycket driver vätskan</span>
+        <span class="grade grade-a">A: Fullständig förklaring: undertryck + atmosfärstryck driver → saknas på Månen</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== NP-FRÅGOR ===== -->
+<div class="section" id="sec-np">
+
+  <div style="margin-top:16px;margin-bottom:16px;background:rgba(58,142,255,.08);border:1px solid rgba(58,142,255,.25);border-radius:12px;padding:14px;font-size:13px;line-height:1.6;color:#a8d4ff">
+    <strong>🎯 Riktiga NP-frågor</strong> från ämnesproven 2016. Motivera alltid dina svar!
+  </div>
+
+  <div class="np-card">
+    <div class="np-header">
+      <span class="np-logo">NP 2016</span>
+      <span class="np-year">Delprov A1 · Fråga 8</span>
+    </div>
+    <div class="np-q">Ett fartyg åker mellan hav med olika salthalt. Havens olika salthalter avgör hur mycket last som fartyget kan frakta. Använd kunskaper om vattnets densitet och lyftkraft för att förklara hur havens olika salthalter påverkar hur mycket last som fartyget kan frakta.</div>
+    <div class="res-steps" style="margin-top:12px">
+      <div class="res-step">
+        <label>Ditt svar</label>
+        <textarea class="res-textarea" placeholder="Förklara sambandet: salthalt → densitet → lyftkraft → last..." style="min-height:90px"></textarea>
+      </div>
+    </div>
+    <button class="btn-model" onclick="showModel('np1')">Visa exempelsvar (E/C/A)</button>
+    <div class="model-ans" id="ma-np1">
+      <h4>✅ Exempelsvar</h4>
+      <p><strong>E:</strong> "I saltvatten flyter fartyget högre och kan ta mer last."</p>
+      <p style="margin-top:6px"><strong>C:</strong> "Saltvatten har högre densitet än sötvatten. Lyftkraften är större i saltvatten → fartyget flyter högre → kan lasta mer utan att sjunka djupare än tillåtet. I sötvatten (lägre densitet) är lyftkraften mindre → fartyget måste lasta av."</p>
+      <p style="margin-top:6px"><strong>A:</strong> Komplett svar som kopplar salthalt → densitet stiger → F_L = ρ·V·g ökar → fartyget flyter med samma last men djupgåendet minskar → mer last möjlig. Tydlig kedja av orsak och verkan med rätt begrepp.</p>
+    </div>
+  </div>
+
+  <div class="np-card">
+    <div class="np-header">
+      <span class="np-logo">NP 2016</span>
+      <span class="np-year">Delprov A1 · Fråga 5</span>
+    </div>
+    <div class="np-q">Vilket påstående om lyftkraft är korrekt?</div>
+    <div class="fq-opts" style="margin-top:8px">
+      <button class="fq-opt" onclick="fAns(this,false,'NP2')">A. Lyftkraften beror på föremålets massa</button>
+      <button class="fq-opt" onclick="fAns(this,true,'NP2')">B. Lyftkraften är lika stor som vikten av den undanträngda vätskan</button>
+      <button class="fq-opt" onclick="fAns(this,false,'NP2')">C. Lyftkraften ökar alltid med djupet</button>
+      <button class="fq-opt" onclick="fAns(this,false,'NP2')">D. Lyftkraften är noll om föremålet sjunker</button>
+    </div>
+    <div class="fq-feedback" id="fb-NP2"></div>
+  </div>
+
+  <div class="np-card">
+    <div class="np-header">
+      <span class="np-logo">NP-typ</span>
+      <span class="np-year">Beräknings- &amp; resonemangsuppgift</span>
+    </div>
+    <div class="np-q">En person (tyngd 750 N) springer med spikskor över en myr. Varje spik har arean 0,5 cm² = 0,00005 m². Det finns 40 spikar i kontakt med marken. Hur stort är trycket mot myren? Förklara varför det är viktigt att sprida vikten.</div>
+    <div class="res-steps" style="margin-top:12px">
+      <div class="res-step">
+        <label>Beräkning: total area och tryck</label>
+        <textarea class="res-textarea" placeholder="A_total = 40 × 0,00005 = ? m², sedan p = F/A = ?"></textarea>
+      </div>
+      <div class="res-step">
+        <label>Förklaring: varför är trycket viktigt?</label>
+        <textarea class="res-textarea" placeholder="Vad händer om man istället har en liten area..."></textarea>
+      </div>
+    </div>
+    <button class="btn-model" onclick="showModel('np3')">Visa modellsvar</button>
+    <div class="model-ans" id="ma-np3">
+      <h4>✅ Modellsvar</h4>
+      <p><strong>Beräkning:</strong> A_total = 40 × 0,00005 = 0,002 m²<br>p = F/A = 750 / 0,002 = 375 000 Pa = 375 kPa</p>
+      <p style="margin-top:6px"><strong>Förklaring:</strong> Spikskor sprider vikten på många spikar → lägre tryck per spik → sjunker inte ner i myren. Jämför: om man bara stod på EN spik: p = 750/0,00005 = 15 000 000 Pa → sjunker direkt. Stor area = litet tryck (p = F/A).</p>
+    </div>
+  </div>
+
+  <div class="np-card">
+    <div class="np-header">
+      <span class="np-logo">NP-typ</span>
+      <span class="np-year">Flerval — tryckets riktning</span>
+    </div>
+    <div class="np-q">I vilken riktning verkar vätsketryck mot en dykare på 5 meters djup?</div>
+    <div class="fq-opts" style="margin-top:8px">
+      <button class="fq-opt" onclick="fAns(this,false,'NP4')">A. Bara nedåt, med tyngdkraften</button>
+      <button class="fq-opt" onclick="fAns(this,false,'NP4')">B. Bara uppåt, som lyftkraft</button>
+      <button class="fq-opt" onclick="fAns(this,true,'NP4')">C. Åt alla håll — trycket i en vätska verkar lika i alla riktningar</button>
+      <button class="fq-opt" onclick="fAns(this,false,'NP4')">D. Bara horisontellt från sidan</button>
+    </div>
+    <div class="fq-feedback" id="fb-NP4"></div>
+  </div>
+</div>
+
+<script>
+const STORAGE_KEY = 'fysik_tryck';
+const quizItems = Array(21).fill(null);
+const allCards = [
+  {tag:'Tryck',q:'Formeln för tryck?',a:'p = F / A\np = tryck (Pascal, Pa)\nF = kraft (Newton, N)\nA = area (m²)\nStort F eller liten A → högt tryck!',hint:'Pa = N/m²'},
+  {tag:'Tryck',q:'Vad är Pascal (Pa)?',a:'Enheten för tryck. 1 Pa = 1 N/m². Normalt lufttryck ≈ 101 325 Pa ≈ 1013 hPa. Även bar används: 1 bar ≈ 100 000 Pa.',hint:'Lufttryck ≈ 101 325 Pa'},
+  {tag:'Tryck',q:'Hur ökar vätsketrycket med djupet?',a:'p = ρ · g · h\nρ = vätskans densitet (kg/m³)\ng = 9,8 ≈ 10 m/s²\nh = djup (m)\nVar 10 m i vatten = +100 000 Pa extra tryck.',hint:'Djupare = mer vattenpelare ovanför'},
+  {tag:'Tryck',q:'Vad är Arkimedes princip?',a:'En kropp i en vätska utsätts för en lyftkraft som är lika stor som vikten av den undanträngda vätskan.\nF_L = ρ_vätska · V_nedsänkt · g',hint:'Upptäckt i badkaret!'},
+  {tag:'Lyftkraft',q:'När flyter ett föremål?',a:'När föremålets genomsnittsdensitet är lägre än vätskans densitet.\nρ_föremål < ρ_vätska → Flyter\nρ_föremål > ρ_vätska → Sjunker',hint:'Trä (≈0,5) < Vatten (1,0) → flyter'},
+  {tag:'Lyftkraft',q:'Hur beräknar man lyftkraften?',a:'F_L = ρ_vätska · V_nedsänkt · g\nAlternativt: F_L = tyngd i luft − tyngd i vätska (mätt med fjädervåg)',hint:'Undanträngd vätska'},
+  {tag:'Lyftkraft',q:'Varför flyter ett stålskepp?',a:'Skrovet omsluter luftfyllda utrymmen. Skeppets totala genomsnittsdensitet (stål + luft) är lägre än vattnets → flyter. Arkimedes princip.',hint:'Volym med luft räknas med'},
+  {tag:'Lyftkraft',q:'Varför flyter fartyg högre i saltvatten?',a:'Saltvatten har högre densitet → ger större lyftkraft för samma nedsänkt volym → fartyget behöver inte sänkas ner lika djupt för att lyftkraften ska bära fartygets vikt.',hint:'ρ_salt ≈ 1025 kg/m³ > ρ_sötvatten'},
+  {tag:'Lufttryck',q:'Vad är lufttryck?',a:'Trycket som atmosfärens luftpelares vikt utövar. Normalt: ~101 325 Pa = 1013 hPa = 1 atm. Mäts med barometer.',hint:'Lufttrycket bär en vattenpelare på ~10 m'},
+  {tag:'Lufttryck',q:'Vad är hektopascal (hPa)?',a:'1 hPa = 100 Pa. Används i meteorologi. Normalt lufttryck: 1013 hPa. Lågtryck <1013 hPa (oväder), högtryck >1013 hPa (fint väder).',hint:'h = hekto = 100'},
+  {tag:'Lufttryck',q:'Varför minskar lufttrycket med höjden?',a:'Ju högre upp, desto tunnare luft (färre molekyler per volym) och kortare luftpelare ovanför → lägre tryck. På 5 500 m är trycket ungefär hälften av havsytans.',hint:'Everest-toppen: ~1/3 av normaltrycket'},
+  {tag:'Över/Undertryck',q:'Vad är övertryck?',a:'Trycket OVER det normala atmosfärstrycket. Ex: pumpat däck (2-3 bar övertryck), tryckkokare. Mäts relativt atmosfärstrycket.',hint:'Däcktryck anges som övertryck'},
+  {tag:'Över/Undertryck',q:'Vad är undertryck?',a:'Trycket UNDER atmosfärens. Skapas t.ex. av sprutor, sugkoppar, sugröret (du skapar undertryck i munnen). Atmosfärtrycket utanför driver då in eller upp vätskan.',hint:'Sugrör = undertryck i munnen'},
+  {tag:'Över/Undertryck',q:'Vad är vakuum?',a:'Utrymme utan materia (eller extremt lite). Trycket = 0 Pa. Finns naturligt i rymden. Skapas tekniskt i t.ex. glödlampor, vakuumförpackningar.',hint:'Rymden = vakuum'},
+  {tag:'Tillämpningar',q:'Hur fungerar ett sugrör?',a:'Du skapar undertryck i munnen. Atmosfärens tryck (101 325 Pa) på vätskan utifrån överstiger undertrycket → trycker upp vätskan i röret. Det är INTE "sugkraften" — det är lufttrycket som driver.',hint:'Lufttrycket trycker upp, inte sugkraften'},
+  {tag:'Tillämpningar',q:'Hur fungerar en ubåts ballasttankar?',a:'Sänka: fyller tankar med vatten → genomsnittsdensiteten ökar → sjunker.\nStiga: blåser in trycksatt luft → driver ut vatten → densiteten minskar → stiger.',hint:'Densitetsstyrning'},
+  {tag:'Tillämpningar',q:'Varför är höga klackar farliga för golv?',a:'p = F/A. Kroppstyngden (~600 N) pressas mot minimal area (~1 cm²) → enormt tryck (~6 MPa). Kan överstiga materialets hållfasthet → märken i parkettgolv, sjunker i mjuk mark.',hint:'Liten area = högt tryck'},
+  {tag:'Tillämpningar',q:'Hur hjälper breda skidor i djup snö?',a:'Breda skidor ger stor kontaktarea → tryck = F/A minskar → sjunker inte ner i snön. Snöskotrar och skidåkare: samma princip.',hint:'Stor area = litet tryck'},
+  {tag:'Tillämpningar',q:'Varför plattas PET-flaskor ihop i höjd?',a:'Inne i förpackningen är trycket normalt. På hög höjd (lågt lufttryck utanför) är övertrycket inuti relativt högre → flaskan buktar ut. Omvänt: stängs på höjden och öppnas på marken → undertryck → plattats ihop.',hint:'Tryckskillnad inuti/utanför'},
+  {tag:'Tryck',q:'Hur verkar vätsketryck åt vilket håll?',a:'Vätsketrycket verkar lika i ALLA riktningar vid samma djup (Pascal lag). Det är inte bara nedåt — en dykare känner trycket mot hela kroppen.',hint:'Alla riktningar vid samma djup'},
+];
+
+let cIdx=0;
+const cardStates={};
+
+function renderCard(){
+  const c=allCards[cIdx];
+  const flipped=cardStates[cIdx]==='flipped'||cardStates[cIdx]==='good'||cardStates[cIdx]==='bad';
+  document.getElementById('cardArea').innerHTML=`
+    <div class="card-wrap">
+      <div class="card-inner ${flipped?'flipped':''}" id="cinner" onclick="flipCard()">
+        <div class="card-front">
+          <div class="card-tag">${c.tag}</div>
+          <div class="card-q">${c.q}</div>
+          ${c.hint?`<div class="card-hint">💡 ${c.hint}</div>`:''}
+        </div>
+        <div class="card-back">
+          <div class="card-tag" style="color:var(--accent2)">Svar</div>
+          <div class="card-a">${c.a.replace(/\n/g,'<br>')}</div>
+        </div>
+      </div>
+    </div>
+    ${flipped?`<div class="btn-row">
+      <button class="btn-know" onclick="markCard('good')">✓ Kan det!</button>
+      <button class="btn-again" onclick="markCard('bad')">↺ Igen</button>
+    </div>`:''}
+  `;
+  document.getElementById('cardCounter').textContent=`${cIdx+1} / ${allCards.length}`;
+  updateCardStats();
+}
+function flipCard(){if(cardStates[cIdx]==='good')return;cardStates[cIdx]='flipped';renderCard()}
+function prevCard(){cIdx=(cIdx-1+allCards.length)%allCards.length;renderCard()}
+function nextCard(){cIdx=(cIdx+1)%allCards.length;renderCard()}
+function markCard(s){cardStates[cIdx]=s;if(s==='good')setTimeout(()=>{nextCard()},300);else renderCard()}
+function updateCardStats(){
+  const good=Object.values(cardStates).filter(v=>v==='good').length;
+  document.getElementById('cGood').textContent=good;
+  document.getElementById('cLeft').textContent=allCards.length-good;
+  document.getElementById('cPct').textContent=Math.round((good/allCards.length)*100)+'%';
+  updateMainProgress();
+}
+
+const fbTexts={
+  F1:{ok:'✅ Rätt! p = F/A — nålens area är extremt liten → trycket per cm² blir enormt trots samma kraft som ett finger.',err:'❌ Fel. Kraften är densamma. Det är arean som avgör trycket: p = F/A. Liten area → högt tryck.'},
+  F2:{ok:'✅ Rätt! Salt ökar vätskans densitet → lyftkraften (F_L = ρ·V·g) ökar → kroppen flyter lättare.',err:'❌ Fel. Lyftkraften beror på vätskans densitet (F_L = ρ·V·g). Saltvatten är tätare → ger större lyftkraft.'},
+  F3:{ok:'✅ Rätt! p = ρgh. På 10 m djup i vatten: p = 1000·10·10 = 100 000 Pa extra — lika som hela lufttrycket!',err:'❌ Fel. Trycket ökar med djupet (p = ρgh). Vattenpelaren ovanför trycket nedåt och alltsidigt.'},
+  F4:{ok:'✅ Rätt! Ballasttankar fylls med vatten → genomsnittsdensiteten ökar → lyftkraft < tyngdkraft → sjunker.',err:'❌ Fel. Ubåten justerar sin genomsnittsdensitet via ballasttankar: mer vatten in → tyngre → sjunker.'},
+  F5:{ok:'✅ Rätt! Skrovet är inte massivt stål — inuti är det luftfyllt. Genomsnittsdensiteten (stål + luft) < vattnets densitet.',err:'❌ Fel. Skeppet är inte massivt. Det inneslutar luft → genomsnittsdensiteten < vattnet → flyter.'},
+  F6:{ok:'✅ Rätt! p = ρgh ökar med djupet → vattenpelaren pressar mot trumhinnan med högre kraft.',err:'❌ Fel. Det är vätsketrycket p = ρgh som ökar med djupet och trycker mot trumhinnan.'},
+  F7:{ok:'✅ Rätt! Vakuum = (nästan) inget material, tryck ≈ 0 Pa. Rymden är vakuum.',err:'❌ Fel. Vakuum är ett utrymme utan (eller med extremt lite) materia. Trycket är noll eller nära noll.'},
+  F8:{ok:'✅ Rätt! Sugning skapar undertryck inuti. Atmosfärtrycket utanför är högre → driver vätskan upp. Lufttrycket "trycker" — det är inte en aktiv "sugkraft".',err:'❌ Fel. Undertryck inuti röret gör att atmosfärtrycket utanför driver vätskan uppåt. Ingenting "suger aktivt".'},
+  F9:{ok:'✅ Rätt! Kortare luftpelare ovanför berget → mindre luftmassa → lägre lufttryck.',err:'❌ Fel. Det är mängden luft ovanför som skapar trycket. På hög höjd är luftpelaren kortare → lägre tryck.'},
+  F10:{ok:'✅ Rätt! Övertryck = trycket OVER det normala lufttrycket. Ex: däck pumpad till 2 bar övertryck.',err:'❌ Fel. Övertryck innebär att trycket inuti är HÖGRE än omgivningens lufttryck.'},
+  F11:{ok:'✅ Rätt! Lyftkraft = skillnaden: 8 N (i luft) − 5 N (i vatten) = 3 N. Det är vikten av undanträngd vätska.',err:'❌ Fel. Lyftkraft = tyngd i luft − tyngd i vätska = 8 − 5 = 3 N.'},
+  F12:{ok:'✅ Rätt! 101 325 Pa är ett stort tal att skriva. hPa ger ~1013 vilket är mer hanterbart för meteorologer.',err:'❌ Fel. hPa är bara en bekvämare enhet (100× Pa). Normaltrycket = 1013 hPa istället för 101 300 Pa.'},
+  NP2:{ok:'✅ Rätt! Arkimedes princip: lyftkraften = vikten av undanträngd vätska. Det är definitionen.',err:'❌ Fel. Svaret är B. Arkimedes princip säger att lyftkraften = vikten av den undanträngda vätskan.'},
+  NP4:{ok:'✅ Rätt! Vätsketrycket verkar lika i alla riktningar (Pascals lag) — inte bara nedåt.',err:'❌ Fel. Svaret är C. Vätsketryck verkar i alla riktningar lika vid ett givet djup (Pascals princip).'},
+};
+
+const fAnswered={};
+function fAns(btn,correct,id){
+  if(fAnswered[id]!==undefined)return;
+  fAnswered[id]=correct;
+  btn.parentElement.querySelectorAll('.fq-opt').forEach(o=>o.disabled=true);
+  btn.classList.add(correct?'correct':'wrong');
+  const fb=document.getElementById('fb-'+id);
+  if(fb){fb.textContent=correct?fbTexts[id].ok:fbTexts[id].err;fb.className='fq-feedback show '+(correct?'ok':'err');}
+  if(correct){
+    const s=document.getElementById('fScore');if(s)s.textContent=Object.values(fAnswered).filter(v=>v===true).length;
+    const p=document.getElementById('fPct');if(p)p.textContent=Math.round((Object.values(fAnswered).filter(v=>v===true).length/Object.keys(fAnswered).length)*100)+'%';
+  }
+  updateMainProgress();
+}
+
+function chk(inputId,correct,resultId,okMsg,errMsg,tol){
+  const val=parseFloat(document.getElementById(inputId).value);
+  const el=document.getElementById(resultId);
+  if(isNaN(val)){el.textContent='Ange ett tal.';el.className='calc-result show err';return;}
+  const ok=Math.abs(val-correct)<=tol;
+  el.textContent=ok?okMsg:errMsg;
+  el.className='calc-result show '+(ok?'ok':'err');
+  if(ok)updateMainProgress();
+}
+
+function showModel(id){document.getElementById('ma-'+id).classList.toggle('show')}
+
+function showTab(name,e){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('sec-'+name).classList.add('active');
+  if(e)e.currentTarget.classList.add('active');
+}
+
+function updateMainProgress() {
+  const good   = Object.values(cardStates).filter(v => v === 'good').length;
+  const fRight = Object.values(fAnswered).filter(v => v === true).length;
+  const total  = allCards.length + quizItems.length;
+  const pct    = Math.min(100, Math.round(((good + fRight) / total) * 100));
+  document.getElementById('mainProgress').style.width = pct + '%';
+  document.getElementById('progressText').textContent = (good + fRight) + ' av ' + total + ' klara';
+  localStorage.setItem(STORAGE_KEY + '_progress', JSON.stringify({
+    pct, good, fRight, total,
+    cardStates: Object.assign({}, cardStates),
+    fAnswered:  Object.assign({}, fAnswered),
+  }));
+}
+
+function restoreProgress() {
+  const raw = localStorage.getItem(STORAGE_KEY + '_progress');
+  if (!raw) return;
+  try {
+    const data = JSON.parse(raw);
+    if (data.cardStates) Object.entries(data.cardStates).forEach(([k,v]) => { cardStates[k] = v; });
+    if (data.fAnswered)  Object.entries(data.fAnswered).forEach(([k,v])  => { fAnswered[k] = v; });
+  } catch(e) {}
+}
+
+restoreProgress();
+renderCard();
+</script>
+</body>
+</html>

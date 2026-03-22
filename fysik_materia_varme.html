@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Materia & Värme — NP Fysik åk 9</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f1117;
+  --surface: #1a1d27;
+  --card: #222638;
+  --border: #2e3347;
+  --accent: #ff6b35;
+  --accent2: #ffd23f;
+  --accent3: #06d6a0;
+  --text: #e8eaf0;
+  --muted: #7a7f96;
+  --good: #06d6a0;
+  --bad: #ff4d6d;
+  --warn: #ffd23f;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+/* HEADER */
+.header{background:linear-gradient(135deg,#1a0a00 0%,#2d1500 40%,#0f1117 100%);padding:32px 24px 24px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.header::before{content:'🔥';position:absolute;right:24px;top:50%;transform:translateY(-50%);font-size:80px;opacity:.12}
+.header::after{content:'⚛️';position:absolute;right:100px;top:30%;font-size:50px;opacity:.1}
+.badge{display:inline-block;background:var(--accent);color:#fff;font-size:11px;font-weight:700;letter-spacing:2px;padding:4px 10px;border-radius:4px;margin-bottom:10px;text-transform:uppercase}
+.header h1{font-size:clamp(22px,5vw,36px);font-weight:900;letter-spacing:-1px;line-height:1.1}
+.header h1 span{color:var(--accent)}
+.subtitle{color:var(--muted);margin-top:6px;font-size:14px}
+
+/* PROGRESS */
+.progress-bar{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin:20px 16px 0}
+.prog-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:13px}
+.prog-label span:last-child{font-family:'JetBrains Mono',monospace;color:var(--accent);font-size:12px}
+.prog-track{height:8px;background:var(--border);border-radius:99px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:99px;transition:width .5s ease;width:0%}
+
+/* TABS */
+.tabs{display:flex;gap:4px;padding:16px;overflow-x:auto;border-bottom:1px solid var(--border);background:var(--surface)}
+.tab-btn{flex-shrink:0;padding:8px 16px;border:1px solid var(--border);background:transparent;color:var(--muted);border-radius:8px;cursor:pointer;font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;transition:all .2s}
+.tab-btn:hover{color:var(--text);border-color:var(--accent)}
+.tab-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* SECTIONS */
+.section{display:none;padding:16px;max-width:720px;margin:0 auto}
+.section.active{display:block}
+
+/* ATOM DIAGRAM */
+.atom-box{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:20px;text-align:center}
+.atom-box h3{font-size:14px;font-weight:700;color:var(--accent2);letter-spacing:1px;text-transform:uppercase;margin-bottom:16px}
+.atom-table{width:100%;border-collapse:collapse;font-size:13px}
+.atom-table th{background:var(--card);color:var(--muted);padding:8px 12px;text-align:left;font-weight:600;font-size:11px;letter-spacing:1px;text-transform:uppercase}
+.atom-table td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
+.atom-table tr:last-child td{border-bottom:none}
+.particle{display:inline-block;width:14px;height:14px;border-radius:50%;margin-right:6px;vertical-align:middle}
+.p-proton{background:#ff6b35}
+.p-neutron{background:#7a7f96}
+.p-electron{background:#06d6a0}
+.formula-chip{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:4px 10px;font-family:'JetBrains Mono',monospace;font-size:13px;display:inline-block;margin:2px}
+
+/* PHASE DIAGRAM */
+.phase-box{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:20px}
+.phase-box h3{font-size:14px;font-weight:700;color:var(--accent3);letter-spacing:1px;text-transform:uppercase;margin-bottom:14px}
+.phase-flow{display:flex;align-items:center;flex-wrap:wrap;gap:4px;justify-content:center;margin-bottom:16px}
+.phase-state{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 16px;text-align:center;min-width:90px}
+.phase-state .name{font-weight:700;font-size:14px}
+.phase-state .desc{font-size:10px;color:var(--muted);margin-top:2px}
+.phase-arrow{display:flex;flex-direction:column;align-items:center;font-size:10px;color:var(--muted);text-align:center;padding:0 2px}
+.phase-arrow .top{color:var(--accent);font-size:10px;margin-bottom:2px}
+.phase-arrow .bot{color:var(--accent3);font-size:10px;margin-top:2px}
+.phase-arrow .arr{font-size:18px;color:var(--border)}
+
+/* HEAT TRANSFER */
+.heat-box{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:20px}
+.heat-box h3{font-size:14px;font-weight:700;color:var(--accent);letter-spacing:1px;text-transform:uppercase;margin-bottom:14px}
+.heat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.heat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center}
+.heat-icon{font-size:28px;margin-bottom:8px}
+.heat-name{font-weight:700;font-size:13px;margin-bottom:4px}
+.heat-desc{font-size:11px;color:var(--muted);line-height:1.5}
+
+/* FLASHCARDS */
+.deck-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:20px 0 8px}
+.card-wrap{perspective:1000px;margin-bottom:20px}
+.card-inner{position:relative;width:100%;min-height:160px;transform-style:preserve-3d;transition:transform .5s ease;cursor:pointer}
+.card-inner.flipped{transform:rotateY(180deg)}
+.card-front,.card-back{position:absolute;top:0;left:0;width:100%;min-height:160px;backface-visibility:hidden;border-radius:16px;padding:24px;display:flex;flex-direction:column;justify-content:center}
+.card-front{background:var(--card);border:1px solid var(--border)}
+.card-back{background:linear-gradient(135deg,#1a2a1a,#0d1f0d);border:1px solid var(--accent3);transform:rotateY(180deg)}
+.card-tag{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.card-q{font-size:18px;font-weight:700;line-height:1.3}
+.card-a{font-size:15px;line-height:1.6;color:#b8f5e0}
+.card-hint{font-size:11px;color:var(--muted);margin-top:4px}
+.card-tap{font-size:11px;color:var(--muted);text-align:center;margin-top:8px}
+
+.btn-row{display:flex;gap:8px;margin-top:8px}
+.btn-know{flex:1;background:rgba(6,214,160,.15);border:1px solid var(--accent3);color:var(--accent3);padding:10px;border-radius:10px;cursor:pointer;font-family:'Outfit',sans-serif;font-weight:700;font-size:13px;transition:all .2s}
+.btn-know:hover{background:rgba(6,214,160,.3)}
+.btn-again{flex:1;background:rgba(255,77,109,.12);border:1px solid var(--bad);color:var(--bad);padding:10px;border-radius:10px;cursor:pointer;font-family:'Outfit',sans-serif;font-weight:700;font-size:13px;transition:all .2s}
+.btn-again:hover{background:rgba(255,77,109,.25)}
+.card-nav{display:flex;align-items:center;justify-content:space-between;margin-top:6px;font-size:12px;color:var(--muted)}
+.btn-nav{background:var(--card);border:1px solid var(--border);color:var(--text);padding:6px 14px;border-radius:8px;cursor:pointer;font-family:'Outfit',sans-serif;font-size:12px}
+
+/* FÖRSTÅELSE */
+.fq-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:14px}
+.fq-num{font-size:11px;font-weight:700;letter-spacing:1px;color:var(--muted);text-transform:uppercase;margin-bottom:6px}
+.fq-q{font-weight:700;font-size:15px;line-height:1.5;margin-bottom:12px}
+.fq-opts{display:flex;flex-direction:column;gap:6px}
+.fq-opt{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px;cursor:pointer;font-size:13px;text-align:left;color:var(--text);font-family:'Outfit',sans-serif;transition:all .2s;width:100%}
+.fq-opt:hover:not(:disabled){border-color:var(--accent);background:rgba(255,107,53,.08)}
+.fq-opt.correct{background:rgba(6,214,160,.15);border-color:var(--accent3);color:var(--accent3)}
+.fq-opt.wrong{background:rgba(255,77,109,.12);border-color:var(--bad);color:var(--bad)}
+.fq-feedback{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:13px;line-height:1.5;display:none}
+.fq-feedback.show{display:block}
+.fq-feedback.ok{background:rgba(6,214,160,.1);border-left:3px solid var(--accent3);color:#b8f5e0}
+.fq-feedback.err{background:rgba(255,77,109,.1);border-left:3px solid var(--bad);color:#ffb3c1}
+
+/* RÄKNA */
+.calc-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:14px}
+.calc-q{font-weight:700;font-size:15px;margin-bottom:14px;line-height:1.5}
+.calc-input{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.calc-inp{background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:9px 14px;font-family:'JetBrains Mono',monospace;font-size:14px;width:120px;outline:none}
+.calc-inp:focus{border-color:var(--accent)}
+.calc-unit{color:var(--muted);font-size:13px}
+.btn-check{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:9px 18px;cursor:pointer;font-family:'Outfit',sans-serif;font-weight:700;font-size:13px}
+.calc-result{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:13px;display:none}
+.calc-result.show{display:block}
+.calc-result.ok{background:rgba(6,214,160,.1);border-left:3px solid var(--accent3);color:#b8f5e0}
+.calc-result.err{background:rgba(255,77,109,.1);border-left:3px solid var(--bad);color:#ffb3c1}
+
+/* RESONEMANG */
+.res-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;margin-bottom:16px}
+.res-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 8px;border-radius:4px;margin-bottom:10px}
+.res-badge.np{background:rgba(255,107,53,.2);color:var(--accent)}
+.res-badge.res{background:rgba(255,210,63,.2);color:var(--accent2)}
+.res-q{font-weight:700;font-size:15px;line-height:1.5;margin-bottom:12px}
+.res-context{background:var(--surface);border-left:3px solid var(--accent2);border-radius:0 8px 8px 0;padding:12px 14px;margin-bottom:14px;font-size:13px;color:#ffe8a0;line-height:1.6}
+.res-steps{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.res-step{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.res-step label{font-size:12px;font-weight:700;color:var(--muted);display:block;margin-bottom:6px;letter-spacing:1px;text-transform:uppercase}
+.res-textarea{width:100%;background:transparent;border:none;color:var(--text);font-family:'Outfit',sans-serif;font-size:13px;resize:none;outline:none;min-height:56px;line-height:1.6}
+.btn-model{background:transparent;border:1px solid var(--accent2);color:var(--accent2);padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;transition:all .2s}
+.btn-model:hover{background:rgba(255,210,63,.1)}
+.model-ans{margin-top:10px;background:rgba(255,210,63,.06);border:1px solid rgba(255,210,63,.25);border-radius:10px;padding:14px;font-size:13px;line-height:1.6;display:none}
+.model-ans.show{display:block}
+.model-ans h4{color:var(--accent2);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.grade-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.grade{font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px}
+.grade-e{background:rgba(255,107,53,.2);color:var(--accent)}
+.grade-c{background:rgba(255,210,63,.2);color:var(--accent2)}
+.grade-a{background:rgba(6,214,160,.2);color:var(--accent3)}
+
+/* NP */
+.np-card{background:linear-gradient(135deg,#1a120a,#1a1d27);border:1px solid rgba(255,107,53,.3);border-radius:16px;padding:22px;margin-bottom:16px}
+.np-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.np-logo{background:var(--accent);color:#fff;font-weight:900;font-size:11px;padding:4px 8px;border-radius:6px;letter-spacing:1px}
+.np-year{color:var(--muted);font-size:12px}
+.np-q{font-weight:700;font-size:15px;line-height:1.5;margin-bottom:12px}
+.np-table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0 14px}
+.np-table th{background:rgba(255,255,255,.05);padding:8px 12px;text-align:left;font-size:11px;letter-spacing:1px;color:var(--muted);font-weight:700;text-transform:uppercase}
+.np-table td{padding:10px 12px;border-bottom:1px solid var(--border)}
+.np-table tr:last-child td{border-bottom:none}
+
+/* STATS */
+.stats-row{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 16px;flex:1;min-width:80px;text-align:center}
+.stat-val{font-size:24px;font-weight:900;font-family:'JetBrains Mono',monospace}
+.stat-lbl{font-size:10px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:1px}
+
+@media(max-width:480px){.heat-grid{grid-template-columns:1fr}.phase-flow{gap:2px}.phase-state{min-width:70px;padding:8px}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="badge">Kapitel 3 av 9</div>
+  <h1>Materia &amp; <span>Värme</span></h1>
+  <p class="subtitle">Atomer · Fasövergångar · Densitet · Värmeöverföring · Temperatur</p>
+</div>
+
+<div class="progress-bar">
+  <div class="prog-label">
+    <span>Din framgång</span>
+    <span id="progressText">0 av 51 klara</span>
+  </div>
+  <div class="prog-track"><div class="prog-fill" id="mainProgress"></div></div>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('begrepp',event)">🃏 Begrepp</button>
+  <button class="tab-btn" onclick="showTab('forstaaelse',event)">💡 Förståelse</button>
+  <button class="tab-btn" onclick="showTab('rakna',event)">🔢 Räkna</button>
+  <button class="tab-btn" onclick="showTab('resonemang',event)">🧠 Resonemang</button>
+  <button class="tab-btn" onclick="showTab('np',event)">📋 NP-Frågor</button>
+</div>
+
+<!-- ===== BEGREPP ===== -->
+<div class="section active" id="sec-begrepp">
+
+  <div class="stats-row" style="margin-top:16px">
+    <div class="stat"><div class="stat-val" id="cGood" style="color:var(--accent3)">0</div><div class="stat-lbl">Kan</div></div>
+    <div class="stat"><div class="stat-val" id="cLeft" style="color:var(--accent)">24</div><div class="stat-lbl">Kvar</div></div>
+    <div class="stat"><div class="stat-val" id="cPct" style="color:var(--accent2)">0%</div><div class="stat-lbl">Klart</div></div>
+  </div>
+
+  <!-- ATOM -->
+  <div class="atom-box">
+    <h3>⚛️ Atomens uppbyggnad</h3>
+    <table class="atom-table">
+      <tr><th>Partikel</th><th>Plats</th><th>Laddning</th><th>Massa</th></tr>
+      <tr><td><span class="particle p-proton"></span>Proton</td><td>Kärnan</td><td>+1</td><td>1 u</td></tr>
+      <tr><td><span class="particle p-neutron"></span>Neutron</td><td>Kärnan</td><td>0 (neutral)</td><td>1 u</td></tr>
+      <tr><td><span class="particle p-electron"></span>Elektron</td><td>Elektronskal</td><td>−1</td><td>~0</td></tr>
+    </table>
+    <div style="margin-top:12px;font-size:12px;color:var(--muted)">Nyckelformler: <span class="formula-chip">Atomnummer = antal protoner</span> <span class="formula-chip">Masstal = protoner + neutroner</span></div>
+  </div>
+
+  <!-- PHASE FLOW -->
+  <div class="phase-box">
+    <h3>🌡️ Fasövergångar</h3>
+    <div class="phase-flow">
+      <div class="phase-state" style="border-color:var(--accent3)"><div class="name" style="color:var(--accent3)">Fast</div><div class="desc">Ordnat, tätt</div></div>
+      <div class="phase-arrow"><div class="top">Smältning ↑</div><div class="arr">⇄</div><div class="bot">Stelning ↓</div></div>
+      <div class="phase-state" style="border-color:var(--accent2)"><div class="name" style="color:var(--accent2)">Flytande</div><div class="desc">Rör sig fritt</div></div>
+      <div class="phase-arrow"><div class="top">Kokning/avdunst. ↑</div><div class="arr">⇄</div><div class="bot">Kondensation ↓</div></div>
+      <div class="phase-state" style="border-color:var(--accent)"><div class="name" style="color:var(--accent)">Gas</div><div class="desc">Snabbt, spritt</div></div>
+    </div>
+    <p style="font-size:12px;color:var(--muted);text-align:center">↑ = energi tillförs · ↓ = energi avges</p>
+  </div>
+
+  <!-- HEAT TRANSFER -->
+  <div class="heat-box">
+    <h3>🔥 Tre sätt att transportera värme</h3>
+    <div class="heat-grid">
+      <div class="heat-card">
+        <div class="heat-icon">🍳</div>
+        <div class="heat-name">Ledning</div>
+        <div class="heat-desc">Värme leds direkt genom ett material. Ex: metallsked i varm soppa.</div>
+      </div>
+      <div class="heat-card">
+        <div class="heat-icon">♨️</div>
+        <div class="heat-name">Strömning</div>
+        <div class="heat-desc">Varm vätska/gas rör sig uppåt (konvektion). Ex: element, sjöbris.</div>
+      </div>
+      <div class="heat-card">
+        <div class="heat-icon">☀️</div>
+        <div class="heat-name">Strålning</div>
+        <div class="heat-desc">EM-strålning utan medium. Ex: solens värme, IR-strålning.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="deck-label">Begrepp — klicka för att vända</div>
+
+  <div id="cardArea"></div>
+  <div class="card-tap" id="tapHint">Tryck på kortet för att se svaret</div>
+  <div class="card-nav">
+    <button class="btn-nav" onclick="prevCard()">← Föregående</button>
+    <span id="cardCounter" style="font-family:'JetBrains Mono',monospace;font-size:12px">1 / 24</span>
+    <button class="btn-nav" onclick="nextCard()">Nästa →</button>
+  </div>
+</div>
+
+<!-- ===== FÖRSTÅELSE ===== -->
+<div class="section" id="sec-forstaaelse">
+  <div class="stats-row" style="margin-top:16px">
+    <div class="stat"><div class="stat-val" id="fScore" style="color:var(--accent3)">0</div><div class="stat-lbl">Rätt</div></div>
+    <div class="stat"><div class="stat-val" id="fPct" style="color:var(--accent2)">0%</div><div class="stat-lbl">Klart</div></div>
+  </div>
+
+  <div class="fq-card">
+    <div class="fq-num">Fråga 1</div>
+    <div class="fq-q">Vilket av följande påståenden om protoner är korrekt?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAnswer(this,false,'F1')">Protoner finns i elektronskalets yttre del</button>
+      <button class="fq-opt" onclick="fAnswer(this,true,'F1')">Protoner finns i atomkärnan och har positiv laddning</button>
+      <button class="fq-opt" onclick="fAnswer(this,false,'F1')">Protoner är neutrala och tyngre än neutroner</button>
+      <button class="fq-opt" onclick="fAnswer(this,false,'F1')">Antal protoner är alltid lika med masstal</button>
+    </div>
+    <div class="fq-feedback" id="fb-F1"></div>
+  </div>
+
+  <div class="fq-card">
+    <div class="fq-num">Fråga 2</div>
+    <div class="fq-q">Vatten kokar vid 100 °C. Vad händer med vattenmolekylerna när vattnet kokar?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAnswer(this,false,'F2')">Molekylerna förstörs och bildar nya ämnen</button>
+      <button class="fq-opt" onclick="fAnswer(this,false,'F2')">Molekylerna stannar kvar men rör sig långsammare</button>
+      <button class="fq-opt" onclick="fAnswer(this,true,'F2')">Molekylerna frigörs från vätskan och bildar ånga (gas)</button>
+      <button class="fq-opt" onclick="fAnswer(this,false,'F2')">Molekylerna ordnar sig i ett fast mönster</button>
+    </div>
+    <div class="fq-feedback" id="fb-F2"></div>
+  </div>
+
+  <div class="fq-card">
+    <div class="fq-num">Fråga 3</div>
+    <div class="fq-q">Varför stiger varm luft uppåt?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAnswer(this,false,'F3')">Varm luft är tyngre och sjunker alltid</button>
+      <button class="fq-opt" onclick="fAnswer(this,true,'F3')">Varm luft har lägre densitet och trängs uppåt av tyngre kall luft</button>
+      <button class="fq-opt" onclick="fAnswer(this,false,'F3')">Varm luft dras mot jordens magnetfält</button>
+      <button class="fq-opt" onclick="fAnswer(this,false,'F3')">Varm luft har fler molekyler per kubikmeter</button>
+    </div>
+    <div class="fq-feedback" id="fb-F3"></div>
+  </div>
+
+  <div class="fq-card">
+    <div class="fq-num">Fråga 4</div>
+    <div class="fq-q">Vad menas med absoluta nollpunkten (0 Kelvin = −273 °C)?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAnswer(this,false,'F4')">Temperaturen då vatten fryser</button>
+      <button class="fq-opt" onclick="fAnswer(this,false,'F4')">Den lägsta temperaturen som mätts i Arktis</button>
+      <button class="fq-opt" onclick="fAnswer(this,true,'F4')">Den teoretiska lägsta möjliga temperaturen — alla partikelrörelser upphör</button>
+      <button class="fq-opt" onclick="fAnswer(this,false,'F4')">Temperaturen i jordens inre kärna</button>
+    </div>
+    <div class="fq-feedback" id="fb-F4"></div>
+  </div>
+
+  <div class="fq-card">
+    <div class="fq-num">Fråga 5</div>
+    <div class="fq-q">En metallsked värms upp i handen. Vilken värmeöverföringsmetod dominerar?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAnswer(this,false,'F5')">Strålning</button>
+      <button class="fq-opt" onclick="fAnswer(this,false,'F5')">Konvektion (strömning)</button>
+      <button class="fq-opt" onclick="fAnswer(this,true,'F5')">Ledning — värmen leds direkt genom materialet</button>
+      <button class="fq-opt" onclick="fAnswer(this,false,'F5')">Induktion</button>
+    </div>
+    <div class="fq-feedback" id="fb-F5"></div>
+  </div>
+
+  <div class="fq-card">
+    <div class="fq-num">Fråga 6</div>
+    <div class="fq-q">En sjöbris uppstår en varm sommardag. Vad orsakar detta?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAnswer(this,false,'F6')">Havet är varmare än landet och driver bris mot land</button>
+      <button class="fq-opt" onclick="fAnswer(this,true,'F6')">Landet värms snabbare → varm luft stiger → kall havsluft strömmar in (konvektion)</button>
+      <button class="fq-opt" onclick="fAnswer(this,false,'F6')">Solstrålning driver vinden direkt mot stranden</button>
+      <button class="fq-opt" onclick="fAnswer(this,false,'F6')">Atmosfärens strålning skapar tryckskillnader oberoende av temperatur</button>
+    </div>
+    <div class="fq-feedback" id="fb-F6"></div>
+  </div>
+
+  <div class="fq-card">
+    <div class="fq-num">Fråga 7</div>
+    <div class="fq-q">Vilket är skillnaden mellan grundämne och kemisk förening?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAnswer(this,false,'F7')">Grundämnen är alltid gaser, föreningar alltid fasta</button>
+      <button class="fq-opt" onclick="fAnswer(this,true,'F7')">Grundämnen består av bara en atomtyp; föreningar av flera bundna atomtyper</button>
+      <button class="fq-opt" onclick="fAnswer(this,false,'F7')">Föreningar finns bara i periodiska systemet</button>
+      <button class="fq-opt" onclick="fAnswer(this,false,'F7')">Grundämnen kan inte smälta eller koka</button>
+    </div>
+    <div class="fq-feedback" id="fb-F7"></div>
+  </div>
+
+  <div class="fq-card">
+    <div class="fq-num">Fråga 8</div>
+    <div class="fq-q">Varför är ull ett bra isoleringsmaterial mot kyla?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAnswer(this,false,'F8')">Ull leder värme snabbt bort från kroppen</button>
+      <button class="fq-opt" onclick="fAnswer(this,false,'F8')">Ull reflekterar all strålning</button>
+      <button class="fq-opt" onclick="fAnswer(this,true,'F8')">Ull fångar in stillastående luft som är dålig värmeledare — minskar ledning och strömning</button>
+      <button class="fq-opt" onclick="fAnswer(this,false,'F8')">Ullmolekyler avger värme aktivt</button>
+    </div>
+    <div class="fq-feedback" id="fb-F8"></div>
+  </div>
+
+  <div class="fq-card">
+    <div class="fq-num">Fråga 9</div>
+    <div class="fq-q">En is-bit smälter. Temperaturen håller sig på 0 °C under hela smältprocessen. Varför?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAnswer(this,false,'F9')">Isen inte kan ta emot mer värme</button>
+      <button class="fq-opt" onclick="fAnswer(this,true,'F9')">All tillförd energi går åt till att bryta bindningarna i kristallstrukturen, inte till att höja temperaturen</button>
+      <button class="fq-opt" onclick="fAnswer(this,false,'F9')">Smältvatten kyler ner omgivningen exakt lika snabbt</button>
+      <button class="fq-opt" onclick="fAnswer(this,false,'F9')">Fasövergången sker utan energiutbyte</button>
+    </div>
+    <div class="fq-feedback" id="fb-F9"></div>
+  </div>
+
+  <div class="fq-card">
+    <div class="fq-num">Fråga 10</div>
+    <div class="fq-q">Vad händer med densiteten hos ett ämne när det värms upp (i allmänhet)?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAnswer(this,false,'F10')">Densiteten ökar eftersom massan ökar</button>
+      <button class="fq-opt" onclick="fAnswer(this,true,'F10')">Densiteten minskar — volymen ökar men massan är oförändrad</button>
+      <button class="fq-opt" onclick="fAnswer(this,false,'F10')">Densiteten förändras inte av temperatur</button>
+      <button class="fq-opt" onclick="fAnswer(this,false,'F10')">Densiteten ökar vid uppvärmning av gaser men minskar för vätskor</button>
+    </div>
+    <div class="fq-feedback" id="fb-F10"></div>
+  </div>
+
+  <div class="fq-card">
+    <div class="fq-num">Fråga 11</div>
+    <div class="fq-q">Hur värms jordens yta upp av solen?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAnswer(this,false,'F11')">Ledning — solen leder värme direkt</button>
+      <button class="fq-opt" onclick="fAnswer(this,false,'F11')">Konvektion — varm gasström från solen</button>
+      <button class="fq-opt" onclick="fAnswer(this,true,'F11')">Strålning — elektromagnetisk strålning (ljus och IR) tar sig genom vakuum</button>
+      <button class="fq-opt" onclick="fAnswer(this,false,'F11')">Jordens magnetfält fångar in solens värme</button>
+    </div>
+    <div class="fq-feedback" id="fb-F11"></div>
+  </div>
+
+  <div class="fq-card">
+    <div class="fq-num">Fråga 12</div>
+    <div class="fq-q">Varför känns ett metallhandtag kallare än ett trähandtag i samma rum?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAnswer(this,false,'F12')">Metall håller lägre temperatur naturligt</button>
+      <button class="fq-opt" onclick="fAnswer(this,true,'F12')">Metall leder värme bättre och suger snabbt värme från handen — ger kylande känsla</button>
+      <button class="fq-opt" onclick="fAnswer(this,false,'F12')">Trä avger värme via strålning, metall inte</button>
+      <button class="fq-opt" onclick="fAnswer(this,false,'F12')">Metall har lägre densitet och absorberar mer värme</button>
+    </div>
+    <div class="fq-feedback" id="fb-F12"></div>
+  </div>
+</div>
+
+<!-- ===== RÄKNA ===== -->
+<div class="section" id="sec-rakna">
+  <div style="margin-top:16px;margin-bottom:16px;background:rgba(255,210,63,.08);border:1px solid rgba(255,210,63,.25);border-radius:12px;padding:14px;font-size:13px;line-height:1.6;color:#ffe8a0">
+    <strong>📐 Formlerna du behöver:</strong><br>
+    <span class="formula-chip">ρ = m / V</span> &nbsp; densitet = massa / volym<br>
+    <span class="formula-chip">m = ρ · V</span> &nbsp; <span class="formula-chip">V = m / ρ</span>
+  </div>
+
+  <div class="calc-card">
+    <div class="fq-num">Räkneuppgift 1</div>
+    <div class="calc-q">En kropp har massan 500 g och volymen 250 cm³. Vad är densiteten?</div>
+    <div class="calc-input">
+      <input type="number" class="calc-inp" id="r1" placeholder="?" step="0.1">
+      <span class="calc-unit">g/cm³</span>
+      <button class="btn-check" onclick="checkCalc('r1',2,'r1-res','Rätt! ρ = 500/250 = 2 g/cm³','Fel. ρ = m/V = 500 g ÷ 250 cm³ = 2 g/cm³',0.05)">Kontrollera</button>
+    </div>
+    <div class="calc-result" id="r1-res"></div>
+  </div>
+
+  <div class="calc-card">
+    <div class="fq-num">Räkneuppgift 2</div>
+    <div class="calc-q">Järn har densiteten 7,87 g/cm³. Vad är massan av ett järnstycke med volymen 10 cm³?</div>
+    <div class="calc-input">
+      <input type="number" class="calc-inp" id="r2" placeholder="?" step="0.1">
+      <span class="calc-unit">g</span>
+      <button class="btn-check" onclick="checkCalc('r2',78.7,'r2-res','Rätt! m = ρ·V = 7,87 × 10 = 78,7 g','Fel. m = ρ · V = 7,87 g/cm³ × 10 cm³ = 78,7 g',1)">Kontrollera</button>
+    </div>
+    <div class="calc-result" id="r2-res"></div>
+  </div>
+
+  <div class="calc-card">
+    <div class="fq-num">Räkneuppgift 3</div>
+    <div class="calc-q">En flytande vätska väger 800 g och har densiteten 0,8 g/cm³. Vad är volymen?</div>
+    <div class="calc-input">
+      <input type="number" class="calc-inp" id="r3" placeholder="?" step="1">
+      <span class="calc-unit">cm³</span>
+      <button class="btn-check" onclick="checkCalc('r3',1000,'r3-res','Rätt! V = m/ρ = 800/0,8 = 1000 cm³','Fel. V = m / ρ = 800 g ÷ 0,8 g/cm³ = 1000 cm³',10)">Kontrollera</button>
+    </div>
+    <div class="calc-result" id="r3-res"></div>
+  </div>
+
+  <div class="calc-card">
+    <div class="fq-num">Räkneuppgift 4</div>
+    <div class="calc-q">Vatten har densiteten 1 g/cm³. Flyter ett föremål med densiteten 0,6 g/cm³?<br><small style="color:var(--muted)">Skriv 1 = flyter, 2 = sjunker</small></div>
+    <div class="calc-input">
+      <input type="number" class="calc-inp" id="r4" placeholder="1 eller 2" step="1" min="1" max="2">
+      <button class="btn-check" onclick="checkCalc('r4',1,'r4-res','Rätt! Densitet < 1 g/cm³ → flyter. Lyftkraften > tyngdkraften.','Fel. Svaret är 1 (flyter). Om ρ_föremål < ρ_vätska → flyter.',0.1)">Kontrollera</button>
+    </div>
+    <div class="calc-result" id="r4-res"></div>
+  </div>
+
+  <div class="calc-card">
+    <div class="fq-num">Räkneuppgift 5</div>
+    <div class="calc-q">En kub av aluminium (ρ = 2,7 g/cm³) har sidan 3 cm. Vad är massan? (V = s³)</div>
+    <div class="calc-input">
+      <input type="number" class="calc-inp" id="r5" placeholder="?" step="0.1">
+      <span class="calc-unit">g</span>
+      <button class="btn-check" onclick="checkCalc('r5',72.9,'r5-res','Rätt! V = 3³ = 27 cm³, m = 2,7 × 27 = 72,9 g','Fel. V = 3×3×3 = 27 cm³, m = ρ·V = 2,7 × 27 = 72,9 g',1)">Kontrollera</button>
+    </div>
+    <div class="calc-result" id="r5-res"></div>
+  </div>
+</div>
+
+<!-- ===== RESONEMANG ===== -->
+<div class="section" id="sec-resonemang">
+
+  <div class="res-card">
+    <span class="res-badge np">NP-liknande</span>
+    <div class="res-q">🎈 Varför stiger en rispapperslykta med varm luft uppåt?</div>
+    <div class="res-context">Vid högtider släpps rispapperslyktor upp i luften. Inuti lyktorna bränner ett litet ljus som värmer luften.</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <label>Steg 1 — Vad händer med luften när den värms?</label>
+        <textarea class="res-textarea" placeholder="Skriv ditt svar här..."></textarea>
+      </div>
+      <div class="res-step">
+        <label>Steg 2 — Koppla till densitet</label>
+        <textarea class="res-textarea" placeholder="Hur förändras densiteten?"></textarea>
+      </div>
+      <div class="res-step">
+        <label>Steg 3 — Koppla till lyftkraft/rörelse</label>
+        <textarea class="res-textarea" placeholder="Varför stiger den uppåt?"></textarea>
+      </div>
+    </div>
+    <button class="btn-model" onclick="showModel('lykta')">Visa modellsvar</button>
+    <div class="model-ans" id="ma-lykta">
+      <h4>✅ Modellsvar (NP-nivå)</h4>
+      <p><strong>Steg 1:</strong> Ljuslågan värmer luften inuti lyktans pappershölje. Luftmolekylerna rör sig snabbare och tar mer plats — luften expanderar.</p>
+      <p style="margin-top:6px"><strong>Steg 2:</strong> Eftersom massan är ungefär densamma men volymen ökar → densiteten minskar (ρ = m/V). Varm luft inuti är glesare/lättare än kall luft utanför.</p>
+      <p style="margin-top:6px"><strong>Steg 3:</strong> Lyftkraften (den tyngre omgivande luften pressar uppåt) är nu större än tyngdkraften. Lyktans totala densitet är lägre än omgivningen → stiger uppåt. (Samma princip som ett isblock i vatten som flyter.)</p>
+      <div class="grade-row">
+        <span class="grade grade-e">E: Nämner varm luft stiger</span>
+        <span class="grade grade-c">C: Kopplar till densitet</span>
+        <span class="grade grade-a">A: Fullständig förklaring med ρ = m/V och lyftkraft</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="res-card">
+    <span class="res-badge np">NP-liknande</span>
+    <div class="res-q">🌡️ Termometer — varför väljer man etanol istället för pentan eller glykol?</div>
+    <div class="res-context">Ett företag ska tillverka utomhustermometrar för Sverige. De väljer mellan tre vätskor: Pentan (smälter −130°C, kokar 36°C), Etanol (smälter −117°C, kokar 79°C), Glykol (smälter −13°C, kokar 197°C).</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <label>Varför duger inte pentan?</label>
+        <textarea class="res-textarea" placeholder="Tänk på kokpunkt och svenska sommrar..."></textarea>
+      </div>
+      <div class="res-step">
+        <label>Varför duger inte glykol?</label>
+        <textarea class="res-textarea" placeholder="Tänk på smältpunkt och svenska vintrar..."></textarea>
+      </div>
+      <div class="res-step">
+        <label>Varför passar etanol?</label>
+        <textarea class="res-textarea" placeholder="Visa att etanol täcker hela temperaturspannet..."></textarea>
+      </div>
+    </div>
+    <button class="btn-model" onclick="showModel('termo')">Visa modellsvar</button>
+    <div class="model-ans" id="ma-termo">
+      <h4>✅ Modellsvar</h4>
+      <p><strong>Pentan:</strong> Kokar redan vid 36°C — en varm sommardag kan pentanen koka i röret och mätningen bli felaktig.</p>
+      <p style="margin-top:6px"><strong>Glykol:</strong> Stelnar vid −13°C — en kall vinterdag i Sverige (kan gå ner till −30°C eller lägre) fryser glykolröret och går sönder eller mäter fel.</p>
+      <p style="margin-top:6px"><strong>Etanol:</strong> Smälter vid −117°C och kokar vid 79°C. Täcker hela det svenska temperaturspannet (ca −40°C till +40°C) utan att frysa eller koka. Passar utomhusbruk år runt i Sverige.</p>
+      <div class="grade-row">
+        <span class="grade grade-e">E: Korrekt val av etanol</span>
+        <span class="grade grade-c">C: Motiverar med smält- eller kokpunkt</span>
+        <span class="grade grade-a">A: Utesluter båda alternativen med korrekt motivering + visar etanol täcker spannet</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="res-card">
+    <span class="res-badge res">Resonemang</span>
+    <div class="res-q">🌊 Hur fungerar en sjöbris? Förklara med hjälp av konvektion.</div>
+    <div class="res-context">En varm sommardag vid havet märker du att en sval bris blåser in från havet mot land under dagen, men att vinden vänder på kvällen.</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <label>Beskriv vad som händer med luften ovanför land under dagen</label>
+        <textarea class="res-textarea" placeholder="Varför värms landet snabbare än havet?"></textarea>
+      </div>
+      <div class="res-step">
+        <label>Förklara vindriktningen med densitet och tryck</label>
+        <textarea class="res-textarea" placeholder="Vad händer med lufttrycket ovanför land vs hav?"></textarea>
+      </div>
+    </div>
+    <button class="btn-model" onclick="showModel('sjobris')">Visa modellsvar</button>
+    <div class="model-ans" id="ma-sjobris">
+      <h4>✅ Modellsvar</h4>
+      <p><strong>Dag:</strong> Solen värmer land snabbare än vatten (marken absorberar mer). Luften ovanför land värms, expanderar, minskar i densitet → stiger uppåt (konvektion). Det skapas ett lågtrycksområde ovanför land.</p>
+      <p style="margin-top:6px">Kall tätare luft ovanför havet (högtryck) strömmar in mot land för att fylla tomrummet → sjöbrisen blåser från hav mot land.</p>
+      <p style="margin-top:6px"><strong>Kväll:</strong> Havet avger värme långsammare. Landet kallnar fort → vinden vänder och landbris uppstår (från land mot hav).</p>
+    </div>
+  </div>
+
+  <div class="res-card">
+    <span class="res-badge res">Resonemang</span>
+    <div class="res-q">🧪 Varför absorberar mörka kläder mer värme från solen än ljusa?</div>
+    <div class="res-context">Det svenska fotbollslandslaget diskuterar vilken tröjfärg som är bäst i varma länder (40°C). Du ska förklara sambandet mellan färg och värmeabsorption.</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <label>Förklara vad som händer med ljus som träffar mörk respektive ljus yta</label>
+        <textarea class="res-textarea" placeholder="Absorbera vs reflektera..."></textarea>
+      </div>
+      <div class="res-step">
+        <label>Rekommendation och motivering</label>
+        <textarea class="res-textarea" placeholder="Vilken färg bör spelarna välja och varför?"></textarea>
+      </div>
+    </div>
+    <button class="btn-model" onclick="showModel('farg')">Visa modellsvar</button>
+    <div class="model-ans" id="ma-farg">
+      <h4>✅ Modellsvar</h4>
+      <p><strong>Mörk yta:</strong> Absorberar de flesta våglängder av solstrålning → omvandlas till värme → kroppen under tröjan värms mer.</p>
+      <p style="margin-top:6px"><strong>Ljus/vit yta:</strong> Reflekterar merparten av strålningen tillbaka → absorberar lite → kroppen under värms mindre.</p>
+      <p style="margin-top:6px"><strong>Rekommendation:</strong> Vit (eller ljus) tröja — den reflekterar solens strålning och håller spelarna svalare i 40°C-värme. Minskar risk för överhettning och förbättrar prestation.</p>
+      <div class="grade-row">
+        <span class="grade grade-e">E: Ger korrekt rekommendation</span>
+        <span class="grade grade-c">C: Kopplar till absorption/reflektion</span>
+        <span class="grade grade-a">A: Fullständig förklaring med strålningsöverföring + konsekvens</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== NP-FRÅGOR ===== -->
+<div class="section" id="sec-np">
+
+  <div style="margin-top:16px;margin-bottom:16px;background:rgba(255,107,53,.08);border:1px solid rgba(255,107,53,.25);border-radius:12px;padding:14px;font-size:13px;line-height:1.6;color:#ffcbb0">
+    <strong>🎯 Riktiga NP-frågor</strong> från ämnesproven 2016 och 2018. Svara som på ett riktigt prov — motivera dina svar!
+  </div>
+
+  <div class="np-card">
+    <div class="np-header">
+      <span class="np-logo">NP 2016</span>
+      <span class="np-year">Delprov A1 · Fråga 3</span>
+    </div>
+    <div class="np-q">Vid högtider, till exempel nyårsafton, är det vanligt att släppa upp rispapperslyktor i luften. Vilket av alternativen A–D beskriver <em>bäst</em> varför en rispapperslykta fylld med varm luft stiger uppåt när den släpps?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAnswer(this,false,'NP1')">A. Dragningskraften minskar när luften värms.</button>
+      <button class="fq-opt" onclick="fAnswer(this,false,'NP1')">B. Dragningskraften ökar när luften värms.</button>
+      <button class="fq-opt" onclick="fAnswer(this,true,'NP1')">C. Varm luft har lägre densitet än kall luft.</button>
+      <button class="fq-opt" onclick="fAnswer(this,false,'NP1')">D. Varm luft har högre densitet än kall luft.</button>
+    </div>
+    <div class="fq-feedback" id="fb-NP1"></div>
+  </div>
+
+  <div class="np-card">
+    <div class="np-header">
+      <span class="np-logo">NP 2016</span>
+      <span class="np-year">Delprov A1 · Fråga 4</span>
+    </div>
+    <div class="np-q">Ett företag ska tillverka en termometer med ett rör fyllt med en färgad vätska. Termometern ska säljas i Sverige och ska fungera utomhus året runt. Förklara varför företaget ska välja att använda etanol istället för pentan eller glykol som vätska i termometern.</div>
+    <table class="np-table">
+      <tr><th>Vätska</th><th>Smältpunkt (°C)</th><th>Kokpunkt (°C)</th></tr>
+      <tr><td>Pentan</td><td>−130</td><td>36</td></tr>
+      <tr><td>Etanol</td><td>−117</td><td>79</td></tr>
+      <tr><td>Glykol</td><td>−13</td><td>197</td></tr>
+    </table>
+    <div class="res-steps">
+      <div class="res-step">
+        <label>Ditt svar</label>
+        <textarea class="res-textarea" placeholder="Förklara varför etanol passar bäst — motivera med smält- och kokpunkter..."></textarea>
+      </div>
+    </div>
+    <button class="btn-model" onclick="showModel('np2')">Visa exempelsvar (E/C/A)</button>
+    <div class="model-ans" id="ma-np2">
+      <h4>✅ Exempelsvar med betygsnivåer</h4>
+      <p><strong>Betyg E:</strong> "Etanol är bäst för Sverige. Glykol fryser vid −13°C och pentan kokar vid 36°C."</p>
+      <p style="margin-top:6px"><strong>Betyg C:</strong> "Pentan kokar redan vid 36°C vilket kan ske en varm sommardag i Sverige → fungerar inte. Glykol fryser vid −13°C vilket kan ske en kall vinterdag → fungerar inte. Etanol smälter vid −117°C och kokar vid 79°C, täcker hela det svenska temperaturspannet."</p>
+      <p style="margin-top:6px"><strong>Betyg A:</strong> Fullständigt svar med tydlig uteslutning av båda alternativen + korrekt motivering med smält-/kokpunkter + slutsats om etanolens lämpliga temperaturintervall för svenska förhållanden (ca −40°C till +40°C).</p>
+    </div>
+  </div>
+
+  <div class="np-card">
+    <div class="np-header">
+      <span class="np-logo">NP 2016</span>
+      <span class="np-year">Delprov A3 · Fråga 13</span>
+    </div>
+    <div class="np-q">Hur mycket värmestrålning absorberar olika färger? Du ska planera en undersökning där du tar reda på om det är ett blått, gult eller vitt tyg som absorberar minst värmestrålning från en lampa. Du använder en bägare med vatten som modell för en människokropp.</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <label>a) Hypotes — vilket tyg absorberar minst, och varför?</label>
+        <textarea class="res-textarea" placeholder="Skriv din hypotes med motivering..."></textarea>
+      </div>
+      <div class="res-step">
+        <label>b) Undersökningsmetod — beskriv steg för steg</label>
+        <textarea class="res-textarea" placeholder="Vilka material, hur mäter du, vad håller du konstant?..." style="min-height:100px"></textarea>
+      </div>
+    </div>
+    <button class="btn-model" onclick="showModel('np3')">Visa modellsvar</button>
+    <div class="model-ans" id="ma-np3">
+      <h4>✅ Modellsvar</h4>
+      <p><strong>a) Hypotes:</strong> Vitt tyg absorberar minst värmestrålning eftersom ljusa färger reflekterar mer av strålningen. Mörka färger (blått) absorberar mer.</p>
+      <p style="margin-top:8px"><strong>b) Metod:</strong></p>
+      <p>1. Fyll tre identiska bägare med lika mängd vatten (t.ex. 200 ml) vid samma starttemperatur.<br>
+      2. Linda en bägare med blått tyg, en med gult och en med vitt.<br>
+      3. Placera alla bägare på samma avstånd från en lampa (värmekälla).<br>
+      4. Tänd lampan och mät vattentemperaturen i alla bägare med termometer efter exakt samma tid (t.ex. 10 min).<br>
+      5. Bägaren med lägst temperaturökning = tyg som absorberat minst.<br>
+      <em>Kontrollvariabler:</em> Samma vattenmängd, samma lampavstånd, samma tid, samma starttemperatur.</p>
+      <div class="grade-row">
+        <span class="grade grade-e">E: Enkel metod med mätning</span>
+        <span class="grade grade-c">C: Kontrollvariabler nämns</span>
+        <span class="grade grade-a">A: Fullständig systematisk plan, hypotes motiverad, alla variabler kontrollerade</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="np-card">
+    <div class="np-header">
+      <span class="np-logo">NP 2018</span>
+      <span class="np-year">Delprov A1 · Fråga 11</span>
+    </div>
+    <div class="np-q">I början på 1900-talet visste vetenskapsmän att atomer har en kärna. Idag vet vi mer om hur atomens kärna är uppbyggd. Ge ett exempel på en partikel som finns i atomens kärna.</div>
+    <div class="fq-opts" style="margin-top:8px">
+      <button class="fq-opt" onclick="fAnswer(this,false,'NP4')">Elektron</button>
+      <button class="fq-opt" onclick="fAnswer(this,true,'NP4')">Proton</button>
+      <button class="fq-opt" onclick="fAnswer(this,false,'NP4')">Foton</button>
+      <button class="fq-opt" onclick="fAnswer(this,false,'NP4')">Joule</button>
+    </div>
+    <div class="fq-feedback" id="fb-NP4"></div>
+    <div style="margin-top:10px;font-size:12px;color:var(--muted)">💡 Tips: Både proton och neutron är giltiga svar på det riktiga provet.</div>
+  </div>
+
+</div>
+
+<script>
+const STORAGE_KEY = 'fysik_materia_varme';
+const quizItems = Array(21).fill(null);
+// ===== FLASHCARD DATA =====
+const allCards = [
+  // ATOMEN
+  {tag:'Atomen',q:'Vad är ett grundämne?',a:'Ett ämne som bara består av en typ av atomer. Kan inte sönderdelas kemiskt. Ex: järn (Fe), syre (O₂), guld (Au).',hint:'Finns i periodiska systemet'},
+  {tag:'Atomen',q:'Vad är atomnumret?',a:'Antalet protoner i atomkärnan. Det är unikt för varje grundämne och bestämmer vilket grundämne det är.',hint:'H=1, He=2, C=6, O=8'},
+  {tag:'Atomen',q:'Vad är masstalet?',a:'Summan av protoner + neutroner i atomkärnan. Ger atomens ungefärliga massa i atommasseenheter (u).',hint:'Masstal = p⁺ + n⁰'},
+  {tag:'Atomen',q:'Vad är en isotop?',a:'Atomer av samma grundämne (samma protonantal) men med olika antal neutroner → olika masstal.',hint:'Ex: Kol-12 och Kol-14'},
+  {tag:'Atomen',q:'Var finns elektronerna i atomen?',a:'I elektronskal utanför atomkärnan. Yttersta skalet kallas valensskal och avgör kemiska egenskaper.',hint:'Negativt laddade: −1'},
+  // FASER
+  {tag:'Fasövergångar',q:'Vad är smältning?',a:'Fast form → flytande form. Energi tillförs. Temperaturen är konstant under fasövergången (smältpunkten).',hint:'Is → Vatten vid 0°C'},
+  {tag:'Fasövergångar',q:'Vad är kondensation?',a:'Gasform → flytande form. Energi avges. Ex: dagg på glas, imma på spegel.',hint:'Ånga → Vatten'},
+  {tag:'Fasövergångar',q:'Vad är avdunstning?',a:'Flytande form → gas, sker vid ytan under kokpunkten. Molekyler med högst rörelseenergi flyr ytan.',hint:'Skillnad från kokning!'},
+  {tag:'Fasövergångar',q:'Varför är temperaturen konstant vid kokning?',a:'All tillförd energi går åt till att bryta bindningarna i vätskan (fasövergångsvärme), inte till att höja temperaturen.',hint:'Fasövergångsvärme'},
+  // DENSITET
+  {tag:'Densitet',q:'Formeln för densitet?',a:'ρ = m / V · · · densitet (g/cm³) = massa (g) / volym (cm³). Vatten: ρ = 1 g/cm³',hint:'Rho (ρ) = massa/volym'},
+  {tag:'Densitet',q:'Vad händer med densiteten när ett ämne värms?',a:'Densiteten minskar — ämnet expanderar (volymen ökar) men massan är konstant → ρ = m/V minskar.',hint:'Mer volym, samma massa'},
+  {tag:'Densitet',q:'Flyter eller sjunker? Hur avgör man?',a:'Om föremålets densitet < vätskans densitet → flyter. Om densitet > vätskans → sjunker. (Arkimedes princip)',hint:'Trä flyter: ρ ≈ 0,5 < 1'},
+  // TEMPERATUR
+  {tag:'Temperatur',q:'Vad är absoluta nollpunkten?',a:'0 Kelvin = −273°C. Den lägsta möjliga temperaturen. Alla partikelrörelser upphör teoretiskt.',hint:'0 K = −273°C'},
+  {tag:'Temperatur',q:'Hur omvandlar man Celsius till Kelvin?',a:'K = °C + 273 · Ex: 0°C = 273 K · 100°C = 373 K · −273°C = 0 K',hint:'Lägg till 273'},
+  // VÄRMEÖVERFÖRING
+  {tag:'Värmeöverföring',q:'Vad är värmeledning (konduktion)?',a:'Värme sprids genom direkt kontakt i ett material. Sker i fasta ämnen. Metaller leder värme bra, trä dåligt.',hint:'Metallsked i het soppa'},
+  {tag:'Värmeöverföring',q:'Vad är konvektion (strömning)?',a:'Värme sprids via rörelse av vätska eller gas. Varm fluid stiger, kall sjunker → skapar cirkulation.',hint:'Sjöbris, element, vatten som kokar'},
+  {tag:'Värmeöverföring',q:'Vad är värmestrålning (radiation)?',a:'Värme sprids som elektromagnetisk strålning (IR). Behöver inget medium — fungerar i vakuum.',hint:'Solens värme till Jorden'},
+  {tag:'Värmeöverföring',q:'Varför isolerar ull och luft bra?',a:'Stillastående luft är en dålig värmeledare. Ull fångar luftfickor → minimerar ledning och konvektion.',hint:'Luftfickor = isolering'},
+  // LUFT OCH TRYCK
+  {tag:'Luft & Väder',q:'Vad är lufttryck?',a:'Trycket som luftens vikt utövar. Mäts i Pascal (Pa) eller hektopascal (hPa). Normalt lufttryck: 1013 hPa.',hint:'Mäts med barometer'},
+  {tag:'Luft & Väder',q:'Varför sjunker lufttrycket med höjden?',a:'Ju högre upp, desto mindre luftmassa ovanför. Mindre vikt = lägre tryck.',hint:'På bergstopp: lägre lufttryck'},
+  {tag:'Luft & Väder',q:'Vad är en sjöbris?',a:'Vind från hav mot land under dagen. Land värms snabbt → varm luft stiger → kall havsluft strömmar in (konvektion).',hint:'Kall havsluft fyller tomrummet'},
+  // PERIODISKA SYSTEMET
+  {tag:'Periodiska systemet',q:'Hur är periodiska systemet organiserat?',a:'Rader (perioder) = antal elektronskal. Kolumner (grupper) = antal elektroner i yttre skalet. Ordnat efter atomnummer.',hint:'H=1 → Og=118'},
+  {tag:'Periodiska systemet',q:'Vad berättar gruppen i periodiska systemet?',a:'Ämnen i samma grupp har samma antal valenselektroner → liknande kemiska egenskaper.',hint:'Grupp 1 = alkalimetaller'},
+  {tag:'Värme',q:'Vad är värme (Q) i fysikalisk mening?',a:'Värme är energi som överförs från varmare till kallare kropp. Mäts i Joule (J). Temperaturen mäter den genomsnittliga rörelseenergin hos partiklarna.',hint:'Energiöverföring, inte energiinnehåll'},
+];
+
+let cIdx = 0;
+const cardStates = {};
+
+function renderCard() {
+  const c = allCards[cIdx];
+  const flipped = cardStates[cIdx] === 'flipped' || cardStates[cIdx] === 'good' || cardStates[cIdx] === 'bad';
+  document.getElementById('cardArea').innerHTML = `
+    <div class="card-wrap">
+      <div class="card-inner ${flipped?'flipped':''}" id="cinner" onclick="flipCard()">
+        <div class="card-front">
+          <div class="card-tag">${c.tag}</div>
+          <div class="card-q">${c.q}</div>
+          ${c.hint?`<div class="card-hint">💡 ${c.hint}</div>`:''}
+        </div>
+        <div class="card-back">
+          <div class="card-tag" style="color:var(--accent3)">Svar</div>
+          <div class="card-a">${c.a}</div>
+        </div>
+      </div>
+    </div>
+    ${flipped?`<div class="btn-row">
+      <button class="btn-know" onclick="markCard('good')">✓ Kan det!</button>
+      <button class="btn-again" onclick="markCard('bad')">↺ Igen</button>
+    </div>`:''}
+  `;
+  document.getElementById('cardCounter').textContent = `${cIdx+1} / ${allCards.length}`;
+  updateCardStats();
+}
+
+function flipCard(){
+  if(cardStates[cIdx]==='good') return;
+  cardStates[cIdx]='flipped';
+  renderCard();
+}
+function prevCard(){cIdx=(cIdx-1+allCards.length)%allCards.length;renderCard()}
+function nextCard(){cIdx=(cIdx+1)%allCards.length;renderCard()}
+function markCard(s){
+  cardStates[cIdx]=s;
+  if(s==='good') setTimeout(()=>{nextCard()},300);
+  else renderCard();
+}
+function updateCardStats(){
+  const good=Object.values(cardStates).filter(v=>v==='good').length;
+  document.getElementById('cGood').textContent=good;
+  document.getElementById('cLeft').textContent=allCards.length-good;
+  document.getElementById('cPct').textContent=Math.round((good/allCards.length)*100)+'%';
+  updateMainProgress();
+}
+
+// ===== FÖRSTÅELSE =====
+const fbTexts = {
+  F1:{ok:'✅ Rätt! Protoner sitter i atomkärnan och bär positiv laddning (+1). Antalet protoner = atomnummer.',err:'❌ Fel. Protoner finns i kärnan (inte elektronskalets), är positivt laddade. Masstal = p + n (inte bara p).'},
+  F2:{ok:'✅ Rätt! Vid kokning tillförs tillräcklig energi för att vattenmolekylerna ska lämna den flytande fasen och bli ånga.',err:'❌ Fel. Vid kokning frigörs molekylerna från vätskan och övergår till gasform (ånga). Molekylerna förstörs inte.'},
+  F3:{ok:'✅ Rätt! Varm luft expanderar, massan är densamma → densiteten minskar (ρ=m/V). Kall, tätare luft tränger undan den varma uppåt.',err:'❌ Fel. Varm luft är lättare (lägre densitet) eftersom samma massa upptar större volym → den tyngre kalla luften tränger upp den.'},
+  F4:{ok:'✅ Rätt! Vid 0 Kelvin (−273°C) har partiklarna minimal rörelseenergi. Det är den teoretiskt lägsta möjliga temperaturen.',err:'❌ Fel. Absoluta nollpunkten = 0 K = −273°C. Det är inte fryspunkten för vatten (0°C), utan den lägsta möjliga temperaturen.'},
+  F5:{ok:'✅ Rätt! Ledning sker genom direkt kontakt. Metall leder värme effektivt → energin sprids snabbt från din hand genom skaftet.',err:'❌ Fel. Det är värmeledning (konduktion) — direkt kontakt metall-hand → energin leds direkt.'},
+  F6:{ok:'✅ Rätt! Konvektion: Landet värms → luft stiger → undertryck → havsluften strömmar in. Klassisk sjöbris.',err:'❌ Fel. Havet är svalare (inte varmare). Landet värms snabbare → konvektion → kall havsluft strömmar in mot land.'},
+  F7:{ok:'✅ Rätt! Grundämnen = bara en atomtyp (t.ex. O₂, Fe). Föreningar = flera atomtyper bundna (t.ex. H₂O, CO₂).',err:'❌ Fel. Grundämnen kan vara fasta, flytande eller gas. Grundämnen finns i periodiska systemet. Föreningar är bundna atomtyper.'},
+  F8:{ok:'✅ Rätt! Ull är poröst och innehåller luftfickor. Stillastående luft isolerar bra — låg värmeledningsförmåga + begränsar konvektion.',err:'❌ Fel. Ull leder inte värme bort snabbt, det är tvärtom. Ull minskar värmeöverföringen via ledning och strömning tack vare luftfickor.'},
+  F9:{ok:'✅ Rätt! Fasövergångsvärme (smältvärme) — all energi används till att bryta kristallbindningarna, inget till temperaturhöjning.',err:'❌ Fel. Temperaturhöjning sker bara EFTER fasövergången. Under smältning absorberas all energi för att bryta bindningarna i kristallen.'},
+  F10:{ok:'✅ Rätt! ρ = m/V — massan är konstant men volymen ökar vid uppvärmning → densiteten minskar.',err:'❌ Fel. Massan förändras inte av värme. Men volymen ökar (termisk expansion) → ρ = m/V minskar.'},
+  F11:{ok:'✅ Rätt! Solstrålningen är elektromagnetisk strålning som kan resa genom vakuum (rymden) utan medium.',err:'❌ Fel. Det finns inget medium i rymden för ledning eller konvektion. Solens värme når oss via strålning (EM-strålning).'},
+  F12:{ok:'✅ Rätt! Metall har hög värmeledningsförmåga → leder snabbt bort värme från handen → ger kylande känsla, även om temperaturen är densamma.',err:'❌ Fel. Metall och trä har samma temperatur i rummet. Men metall leder värme snabbare → mer värme lämnar handen/tidsenhet → känns kallare.'},
+  NP1:{ok:'✅ Rätt (C)! Varm luft expanderar → densiteten minskar (ρ=m/V). Lyftkraften från den kalla luften runt lyktans överväger tyngdkraften.',err:'❌ Fel. Svaret är C. Dragningskraften (gravitationen) minskar INTE för att luften värms. Det är densitetsskillnaden som orsakar att lyktkan stiger.'},
+  NP4:{ok:'✅ Rätt! Protoner (och neutroner) finns i atomkärnan. Elektroner befinner sig i elektronskal utanför kärnan.',err:'❌ Fel. Svaret är proton (eller neutron). Elektroner finns i elektronskal utanför kärnan. Fotoner är ljuspartiklar, Joule är en energienhet.'},
+};
+
+const fAnswered={};
+function fAnswer(btn,correct,id){
+  if(fAnswered[id]) return;
+  fAnswered[id]=correct;
+  const opts=btn.parentElement.querySelectorAll('.fq-opt');
+  opts.forEach(o=>o.disabled=true);
+  btn.classList.add(correct?'correct':'wrong');
+  const fb=document.getElementById('fb-'+id);
+  if(fb){
+    fb.textContent=correct?fbTexts[id].ok:fbTexts[id].err;
+    fb.className='fq-feedback show '+(correct?'ok':'err');
+  }
+  if(correct){
+    const s=document.getElementById('fScore');
+    if(s) s.textContent=Object.values(fAnswered).filter(v=>v===true).length;
+    const p=document.getElementById('fPct');
+    if(p){
+      const total=Object.keys(fAnswered).length;
+      p.textContent=Math.round((Object.values(fAnswered).filter(v=>v===true).length/total)*100)+'%';
+    }
+  }
+  updateMainProgress();
+}
+
+function checkCalc(inputId, correct, resultId, okMsg, errMsg, tolerance){
+  const val=parseFloat(document.getElementById(inputId).value);
+  const el=document.getElementById(resultId);
+  if(isNaN(val)){el.textContent='Ange ett tal.';el.className='calc-result show err';return;}
+  const ok=Math.abs(val-correct)<=tolerance;
+  el.textContent=ok?'✅ '+okMsg:'❌ '+errMsg;
+  el.className='calc-result show '+(ok?'ok':'err');
+  if(ok) updateMainProgress();
+}
+
+function showModel(id){document.getElementById('ma-'+id).classList.toggle('show')}
+
+function showTab(name,e){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('sec-'+name).classList.add('active');
+  if(e) e.currentTarget.classList.add('active');
+}
+
+function updateMainProgress() {
+  const good   = Object.values(cardStates).filter(v => v === 'good').length;
+  const fRight = Object.values(fAnswered).filter(v => v === true).length;
+  const total  = allCards.length + quizItems.length;
+  const pct    = Math.min(100, Math.round(((good + fRight) / total) * 100));
+  document.getElementById('mainProgress').style.width = pct + '%';
+  document.getElementById('progressText').textContent = (good + fRight) + ' av ' + total + ' klara';
+  localStorage.setItem(STORAGE_KEY + '_progress', JSON.stringify({
+    pct, good, fRight, total,
+    cardStates: Object.assign({}, cardStates),
+    fAnswered:  Object.assign({}, fAnswered),
+  }));
+}
+
+function restoreProgress() {
+  const raw = localStorage.getItem(STORAGE_KEY + '_progress');
+  if (!raw) return;
+  try {
+    const data = JSON.parse(raw);
+    if (data.cardStates) Object.entries(data.cardStates).forEach(([k,v]) => { cardStates[k] = v; });
+    if (data.fAnswered)  Object.entries(data.fAnswered).forEach(([k,v])  => { fAnswered[k] = v; });
+  } catch(e) {}
+}
+
+restoreProgress();
+renderCard();
+</script>
+</body>
+</html>

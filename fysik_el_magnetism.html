@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fysik åk 9 – Elektricitet & Magnetism</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f6f2;
+    --white: #ffffff;
+    --text: #1a1a2e;
+    --muted: #6b7280;
+    --border: #e2e0d8;
+    --accent: #2563a8;
+    --accent-light: #dbeafe;
+    --accent-hover: #1d4e8a;
+    --green: #15803d;
+    --green-light: #dcfce7;
+    --red: #b91c1c;
+    --red-light: #fee2e2;
+    --orange: #c2410c;
+    --orange-light: #ffedd5;
+    --yellow-light: #fef9c3;
+    --shadow: 0 2px 8px rgba(0,0,0,0.07);
+    --shadow-lg: 0 8px 24px rgba(0,0,0,0.10);
+    --radius: 10px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ─────────────────────────────── */
+  header {
+    background: var(--white);
+    border-bottom: 2px solid var(--border);
+    padding: 0 24px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 0;
+    flex-wrap: wrap;
+  }
+  .subject-badge {
+    background: var(--accent);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 4px;
+  }
+  h1 {
+    font-family: 'Lora', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .header-meta {
+    margin-left: auto;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .progress-bar-wrap {
+    width: 100%;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    margin-top: 6px;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: width .4s ease;
+    width: 0%;
+  }
+
+  /* ── TABS ────────────────────────────────── */
+  .tabs {
+    max-width: 860px;
+    margin: 24px auto 0;
+    padding: 0 16px;
+    display: flex;
+    gap: 4px;
+    border-bottom: 2px solid var(--border);
+  }
+  .tab-btn {
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    padding: 10px 18px 11px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    transition: color .2s, border-color .2s;
+    white-space: nowrap;
+    margin-bottom: -2px;
+    border-radius: 6px 6px 0 0;
+  }
+  .tab-btn:hover { color: var(--accent); }
+  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .tab-badge {
+    display: inline-block;
+    background: var(--border);
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 10px;
+    margin-left: 5px;
+  }
+  .tab-btn.active .tab-badge { background: var(--accent-light); color: var(--accent); }
+
+  /* ── CONTENT WRAPPER ─────────────────────── */
+  .content {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 28px 16px 60px;
+  }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  .section-intro {
+    background: var(--accent-light);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 14px 18px;
+    margin-bottom: 28px;
+    font-size: 14px;
+    color: #1e40af;
+  }
+  .section-intro strong { font-weight: 700; }
+
+  /* ── FLASHCARDS ──────────────────────────── */
+  .flashcard-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .fc-counter {
+    font-size: 14px;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .fc-progress {
+    flex: 1;
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    min-width: 80px;
+  }
+  .fc-progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 3px;
+    transition: width .3s;
+  }
+
+  .flashcard-scene {
+    perspective: 1000px;
+    height: 220px;
+    margin-bottom: 20px;
+    cursor: pointer;
+  }
+  .flashcard {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform .5s cubic-bezier(.4,0,.2,1);
+  }
+  .flashcard.flipped { transform: rotateY(180deg); }
+  .fc-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    border-radius: var(--radius);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 28px 32px;
+    text-align: center;
+    box-shadow: var(--shadow-lg);
+  }
+  .fc-front {
+    background: var(--white);
+    border: 2px solid var(--border);
+  }
+  .fc-back {
+    background: #1a3560;
+    color: #fff;
+    transform: rotateY(180deg);
+  }
+  .fc-category {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .fc-back .fc-category { color: #93c5fd; }
+  .fc-question {
+    font-family: 'Lora', serif;
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--text);
+  }
+  .fc-back .fc-question { color: #fff; font-size: 17px; }
+  .fc-hint { font-size: 13px; color: var(--muted); margin-top: 12px; }
+  .fc-back .fc-hint { color: #93c5fd; }
+  .fc-tap-hint {
+    position: absolute;
+    bottom: 12px;
+    right: 16px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .fc-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 9px 20px;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: background .15s, transform .1s, box-shadow .15s;
+    border: 2px solid transparent;
+  }
+  .btn:active { transform: scale(.97); }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+  .btn-primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+  .btn-outline {
+    background: var(--white);
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+  .btn-outline:hover { background: var(--accent-light); }
+  .btn-green {
+    background: var(--green);
+    color: #fff;
+    border-color: var(--green);
+  }
+  .btn-red {
+    background: var(--red);
+    color: #fff;
+    border-color: var(--red);
+  }
+  .btn-sm { font-size: 13px; padding: 7px 14px; }
+
+  .fc-category-filter {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .filter-chip {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1.5px solid var(--border);
+    background: var(--white);
+    cursor: pointer;
+    transition: all .15s;
+    color: var(--muted);
+  }
+  .filter-chip:hover, .filter-chip.active {
+    border-color: var(--accent);
+    background: var(--accent-light);
+    color: var(--accent);
+  }
+
+  /* ── FÖRSTÅELSE ──────────────────────────── */
+  .question-card {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px 26px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+  }
+  .question-card.done { border-color: #86efac; }
+  .q-number {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .q-text {
+    font-family: 'Lora', serif;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.5;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+  .q-context {
+    background: var(--yellow-light);
+    border-left: 3px solid #eab308;
+    border-radius: 0 6px 6px 0;
+    padding: 10px 14px;
+    font-size: 14px;
+    margin-bottom: 16px;
+    color: #713f12;
+  }
+
+  /* Multiple choice */
+  .mc-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+  .mc-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 2px solid var(--border);
+    cursor: pointer;
+    transition: all .15s;
+    background: var(--white);
+  }
+  .mc-option:hover:not(.disabled) { border-color: var(--accent); background: var(--accent-light); }
+  .mc-option.correct { border-color: var(--green); background: var(--green-light); }
+  .mc-option.wrong { border-color: var(--red); background: var(--red-light); }
+  .mc-option.disabled { cursor: default; }
+  .mc-letter {
+    width: 26px;
+    height: 26px;
+    min-width: 26px;
+    border-radius: 50%;
+    background: var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--muted);
+  }
+  .mc-option.correct .mc-letter { background: var(--green); color: #fff; }
+  .mc-option.wrong .mc-letter { background: var(--red); color: #fff; }
+  .mc-text { font-size: 15px; line-height: 1.4; padding-top: 2px; }
+
+  .feedback-box {
+    display: none;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-top: 12px;
+  }
+  .feedback-box.show { display: block; }
+  .feedback-box.correct { background: var(--green-light); border-left: 3px solid var(--green); color: #14532d; }
+  .feedback-box.wrong { background: var(--red-light); border-left: 3px solid var(--red); color: #7f1d1d; }
+  .feedback-box.info { background: var(--accent-light); border-left: 3px solid var(--accent); color: #1e3a6e; }
+
+  /* Open questions */
+  .open-textarea {
+    width: 100%;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    resize: vertical;
+    min-height: 90px;
+    margin-bottom: 12px;
+    transition: border-color .2s;
+    background: var(--bg);
+    color: var(--text);
+  }
+  .open-textarea:focus { outline: none; border-color: var(--accent); background: var(--white); }
+
+  .model-answer {
+    display: none;
+    background: #f0f9ff;
+    border: 1.5px solid #7dd3fc;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-top: 12px;
+  }
+  .model-answer.show { display: block; }
+  .model-answer-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    color: #0369a1;
+    margin-bottom: 6px;
+  }
+  .model-answer-text { font-size: 14px; line-height: 1.55; color: #0c4a6e; }
+  .model-answer-text strong { color: #0369a1; }
+
+  /* ── RESONEMANG ──────────────────────────── */
+  .resonemang-card {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 26px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+  }
+  .res-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    background: var(--orange-light);
+    color: var(--orange);
+  }
+  .res-tag.np { background: #ede9fe; color: #6d28d9; }
+  .res-scenario {
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 15px;
+    margin-bottom: 18px;
+    border: 1.5px solid var(--border);
+    font-style: italic;
+    color: #374151;
+  }
+  .res-steps { display: flex; flex-direction: column; gap: 16px; }
+  .res-step {
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 14px 16px;
+    border: 1.5px solid var(--border);
+  }
+  .res-step-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .res-step-q { font-size: 15px; font-weight: 600; margin-bottom: 10px; line-height: 1.4; }
+  .res-step-level {
+    font-size: 11px;
+    color: var(--muted);
+    display: inline-block;
+    padding: 2px 7px;
+    border-radius: 4px;
+    background: var(--border);
+    margin-bottom: 8px;
+  }
+
+  /* ── NP-FRÅGOR ───────────────────────────── */
+  .np-card {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px 26px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+  }
+  .np-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .np-year {
+    font-size: 12px;
+    font-weight: 700;
+    background: #ede9fe;
+    color: #6d28d9;
+    padding: 3px 9px;
+    border-radius: 4px;
+    letter-spacing: .05em;
+  }
+  .np-level {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 4px;
+  }
+  .np-level.E { background: #dcfce7; color: #15803d; }
+  .np-level.C { background: #dbeafe; color: #1d4ed8; }
+  .np-level.A { background: #fef3c7; color: #92400e; }
+  .np-level.mixed { background: var(--orange-light); color: var(--orange); }
+
+  /* ── SCORE TRACKER ───────────────────────── */
+  .score-panel {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    box-shadow: var(--shadow);
+  }
+  .score-item { text-align: center; }
+  .score-num {
+    font-family: 'Lora', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .score-label { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .score-divider { width: 1px; height: 40px; background: var(--border); }
+
+  /* ── SUMMARY / COMPLETED ─────────────────── */
+  .congrats-box {
+    text-align: center;
+    padding: 40px 24px;
+    background: var(--white);
+    border-radius: var(--radius);
+    border: 1.5px solid var(--border);
+    box-shadow: var(--shadow-lg);
+  }
+  .congrats-emoji { font-size: 48px; margin-bottom: 12px; }
+  .congrats-title { font-family: 'Lora', serif; font-size: 26px; font-weight: 700; margin-bottom: 8px; }
+  .congrats-sub { color: var(--muted); font-size: 16px; margin-bottom: 24px; }
+
+  /* ── FORMULA BOX ─────────────────────────── */
+  .formula-card {
+    background: #1a3560;
+    color: #fff;
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 28px;
+  }
+  .formula-card h3 {
+    font-family: 'Lora', serif;
+    font-size: 16px;
+    margin-bottom: 14px;
+    color: #93c5fd;
+  }
+  .formula-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+  }
+  .formula-item {
+    background: rgba(255,255,255,.08);
+    border-radius: 8px;
+    padding: 12px 14px;
+    border: 1px solid rgba(255,255,255,.12);
+  }
+  .formula-eq {
+    font-size: 20px;
+    font-weight: 700;
+    font-family: 'Lora', serif;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+  .formula-desc { font-size: 12px; color: #93c5fd; }
+
+  /* ── RESPONSIVE ──────────────────────────── */
+  @media (max-width: 600px) {
+    .tabs { gap: 0; overflow-x: auto; padding-bottom: 0; }
+    .tab-btn { font-size: 13px; padding: 9px 12px; }
+    .fc-question { font-size: 16px; }
+    .q-text { font-size: 16px; }
+    h1 { font-size: 17px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <span class="subject-badge">Fysik åk 9</span>
+    <h1>Elektricitet &amp; Magnetism</h1>
+    <span class="header-meta" id="progressText">0 av 50 klara</span>
+  </div>
+  <div style="max-width:860px;margin:0 auto;padding:0 0 10px;">
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="mainProgress"></div>
+    </div>
+  </div>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('begrepp')">🃏 Begrepp <span class="tab-badge" id="badge-begrepp">28</span></button>
+  <button class="tab-btn" onclick="showTab('forstaaelse')">💡 Förståelse <span class="tab-badge" id="badge-forstaaelse">12</span></button>
+  <button class="tab-btn" onclick="showTab('resonemang')">🧠 Resonemang <span class="tab-badge" id="badge-resonemang">6</span></button>
+  <button class="tab-btn" onclick="showTab('np')">📋 NP-Frågor <span class="tab-badge" id="badge-np">4</span></button>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SEKTION 1: BEGREPP (FLASHCARDS)
+═══════════════════════════════════════════ -->
+<div class="content">
+<div id="sec-begrepp" class="section active">
+
+  <div class="section-intro">
+    <strong>Begrepp:</strong> Klicka på kortet för att se svaret. Sortera på kategori om du vill fokusera. Målet är att du ska kunna varje begrepp utan att tveka!
+  </div>
+
+  <div class="formula-card">
+    <h3>📐 Viktiga formler att kunna</h3>
+    <div class="formula-grid">
+      <div class="formula-item">
+        <div class="formula-eq">U = R × I</div>
+        <div class="formula-desc">Ohms lag — Spänning = Resistans × Ström</div>
+      </div>
+      <div class="formula-item">
+        <div class="formula-eq">P = U × I</div>
+        <div class="formula-desc">Effektlagen — Effekt = Spänning × Ström</div>
+      </div>
+      <div class="formula-item">
+        <div class="formula-eq">W = P × t</div>
+        <div class="formula-desc">Energi = Effekt × Tid</div>
+      </div>
+      <div class="formula-item">
+        <div class="formula-eq">U₁/U₂ = N₁/N₂</div>
+        <div class="formula-desc">Transformatorn — lindningskvoter</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fc-category-filter" id="fcFilter">
+    <span class="filter-chip active" onclick="filterCards('all', this)">Alla kort</span>
+    <span class="filter-chip" onclick="filterCards('grundbegrepp', this)">Grundbegrepp</span>
+    <span class="filter-chip" onclick="filterCards('kretsar', this)">Kretsar &amp; koppling</span>
+    <span class="filter-chip" onclick="filterCards('sakerhetheten', this)">Elsäkerhet</span>
+    <span class="filter-chip" onclick="filterCards('magnetism', this)">Magnetism</span>
+    <span class="filter-chip" onclick="filterCards('generatorer', this)">Generator &amp; transformator</span>
+  </div>
+
+  <div class="flashcard-controls">
+    <span class="fc-counter" id="fcCounter">1 / 28</span>
+    <div class="fc-progress"><div class="fc-progress-fill" id="fcProgressFill"></div></div>
+    <button class="btn btn-outline btn-sm" onclick="shuffleCards()">🔀 Blanda</button>
+  </div>
+
+  <div class="flashcard-scene" onclick="flipCard()">
+    <div class="flashcard" id="flashcard">
+      <div class="fc-face fc-front">
+        <div class="fc-category" id="fcCat"></div>
+        <div class="fc-question" id="fcQ">Laddar...</div>
+        <div class="fc-hint" id="fcHint"></div>
+        <div class="fc-tap-hint">👆 Klicka för att vända</div>
+      </div>
+      <div class="fc-face fc-back">
+        <div class="fc-category" id="fcCatBack">Svar</div>
+        <div class="fc-question" id="fcA"></div>
+        <div class="fc-hint" id="fcExtra"></div>
+        <div class="fc-tap-hint" style="color:#93c5fd">👆 Klicka för att vända</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fc-nav">
+    <button class="btn btn-outline" onclick="prevCard()">← Föregående</button>
+    <button class="btn btn-red btn-sm" id="btnWrong" onclick="markCard(false)">✗ Kunde inte</button>
+    <button class="btn btn-green btn-sm" id="btnCorrect" onclick="markCard(true)">✓ Kunde!</button>
+    <button class="btn btn-primary" onclick="nextCard()">Nästa →</button>
+  </div>
+
+  <div style="margin-top:20px; display:flex; justify-content:center; gap:16px; font-size:14px; color:var(--muted);">
+    <span>✅ Kan: <strong id="fcGood">0</strong></span>
+    <span>❌ Öva mer: <strong id="fcBad">0</strong></span>
+    <span>⬜ Osedd: <strong id="fcUnseen" style="color:var(--accent)">28</strong></span>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════════
+     SEKTION 2: FÖRSTÅELSE
+═══════════════════════════════════════════ -->
+<div id="sec-forstaaelse" class="section">
+
+  <div class="section-intro">
+    <strong>Förståelse:</strong> Här tränar du på att förklara och analysera — precis som på E- och C-nivå i provet. Välj rätt svar eller skriv din förklaring och jämför sedan med modelsvaret.
+  </div>
+
+  <div class="score-panel">
+    <div class="score-item"><div class="score-num" id="fScore">0</div><div class="score-label">Rätt svar</div></div>
+    <div class="score-divider"></div>
+    <div class="score-item"><div class="score-num" id="fTotal">12</div><div class="score-label">Frågor totalt</div></div>
+    <div class="score-divider"></div>
+    <div class="score-item"><div class="score-num" id="fPct">0%</div><div class="score-label">Andel rätt</div></div>
+  </div>
+
+  <!-- F1 -->
+  <div class="question-card" id="fq1">
+    <div class="q-number">Fråga 1 · Grundbegrepp</div>
+    <div class="q-text">En elektrisk krets fungerar bara om den är sluten. Vad betyder det att en krets är "sluten"?</div>
+    <div class="mc-options">
+      <div class="mc-option" onclick="checkMC(this, 'fq1', false, 'A')"><div class="mc-letter">A</div><div class="mc-text">Det finns en strömbrytare i kretsen</div></div>
+      <div class="mc-option" onclick="checkMC(this, 'fq1', true, 'B')"><div class="mc-letter">B</div><div class="mc-text">Det finns en obruten ledningsväg hela varvet runt — från plus, genom komponenter, tillbaka till minus</div></div>
+      <div class="mc-option" onclick="checkMC(this, 'fq1', false, 'C')"><div class="mc-letter">C</div><div class="mc-text">Kretsen innehåller minst en lampa och ett batteri</div></div>
+      <div class="mc-option" onclick="checkMC(this, 'fq1', false, 'D')"><div class="mc-letter">D</div><div class="mc-text">Kretsen skyddas av en säkring</div></div>
+    </div>
+    <div class="feedback-box" id="fb-fq1"></div>
+  </div>
+
+  <!-- F2 -->
+  <div class="question-card" id="fq2">
+    <div class="q-number">Fråga 2 · Ohms lag</div>
+    <div class="q-text">En lampa har resistansen 20 Ω och är kopplad till ett batteri med spänningen 6 V. Hur stor är strömmen genom lampan?</div>
+    <div class="mc-options">
+      <div class="mc-option" onclick="checkMC(this, 'fq2', false, 'A')"><div class="mc-letter">A</div><div class="mc-text">120 A</div></div>
+      <div class="mc-option" onclick="checkMC(this, 'fq2', true, 'B')"><div class="mc-letter">B</div><div class="mc-text">0,3 A</div></div>
+      <div class="mc-option" onclick="checkMC(this, 'fq2', false, 'C')"><div class="mc-letter">C</div><div class="mc-text">3,3 A</div></div>
+      <div class="mc-option" onclick="checkMC(this, 'fq2', false, 'D')"><div class="mc-letter">D</div><div class="mc-text">14 A</div></div>
+    </div>
+    <div class="feedback-box" id="fb-fq2"></div>
+  </div>
+
+  <!-- F3 -->
+  <div class="question-card" id="fq3">
+    <div class="q-number">Fråga 3 · Serie- och parallellkoppling</div>
+    <div class="q-text">Lampor i ditt hem är parallellkopplade — inte seriekopplade. Vilket av dessa påståenden förklarar bäst varför?</div>
+    <div class="mc-options">
+      <div class="mc-option" onclick="checkMC(this, 'fq3', false, 'A')"><div class="mc-letter">A</div><div class="mc-text">Parallellkoppling gör att alla lampor lyser svagare, vilket sparar energi</div></div>
+      <div class="mc-option" onclick="checkMC(this, 'fq3', false, 'B')"><div class="mc-letter">B</div><div class="mc-text">Vid seriekoppling delar lamporna på strömmen och lyser starkare</div></div>
+      <div class="mc-option" onclick="checkMC(this, 'fq3', true, 'C')"><div class="mc-letter">C</div><div class="mc-text">Vid parallellkoppling har varje lampa full spänning och de fungerar oberoende — slocknar en, lyser de andra ändå</div></div>
+      <div class="mc-option" onclick="checkMC(this, 'fq3', false, 'D')"><div class="mc-letter">D</div><div class="mc-text">Seriekoppling kräver for&#xe5; stor kabeldimension</div></div>
+    </div>
+    <div class="feedback-box" id="fb-fq3"></div>
+  </div>
+
+  <!-- F4 - BRÖDROST VT18 -->
+  <div class="question-card" id="fq4">
+    <div class="q-number">Fråga 4 · Resistans &amp; värme — liknande NP 2018</div>
+    <div class="q-text">Inuti en brödrost finns ledningstrådar. När brödrosten används blir trådarna väldigt varma, men inte sladden som går till vägguttaget. Vilket påstående förklarar varför?</div>
+    <div class="mc-options">
+      <div class="mc-option" onclick="checkMC(this, 'fq4', true, 'A')"><div class="mc-letter">A</div><div class="mc-text">Trådarna inuti brödrosten har en högre resistans än sladden — högre resistans ger mer värmeutveckling</div></div>
+      <div class="mc-option" onclick="checkMC(this, 'fq4', false, 'B')"><div class="mc-letter">B</div><div class="mc-text">Trådarna inuti brödrosten har lägre resistans än sladden</div></div>
+      <div class="mc-option" onclick="checkMC(this, 'fq4', false, 'C')"><div class="mc-letter">C</div><div class="mc-text">Trådarna inuti brödrosten har högre ström än sladden</div></div>
+      <div class="mc-option" onclick="checkMC(this, 'fq4', false, 'D')"><div class="mc-letter">D</div><div class="mc-text">Sladden är gjord av ett annat material som inte kan ledas</div></div>
+    </div>
+    <div class="feedback-box" id="fb-fq4"></div>
+  </div>
+
+  <!-- F5 -->
+  <div class="question-card" id="fq5">
+    <div class="q-number">Fråga 5 · Elsäkerhet</div>
+    <div class="q-text">En jordfelsbrytare skiljer sig från en vanlig säkring. Vad är den viktigaste skillnaden med vad en jordfelsbrytare skyddar mot?</div>
+    <div class="mc-options">
+      <div class="mc-option" onclick="checkMC(this, 'fq5', false, 'A')"><div class="mc-letter">A</div><div class="mc-text">Den skyddar mot för hög spänning</div></div>
+      <div class="mc-option" onclick="checkMC(this, 'fq5', false, 'B')"><div class="mc-letter">B</div><div class="mc-text">Den skyddar mot för hög resistans i kretsen</div></div>
+      <div class="mc-option" onclick="checkMC(this, 'fq5', true, 'C')"><div class="mc-letter">C</div><div class="mc-text">Den bryter strömmen om el läcker ut via en person (strömläckage) — skyddar mot elstöt och brand</div></div>
+      <div class="mc-option" onclick="checkMC(this, 'fq5', false, 'D')"><div class="mc-letter">D</div><div class="mc-text">Den skyddar mot blixtnedslag</div></div>
+    </div>
+    <div class="feedback-box" id="fb-fq5"></div>
+  </div>
+
+  <!-- F6 -->
+  <div class="question-card" id="fq6">
+    <div class="q-number">Fråga 6 · Magnetism</div>
+    <div class="q-text">En elektromagnet kan stängas av och sättas på. En vanlig permanent magnet kan inte det. Vad gör en elektromagnet magnetisk?</div>
+    <textarea class="open-textarea" id="ota-fq6" placeholder="Skriv din förklaring här..."></textarea>
+    <div style="display:flex;gap:10px;">
+      <button class="btn btn-outline btn-sm" onclick="showModel('fq6')">Visa modellsvar</button>
+    </div>
+    <div class="model-answer" id="ma-fq6">
+      <div class="model-answer-label">📖 Modellsvar</div>
+      <div class="model-answer-text">En elektromagnet fungerar tack vare att en <strong>elektrisk ström</strong> flödar genom en spole av ledningsträd lindad runt en järnkärna. Ström skapar alltid ett <strong>magnetfält</strong> runt sig — ju fler lindningar och ju starkare ström, desto starkare magnet. Stänger man av strömmen försvinner magnetfältet. En permanent magnet har sina atomer permanent inriktade i en riktning och behöver ingen ström.</div>
+    </div>
+  </div>
+
+  <!-- F7 -->
+  <div class="question-card" id="fq7">
+    <div class="q-number">Fråga 7 · Transformatorn</div>
+    <div class="q-text">Varför används transformatorer när el transporteras långa sträckor i kraftledningar?</div>
+    <textarea class="open-textarea" id="ota-fq7" placeholder="Skriv din förklaring här..."></textarea>
+    <div style="display:flex;gap:10px;">
+      <button class="btn btn-outline btn-sm" onclick="showModel('fq7')">Visa modellsvar</button>
+    </div>
+    <div class="model-answer" id="ma-fq7">
+      <div class="model-answer-label">📖 Modellsvar</div>
+      <div class="model-answer-text">En transformator <strong>höjer spänningen</strong> (och sänker strömmen proportionellt) innan elen skickas ut på kraftledningarna. Låg ström ger <strong>mindre energiförlust</strong> som värme i ledningarna (P = I² × R — värmeeffekten beror på strömmen i kvadrat). Nära slutanvändaren sänker en ny transformator spänningen till säkra 230 V. Transformatorn fungerar bara med <strong>växelström</strong>, vilket är ett skäl till att vi använder AC (växelström) i elnätet.</div>
+    </div>
+  </div>
+
+  <!-- F8 -->
+  <div class="question-card" id="fq8">
+    <div class="q-number">Fråga 8 · Effektlagen</div>
+    <div class="q-text">En hushållsapparat drar 10 A när den kopplas in på 230 V. Hur stor effekt har apparaten? Visa uträkning.</div>
+    <textarea class="open-textarea" id="ota-fq8" placeholder="Skriv din uträkning och svar här..."></textarea>
+    <div style="display:flex;gap:10px;">
+      <button class="btn btn-outline btn-sm" onclick="showModel('fq8')">Visa modellsvar</button>
+    </div>
+    <div class="model-answer" id="ma-fq8">
+      <div class="model-answer-label">📖 Modellsvar</div>
+      <div class="model-answer-text"><strong>Formel:</strong> P = U × I<br><strong>Indata:</strong> U = 230 V, I = 10 A<br><strong>Beräkning:</strong> P = 230 × 10 = <strong>2 300 W = 2,3 kW</strong><br><em>Det är ungefär lika kraftigt som en elspis på en platta.</em></div>
+    </div>
+  </div>
+
+  <!-- F9 -->
+  <div class="question-card" id="fq9">
+    <div class="q-number">Fråga 9 · Statisk elektricitet &amp; influens</div>
+    <div class="q-text">När du drar ett kamm genom håret och sedan håller den nära små pappersremsor — vad händer och varför?</div>
+    <textarea class="open-textarea" id="ota-fq9" placeholder="Förklara med begreppen laddning och influens..."></textarea>
+    <div style="display:flex;gap:10px;">
+      <button class="btn btn-outline btn-sm" onclick="showModel('fq9')">Visa modellsvar</button>
+    </div>
+    <div class="model-answer" id="ma-fq9">
+      <div class="model-answer-label">📖 Modellsvar</div>
+      <div class="model-answer-text">Kammen gnids mot håret och <strong>laddas negativt</strong> (tar upp elektroner). När kammen hålls nära papperet sker <strong>influens</strong>: de positiva laddningarna i papperet dras mot kammens yta och de negativa skjuts bort. Papperet får en positiv laddning närmast kammen och attraheras av den negativa kammen — <strong>olika laddningar attraherar</strong> varandra. Pappersremsorna hoppar upp mot kammen!</div>
+    </div>
+  </div>
+
+  <!-- F10 -->
+  <div class="question-card" id="fq10">
+    <div class="q-number">Fråga 10 · Kortslutning</div>
+    <div class="q-text">Vad händer i en elektrisk krets vid en kortslutning, och varför är det farligt?</div>
+    <div class="mc-options">
+      <div class="mc-option" onclick="checkMC(this, 'fq10', false, 'A')"><div class="mc-letter">A</div><div class="mc-text">Strömmen blir noll — kretsen stängs av</div></div>
+      <div class="mc-option" onclick="checkMC(this, 'fq10', true, 'B')"><div class="mc-letter">B</div><div class="mc-text">Resistansen sjunker till nära noll, strömmen ökar enormt, ledningarna hettar upp och kan orsaka brand</div></div>
+      <div class="mc-option" onclick="checkMC(this, 'fq10', false, 'C')"><div class="mc-letter">C</div><div class="mc-text">Spänningen dubbleras vilket skadar apparaterna</div></div>
+      <div class="mc-option" onclick="checkMC(this, 'fq10', false, 'D')"><div class="mc-letter">D</div><div class="mc-text">Säkringen stänger av kretsen långsamt under flera timmar</div></div>
+    </div>
+    <div class="feedback-box" id="fb-fq10"></div>
+  </div>
+
+  <!-- F11 -->
+  <div class="question-card" id="fq11">
+    <div class="q-number">Fråga 11 · Generator</div>
+    <div class="q-text">En generator och en motor är konstruerade på liknande sätt men gör motsatta saker. Förklara skillnaden.</div>
+    <textarea class="open-textarea" id="ota-fq11" placeholder="Förklara vad en generator resp. en motor omvandlar..."></textarea>
+    <div style="display:flex;gap:10px;">
+      <button class="btn btn-outline btn-sm" onclick="showModel('fq11')">Visa modellsvar</button>
+    </div>
+    <div class="model-answer" id="ma-fq11">
+      <div class="model-answer-label">📖 Modellsvar</div>
+      <div class="model-answer-text">En <strong>generator</strong> omvandlar <em>rörelseenergi → elektrisk energi</em>. En spole roterar i ett magnetfält och en ström induceras — det är principen i vindkraft, vattenkraft och kraftverk. En <strong>motor</strong> gör tvärtom: <em>elektrisk energi → rörelseenergi</em>. Ström genom en spole i ett magnetfält skapar en kraft som roterar spolen. Båda bygger på elektromagnetisk induktion.</div>
+    </div>
+  </div>
+
+  <!-- F12 -->
+  <div class="question-card" id="fq12">
+    <div class="q-number">Fråga 12 · Säkring &amp; NP 2016</div>
+    <div class="q-text">I ett rum finns ett antal elektriska apparater, alla kopplade till samma eluttag. När alla används samtidigt bryts strömmen. Förklara varför strömmen plötsligt bryts.</div>
+    <textarea class="open-textarea" id="ota-fq12" placeholder="Använd begreppen ström, överbelastning och säkring..."></textarea>
+    <div style="display:flex;gap:10px;">
+      <button class="btn btn-outline btn-sm" onclick="showModel('fq12')">Visa modellsvar</button>
+    </div>
+    <div class="model-answer" id="ma-fq12">
+      <div class="model-answer-label">📖 Modellsvar</div>
+      <div class="model-answer-text">Varje apparat drar en viss ström. När alla används <strong>summeras strömmen</strong> (parallellkoppling adderar strömmar). Om den totala strömmen överstiger säkringens märkström uppstår <strong>överbelastning</strong>. Säkringen är konstruerad för att smälta eller lösa ut när strömmen är för hög, för att skydda ledningarna från att bli för varma och orsaka brand. Ledningarna och vägguttaget är dimensionerade för en viss maximal ström.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════════
+     SEKTION 3: RESONEMANG
+═══════════════════════════════════════════ -->
+<div id="sec-resonemang" class="section">
+
+  <div class="section-intro">
+    <strong>Resonemang:</strong> Det är här A- och C-betygen vinns! Träna på att resonera i <em>flera led</em> — att koppla orsak → konsekvens → samhällsperspektiv. Det är exakt det provet testar.
+  </div>
+
+  <!-- R1 -->
+  <div class="resonemang-card">
+    <span class="res-tag">Resonemang i flera led</span>
+    <div class="q-text">Scenario: Din familj ska installera solpaneler hemma och behöver en transformator.</div>
+    <div class="res-scenario">Solpaneler producerar likström (DC) med spänningen 48 V. Hemmet behöver 230 V växelström för att apparaterna ska fungera.</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <div class="res-step-label">Steg 1 — E-nivå</div>
+        <div class="res-step-q">Vad är skillnaden mellan likström och växelström?</div>
+        <textarea class="open-textarea" placeholder="Förklara med egna ord..."></textarea>
+        <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa svar</button>
+        <div class="feedback-box info">Likström (DC) flödar alltid i samma riktning — som från ett batteri. Växelström (AC) byter riktning många gånger per sekund (50 Hz i Sverige). Solpaneler ger likström, elnätet använder växelström.</div>
+      </div>
+      <div class="res-step">
+        <div class="res-step-label">Steg 2 — C-nivå</div>
+        <div class="res-step-q">Varför kan man inte direkt använda en transformator för att höja DC-spänningen från 48 V till 230 V?</div>
+        <textarea class="open-textarea" placeholder="Tänk på hur en transformator fungerar..."></textarea>
+        <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa svar</button>
+        <div class="feedback-box info">En transformator fungerar genom att ett <strong>varierande magnetfält</strong> i primärspolen inducerar en ström i sekundärspolen. Likström ger ett <strong>konstant</strong> magnetfält — inget varierande fält → ingen inducerad ström → transformatorn fungerar inte. Man behöver en växelriktare (inverter) som omvandlar DC till AC först.</div>
+      </div>
+      <div class="res-step">
+        <div class="res-step-label">Steg 3 — A-nivå</div>
+        <div class="res-step-q">Resonera i två led om hur övergången till solenergi i hemmet kan påverka miljön — både positivt och negativt.</div>
+        <textarea class="open-textarea" style="min-height:110px;" placeholder="Resonera: Konsekvens 1... → vilket leder till... Konsekvens 2..."></textarea>
+        <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa modellsvar</button>
+        <div class="feedback-box info"><strong>Positivt (2 led):</strong> Solpaneler producerar el utan att förbränna fossila bränslen → mindre koldioxidutsläpp → minskad växthuseffekt och klimatpåverkan. <br><br><strong>Negativt (2 led):</strong> Tillverkning av solpaneler kräver sällsynta metaller som måste brytas → gruvdrift skadar miljön lokalt och kräver energi → nettomiljövinsten tar tid att uppnå (energiåterbetalningstid ca 1–3 år).</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- R2 -->
+  <div class="resonemang-card">
+    <span class="res-tag">Resonemang i flera led</span>
+    <div class="q-text">Scenario: Elsäkerhet i ett gammalt hus</div>
+    <div class="res-scenario">Ett 60-tal gammalt hus saknar jordfelsbrytare. Ägaren vill anlita en elektriker för att modernisera elsystemet, men undrar om det verkligen behövs.</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <div class="res-step-label">Steg 1 — E-nivå</div>
+        <div class="res-step-q">Vad gör en jordfelsbrytare? Förklara hur den skiljer sig från en vanlig säkring.</div>
+        <textarea class="open-textarea" placeholder="Beskriv funktionen..."></textarea>
+        <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa svar</button>
+        <div class="feedback-box info">En <strong>säkring</strong> skyddar mot för hög ström (överbelastning och kortslutning). En <strong>jordfelsbrytare</strong> mäter skillnaden i ström mellan fasledan och nolledan — om el läcker ut via en person (strömläckage) är skillnaden > 30 mA och brytaren löser ut på millisekunder. Säkringen löser inte ut vid ett sådant litet strömläckage, men det är nog för att döda en människa.</div>
+      </div>
+      <div class="res-step">
+        <div class="res-step-label">Steg 2 — C-nivå</div>
+        <div class="res-step-q">I ett badrum är risken för elolyckor extra stor. Förklara varför med hjälp av kunskaper om ledare och isolatorer.</div>
+        <textarea class="open-textarea" placeholder="Tänk på vad vatten gör med ledningsförmågan..."></textarea>
+        <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa svar</button>
+        <div class="feedback-box info">Vatten (särskilt saltvatten/svett) är en <strong>ledare</strong> — det innehåller joner som kan transportera elektrisk laddning. Torr hud är en relativt bra <strong>isolator</strong>, men våt hud leder ström mycket bättre. I ett badrum omges man av vatten och fukt, vilket dramatiskt sänker kroppens resistans och ökar risken för att en elstöt ska bli dödlig. Strömmen kan ta vägen via kroppen till jord.</div>
+      </div>
+      <div class="res-step">
+        <div class="res-step-label">Steg 3 — A-nivå</div>
+        <div class="res-step-q">Resonera om varför det är viktigt med elsäkerhetsregler ur ett samhällsperspektiv — resonera i minst två led.</div>
+        <textarea class="open-textarea" style="min-height:110px;" placeholder="Tänk: Individ → samhälle → ekonomi/miljö..."></textarea>
+        <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa modellsvar</button>
+        <div class="feedback-box info"><strong>Led 1:</strong> Elsäkerhetsregler minskar risken för elolyckor → färre skadade och döda privatpersoner och hantverkare, vilket minskar mänskligt lidande. <br><br><strong>Led 2:</strong> Brandfarliga installationer orsakar varje år hundratals bränder i Sverige → brandsläckning, sjukvård och återuppbyggnad kostar samhället miljarder kronor och belastar sjukvårds- och räddningstjänstresurser. Satsning på elsäkerhet är därmed ett samhällsekonomiskt lönsamt preventivt arbete.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- R3 -->
+  <div class="resonemang-card">
+    <span class="res-tag">Resonemang i flera led</span>
+    <div class="q-text">Scenario: Magnetism i vardagen</div>
+    <div class="res-scenario">Sjukhus använder MRI-kameror (magnetkameror) som bygger på extremt starka elektromagneter. Patienter med pace­maker får inte genomgå MRI-undersökning.</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <div class="res-step-label">Steg 1 — E-nivå</div>
+        <div class="res-step-q">Vad är en elektromagnet och varför kan man reglera dess styrka?</div>
+        <textarea class="open-textarea" placeholder="Förklara principen..."></textarea>
+        <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa svar</button>
+        <div class="feedback-box info">En elektromagnet är en spole av ledande tråd lindad runt en järnkärna. Ström genom spolen skapar ett <strong>magnetfält</strong>. Styrkan kan regleras genom att ändra strömstyrkan eller antalet lindningar. Fördelen mot en permanent magnet är att den kan stängas av.</div>
+      </div>
+      <div class="res-step">
+        <div class="res-step-label">Steg 2 — A-nivå</div>
+        <div class="res-step-q">Förklara i två led varför en patient med pacemaker inte bör genomgå MRI, och vad detta innebär för sjukvården.</div>
+        <textarea class="open-textarea" style="min-height:110px;" placeholder="Led 1: Vad händer med pacemakern? Led 2: Konsekvens för patienten och sjukvårdens möjligheter..."></textarea>
+        <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa modellsvar</button>
+        <div class="feedback-box info"><strong>Led 1:</strong> MRI-kamerans extremt starka magnetfält kan inducera ström i pacemakerns metalldelar och elektronik → pacemakern kan sluta fungera korrekt eller sända felaktiga pulser till hjärtat → livsfarligt för patienten. <br><br><strong>Led 2:</strong> Sjukvården måste använda alternativa undersökningsmetoder (t.ex. röntgen, ultraljud, CT) för patienter med pacemaker, vilket kan ge sämre bildkvalitet för vissa vävnadstyper. Detta begränsar diagnostiska möjligheter och kan fördröja diagnos → visar hur teknologiska landvinningar alltid medför etiska avvägningar och begränsningar.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- R4 -->
+  <div class="resonemang-card">
+    <span class="res-tag">Resonemang i flera led</span>
+    <div class="q-text">Scenario: Åskväder och elektronik — NP 2018 (omarbetad)</div>
+    <div class="res-scenario">Vid åskväder kan blixtar skada elektriska apparater i hemmet, till exempel TV och datorer.</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <div class="res-step-label">Steg 1 — E-nivå</div>
+        <div class="res-step-q">Ge ett exempel på vad ett hushåll kan göra för att förhindra att elektriska apparater skadas vid ett åskväder.</div>
+        <textarea class="open-textarea" placeholder="Beskriv en praktisk åtgärd..."></textarea>
+        <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa svar</button>
+        <div class="feedback-box info">Dra ur stickproppen på känsliga apparater (TV, dator) ur vägguttaget under åskvädret. En blixt kan orsaka ett kraftigt spänningsspikar i elnätet som sprider sig via ledningarna och skadar elektroniken. Alternativt: använda ett överspänningsskydd (en typ av grenuttag med inbyggt skydd).</div>
+      </div>
+      <div class="res-step">
+        <div class="res-step-label">Steg 2 — C-nivå</div>
+        <div class="res-step-q">Förklara vad som fysikaliskt händer vid ett blixtnedslag som kan skada apparaterna. Koppla till begreppen laddning, spänning och ström.</div>
+        <textarea class="open-textarea" placeholder="Förklara den fysikaliska mekanismen..."></textarea>
+        <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa svar</button>
+        <div class="feedback-box info">Åskmolnet bygger upp en stor negativ <strong>laddning</strong>. Marken och byggnader induceras till positiv laddning (influens). När spänningsskillnaden är tillräckligt stor bryter luftens isolerande förmåga — en gnista (blixten) uppstår. Den enorma <strong>ström</strong>pulsen kan fortplantas via elnätet som en spänningsspik med tusentals volt. Elektronik är känslig för spänningar utanför sitt normalintervall och kan bli kortsluten eller bränd.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- R5 -->
+  <div class="resonemang-card">
+    <span class="res-tag">Resonemang i flera led</span>
+    <div class="q-text">Scenario: Seriekoppling i praktiken</div>
+    <div class="res-scenario">Gamla julgransbelysningar bestod av lampor i serie. Nyare belysningar har lamporna parallellkopplade.</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <div class="res-step-label">Steg 1 — E-nivå</div>
+        <div class="res-step-q">Beskriv skillnaden mellan serie- och parallellkoppling när det gäller vad som händer om en lampa går sönder.</div>
+        <textarea class="open-textarea" placeholder="Förklara för båda kopplingstyperna..."></textarea>
+        <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa svar</button>
+        <div class="feedback-box info"><strong>Seriekoppling:</strong> Det finns bara en strömväg. Om en lampa går sönder (tråden bryts) bryts hela kretsen → alla lampor slocknar. <br><strong>Parallellkoppling:</strong> Varje lampa har en egen strömväg. Om en lampa går sönder fortsätter strömmen i de andra grenarna → bara den sönder lampan slocknar.</div>
+      </div>
+      <div class="res-step">
+        <div class="res-step-label">Steg 2 — C-nivå</div>
+        <div class="res-step-q">Vid seriekoppling av 10 lampor på 230 V — vilken spänning får varje lampa? Varför lyser de svagare än vid parallellkoppling?</div>
+        <textarea class="open-textarea" placeholder="Räkna och förklara..."></textarea>
+        <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa svar</button>
+        <div class="feedback-box info">Vid seriekoppling delar lamporna på den totala spänningen: 230 V ÷ 10 = <strong>23 V per lampa</strong>. En lampa konstruerad för 230 V får bara 23 V → den lyser mycket svagare. Vid parallellkoppling får varje lampa hela 230 V → full ljusstyrka. Det är varför gamla julgransbelysningar alltid var svagare och det var svårt att hitta den trasiga lampan.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- R6 -->
+  <div class="resonemang-card">
+    <span class="res-tag">Resonemang i flera led</span>
+    <div class="q-text">Scenario: Säkringsplacering — liknande NP 2016</div>
+    <div class="res-scenario">En elektrisk krets har fyra apparater parallellkopplade. En säkring ska skydda hela kretsen.</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <div class="res-step-label">Steg 1 — E-nivå</div>
+        <div class="res-step-q">Var i kretsen ska säkringen placeras för att strömmen alltid bryts om det uppstår ett fel i NÅGON av de fyra apparaterna? Förklara varför.</div>
+        <textarea class="open-textarea" placeholder="Tänk på var all ström måste passera..."></textarea>
+        <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa svar</button>
+        <div class="feedback-box info">Säkringen ska placeras i <strong>huvudledningen</strong> — det vill säga i den del av kretsen som all ström måste passera, innan kretsen förgrenar sig till de fyra grenarna. Vid ett fel i vilken som helst apparat ökar strömmen i huvudledningen, och säkringen löser ut. Om säkringen placeras i en av grenarna skyddar den bara den apparat som är i just den grenen.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════════
+     SEKTION 4: RIKTIGA NP-FRÅGOR
+═══════════════════════════════════════════ -->
+<div id="sec-np" class="section">
+
+  <div class="section-intro">
+    <strong>NP-Frågor:</strong> Dessa frågor är hämtade direkt ur de nationella proven 2016–2018. Träna som om det är skarpt läge — svara ordentligt innan du tittar på ledtråden.
+  </div>
+
+  <!-- NP1 -->
+  <div class="np-card">
+    <div class="np-header">
+      <span class="np-year">NP 2018 · Delprov A1</span>
+      <span class="np-level E">E-nivå</span>
+    </div>
+    <div class="q-text">Vad kan ett hushåll göra för att förhindra att elektriska apparater, till exempel TV och dator, skadas vid ett åskväder? Ge ett exempel.</div>
+    <textarea class="open-textarea" placeholder="Skriv ditt svar..."></textarea>
+    <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa ledtråd / bedömning</button>
+    <div class="model-answer">
+      <div class="model-answer-label">📋 Bedömningskommentar</div>
+      <div class="model-answer-text"><strong>E-nivå:</strong> Det räcker med ett korrekt exempel, t.ex. dra ur kontakten, använda ett överspänningsskydd eller koppla från antennen. <strong>C-nivå:</strong> Du kopplar åtgärden till en förklaring — t.ex. "för att undvika att spänningsspikar i elnätet når elektroniken." Inga beräkningar behövs.</div>
+    </div>
+  </div>
+
+  <!-- NP2 -->
+  <div class="np-card">
+    <div class="np-header">
+      <span class="np-year">NP 2018 · Delprov A1</span>
+      <span class="np-level E">E-nivå (flerval)</span>
+    </div>
+    <div class="q-text">Inuti en brödrost finns det ledningstrådar. När brödrosten används blir ledningstrådarna väldigt varma men inte sladden som går från brödrosten till vägguttaget. Ett av alternativen A–D beskriver varför. Vilket?</div>
+    <div class="mc-options">
+      <div class="mc-option" onclick="checkMC(this, 'np2', true, 'A')"><div class="mc-letter">A</div><div class="mc-text">Trådarna inuti brödrosten har en högre resistans än sladden.</div></div>
+      <div class="mc-option" onclick="checkMC(this, 'np2', false, 'B')"><div class="mc-letter">B</div><div class="mc-text">Trådarna inuti brödrosten har en lägre resistans än sladden.</div></div>
+      <div class="mc-option" onclick="checkMC(this, 'np2', false, 'C')"><div class="mc-letter">C</div><div class="mc-text">Trådarna inuti brödrosten har en högre ström än sladden.</div></div>
+      <div class="mc-option" onclick="checkMC(this, 'np2', false, 'D')"><div class="mc-letter">D</div><div class="mc-text">Trådarna inuti brödrosten har en lägre ström än sladden.</div></div>
+    </div>
+    <div class="feedback-box" id="fb-np2"></div>
+  </div>
+
+  <!-- NP3 -->
+  <div class="np-card">
+    <div class="np-header">
+      <span class="np-year">NP 2017 · Delprov A1</span>
+      <span class="np-level C">C-nivå</span>
+    </div>
+    <div class="q-text">I ett rum finns ett antal elektriska apparater. Alla apparater är kopplade till samma eluttag. När alla apparater används samtidigt bryts strömmen. Förklara varför strömmen plötsligt bryts när alla apparater används samtidigt.</div>
+    <textarea class="open-textarea" style="min-height:100px;" placeholder="Skriv din förklaring — tänk: ström, parallellkoppling, säkring, överbelastning..."></textarea>
+    <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa bedömningskommentar</button>
+    <div class="model-answer">
+      <div class="model-answer-label">📋 Bedömningskommentar</div>
+      <div class="model-answer-text"><strong>E:</strong> Säkringen löser ut / strömmen blir för stor. <br><strong>C:</strong> Förklarar att apparaterna är parallellkopplade, att strömmen i huvudledningen är summan av alla grenar, och att säkringen löser ut när gränsen överskrids för att skydda ledningarna. <br><strong>A:</strong> Nämner specifikt att säkringens funktion är att förhindra brand/överhettning, kopplar till Ohms lag eller energiförlust som värme.</div>
+    </div>
+  </div>
+
+  <!-- NP4 -->
+  <div class="np-card">
+    <div class="np-header">
+      <span class="np-year">NP 2016 · Delprov A1</span>
+      <span class="np-level mixed">C–A-nivå</span>
+    </div>
+    <div class="q-text">Figuren visar en elektrisk krets med fyra inkopplade apparater (parallellkopplade). Apparaterna har olika effekt. I kretsen finns en säkring som gör att strömmen i kretsen bryts om det uppstår ett elektriskt fel i någon av apparaterna. I vilken av punkterna A–E ska en säkring placeras för att strömmen i kretsen ALLTID ska brytas om det uppstår ett elektriskt fel i NÅGON av apparaterna? Förklara varför.</div>
+    <div class="q-context">💡 Tänk dig fyra parallella grenar och en gemensam ledning. Punkt A–D är i varje gren, punkt E är i huvudledningen (innan förgreningen).</div>
+    <textarea class="open-textarea" style="min-height:100px;" placeholder="Ange vilken punkt och förklara varför just den..."></textarea>
+    <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa bedömningskommentar</button>
+    <div class="model-answer">
+      <div class="model-answer-label">📋 Bedömningskommentar</div>
+      <div class="model-answer-text"><strong>Rätt svar: Punkt E</strong> (i huvudledningen). <br><strong>Förklaring (C–A):</strong> All ström måste passera punkt E, oavsett vilken apparat som är inkopplad. Om ett fel uppstår i någon apparat ökar den totala strömmen i huvudledningen → säkringen i E löser ut. Placeras säkringen i en gren (A–D) skyddar den bara den appen — om fel uppstår i en annan gren bryts inte strömmen.</div>
+    </div>
+  </div>
+
+</div>
+</div><!-- /content -->
+
+<script>
+const STORAGE_KEY = 'fysik_el_magnetism';
+const quizItems = Array(12).fill(null);
+// ══════════════════════════════════════════
+// FLASHCARD DATA
+// ══════════════════════════════════════════
+const allCards = [
+  // GRUNDBEGREPP
+  { cat:'grundbegrepp', catLabel:'Grundbegrepp', q:'Vad är elektrisk spänning och i vilken enhet mäts den?', a:'Spänning (U) är den "drivkraft" som driver elektroner genom en ledare — skillnaden i elektrisk potential. Mäts i Volt (V). Mäts med ett voltmeter parallellt i kretsen.', hint:'Symbol: U' },
+  { cat:'grundbegrepp', catLabel:'Grundbegrepp', q:'Vad är elektrisk ström och i vilken enhet mäts den?', a:'Ström (I) är flödet av elektriska laddningar (elektroner) per tidsenhet i en ledare. Mäts i Ampere (A). Mäts med ett amperemeter i serie i kretsen.', hint:'Symbol: I' },
+  { cat:'grundbegrepp', catLabel:'Grundbegrepp', q:'Vad är resistans och i vilken enhet mäts den?', a:'Resistans (R) är ett materials motstånd mot elektrisk ström. Mäts i Ohm (Ω). Hög resistans → liten ström vid given spänning.', hint:'Symbol: R' },
+  { cat:'grundbegrepp', catLabel:'Grundbegrepp', q:'Formulera Ohms lag.', a:'U = R × I (Spänning = Resistans × Ström). Kan skrivas om: I = U/R eller R = U/I. Gäller för linjära resistorer vid konstant temperatur.', hint:'U = R × I' },
+  { cat:'grundbegrepp', catLabel:'Grundbegrepp', q:'Vad är skillnaden mellan en ledare och en isolator?', a:'Ledare: material som elektroner kan röra sig fritt igenom, t.ex. koppar, silver, aluminium. Isolator: material som hindrar elektroner, t.ex. gummi, plast, glas, torr luft.', hint:'Tänk: metaller vs plast' },
+  { cat:'grundbegrepp', catLabel:'Grundbegrepp', q:'Vad är statisk elektricitet?', a:'Elektrisk laddning som ansamlats på ytan av ett material (inte rör sig). Uppstår vid friktion — elektroner överförs från ett material till ett annat. Ex: gnida ballong mot håret, gå på heltäckningsmatta.', hint:'Olika laddningar attraherar, lika repellerar' },
+  { cat:'grundbegrepp', catLabel:'Grundbegrepp', q:'Vad menas med influens?', a:'Influens = laddningsomfördelning i ett ledande material när det befinner sig nära en laddad kropp — utan att de rör vid varandra. Positiva och negativa laddningar förflyttas inom materialet.', hint:'Papper attraheras av kamm utan att röra vid' },
+
+  // KRETSAR & KOPPLING
+  { cat:'kretsar', catLabel:'Kretsar & koppling', q:'Vad är skillnaden mellan serie- och parallellkoppling?', a:'Seriekoppling: Alla komponenter i rad — en enda strömväg. Strömmen är samma överallt, spänningarna adderas. En trasig komponent bryter hela kretsen.\nParallellkoppling: Komponenter i parallella grenar — flera strömvägar. Spänningen är samma i alla grenar, strömmar adderas i huvudledningen.', hint:'Serie = en väg, parallell = flera vägar' },
+  { cat:'kretsar', catLabel:'Kretsar & koppling', q:'Vilka symboler används i ett kopplingsschema?', a:'Batteri: lång + kort streck. Lampa: cirkel med X. Strömbrytare: öppen linje (bruten) / sluten linje. Amperemeter: cirkel med A. Voltmeter: cirkel med V. Resistor: rektangel.', hint:'Rita dem från minnet!' },
+  { cat:'kretsar', catLabel:'Kretsar & koppling', q:'Hur kopplas ett amperemeter respektive voltmeter i en krets?', a:'Amperemeter kopplas i SERIE — strömmen måste flöda igenom den. Voltmeter kopplas PARALLELLT över den komponent vars spänning ska mätas — så att strömmen kan passera utanför mätaren.', hint:'A = serie, V = parallell' },
+  { cat:'kretsar', catLabel:'Kretsar & koppling', q:'Vad händer med den totala resistansen när man kopplar resistorer i serie?', a:'Total resistans adderas: R_tot = R₁ + R₂ + R₃ + ... Den totala resistansen ökar ju fler komponenter man lägger till i serie.', hint:'R_tot = R₁ + R₂' },
+  { cat:'kretsar', catLabel:'Kretsar & koppling', q:'Vad händer med den totala resistansen vid parallellkoppling?', a:'Den totala resistansen MINSKAR vid parallellkoppling — den är alltid lägre än den minsta grenen. Fler strömvägar = lättare för strömmen att flöda.', hint:'1/R_tot = 1/R₁ + 1/R₂' },
+  { cat:'kretsar', catLabel:'Kretsar & koppling', q:'Vad är effektlagen och vad används den till?', a:'P = U × I (Effekt = Spänning × Ström). Enheten är Watt (W). Beskriver hur mycket energi per sekund som omvandlas i en komponent. Kan kombineras med Ohms lag: P = I²R eller P = U²/R.', hint:'P = U × I (Watt)' },
+
+  // ELSÄKERHET
+  { cat:'sakerhetheten', catLabel:'Elsäkerhet', q:'Vad är en kortslutning och varför är den farlig?', a:'Kortslutning uppstår när ström kan flöda direkt mellan plus och minus utan att passera någon belastning (resistans ≈ 0). Strömmen blir extremt hög → enorm värmeutveckling i ledningarna → brand och skador.', hint:'R → 0, I → ∞' },
+  { cat:'sakerhetheten', catLabel:'Elsäkerhet', q:'Vad är skillnaden mellan en säkring/propp och en jordfelsbrytare?', a:'Säkring/propp: skyddar mot för hög ström (överbelastning och kortslutning) — smälter eller löser ut när ström > märkvärdet.\nJordfelsbrytare: bryter kretsen om ström läcker ut via t.ex. en människa (strömläckage > 30 mA) — skyddar mot elstöt.', hint:'Säkring = för hög ström / Jordfels = läckage' },
+  { cat:'sakerhetheten', catLabel:'Elsäkerhet', q:'Vad menas med överbelastning i en elektrisk krets?', a:'Överbelastning innebär att mer ström tas ut än kretsen/ledningarna är dimensionerade för. Uppstår ofta när för många apparater kopplas in på samma krets. Ledningarna hettar upp och risk för brand uppstår. Säkringen ska lösa ut innan det sker.', hint:'För många apparater = för stor ström' },
+
+  // MAGNETISM
+  { cat:'magnetism', catLabel:'Magnetism', q:'Vad är ett magnetfält och hur visualiseras det?', a:'Magnetfältet är det kraftfält som omger en magnet och utövar kraft på magnetiska material och rörliga laddningar. Visualiseras med fältlinjer — de går från nordpol till sydpol utanför magneten, och är tätt packade där fältet är starkt.', hint:'Fältlinjer: N → S' },
+  { cat:'magnetism', catLabel:'Magnetism', q:'Vilket magnetpol attraherar vilket? Vilka repellerar?', a:'Olika poler (N och S) attraherar varandra. Lika poler (N–N eller S–S) repellerar varandra. Precis som elektriska laddningar: lika laddar repellerar, olika attraherar.', hint:'Olikt → attraherar, likt → repellerar' },
+  { cat:'magnetism', catLabel:'Magnetism', q:'Vad är en elektromagnet och vad avgör dess styrka?', a:'En elektromagnet är en spole av ledande tråd (ofta runt en järnkärna) som skapar ett magnetfält när ström flödar igenom. Styrkan ökar med: 1) högre ström, 2) fler lindningar, 3) järnkärna (förstärker fältet).', hint:'Spole + ström + järnkärna' },
+  { cat:'magnetism', catLabel:'Magnetism', q:'Vad är jordens magnetfält och varför är det viktigt?', a:'Jordens inre flytande järnkärna genererar ett magnetfält som omger hela planeten. Det skyddar mot skadliga solvindar och kosmisk strålning. Kompassen pekar mot magnetisk nordpol (som inte sammanfaller exakt med geografisk nordpol).', hint:'Kompassnålen pekar mot magnetisk nord' },
+
+  // GENERATOR & TRANSFORMATOR
+  { cat:'generatorer', catLabel:'Generator & transformator', q:'Hur fungerar en generator? Vilken energiomvandling sker?', a:'En generator omvandlar rörelseenergi → elektrisk energi. En spole roterar i ett magnetfält (eller ett magnetfält roterar kring en spole) → ett varierande magnetfält inducerar en spänning i spolen (elektromagnetisk induktion). Producerar växelström (AC).', hint:'Rörelse → El' },
+  { cat:'generatorer', catLabel:'Generator & transformator', q:'Hur fungerar en transformator? Vilka är de två delarna?', a:'En transformator består av en primärspole och en sekundärspole lindade runt en gemensam järnkärna. Växelspänning i primärspolen skapar ett varierande magnetfält som inducerar en ny spänning i sekundärspolen.\nFormel: U₁/U₂ = N₁/N₂', hint:'Fungerar bara med AC!' },
+  { cat:'generatorer', catLabel:'Generator & transformator', q:'Vad är skillnaden mellan växelström och likström?', a:'Växelström (AC): ändrar riktning periodiskt, 50 gånger/sekund i Sverige (50 Hz). Används i elnätet, effektiv för transport. Likström (DC): flödar alltid i en riktning. Produceras av batterier, solceller, bränsleceller.', hint:'AC = växlar riktning, DC = en riktning' },
+  { cat:'generatorer', catLabel:'Generator & transformator', q:'Varför höjs spänningen i kraftledningar med transformatorer?', a:'Hög spänning → låg ström (samma effekt: P=UI). Låg ström → mycket liten energiförlust som värme i ledningarna (P_förlust = I²R). Det är ekonomiskt och energieffektivt att transportera el vid höga spänningar (hundratusentals volt).', hint:'Höj U → sänk I → mindre förlust' },
+  { cat:'generatorer', catLabel:'Generator & transformator', q:'Vad är en stegup- respektive stegner-transformator?', a:'Stegup-transformator: höjer spänningen (fler vindningar i sekundärspolen än primärspolen). Används vid kraftproduktionen för att höja spänningen till kraftledningsnätet.\nStegner-transformator: sänker spänningen (färre vindningar i sekundärspolen). Används nära konsumenter för att sänka till 230 V.', hint:'N₂ > N₁ = stegup' },
+  { cat:'generatorer', catLabel:'Generator & transformator', q:'Vad är elektromagnetisk induktion?', a:'När ett magnetfält förändras (varierar) kring en ledare induceras en elektromotorisk kraft (EMK) och en ström i ledaren. Uppfanns av Faraday 1831. Principen bakom generatorer, transformatorer och induktionsladdning.', hint:'Varierande B-fält → inducerad ström' },
+
+  // EXTRA
+  { cat:'grundbegrepp', catLabel:'Grundbegrepp', q:'Vad är effekt och i vilken enhet mäts den?', a:'Effekt (P) anger hur snabbt energi omvandlas — joule per sekund. Mäts i Watt (W). En 100W lampa omvandlar 100 joule elektrisk energi per sekund till ljus och värme.', hint:'P = J/s = W' },
+  { cat:'grundbegrepp', catLabel:'Grundbegrepp', q:'Hur beräknas den elektriska energin (W) från effekt och tid?', a:'W = P × t (Energi = Effekt × Tid). Om du vet kWh på elräkningen: 1 kWh = 1000 W under 1 timme. Enheten är joule (J) eller kilowattimme (kWh) för hushållsbruk.', hint:'W = P × t' },
+];
+
+// ══════════════════════════════════════════
+// FLASHCARD LOGIC
+// ══════════════════════════════════════════
+let deck = [...allCards];
+let currentIdx = 0;
+let cardStates = {}; // 'good', 'bad', or undefined
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+}
+
+function filterCards(cat, el) {
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  deck = cat === 'all' ? [...allCards] : allCards.filter(c => c.cat === cat);
+  currentIdx = 0;
+  renderCard();
+}
+
+function shuffleCards() {
+  shuffle(deck);
+  currentIdx = 0;
+  document.getElementById('flashcard').classList.remove('flipped');
+  renderCard();
+}
+
+function renderCard() {
+  const card = deck[currentIdx];
+  if (!card) return;
+  document.getElementById('fcCat').textContent = card.catLabel;
+  document.getElementById('fcCatBack').textContent = card.catLabel + ' — Svar';
+  document.getElementById('fcQ').textContent = card.q;
+  document.getElementById('fcHint').textContent = card.hint ? '💡 Ledtråd: ' + card.hint : '';
+  document.getElementById('fcA').textContent = card.a;
+  document.getElementById('fcExtra').textContent = '';
+  document.getElementById('fcCounter').textContent = (currentIdx + 1) + ' / ' + deck.length;
+  const pct = deck.length > 1 ? (currentIdx / (deck.length - 1)) * 100 : 100;
+  document.getElementById('fcProgressFill').style.width = pct + '%';
+  updateFcStats();
+}
+
+function flipCard() {
+  document.getElementById('flashcard').classList.toggle('flipped');
+}
+
+function prevCard() {
+  document.getElementById('flashcard').classList.remove('flipped');
+  currentIdx = (currentIdx - 1 + deck.length) % deck.length;
+  renderCard();
+}
+
+function nextCard() {
+  document.getElementById('flashcard').classList.remove('flipped');
+  currentIdx = (currentIdx + 1) % deck.length;
+  renderCard();
+}
+
+function markCard(correct) {
+  const card = deck[currentIdx];
+  cardStates[card.q] = correct ? 'good' : 'bad';
+  updateFcStats();
+  nextCard();
+}
+
+function updateFcStats() {
+  let good = 0, bad = 0;
+  Object.values(cardStates).forEach(v => { if (v === 'good') good++; else bad++; });
+  const unseen = allCards.length - good - bad;
+  document.getElementById('fcGood').textContent = good;
+  document.getElementById('fcBad').textContent = bad;
+  document.getElementById('fcUnseen').textContent = Math.max(0, unseen);
+  updateMainProgress();
+}
+
+// ══════════════════════════════════════════
+// FÖRSTÅELSE LOGIC
+// ══════════════════════════════════════════
+let fScore = 0;
+const fAnswered = {};
+
+function checkMC(el, qId, isCorrect, letter) {
+  if (fAnswered[qId]) return;
+  fAnswered[qId] = true;
+  const options = el.parentElement.querySelectorAll('.mc-option');
+  options.forEach(o => { o.classList.add('disabled'); o.onclick = null; });
+  const fb = document.getElementById('fb-' + qId);
+  if (isCorrect) {
+    el.classList.add('correct');
+    fb.className = 'feedback-box correct show';
+    fb.innerHTML = '✅ <strong>Rätt!</strong> ' + getCorrectFeedback(qId, letter);
+    fScore++;
+    document.getElementById(qId).classList.add('done');
+  } else {
+    el.classList.add('wrong');
+    // highlight correct
+    options.forEach(o => {
+      const oLetter = o.querySelector('.mc-letter').textContent;
+      if (isCorrectOption(qId, oLetter)) o.classList.add('correct');
+    });
+    fb.className = 'feedback-box wrong show';
+    fb.innerHTML = '❌ <strong>Fel.</strong> ' + getWrongFeedback(qId, letter);
+  }
+  document.getElementById('fScore').textContent = fScore;
+  const total = Object.keys(fAnswered).filter(k => !k.startsWith('np')).length;
+  document.getElementById('fPct').textContent = total > 0 ? Math.round((fScore / total) * 100) + '%' : '0%';
+  updateMainProgress();
+}
+
+function isCorrectOption(qId, letter) {
+  const map = { fq1:'B', fq2:'B', fq3:'C', fq4:'A', fq5:'C', fq10:'B', np2:'A' };
+  return map[qId] === letter;
+}
+
+function getCorrectFeedback(qId, letter) {
+  const map = {
+    fq1: 'Det krävs en komplett, obruten strömväg för att elektroner ska kunna flöda.',
+    fq2: 'I = U/R = 6/20 = 0,3 A. Kom ihåg: I = U ÷ R!',
+    fq3: 'Parallellkoppling ger full spänning till varje lampa och de fungerar oberoende av varandra.',
+    fq4: 'Hög resistans → mer energi omvandlas till värme (P = I²R). Det är principen bakom värmeelement.',
+    fq5: 'Jordfelsbrytare reagerar på strömläckage, inte på överström. Den är livsräddande.',
+    fq10: 'Kortslutning = resistans nær noll → ström mot oändligheten → ledningarna glöder.',
+    np2: 'Rätt! Hög resistans = mer värmeutveckling. Brödrostens trådar är gjorda av Ni-Cr-legering med hög resistivitet.'
+  };
+  return map[qId] || '';
+}
+
+function getWrongFeedback(qId, letter) {
+  const map = {
+    fq1: 'En sluten krets betyder en komplett strömväg från + till − utan avbrott.',
+    fq2: 'Använd I = U/R = 6 ÷ 20. Det ger 0,3 A, inte 120 A.',
+    fq3: 'Tänk på vad som händer när en lampa i varje kopplingstyp går sönder.',
+    fq4: 'Kom ihåg: värmeutveckling beror på resistansen. Hög R → mer värme.',
+    fq5: 'En jordfelsbrytare skyddar mot strömläckage via kroppen, inte mot överström.',
+    fq10: 'Vid kortslutning sjunker resistansen → strömmen ökar explosionsartat.',
+    np2: 'Fel. Var uppmärksam på att det är den HÖGA resistansen som orsakar uppvärmning.'
+  };
+  return map[qId] || 'Kontrollera ditt svar.';
+}
+
+function showModel(qId) {
+  document.getElementById('ma-' + qId).classList.add('show');
+}
+
+// ══════════════════════════════════════════
+// TABS
+// ══════════════════════════════════════════
+function showTab(name) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('sec-' + name).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+// ══════════════════════════════════════════
+// MAIN PROGRESS
+// ══════════════════════════════════════════
+function updateMainProgress() {
+  const good   = Object.values(cardStates).filter(v => v === 'good').length;
+  const fRight = Object.entries(fAnswered).filter(([k,v]) => v === true && !k.startsWith('np')).length;
+  const total  = allCards.length + quizItems.length;
+  const pct    = Math.min(100, Math.round(((good + fRight) / total) * 100));
+  document.getElementById('mainProgress').style.width = pct + '%';
+  document.getElementById('progressText').textContent = (good + fRight) + ' av ' + total + ' klara';
+  localStorage.setItem(STORAGE_KEY + '_progress', JSON.stringify({
+    pct, good, fRight, total,
+    cardStates: Object.assign({}, cardStates),
+    fAnswered:  Object.assign({}, fAnswered),
+  }));
+}
+
+function restoreProgress() {
+  const raw = localStorage.getItem(STORAGE_KEY + '_progress');
+  if (!raw) return;
+  try {
+    const data = JSON.parse(raw);
+    if (data.cardStates) Object.entries(data.cardStates).forEach(([k,v]) => { cardStates[k] = v; });
+    if (data.fAnswered)  Object.entries(data.fAnswered).forEach(([k,v])  => { fAnswered[k] = v; });
+  } catch(e) {}
+}
+
+// Init
+restoreProgress();
+renderCard();
+</script>
+</body>
+</html>

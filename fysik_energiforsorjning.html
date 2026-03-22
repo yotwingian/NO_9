@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Energiförsörjning – NP Fysik åk 9</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+:root {
+  --bg: #080e0a;
+  --card: #0d1510;
+  --card2: #111c14;
+  --border: #1a2b1e;
+  --border2: #223328;
+  --text: #e2e8f0;
+  --muted: #64748b;
+  --accent: #22c55e;
+  --accent2: #4ade80;
+  --good: #22c55e;
+  --bad: #ef4444;
+  --warn: #eab308;
+  --blue: #3b82f6;
+  --mono: 'JetBrains Mono', monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── Header ── */
+.header {
+  background: linear-gradient(135deg, #031209 0%, #080e0a 60%);
+  border-bottom: 1px solid var(--border);
+  padding: 2rem 1.5rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '⚡';
+  position: absolute;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 6rem;
+  opacity: 0.07;
+  pointer-events: none;
+}
+.chapter-tag {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.header h1 { font-size: 1.9rem; font-weight: 700; color: var(--text); margin-bottom: 0.3rem; }
+.header h1 span { color: var(--accent); }
+.header p { font-size: 0.85rem; color: var(--muted); }
+
+/* ── Progress ── */
+.progress-wrap {
+  padding: 0.9rem 1.5rem;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 1rem;
+}
+.progress-bar-bg { flex: 1; height: 6px; background: var(--border2); border-radius: 3px; overflow: hidden; }
+.progress-bar-fg {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  border-radius: 3px;
+  transition: width 0.4s ease;
+  width: 0%;
+}
+#progressText { font-family: var(--mono); font-size: 0.7rem; color: var(--muted); white-space: nowrap; }
+
+/* ── Tabs ── */
+.tabs {
+  display: flex; background: var(--card); border-bottom: 1px solid var(--border);
+  overflow-x: auto; scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar { display: none; }
+.tab-btn {
+  font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 500;
+  padding: 0.85rem 1.4rem; border: none; background: transparent; color: var(--muted);
+  cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.15s;
+  white-space: nowrap; display: flex; align-items: center; gap: 0.4rem;
+}
+.tab-btn:hover { color: var(--text); }
+.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+.tab-count {
+  font-family: var(--mono); font-size: 0.65rem;
+  background: var(--border2); padding: 0.1rem 0.4rem; border-radius: 10px;
+}
+.tab-btn.active .tab-count { background: rgba(34,197,94,0.2); color: var(--accent); }
+
+/* ── Sections ── */
+.section { display: none; max-width: 820px; margin: 0 auto; padding: 2rem 1.5rem; }
+.section.active { display: block; }
+
+/* ── Infobox ── */
+.infobox {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 1.2rem 1.4rem; margin-bottom: 1.5rem;
+}
+.infobox-title {
+  font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 0.8rem;
+}
+.infobox p { font-size: 0.85rem; color: var(--muted); line-height: 1.75; }
+.infobox strong { color: var(--text); }
+
+/* ── Energy forms grid ── */
+.ef-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 0.7rem;
+  margin-bottom: 1.5rem;
+}
+.ef-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 0.9rem 0.8rem; text-align: center;
+  transition: border-color 0.2s;
+}
+.ef-card:hover { border-color: rgba(34,197,94,0.35); }
+.ef-icon { font-size: 1.7rem; margin-bottom: 0.4rem; }
+.ef-name { font-size: 0.78rem; font-weight: 700; color: var(--accent); margin-bottom: 0.2rem; }
+.ef-ex { font-size: 0.68rem; color: var(--muted); line-height: 1.3; }
+
+/* ── Renew compare ── */
+.renew-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;
+}
+@media (max-width: 580px) { .renew-grid { grid-template-columns: 1fr; } }
+.renew-col {
+  background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.2rem;
+}
+.renew-col.yes { border-top: 3px solid var(--accent); }
+.renew-col.no  { border-top: 3px solid var(--bad); }
+.renew-col h3 { font-size: 0.82rem; font-weight: 700; margin-bottom: 0.9rem; }
+.renew-col.yes h3 { color: var(--accent); }
+.renew-col.no  h3 { color: var(--bad); }
+.renew-item { display: flex; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.6rem; font-size: 0.8rem; color: var(--muted); }
+.renew-item .ri { font-size: 1rem; line-height: 1.2; flex-shrink: 0; }
+.renew-item strong { color: var(--text); display: block; font-size: 0.8rem; }
+
+/* ── Flashcards ── */
+.card-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+.card-meta-left { font-family: var(--mono); font-size: 0.7rem; color: var(--muted); }
+.card-progress-dots { display: flex; gap: 4px; flex-wrap: wrap; max-width: 320px; justify-content: flex-end; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border2); transition: background 0.2s; }
+.dot.good { background: var(--good); }
+.dot.skip { background: var(--warn); }
+.dot.current { background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+
+.flashcard-scene { perspective: 1000px; width: 100%; max-width: 680px; height: 220px; margin: 0 auto 1.5rem; cursor: pointer; }
+.flashcard-inner { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.45s cubic-bezier(.4,0,.2,1); }
+.flashcard-inner.flipped { transform: rotateY(180deg); }
+.card-side {
+  position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  border-radius: 14px; border: 1px solid var(--border);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 2rem; text-align: center;
+}
+.card-front { background: var(--card); }
+.card-back  { background: var(--card2); transform: rotateY(180deg); }
+.card-side-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
+.card-front .card-side-label { color: var(--accent); }
+.card-text { font-size: 1rem; font-weight: 600; line-height: 1.5; color: var(--text); }
+.card-back .card-text { font-size: 0.88rem; font-weight: 400; color: #cbd5e1; }
+.card-hint { margin-top: 1rem; font-size: 0.72rem; color: var(--muted); }
+
+.card-actions { display: flex; gap: 0.75rem; justify-content: center; margin-bottom: 2.5rem; flex-wrap: wrap; }
+.card-btn {
+  font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 500;
+  padding: 0.55rem 1.3rem; border-radius: 8px; border: 1px solid var(--border2);
+  background: var(--card2); color: var(--muted); cursor: pointer; transition: all 0.15s;
+  display: flex; align-items: center; gap: 0.4rem;
+}
+.card-btn:hover { color: var(--text); border-color: #2d4a35; }
+.card-btn.good { border-color: var(--good); color: var(--good); background: rgba(34,197,94,0.07); }
+.card-btn.good:hover { background: rgba(34,197,94,0.15); }
+.card-btn.skip { border-color: var(--warn); color: var(--warn); background: rgba(234,179,8,0.07); }
+.card-btn.skip:hover { background: rgba(234,179,8,0.15); }
+
+/* ── Quiz ── */
+.f-question { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.4rem; margin-bottom: 1rem; transition: border-color 0.2s; }
+.f-question.answered-correct { border-color: rgba(34,197,94,0.4); }
+.f-question.answered-wrong   { border-color: rgba(239,68,68,0.3); }
+.f-num { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); margin-bottom: 0.5rem; letter-spacing: 0.1em; }
+.f-qtext { font-size: 0.92rem; font-weight: 600; line-height: 1.5; margin-bottom: 1.1rem; }
+.f-opts { display: flex; flex-direction: column; gap: 0.45rem; }
+.f-opt {
+  display: flex; align-items: flex-start; gap: 0.7rem;
+  padding: 0.65rem 0.9rem; background: var(--card2); border: 1px solid var(--border2);
+  border-radius: 8px; cursor: pointer; font-size: 0.84rem; color: var(--muted);
+  text-align: left; width: 100%; font-family: 'Inter', sans-serif; transition: all 0.12s;
+}
+.f-opt:hover:not(:disabled) { color: var(--text); border-color: #2d4a35; background: rgba(255,255,255,0.03); }
+.f-opt .opt-letter { font-family: var(--mono); font-size: 0.7rem; font-weight: 600; color: var(--accent); min-width: 1.1rem; margin-top: 0.1rem; }
+.f-opt.correct { border-color: var(--good); background: rgba(34,197,94,0.08); color: #86efac; }
+.f-opt.wrong   { border-color: var(--bad);  background: rgba(239,68,68,0.08);  color: #fca5a5; }
+.f-opt:disabled { cursor: default; }
+.f-feedback { display: none; margin-top: 0.8rem; padding: 0.7rem 0.9rem; border-radius: 8px; font-size: 0.82rem; line-height: 1.55; }
+.f-feedback.show { display: block; }
+.f-feedback.correct-fb { background: rgba(34,197,94,0.07); border: 1px solid rgba(34,197,94,0.25); color: #86efac; }
+.f-feedback.wrong-fb   { background: rgba(239,68,68,0.07); border: 1px solid rgba(239,68,68,0.2);  color: #fca5a5; }
+.quiz-summary { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 0.5rem; }
+.quiz-score { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); }
+.reset-btn {
+  font-family: var(--mono); font-size: 0.65rem; padding: 0.3rem 0.8rem;
+  border: 1px solid var(--border2); background: transparent; color: var(--muted);
+  border-radius: 5px; cursor: pointer; letter-spacing: 0.08em; transition: all 0.15s;
+}
+.reset-btn:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ── Resonemang ── */
+.res-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 1.2rem; overflow: hidden; }
+.res-header { display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 1.4rem; cursor: pointer; user-select: none; gap: 1rem; }
+.res-header:hover { background: rgba(255,255,255,0.02); }
+.res-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; flex: 1; }
+.res-chevron { color: var(--muted); font-size: 0.8rem; flex-shrink: 0; }
+.res-body { display: none; padding: 0 1.4rem 1.4rem; border-top: 1px solid var(--border); }
+.res-body.show { display: block; }
+.res-scenario { font-size: 0.84rem; color: var(--muted); line-height: 1.7; margin: 1rem 0; padding: 0.8rem 1rem; background: var(--card2); border-radius: 8px; border-left: 3px solid var(--border2); }
+.res-task { font-size: 0.88rem; font-weight: 600; color: var(--text); margin-bottom: 1rem; line-height: 1.5; }
+.level-block { margin-bottom: 0.8rem; }
+.level-label { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.2rem 0.6rem; border-radius: 4px; display: inline-block; margin-bottom: 0.4rem; }
+.lvl-e { background: rgba(34,197,94,0.12); color: var(--good); border: 1px solid rgba(34,197,94,0.25); }
+.lvl-c { background: rgba(59,130,246,0.12); color: #93c5fd; border: 1px solid rgba(59,130,246,0.25); }
+.lvl-a { background: rgba(168,85,247,0.12); color: #d8b4fe; border: 1px solid rgba(168,85,247,0.25); }
+.level-block p { font-size: 0.83rem; color: var(--muted); line-height: 1.65; padding-left: 0.5rem; }
+
+/* ── NP ── */
+.np-intro { background: rgba(34,197,94,0.05); border: 1px solid rgba(34,197,94,0.2); border-radius: 10px; padding: 0.9rem 1.1rem; margin-bottom: 1.5rem; font-size: 0.82rem; color: #86efac; line-height: 1.6; }
+.np-question { background: var(--card); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 1.2rem; overflow: hidden; }
+.np-qheader { display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 1.4rem; cursor: pointer; gap: 1rem; }
+.np-qheader:hover { background: rgba(255,255,255,0.02); }
+.np-year { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; color: var(--accent); background: rgba(34,197,94,0.1); padding: 0.2rem 0.6rem; border-radius: 4px; white-space: nowrap; }
+.np-qtitle { font-size: 0.9rem; font-weight: 600; flex: 1; line-height: 1.4; }
+.np-body { display: none; padding: 0 1.4rem 1.4rem; border-top: 1px solid var(--border); }
+.np-body.show { display: block; }
+.np-scenario { font-size: 0.84rem; color: var(--muted); line-height: 1.75; margin: 1rem 0; padding: 0.9rem 1.1rem; background: var(--card2); border-radius: 8px; border-left: 3px solid var(--accent); }
+.np-task { font-size: 0.88rem; font-weight: 600; color: var(--text); margin: 0.8rem 0 1rem; line-height: 1.5; }
+.np-tip { font-size: 0.78rem; color: #93c5fd; line-height: 1.6; margin-top: 0.6rem; padding: 0.6rem 0.8rem; background: rgba(59,130,246,0.06); border: 1px solid rgba(59,130,246,0.15); border-radius: 6px; }
+
+/* ── Energiomvandlingskedja ── */
+.chain {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem;
+  background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+  padding: 0.9rem 1.1rem; margin-bottom: 0.7rem; font-size: 0.8rem;
+}
+.chain-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-right: 0.3rem; min-width: 80px; }
+.chain-step { background: var(--card2); border: 1px solid var(--border2); border-radius: 6px; padding: 0.25rem 0.65rem; font-weight: 600; color: var(--accent2); white-space: nowrap; }
+.chain-arrow { color: var(--muted); }
+.chain-loss { font-size: 0.7rem; color: var(--bad); margin-left: 0.2rem; }
+
+@media (max-width: 600px) {
+  .header h1 { font-size: 1.5rem; }
+  .section { padding: 1.5rem 1rem; }
+  .flashcard-scene { height: 200px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="chapter-tag">NP Fysik åk 9 · Kapitel 9</div>
+  <h1>Energi<span>försörjning</span></h1>
+  <p>Energiformer · Energiprincipen · Förnybart &amp; Fossilt · Energiomvandlingar · Miljökonsekvenser</p>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-wrap">
+  <div class="progress-bar-bg"><div class="progress-bar-fg" id="mainProgress"></div></div>
+  <span id="progressText">0 av 0 klara</span>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('begrepp',event)">🃏 Begrepp <span class="tab-count">22</span></button>
+  <button class="tab-btn" onclick="showTab('forsta',event)">💡 Förståelse <span class="tab-count">12</span></button>
+  <button class="tab-btn" onclick="showTab('resonemang',event)">🧠 Resonemang <span class="tab-count">4</span></button>
+  <button class="tab-btn" onclick="showTab('np',event)">📋 NP-frågor <span class="tab-count">4</span></button>
+</div>
+
+<!-- ════════════════════════════════
+     TAB 1: BEGREPP
+════════════════════════════════ -->
+<div class="section active" id="sec-begrepp">
+
+  <!-- Energiformer -->
+  <div class="infobox-title" style="font-family:var(--mono);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.8rem;">⚡ Sex energiformer att kunna</div>
+  <div class="ef-grid">
+    <div class="ef-card"><div class="ef-icon">⚡</div><div class="ef-name">Elektrisk</div><div class="ef-ex">El i kablar, batterier</div></div>
+    <div class="ef-card"><div class="ef-icon">🔄</div><div class="ef-name">Mekanisk</div><div class="ef-ex">Rörelse + lägesenergi</div></div>
+    <div class="ef-card"><div class="ef-icon">🌡️</div><div class="ef-name">Värme</div><div class="ef-ex">Termisk rörelse i atomer</div></div>
+    <div class="ef-card"><div class="ef-icon">⚛️</div><div class="ef-name">Kärn</div><div class="ef-ex">Fission, fusion, E=mc²</div></div>
+    <div class="ef-card"><div class="ef-icon">☀️</div><div class="ef-name">Strålnings</div><div class="ef-ex">Ljus, IR, UV, radiovågor</div></div>
+    <div class="ef-card"><div class="ef-icon">🔋</div><div class="ef-name">Kemisk</div><div class="ef-ex">Bränsle, mat, batteri</div></div>
+  </div>
+
+  <!-- Energiomvandlingskedjor -->
+  <div class="infobox-title" style="font-family:var(--mono);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.8rem;">🔗 Energiomvandlingskedjor</div>
+  <div class="chain">
+    <span class="chain-label">Vattenkraft:</span>
+    <span class="chain-step">Lägesenergi</span><span class="chain-arrow">→</span>
+    <span class="chain-step">Rörelseenergi</span><span class="chain-arrow">→</span>
+    <span class="chain-step">Elektrisk</span>
+    <span class="chain-loss">+ värmeförluster</span>
+  </div>
+  <div class="chain">
+    <span class="chain-label">Kolkraft:</span>
+    <span class="chain-step">Kemisk</span><span class="chain-arrow">→</span>
+    <span class="chain-step">Värme</span><span class="chain-arrow">→</span>
+    <span class="chain-step">Mekanisk</span><span class="chain-arrow">→</span>
+    <span class="chain-step">Elektrisk</span>
+    <span class="chain-loss">+ stora värmeförluster</span>
+  </div>
+  <div class="chain">
+    <span class="chain-label">Solcell:</span>
+    <span class="chain-step">Strålning</span><span class="chain-arrow">→</span>
+    <span class="chain-step">Elektrisk</span>
+    <span class="chain-loss">+ värmeförluster</span>
+  </div>
+  <div class="chain" style="margin-bottom:1.5rem">
+    <span class="chain-label">Kärnkraft:</span>
+    <span class="chain-step">Kärn</span><span class="chain-arrow">→</span>
+    <span class="chain-step">Värme</span><span class="chain-arrow">→</span>
+    <span class="chain-step">Mekanisk</span><span class="chain-arrow">→</span>
+    <span class="chain-step">Elektrisk</span>
+    <span class="chain-loss">+ värmeförluster</span>
+  </div>
+
+  <!-- Förnybart vs icke-förnybart -->
+  <div class="infobox-title" style="font-family:var(--mono);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.8rem;">🌿 Förnybart vs Icke-förnybart</div>
+  <div class="renew-grid">
+    <div class="renew-col yes">
+      <h3>✅ Förnybart</h3>
+      <div class="renew-item"><div class="ri">💧</div><div><strong>Vattenkraft</strong>Strömmande vatten, inga utsläpp, men påverkar älvmiljö</div></div>
+      <div class="renew-item"><div class="ri">💨</div><div><strong>Vindkraft</strong>Vind driver turbiner, buller, påverkar fåglar</div></div>
+      <div class="renew-item"><div class="ri">☀️</div><div><strong>Solceller</strong>Fotonenergi → el direkt, inga utsläpp under drift</div></div>
+      <div class="renew-item"><div class="ri">🌲</div><div><strong>Biobränsle</strong>Trä, etanol, biogas — koldioxidneutralt om hållbart</div></div>
+      <div class="renew-item"><div class="ri">🌍</div><div><strong>Bergvärme</strong>Värme ur marken via värmepump, stabil produktion</div></div>
+    </div>
+    <div class="renew-col no">
+      <h3>❌ Icke-förnybart</h3>
+      <div class="renew-item"><div class="ri">⛏️</div><div><strong>Kol</strong>Fossil, störst CO₂-utsläpp per kWh</div></div>
+      <div class="renew-item"><div class="ri">🛢️</div><div><strong>Olja</strong>Fossil, stora CO₂-utsläpp, ändlig resurs</div></div>
+      <div class="renew-item"><div class="ri">🔥</div><div><strong>Naturgas</strong>Fossil, lägre CO₂ än kol men metan är kraftig växthusgas</div></div>
+      <div class="renew-item"><div class="ri">⚛️</div><div><strong>Kärnkraft</strong>Uran är ändligt, inga CO₂-utsläpp men radioaktivt avfall</div></div>
+    </div>
+  </div>
+
+  <!-- Flashcards -->
+  <div class="card-meta">
+    <div class="card-meta-left">Kort <span id="cardIdx">1</span> av <span id="cardTotal">22</span> &nbsp;·&nbsp; <span id="cardGoodCount">0</span> kan jag ✓</div>
+    <div class="card-progress-dots" id="dotRow"></div>
+  </div>
+
+  <div class="flashcard-scene" onclick="flipCard()">
+    <div class="flashcard-inner" id="fcInner">
+      <div class="card-side card-front">
+        <div class="card-side-label">Begrepp — klicka för att vända</div>
+        <div class="card-text" id="fcFront">...</div>
+        <div class="card-hint" id="fcHint"></div>
+      </div>
+      <div class="card-side card-back">
+        <div class="card-side-label">Förklaring</div>
+        <div class="card-text" id="fcBack">...</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-actions">
+    <button class="card-btn" onclick="prevCard()">← Föregående</button>
+    <button class="card-btn skip" onclick="markCard('skip')">↺ Repeteras</button>
+    <button class="card-btn good" onclick="markCard('good')">✓ Kan jag!</button>
+    <button class="card-btn" onclick="nextCard()">Nästa →</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     TAB 2: FÖRSTÅELSE
+════════════════════════════════ -->
+<div class="section" id="sec-forsta">
+  <div class="quiz-summary">
+    <span class="quiz-score" id="quizScore">Rätt: 0 / 0</span>
+    <button class="reset-btn" onclick="resetQuiz()">↺ Börja om</button>
+  </div>
+  <div id="quizContainer"></div>
+</div>
+
+<!-- ════════════════════════════════
+     TAB 3: RESONEMANG
+════════════════════════════════ -->
+<div class="section" id="sec-resonemang">
+
+  <div class="infobox" style="margin-bottom:1.5rem">
+    <div class="infobox-title">💡 Ställningstagande — NP-mall</div>
+    <p>
+      Energiuppgifterna på NP kräver ofta ett <strong>ställningstagande</strong> + <strong>resonemang i två led</strong>:<br><br>
+      <strong>Led 1 (orsak/fakta):</strong> "Vattenkraft ger inga CO₂-utsläpp under drift…"<br>
+      <strong>Led 2 (konsekvens):</strong> "…vilket minskar bidraget till växthuseffekten och klimatförändringar."<br><br>
+      Nivå E = ett påstående. Nivå C = ett led. Nivå A = två välutvecklade led med naturvetenskapliga begrepp.
+    </p>
+  </div>
+
+  <!-- Resonemang 1 -->
+  <div class="res-card">
+    <div class="res-header" onclick="toggleRes('r1')">
+      <div class="res-title">🌿 Val av energikälla för tomatodlare (NP 2016)</div>
+      <div class="res-chevron" id="ch-r1">▼</div>
+    </div>
+    <div class="res-body" id="r1">
+      <div class="res-scenario">
+        En tomatodlare vill förlänga odlingssäsongen och behöver värma upp sitt växthus. På gården finns tillgång till vind, strömmande vatten och värme i marken.<br><br>
+        <strong>Vindkraft:</strong> 25 000 kWh/år, 1 kWh rörelseenergi → 0,4 kWh värme, buller ~35 dB, påverkar luftlevande arter, livslängd 20–25 år.<br>
+        <strong>Vattenkraft:</strong> 100 000 kWh/år, 1 kWh → 0,8 kWh värme, buller ~30 dB, påverkar vattenlevande arter, livslängd 40–50 år.<br>
+        <strong>Bergvärme:</strong> 50 000 kWh/år, 1 kWh → 3 kWh värme, buller ~40–55 dB, påverkar marklevande arter, livslängd 15 år.
+      </div>
+      <div class="res-task">Rekommendera en energikälla. Resonera i två led kring tre fördelar och en nackdel med ditt val.</div>
+      <div class="level-block">
+        <span class="level-label lvl-e">Nivå E</span>
+        <p>Jag väljer vattenkraft för att den producerar mest energi och har lägst buller.</p>
+      </div>
+      <div class="level-block">
+        <span class="level-label lvl-c">Nivå C</span>
+        <p>Jag rekommenderar vattenkraft. Fördel 1: Producerar 100 000 kWh/år → täcker odlarens värmebehov bättre än alternativen. Fördel 2: Omvandlar 80% av rörelseenergin till värme → mer effektiv värmekälla än vindkraft (40%). Nackdel: Påverkar vattenlevande arters levnadsvillkor → kan kräva miljötillstånd och åtgärder.</p>
+      </div>
+      <div class="level-block">
+        <span class="level-label lvl-a">Nivå A</span>
+        <p>Jag rekommenderar vattenkraft. Fördel 1: 100 000 kWh/år är fyra gånger mer än vindkraft → ger säkrare och stabil energiförsörjning för hela säsongen. Fördel 2: Verkningsgraden 80% (0,8 kWh värme per kWh el) gör att mindre energi går till spillo → lägre driftskostnad per grad uppvärmning. Fördel 3: Livslängd 40–50 år → investeringen är lönsam långsiktigt och ger stabila förutsättningar. Nackdel: Turbinerna kan förändra vattenflödet → påverkar fiskars lek och vattenlevande organisms livsmiljö, vilket kan kräva kostsamma skyddsåtgärder.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Resonemang 2 -->
+  <div class="res-card">
+    <div class="res-header" onclick="toggleRes('r2')">
+      <div class="res-title">☢️ Kärnkraft eller vattenkraft? (NP 2017)</div>
+      <div class="res-chevron" id="ch-r2">▼</div>
+    </div>
+    <div class="res-body" id="r2">
+      <div class="res-scenario">
+        <strong>Kärnkraft:</strong> ~25 000 000 000 kWh/år · Bränsle: uran (räcker ~2500 år) · 30–50 ton radioaktivt avfall/år · 3 olyckor de senaste 40 åren.<br>
+        <strong>Vattenkraft:</strong> ~80 000 000 kWh/år per kraftverk · Bränsle: strömmande vatten · Inga direkta utsläpp · Stora landmassor kan hamna under vatten.
+      </div>
+      <div class="res-task">Ta ställning för kärnkraft eller vattenkraft. Formulera två resonemang i två led för ditt val och ett resonemang mot något av alternativen.</div>
+      <div class="level-block">
+        <span class="level-label lvl-e">Nivå E</span>
+        <p>Jag väljer kärnkraft för att den producerar mest el och inte ger CO₂-utsläpp.</p>
+      </div>
+      <div class="level-block">
+        <span class="level-label lvl-c">Nivå C</span>
+        <p>Jag väljer kärnkraft. För: Producerar 25 miljarder kWh/år — ca 300 gånger mer per kraftverk än vattenkraft → räcker för att försörja en stor del av ett lands elbehov. För: Inga direkta koldioxidutsläpp under drift → bidrar inte till den förstärkta växthuseffekten. Mot vattenkraft: Dammar leder till att stora landmassor hamnar under vatten → förstör ekosystem och kan tvinga befolkningar att flytta.</p>
+      </div>
+      <div class="level-block">
+        <span class="level-label lvl-a">Nivå A</span>
+        <p>Jag väljer kärnkraft. För 1: 25 000 000 000 kWh/år per kraftverk är enormt — det möjliggör storskalig elproduktion på liten markyta → kan ersätta hundratals kolkraftverk och drastiskt minska koldioxidutsläppen globalt. För 2: Inga direkta CO₂-utsläpp → kärnkraft är ett av de kraftslag med lägst livscykel-utsläpp, vilket är avgörande för att nå klimatmål. Mot vattenkraft: Att stora landmassor hamnar under vatten förstör biologisk mångfald och kan frigöra metangas från sönderfallande vegetation → metangas är en kraftigare växthusgas än CO₂, vilket minskar vattenkraftens klimatfördel.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Resonemang 3 -->
+  <div class="res-card">
+    <div class="res-header" onclick="toggleRes('r3')">
+      <div class="res-title">🚛 Minska beroendet av fossila bränslen (NP 2017)</div>
+      <div class="res-chevron" id="ch-r3">▼</div>
+    </div>
+    <div class="res-body" id="r3">
+      <div class="res-scenario">
+        Världens befolkning behöver bidra till ett minskat beroende av fossila bränslen.
+      </div>
+      <div class="res-task">Argumentera för varför det är viktigt att minska beroendet av fossila bränslen. Utgå från dina kunskaper om fossila bränslen och resonera i två led kring två olika naturvetenskapliga perspektiv.</div>
+      <div class="level-block">
+        <span class="level-label lvl-e">Nivå E</span>
+        <p>Fossila bränslen ger koldioxidutsläpp som orsakar växthuseffekten. De tar också slut.</p>
+      </div>
+      <div class="level-block">
+        <span class="level-label lvl-c">Nivå C</span>
+        <p>Klimatperspektiv: Förbränning av fossila bränslen frigör lagrad koldioxid → halten CO₂ i atmosfären ökar → förstärkt växthuseffekt → global uppvärmning med extremväder som följd. Resursperspektiv: Fossila bränslen är ändliga resurser som tar miljoner år att bildas → när de tar slut finns ingen ersättning om inte förnybara alternativ byggts ut i tid.</p>
+      </div>
+      <div class="level-block">
+        <span class="level-label lvl-a">Nivå A</span>
+        <p>Klimatperspektiv: Kol, olja och naturgas innehåller kol som bundits ur atmosfären för hundratals miljoner år sedan → förbränning frigör detta kol som CO₂ på decennier, vilket atmosfären inte kan absorbera i samma takt → CO₂-koncentrationen stiger, förstärkt växthuseffekt, havsnivåer stiger och extrema väderhändelser ökar i frekvens och intensitet. Resursperspektiv: Fossila bränslen är icke-förnybara — de nybildas på geologisk tidsskala → om samhället inte ställer om till förnybara energikällor i tid riskeras energibrist vid utvinningspeak, vilket driver upp priser och skapar geopolitiska konflikter om kvarvarande tillgångar.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Resonemang 4 -->
+  <div class="res-card">
+    <div class="res-header" onclick="toggleRes('r4')">
+      <div class="res-title">🚗 Transport och miljökonsekvenser (NP 2016)</div>
+      <div class="res-chevron" id="ch-r4">▼</div>
+    </div>
+    <div class="res-body" id="r4">
+      <div class="res-scenario">
+        Produkter importeras till Sverige med flygplan. Transporter med flygplan påverkar miljön negativt. Tänk dig att produkter istället transporteras med tåg, lastbil eller båt.
+      </div>
+      <div class="res-task">Välj ett av transportsätten tåg, lastbil eller båt. Resonera i två led kring två konsekvenser som bytet av transportsätt kan få på miljön.</div>
+      <div class="level-block">
+        <span class="level-label lvl-e">Nivå E</span>
+        <p>Jag väljer tåg. Det ger mindre utsläpp och är mer miljövänligt än flyg.</p>
+      </div>
+      <div class="level-block">
+        <span class="level-label lvl-c">Nivå C</span>
+        <p>Jag väljer tåg. Konsekvens 1: Tåg ger betydligt lägre CO₂-utsläpp per tonkilometer än flyg → minskar den totala koldioxidhalten i atmosfären och bromsar klimatförändringarna. Konsekvens 2: Elmotordrivna tåg kan drivas av förnybar el → om andelen förnybar el ökar kan transportsektorn bli nästan utsläppsfri.</p>
+      </div>
+      <div class="level-block">
+        <span class="level-label lvl-a">Nivå A</span>
+        <p>Jag väljer tåg. Konsekvens 1: Tåg släpper ut ca 14 g CO₂/personkm jämfört med flygets ~285 g → en dramatisk minskning av koldioxidutsläppen per transport, vilket direkt minskar bidraget till den förstärkta växthuseffekten och global temperaturhöjning. Konsekvens 2: Tågtrafik på räls minskar behovet av motorvägsbyggen och parkeringsytor → naturmarker och habitat bevaras bättre, vilket skyddar biologisk mångfald och ekosystemtjänster som pollinering och vattenrening som vi är beroende av.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════
+     TAB 4: NP-FRÅGOR
+════════════════════════════════ -->
+<div class="section" id="sec-np">
+
+  <div class="np-intro">
+    📋 Dessa frågor är hämtade direkt från eller utformade i stil med riktiga Nationella Prov. Öppna frågorna och försök svara i flera led — E, C och A visas när du öppnar.
+  </div>
+
+  <!-- NP 1 -->
+  <div class="np-question">
+    <div class="np-qheader" onclick="toggleNP('np1')">
+      <span class="np-year">NP 2016 · Delprov A2</span>
+      <div class="np-qtitle">Val av energikälla för tomatodlare — vindkraft, vattenkraft eller jordvärme?</div>
+      <div class="res-chevron" id="ch-np1">▼</div>
+    </div>
+    <div class="np-body" id="np1">
+      <div class="np-scenario">
+        Se faktablad i Resonemang-fliken. Energikällorna jämförs utifrån aspekterna energi, miljö och allmänt.
+      </div>
+      <div class="np-task">Rekommendera en av energikällorna. Resonera i två led kring tre fördelar och en nackdel. Var saklig och använd naturvetenskapliga argument.</div>
+      <div class="level-block" style="margin-top:0.8rem">
+        <span class="level-label lvl-e">Nivå E</span>
+        <p>Tar ställning och ger minst ett korrekt argument kopplat till faktabladet.</p>
+      </div>
+      <div class="level-block">
+        <span class="level-label lvl-c">Nivå C</span>
+        <p>Tydligt ställningstagande + minst två resonemang i ett led med korrekt faktareferens + ett motargument.</p>
+      </div>
+      <div class="level-block">
+        <span class="level-label lvl-a">Nivå A</span>
+        <p>Välmotiverat ställningstagande + tre resonemang i två led med siffror från faktabladet + ett välutvecklat motargument. Naturvetenskapliga begrepp används korrekt (verkningsgrad, energiomvandling, livslängd).</p>
+      </div>
+      <div class="np-tip">💡 Tipset: Räkna med siffrorna! "Vattenkraft ger 0,8 kWh värme per kWh rörelseenergi, vilket är dubbelt effektivare än vindkraftens 0,4 kWh" — konkreta jämförelser ger A-nivå.</div>
+    </div>
+  </div>
+
+  <!-- NP 2 -->
+  <div class="np-question">
+    <div class="np-qheader" onclick="toggleNP('np2')">
+      <span class="np-year">NP 2017 · Delprov A1</span>
+      <div class="np-qtitle">Varför är det viktigt att minska beroendet av fossila bränslen?</div>
+      <div class="res-chevron" id="ch-np2">▼</div>
+    </div>
+    <div class="np-body" id="np2">
+      <div class="np-scenario">
+        Världens befolkning behöver bidra till ett minskat beroende av fossila bränslen.
+      </div>
+      <div class="np-task">Argumentera kring varför det är viktigt att minska beroendet av fossila bränslen. Utgå från dina kunskaper om fossila bränslen och resonera i två led kring två olika naturvetenskapliga perspektiv.</div>
+      <div class="level-block" style="margin-top:0.8rem">
+        <span class="level-label lvl-e">Nivå E</span>
+        <p>Ett korrekt påstående, t.ex. "Fossila bränslen ger koldioxidutsläpp som påverkar klimatet."</p>
+      </div>
+      <div class="level-block">
+        <span class="level-label lvl-c">Nivå C</span>
+        <p>Två perspektiv med resonemang i ett led vardera. T.ex. klimat- och resursperspektivet.</p>
+      </div>
+      <div class="level-block">
+        <span class="level-label lvl-a">Nivå A</span>
+        <p>Två perspektiv med välmotiverade resonemang i två led + naturvetenskapliga begrepp (koldioxid, växthuseffekt, fossila bränslen, ändlig resurs).</p>
+      </div>
+      <div class="np-tip">💡 Perspektiv att välja bland: klimat, resurstillgång, folkhälsa (luftföroreningar), geopolitik (beroende av andra länder), havsförsurning (CO₂ löser sig i havet).</div>
+    </div>
+  </div>
+
+  <!-- NP 3 -->
+  <div class="np-question">
+    <div class="np-qheader" onclick="toggleNP('np3')">
+      <span class="np-year">NP 2017 · Delprov A2</span>
+      <div class="np-qtitle">Kärnkraft eller vattenkraft — ta ställning</div>
+      <div class="res-chevron" id="ch-np3">▼</div>
+    </div>
+    <div class="np-body" id="np3">
+      <div class="np-scenario">
+        <strong>Kärnkraft:</strong> ~25 000 000 000 kWh/år · uran räcker ~2500 år · 30–50 ton radioaktivt avfall/år · 3 olyckor på 40 år.<br>
+        <strong>Vattenkraft:</strong> ~80 000 000 kWh/år · strömmande vatten · inga direkta utsläpp · stora landmassor under vatten.
+      </div>
+      <div class="np-task">Ta ställning för kärnkraft eller vattenkraft. Formulera två resonemang i två led som talar för ditt val och ett resonemang i två led som talar emot det andra alternativet. Var saklig och använd naturvetenskapliga begrepp.</div>
+      <div class="level-block" style="margin-top:0.8rem">
+        <span class="level-label lvl-e">Nivå E</span>
+        <p>Tar ställning och ger ett enkelt argument med stöd i faktatexten.</p>
+      </div>
+      <div class="level-block">
+        <span class="level-label lvl-c">Nivå C</span>
+        <p>Tydligt ställningstagande + minst ett resonemang i två led för eget val + ett motargument mot alternativet.</p>
+      </div>
+      <div class="level-block">
+        <span class="level-label lvl-a">Nivå A</span>
+        <p>Välmotiverat ställningstagande + två starka resonemang i två led med siffror från faktatexten + ett välutvecklat motargument. Begrepp som radioaktivt avfall, CO₂-utsläpp, ekosystem och energiproduktion används korrekt.</p>
+      </div>
+      <div class="np-tip">💡 Använd siffrorna: 25 miljarder vs 80 miljoner kWh är en faktor ~300. Det är ett starkt argument för kärnkraft i volym — men motvikt är 30–50 ton radioaktivt avfall per år.</div>
+    </div>
+  </div>
+
+  <!-- NP 4 -->
+  <div class="np-question">
+    <div class="np-qheader" onclick="toggleNP('np4')">
+      <span class="np-year">NP 2016 · Delprov A1</span>
+      <div class="np-qtitle">Transporter — konsekvenser av att byta från flyg till tåg/båt/lastbil</div>
+      <div class="res-chevron" id="ch-np4">▼</div>
+    </div>
+    <div class="np-body" id="np4">
+      <div class="np-scenario">
+        Till Sverige importeras många produkter med flygplan. Flygtransporter påverkar miljön negativt. Tänk dig att produkter istället transporteras med tåg, lastbil eller båt.
+      </div>
+      <div class="np-task">Välj ett av transportsätten tåg, lastbil eller båt. Resonera i två led kring två konsekvenser som bytet av transportsätt kan få på miljön.</div>
+      <div class="level-block" style="margin-top:0.8rem">
+        <span class="level-label lvl-e">Nivå E</span>
+        <p>Väljer transportsätt och ger en enkel konsekvens, t.ex. "Tåg ger mindre utsläpp."</p>
+      </div>
+      <div class="level-block">
+        <span class="level-label lvl-c">Nivå C</span>
+        <p>Väljer transportsätt + två konsekvenser med resonemang i ett led vardera.</p>
+      </div>
+      <div class="level-block">
+        <span class="level-label lvl-a">Nivå A</span>
+        <p>Väljer transportsätt + två konsekvenser med välmotiverade resonemang i två led + naturvetenskapliga begrepp (CO₂, koldioxidutsläpp, energiförbrukning, biologisk mångfald).</p>
+      </div>
+      <div class="np-tip">💡 Tänk på BÅDA positiva och negativa konsekvenser — NP vill se att du kan resonera nyanserat. T.ex. tåg är bättre för klimat men kan ta längre tid → ekonomiska konsekvenser som kan motverka bytet.</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const STORAGE_KEY = 'fysik_energiforsorjning';
+// ── Flashcard data ──
+const allCards = [
+  // ENERGIFORMER
+  { cat: 'Energiformer', q: 'Namnge de sex energiformerna.', a: 'Elektrisk energi · Mekanisk energi · Värmeenergi · Kärnenergi · Strålningsenergi · Kemisk energi' },
+  { cat: 'Energiformer', q: 'Vad är kemisk energi? Ge ett exempel.', a: 'Energi lagrad i kemiska bindningar. Exempel: bränsle (bensin, kol), mat, batterier. Frigörs vid förbränning eller kemisk reaktion.' },
+  { cat: 'Energiformer', q: 'Vad är mekanisk energi?', a: 'Summan av rörelseenergi (kinetisk) och lägesenergi (potentiell). Exempel: ett rullande hjul (rörelseenergi) eller en lyft sten (lägesenergi).' },
+  // ENERGIPRINCIPEN
+  { cat: 'Energiprincipen', q: 'Vad säger energiprincipen?', a: 'Energi kan varken skapas eller förstöras — bara omvandlas från en form till en annan. Totala energin i ett slutet system är alltid konstant.' },
+  { cat: 'Energiprincipen', q: 'Varför når verkningsgraden aldrig 100%?', a: 'Vid varje energiomvandling förloras en del som värme (oordnad energi) som är svår att återanvända. Energiprincipen bryts inte — men energin "försämras".' },
+  { cat: 'Energiprincipen', q: 'Hur omvandlas energi i ett vattenkraftverk?', a: 'Lägesenergi (vatten i damm) → Rörelseenergi (fallande vatten) → Mekanisk energi (turbin snurrar) → Elektrisk energi (generator). Plus värmeförluster.' },
+  // FOSSILA BRÄNSLEN
+  { cat: 'Fossila bränslen', q: 'Varför kallas kol, olja och naturgas "fossila"?', a: 'De bildades av döda organismer (växter, djur) för hundratals miljoner år sedan under högt tryck och temperatur. Icke-förnybara på mänsklig tidsskala.' },
+  { cat: 'Fossila bränslen', q: 'Varför ger förbränning av fossila bränslen växthuseffekt?', a: 'Fossila bränslen innehåller kol som bundits ur atmosfären länge. Förbränning frigör det som CO₂ → ökar CO₂-halten i atmosfären → förstärkt växthuseffekt → global uppvärmning.' },
+  { cat: 'Fossila bränslen', q: 'Vilket fossilt bränsle ger störst CO₂-utsläpp per kWh?', a: 'Kol ger störst CO₂-utsläpp per kWh energi. Naturgas ger minst av de tre, men är ändå fossilt.' },
+  // FÖRNYBARA ENERGIKÄLLOR
+  { cat: 'Förnybar energi', q: 'Varför är vattenkraft förnybar?', a: 'Vattenkraft använder strömmande vatten som drivs av solenergi via vattnets kretslopp (avdunstning → regn → floder). Resursen förnyas kontinuerligt.' },
+  { cat: 'Förnybar energi', q: 'Hur fungerar en solcell?', a: 'Solcellen omvandlar strålningsenergi (fotoner) direkt till elektrisk energi via fotoelektrisk effekt. Inga rörliga delar, inga utsläpp under drift.' },
+  { cat: 'Förnybar energi', q: 'Vad är bergvärme (geotermisk energi)?', a: 'Värme hämtas ur berggrunden med hjälp av en värmepump. Stabilt och oberoende av väder. Används för uppvärmning av byggnader.' },
+  { cat: 'Förnybar energi', q: 'Vad är biobränsle och varför anses det koldioxidneutralt?', a: 'Biobränsle = bränsle från biomassa (trä, etanol, biogas). Vid förbränning frigörs CO₂ — men det var samma CO₂ som växten tog upp. Koldioxidneutralt om hållbart brukande.' },
+  { cat: 'Förnybar energi', q: 'Nämn en nackdel med vindkraft.', a: 'Rotorbladen avger buller (~35 dB). Påverkar fåglar och fladdermöss. Beroende av vind — kan inte regleras. Kräver stora markarealer.' },
+  // KÄRNKRAFT
+  { cat: 'Kärnkraft', q: 'Varför räknas kärnkraft som icke-förnybar?', a: 'Kärnkraft använder uran som bränsle. Urantillgångarna är ändliga (beräknas räcka ca 2500 år). Uran nybildas inte på mänsklig tidsskala.' },
+  { cat: 'Kärnkraft', q: 'Vad är den största nackdelen med kärnkraft ur miljösynpunkt?', a: 'Kärnkraftverk producerar radioaktivt avfall som är farligt i tiotusentals år och måste lagras säkert under jord. Risk för olyckor (Tjernobyl 1986, Fukushima 2011).' },
+  { cat: 'Kärnkraft', q: 'Vad är fördelen med kärnkraft jämfört med kol?', a: 'Kärnkraft ger inga direkta CO₂-utsläpp under drift. Producerar enorma mängder el av litet bränsle. Bidrar inte till den förstärkta växthuseffekten.' },
+  // ENERGIOMVANDLING
+  { cat: 'Energiomvandling', q: 'Hur omvandlas energin i ett kolkraftverk?', a: 'Kemisk energi (kol förbränns) → Värme → Mekanisk energi (ånga driver turbin) → Elektrisk energi (generator). Stora värmeförluster i varje steg.' },
+  { cat: 'Energiomvandling', q: 'Hur omvandlas energin i ett kärnkraftverk?', a: 'Kärnenergi (fission av uran) → Värme (kokar vatten) → Mekanisk energi (ånga driver turbin) → Elektrisk energi (generator). Liknande kedja som kolkraft.' },
+  { cat: 'Energiomvandling', q: 'Vad händer med "förlorad" energi vid omvandling?', a: 'Den omvandlas till lågkvalitativ värmeenergi som sprids ut i omgivningen. Den är inte försvunnen (energiprincipen) men är svår att återanvända.' },
+  // MILJÖ & SAMHÄLLE
+  { cat: 'Miljö & Samhälle', q: 'Vad är växthuseffekten?', a: 'Växthusgaser (CO₂, metan, vattenånga) absorberar värmestrålning från jordens yta och hindrar den från att stråla ut i rymden → jordens temperatur stiger. Naturlig men förstärks av fossila bränslen.' },
+  { cat: 'Miljö & Samhälle', q: 'Vad är skillnaden mellan förnybar och icke-förnybar energi?', a: 'Förnybar energi (sol, vind, vatten) förnyas naturligt och tar aldrig slut på mänsklig tidsskala. Icke-förnybar (kol, olja, uran) bildas på geologisk tidsskala och tar slut.' },
+];
+
+// ── Quiz data ──
+const quizItems = [
+  {
+    q: 'Vilka av dessa är förnybara energikällor?',
+    opts: ['Kol och naturgas', 'Vattenkraft och vindkraft', 'Olja och kärnkraft', 'Naturgas och solceller'],
+    correct: 1,
+    fb: 'Vattenkraft och vindkraft är förnybara — de utnyttjar naturresurser som kontinuerligt förnyas (vatten via regncykeln, vind via soluppvärmning). Kärnkraft och fossila bränslen är icke-förnybara.'
+  },
+  {
+    q: 'Vad säger energiprincipen?',
+    opts: ['Energi förstörs när den används', 'Modern teknik kan skapa ny energi', 'Energi kan varken skapas eller förstöras, bara omvandlas', 'Verkningsgraden kan nå 100% med rätt teknik'],
+    correct: 2,
+    fb: 'Energiprincipen (termodynamikens 1:a lag): energi omvandlas men försvinner aldrig. Den "förlorade" energin omvandlas till värme som sprids i omgivningen.'
+  },
+  {
+    q: 'Hur omvandlas energin i ett vattenkraftverk, i rätt ordning?',
+    opts: ['Kemisk → Värme → Mekanisk → Elektrisk', 'Lägesenergi → Rörelseenergi → Mekanisk → Elektrisk', 'Strålning → Elektrisk direkt', 'Kärnenergi → Värme → Mekanisk → Elektrisk'],
+    correct: 1,
+    fb: 'Vattnet i dammen har lägesenergi → faller och får rörelseenergi → driver turbinen (mekanisk) → generatorn producerar el. Plus värmeförluster i varje steg.'
+  },
+  {
+    q: 'Varför förstärker förbränning av fossila bränslen växthuseffekten?',
+    opts: ['Förbränning förbrukar syre som behövs för att kyla atmosfären', 'Fossila bränslen frigör kol som bundits ur atmosfären i miljoner år som CO₂', 'Rök från förbränning reflekterar solstrålning bort från jorden', 'Förbränning producerar vattenånga som kyler atmosfären'],
+    correct: 1,
+    fb: 'Fossila bränslen är gamla organiska rester med kol som tagits ur atmosfären för länge sedan. Förbränning frigör detta kol som CO₂ snabbt → CO₂-halten ökar → mer värme hålls kvar → global uppvärmning.'
+  },
+  {
+    q: 'Vilket är det starkaste argumentet FÖR kärnkraft jämfört med kol?',
+    opts: ['Kärnkraft är billigare att bygga', 'Kärnkraft ger inga direkta CO₂-utsläpp och producerar enorma mängder el', 'Kärnkraft ger inget avfall alls', 'Kärnbränsle är förnybart'],
+    correct: 1,
+    fb: 'Kärnkraft producerar enormt med el (25 miljarder kWh/år per kraftverk) utan CO₂-utsläpp under drift. Nackdelen är radioaktivt avfall och olycksrisken.'
+  },
+  {
+    q: 'Nämn en nackdel med vattenkraft.',
+    opts: ['Den ger stora CO₂-utsläpp', 'Dammar kan översvämma stora landmassor och påverka vattenlevande arters livsmiljö', 'Den producerar radioaktivt avfall', 'Den fungerar bara sommartid'],
+    correct: 1,
+    fb: 'Vattenkraftsdammar kan kräva att stora landmassor sätts under vatten → förstör ekosystem, kan tvinga befolkningar att flytta. Turbinerna påverkar även fiskars vandring.'
+  },
+  {
+    q: 'Hur omvandlas energin i en solcell?',
+    opts: ['Värmeenergi → Elektrisk energi', 'Strålningsenergi (fotoner) → Elektrisk energi direkt', 'Kemisk energi → Elektrisk energi', 'Mekanisk energi → Elektrisk energi'],
+    correct: 1,
+    fb: 'Solceller omvandlar strålningsenergi (fotoner från solen) direkt till elektrisk energi via fotoelektrisk effekt. Inga rörliga delar, inga utsläpp under drift.'
+  },
+  {
+    q: 'Varför räknas kärnkraft som icke-förnybar trots att den inte ger CO₂?',
+    opts: ['Kärnkraft ger för lite energi', 'Kärnkraft kräver vatten som är ändligt', 'Uran som bränsle är en ändlig resurs som inte förnyas', 'Kärnkraft är för farlig för att vara förnybar'],
+    correct: 2,
+    fb: 'Kärnkraft använder uran som bryts ur marken. Jordens urantillgångar är begränsade (ca 2500 år). Uran nybildas inte på mänsklig tidsskala → icke-förnybar.'
+  },
+  {
+    q: 'Vad är biobränsle och varför anses det koldioxidneutralt?',
+    opts: ['Syntetiskt bränsle utan koldioxid alls', 'Bränsle från biomassa — CO₂ som frigörs vid förbränning togs upp av växten', 'Bränsle som inte förbränns utan omvandlas direkt till el', 'Fossilt bränsle med lägre CO₂ än naturgas'],
+    correct: 1,
+    fb: 'Biobränsle (trä, etanol, biogas) frigör CO₂ vid förbränning — men den CO₂:n är densamma som växten tog upp när den levde. Koldioxidneutralt om ny biomassa odlas upp lika snabbt.'
+  },
+  {
+    q: 'Vilken energiform finns lagrad i ett batteri?',
+    opts: ['Elektrisk energi', 'Mekanisk energi', 'Kemisk energi', 'Strålningsenergi'],
+    correct: 2,
+    fb: 'Ett batteri lagrar kemisk energi i sina elektroder. När batteriet används omvandlas kemisk energi till elektrisk energi. Det är därför batterier "tar slut" när de kemiska ämnena förbrukats.'
+  },
+  {
+    q: 'Varför når verkningsgraden aldrig 100%?',
+    opts: ['Det är ett politiskt beslut att begränsa effektiviteten', 'Energi förstörs i varje omvandlingssteg', 'En del energi omvandlas alltid till värme som är svår att återanvända', 'Fysikens lagar tillåter teoretiskt 100% men material begränsar'],
+    correct: 2,
+    fb: 'Vid varje energiomvandling sprids en del som värme (friktion, elektriskt motstånd etc.). Energin försvinner inte (energiprincipen) men sprids ut och kan inte lätt återanvändas. Termodynamikens 2:a lag.'
+  },
+  {
+    q: 'Vilket transportsätt ger lägst CO₂-utsläpp per tonkilometer?',
+    opts: ['Flygplan', 'Lastbil', 'Personbil', 'Båt (fartyg)'],
+    correct: 3,
+    fb: 'Fartyg är mest energieffektiva för tunga varor: det krävs lite energi att flytta ett ton gods ett km till sjöss. Flygplan ger störst CO₂ per tonkm. Exakt ämne i NP 2016!'
+  },
+];
+
+// ── State ──
+const cardStates = {};
+allCards.forEach((_, i) => cardStates[i] = 'unseen');
+let currentCard = 0;
+let isFlipped = false;
+const fAnswered = {};
+let quizCorrect = 0;
+let quizAnswered = 0;
+
+function showTab(name, e) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('sec-' + name).classList.add('active');
+  if (e) e.currentTarget.classList.add('active');
+}
+
+function renderCard() {
+  const card = allCards[currentCard];
+  document.getElementById('fcFront').textContent = card.q;
+  document.getElementById('fcBack').textContent = card.a;
+  document.getElementById('fcHint').textContent = '[ ' + card.cat + ' ]';
+  document.getElementById('cardIdx').textContent = currentCard + 1;
+  document.getElementById('cardTotal').textContent = allCards.length;
+  document.getElementById('fcInner').classList.remove('flipped');
+  isFlipped = false;
+  renderDots();
+  updateMainProgress();
+}
+
+function renderDots() {
+  const row = document.getElementById('dotRow');
+  row.innerHTML = '';
+  allCards.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot';
+    if (i === currentCard) d.classList.add('current');
+    else if (cardStates[i] === 'good') d.classList.add('good');
+    else if (cardStates[i] === 'skip') d.classList.add('skip');
+    row.appendChild(d);
+  });
+  document.getElementById('cardGoodCount').textContent = Object.values(cardStates).filter(v => v === 'good').length;
+}
+
+function flipCard() {
+  isFlipped = !isFlipped;
+  document.getElementById('fcInner').classList.toggle('flipped', isFlipped);
+}
+
+function markCard(state) { cardStates[currentCard] = state; nextCard(); }
+function nextCard() { currentCard = (currentCard + 1) % allCards.length; renderCard(); }
+function prevCard() { currentCard = (currentCard - 1 + allCards.length) % allCards.length; renderCard(); }
+
+function buildQuiz() {
+  const c = document.getElementById('quizContainer');
+  c.innerHTML = '';
+  quizItems.forEach((item, qi) => {
+    const div = document.createElement('div');
+    div.className = 'f-question';
+    div.id = 'fq-' + qi;
+    const letters = ['A','B','C','D'];
+    const optsHtml = item.opts.map((o, oi) =>
+      `<button class="f-opt" id="fo-${qi}-${oi}" onclick="answerQuiz(${qi},${oi})">
+        <span class="opt-letter">${letters[oi]}</span>${o}
+      </button>`
+    ).join('');
+    div.innerHTML = `
+      <div class="f-num">Fråga ${qi+1} av ${quizItems.length}</div>
+      <div class="f-qtext">${item.q}</div>
+      <div class="f-opts">${optsHtml}</div>
+      <div class="f-feedback" id="ff-${qi}"></div>
+    `;
+    c.appendChild(div);
+  });
+}
+
+function applyRestoredQuiz() {
+  quizCorrect = 0;
+  quizAnswered = 0;
+  for (let qi = 0; qi < quizItems.length; qi++) {
+    if (fAnswered[qi] === undefined) continue;
+    const item = quizItems[qi];
+    const isRight = fAnswered[qi];
+    for (let i = 0; i < item.opts.length; i++) {
+      const btn = document.getElementById('fo-' + qi + '-' + i);
+      if (!btn) continue;
+      btn.disabled = true;
+      if (i === item.correct) btn.classList.add('correct');
+    }
+    const fb = document.getElementById('ff-' + qi);
+    if (fb) {
+      fb.className = 'f-feedback show ' + (isRight ? 'correct-fb' : 'wrong-fb');
+      fb.textContent = (isRight ? '✅ Rätt! ' : '❌ Fel. ') + item.fb;
+    }
+    const fq = document.getElementById('fq-' + qi);
+    if (fq) fq.classList.add(isRight ? 'answered-correct' : 'answered-wrong');
+    if (isRight) quizCorrect++;
+    quizAnswered++;
+  }
+  document.getElementById('quizScore').textContent = `Rätt: ${quizCorrect} / ${quizAnswered}`;
+}
+
+function answerQuiz(qi, oi) {
+  if (fAnswered[qi] !== undefined) return;
+  const item = quizItems[qi];
+  fAnswered[qi] = (oi === item.correct);
+  const isRight = oi === item.correct;
+  for (let i = 0; i < item.opts.length; i++) {
+    const btn = document.getElementById('fo-' + qi + '-' + i);
+    btn.disabled = true;
+    if (i === item.correct) btn.classList.add('correct');
+    else if (i === oi) btn.classList.add('wrong');
+  }
+  const fb = document.getElementById('ff-' + qi);
+  fb.className = 'f-feedback show ' + (isRight ? 'correct-fb' : 'wrong-fb');
+  fb.textContent = (isRight ? '✅ Rätt! ' : '❌ Fel. ') + item.fb;
+  document.getElementById('fq-' + qi).classList.add(isRight ? 'answered-correct' : 'answered-wrong');
+  if (isRight) quizCorrect++;
+  quizAnswered++;
+  document.getElementById('quizScore').textContent = `Rätt: ${quizCorrect} / ${quizAnswered}`;
+  updateMainProgress();
+}
+
+function resetQuiz() {
+  Object.keys(fAnswered).forEach(k => delete fAnswered[k]);
+  quizCorrect = 0;
+  quizAnswered = 0;
+  buildQuiz();
+  applyRestoredQuiz();
+  updateMainProgress();
+}
+
+function toggleRes(id) {
+  const body = document.getElementById(id);
+  const ch = document.getElementById('ch-' + id);
+  body.classList.toggle('show');
+  ch.textContent = body.classList.contains('show') ? '▲' : '▼';
+}
+function toggleNP(id) {
+  const body = document.getElementById(id);
+  const ch = document.getElementById('ch-' + id);
+  body.classList.toggle('show');
+  ch.textContent = body.classList.contains('show') ? '▲' : '▼';
+}
+
+function updateMainProgress() {
+  const good   = Object.values(cardStates).filter(v => v === 'good').length;
+  const fRight = Object.values(fAnswered).filter(v => v === true).length;
+  const total  = allCards.length + quizItems.length;
+  const pct    = Math.min(100, Math.round(((good + fRight) / total) * 100));
+  document.getElementById('mainProgress').style.width = pct + '%';
+  document.getElementById('progressText').textContent = (good + fRight) + ' av ' + total + ' klara';
+  localStorage.setItem(STORAGE_KEY + '_progress', JSON.stringify({
+    pct, good, fRight, total,
+    cardStates: Object.assign({}, cardStates),
+    fAnswered:  Object.assign({}, fAnswered),
+  }));
+}
+
+function restoreProgress() {
+  const raw = localStorage.getItem(STORAGE_KEY + '_progress');
+  if (!raw) return;
+  try {
+    const data = JSON.parse(raw);
+    if (data.cardStates) Object.entries(data.cardStates).forEach(([k,v]) => { cardStates[k] = v; });
+    if (data.fAnswered)  Object.entries(data.fAnswered).forEach(([k,v])  => { fAnswered[k] = v; });
+  } catch(e) {}
+}
+
+restoreProgress();
+renderCard();
+buildQuiz();
+applyRestoredQuiz();
+</script>
+</body>
+</html>

@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arbete, Energi & Effekt — NP Fysik åk 9</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d0d0f;--surface:#161618;--card:#1e1e22;--border:#2a2a32;
+  --accent:#a259ff;--accent2:#f5a623;--accent3:#39d353;
+  --bad:#ff4d6d;--text:#e2e2f0;--muted:#6b6b80;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+.header{background:linear-gradient(135deg,#1a0a2e 0%,#2d1458 45%,#0d0d0f 100%);padding:32px 24px 24px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.header::before{content:'⚡';position:absolute;right:24px;top:50%;transform:translateY(-50%);font-size:90px;opacity:.1}
+.header::after{content:'🔧';position:absolute;right:115px;top:25%;font-size:48px;opacity:.08}
+.badge{display:inline-block;background:var(--accent);color:#fff;font-size:11px;font-weight:700;letter-spacing:2px;padding:4px 10px;border-radius:4px;margin-bottom:10px;text-transform:uppercase}
+.header h1{font-size:clamp(20px,5vw,36px);font-weight:900;letter-spacing:-1px;line-height:1.1}
+.header h1 span{color:var(--accent2)}
+.subtitle{color:var(--muted);margin-top:6px;font-size:14px}
+
+.progress-bar{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin:20px 16px 0}
+.prog-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:13px}
+.prog-label span:last-child{font-family:'JetBrains Mono',monospace;color:var(--accent);font-size:12px}
+.prog-track{height:8px;background:var(--border);border-radius:99px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:99px;transition:width .5s ease;width:0%}
+
+.tabs{display:flex;gap:4px;padding:16px;overflow-x:auto;border-bottom:1px solid var(--border);background:var(--surface)}
+.tab-btn{flex-shrink:0;padding:8px 16px;border:1px solid var(--border);background:transparent;color:var(--muted);border-radius:8px;cursor:pointer;font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;transition:all .2s}
+.tab-btn:hover{color:var(--text);border-color:var(--accent)}
+.tab-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+.section{display:none;padding:16px;max-width:720px;margin:0 auto}
+.section.active{display:block}
+
+/* FORMULA BOX */
+.fbox{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:18px}
+.fbox h3{font-size:12px;font-weight:700;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px}
+.fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.fitem{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center}
+.fmain{font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:700;color:var(--accent2);margin-bottom:4px}
+.fname{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px}
+.fexpl{font-size:11px;color:var(--text);line-height:1.5}
+.fc{display:inline-block;background:rgba(162,89,255,.15);border:1px solid rgba(162,89,255,.3);border-radius:6px;padding:2px 8px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);margin:2px}
+
+/* GOLDEN RULE BOX */
+.golden{background:linear-gradient(135deg,#1f1400,#2a1c00);border:1px solid rgba(245,166,35,.35);border-radius:16px;padding:20px;margin-bottom:18px}
+.golden h3{font-size:12px;font-weight:700;color:var(--accent2);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.golden-rule{font-size:17px;font-weight:700;color:var(--accent2);text-align:center;padding:12px;background:rgba(245,166,35,.08);border-radius:10px;margin-bottom:10px;font-family:'JetBrains Mono',monospace}
+.machine-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.machine{flex:1;min-width:130px;background:rgba(245,166,35,.06);border:1px solid rgba(245,166,35,.2);border-radius:10px;padding:11px;text-align:center}
+.m-icon{font-size:24px;margin-bottom:5px}
+.m-name{font-size:12px;font-weight:700;color:var(--accent2);margin-bottom:3px}
+.m-desc{font-size:11px;color:var(--muted);line-height:1.4}
+
+/* ENERGY FORMS */
+.ebox{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:18px}
+.ebox h3{font-size:12px;font-weight:700;color:var(--accent3);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.eforms{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.eform{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center}
+.ef-icon{font-size:22px;margin-bottom:4px}
+.ef-name{font-size:12px;font-weight:700;margin-bottom:3px}
+.ef-ex{font-size:10px;color:var(--muted);line-height:1.4}
+.eprinc{background:rgba(57,211,83,.08);border:1px solid rgba(57,211,83,.25);border-radius:10px;padding:12px 14px;margin-top:10px;font-size:13px;color:#a8f0b3;line-height:1.6;text-align:center}
+
+/* CARDS */
+.stats-row{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 16px;flex:1;min-width:80px;text-align:center}
+.stat-val{font-size:24px;font-weight:900;font-family:'JetBrains Mono',monospace}
+.stat-lbl{font-size:10px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:1px}
+.deck-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:20px 0 8px}
+.card-wrap{perspective:1000px;margin-bottom:16px}
+.card-inner{position:relative;width:100%;min-height:160px;transform-style:preserve-3d;transition:transform .5s ease;cursor:pointer}
+.card-inner.flipped{transform:rotateY(180deg)}
+.card-front,.card-back{position:absolute;top:0;left:0;width:100%;min-height:160px;backface-visibility:hidden;border-radius:16px;padding:22px;display:flex;flex-direction:column;justify-content:center}
+.card-front{background:var(--card);border:1px solid var(--border)}
+.card-back{background:linear-gradient(135deg,#160a2e,#1e1040);border:1px solid var(--accent);transform:rotateY(180deg)}
+.card-tag{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.card-q{font-size:17px;font-weight:700;line-height:1.3}
+.card-a{font-size:14px;line-height:1.65;color:#d4b8ff}
+.card-hint{font-size:11px;color:var(--muted);margin-top:5px}
+.btn-row{display:flex;gap:8px;margin-top:8px}
+.btn-know{flex:1;background:rgba(57,211,83,.15);border:1px solid var(--accent3);color:var(--accent3);padding:10px;border-radius:10px;cursor:pointer;font-family:'Outfit',sans-serif;font-weight:700;font-size:13px;transition:all .2s}
+.btn-know:hover{background:rgba(57,211,83,.28)}
+.btn-again{flex:1;background:rgba(255,77,109,.12);border:1px solid var(--bad);color:var(--bad);padding:10px;border-radius:10px;cursor:pointer;font-family:'Outfit',sans-serif;font-weight:700;font-size:13px;transition:all .2s}
+.btn-again:hover{background:rgba(255,77,109,.25)}
+.card-nav{display:flex;align-items:center;justify-content:space-between;margin-top:6px;font-size:12px;color:var(--muted)}
+.btn-nav{background:var(--card);border:1px solid var(--border);color:var(--text);padding:6px 14px;border-radius:8px;cursor:pointer;font-family:'Outfit',sans-serif;font-size:12px}
+
+/* FÖRSTÅELSE / NP */
+.fq-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:14px}
+.fq-num{font-size:11px;font-weight:700;letter-spacing:1px;color:var(--muted);text-transform:uppercase;margin-bottom:6px}
+.fq-q{font-weight:700;font-size:15px;line-height:1.5;margin-bottom:12px}
+.fq-opts{display:flex;flex-direction:column;gap:6px}
+.fq-opt{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px;cursor:pointer;font-size:13px;text-align:left;color:var(--text);font-family:'Outfit',sans-serif;transition:all .2s;width:100%}
+.fq-opt:hover:not(:disabled){border-color:var(--accent);background:rgba(162,89,255,.08)}
+.fq-opt.correct{background:rgba(57,211,83,.15);border-color:var(--accent3);color:var(--accent3)}
+.fq-opt.wrong{background:rgba(255,77,109,.12);border-color:var(--bad);color:var(--bad)}
+.fq-feedback{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:13px;line-height:1.5;display:none}
+.fq-feedback.show{display:block}
+.fq-feedback.ok{background:rgba(57,211,83,.1);border-left:3px solid var(--accent3);color:#a8f0b3}
+.fq-feedback.err{background:rgba(255,77,109,.1);border-left:3px solid var(--bad);color:#ffb3c1}
+
+/* RÄKNA */
+.calc-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:14px}
+.calc-q{font-weight:700;font-size:15px;margin-bottom:14px;line-height:1.5}
+.calc-input{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.calc-inp{background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:9px 14px;font-family:'JetBrains Mono',monospace;font-size:14px;width:130px;outline:none}
+.calc-inp:focus{border-color:var(--accent)}
+.calc-unit{color:var(--muted);font-size:13px}
+.btn-check{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:9px 18px;cursor:pointer;font-family:'Outfit',sans-serif;font-weight:700;font-size:13px}
+.calc-result{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:13px;display:none}
+.calc-result.show{display:block}
+.calc-result.ok{background:rgba(57,211,83,.1);border-left:3px solid var(--accent3);color:#a8f0b3}
+.calc-result.err{background:rgba(255,77,109,.1);border-left:3px solid var(--bad);color:#ffb3c1}
+
+/* RESONEMANG */
+.res-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;margin-bottom:16px}
+.res-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 8px;border-radius:4px;margin-bottom:10px}
+.res-badge.np{background:rgba(162,89,255,.2);color:var(--accent)}
+.res-badge.res{background:rgba(245,166,35,.2);color:var(--accent2)}
+.res-q{font-weight:700;font-size:15px;line-height:1.5;margin-bottom:12px}
+.res-context{background:var(--surface);border-left:3px solid var(--accent2);border-radius:0 8px 8px 0;padding:12px 14px;margin-bottom:14px;font-size:13px;color:#ffd9a0;line-height:1.6}
+.res-steps{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.res-step{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.res-step label{font-size:12px;font-weight:700;color:var(--muted);display:block;margin-bottom:6px;letter-spacing:1px;text-transform:uppercase}
+.res-textarea{width:100%;background:transparent;border:none;color:var(--text);font-family:'Outfit',sans-serif;font-size:13px;resize:none;outline:none;min-height:60px;line-height:1.6}
+.btn-model{background:transparent;border:1px solid var(--accent2);color:var(--accent2);padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;transition:all .2s}
+.btn-model:hover{background:rgba(245,166,35,.1)}
+.model-ans{margin-top:10px;background:rgba(245,166,35,.05);border:1px solid rgba(245,166,35,.2);border-radius:10px;padding:14px;font-size:13px;line-height:1.6;display:none}
+.model-ans.show{display:block}
+.model-ans h4{color:var(--accent2);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.grade-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.grade{font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px}
+.grade-e{background:rgba(162,89,255,.2);color:var(--accent)}
+.grade-c{background:rgba(245,166,35,.2);color:var(--accent2)}
+.grade-a{background:rgba(57,211,83,.2);color:var(--accent3)}
+
+.np-card{background:linear-gradient(135deg,#12091f,#1a1030);border:1px solid rgba(162,89,255,.35);border-radius:16px;padding:22px;margin-bottom:16px}
+.np-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.np-logo{background:var(--accent);color:#fff;font-weight:900;font-size:11px;padding:4px 8px;border-radius:6px;letter-spacing:1px}
+.np-year{color:var(--muted);font-size:12px}
+.np-q{font-weight:700;font-size:15px;line-height:1.5;margin-bottom:10px}
+.np-table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0 14px}
+.np-table th{background:rgba(255,255,255,.05);padding:8px 12px;text-align:left;font-size:11px;letter-spacing:1px;color:var(--muted);font-weight:700;text-transform:uppercase}
+.np-table td{padding:10px 12px;border-bottom:1px solid var(--border)}
+.np-table tr:last-child td{border-bottom:none}
+
+@media(max-width:500px){.fgrid{grid-template-columns:1fr 1fr}.eforms{grid-template-columns:1fr 1fr}.machine-row{flex-direction:column}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="badge">Kapitel 5 av 9</div>
+  <h1>Arbete, Energi <span>&amp; Effekt</span></h1>
+  <p class="subtitle">W = F·s · Enkla maskiner · Gyllene regeln · Läges-/rörelseenergi · P = W/t</p>
+</div>
+
+<div class="progress-bar">
+  <div class="prog-label"><span>Din framgång</span><span id="progressText">0 av 48 klara</span></div>
+  <div class="prog-track"><div class="prog-fill" id="mainProgress"></div></div>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('begrepp',event)">🃏 Begrepp</button>
+  <button class="tab-btn" onclick="showTab('forstaaelse',event)">💡 Förståelse</button>
+  <button class="tab-btn" onclick="showTab('rakna',event)">🔢 Räkna</button>
+  <button class="tab-btn" onclick="showTab('resonemang',event)">🧠 Resonemang</button>
+  <button class="tab-btn" onclick="showTab('np',event)">📋 NP-Frågor</button>
+</div>
+
+<!-- ===== BEGREPP ===== -->
+<div class="section active" id="sec-begrepp">
+  <div class="stats-row" style="margin-top:16px">
+    <div class="stat"><div class="stat-val" id="cGood" style="color:var(--accent3)">0</div><div class="stat-lbl">Kan</div></div>
+    <div class="stat"><div class="stat-val" id="cLeft" style="color:var(--accent)">21</div><div class="stat-lbl">Kvar</div></div>
+    <div class="stat"><div class="stat-val" id="cPct" style="color:var(--accent2)">0%</div><div class="stat-lbl">Klart</div></div>
+  </div>
+
+  <!-- FORMULAS -->
+  <div class="fbox">
+    <h3>📐 Tre nyckelformler</h3>
+    <div class="fgrid">
+      <div class="fitem">
+        <div class="fname">Fysikaliskt arbete</div>
+        <div class="fmain">W = F · s</div>
+        <div class="fexpl">W = arbete (J)<br>F = kraft (N)<br>s = sträcka (m)</div>
+      </div>
+      <div class="fitem">
+        <div class="fname">Effekt</div>
+        <div class="fmain">P = W / t</div>
+        <div class="fexpl">P = effekt (W)<br>W = arbete (J)<br>t = tid (s)</div>
+      </div>
+      <div class="fitem">
+        <div class="fname">Lägesenergi</div>
+        <div class="fmain">E = m·g·h</div>
+        <div class="fexpl">m = massa (kg)<br>g ≈ 10 m/s²<br>h = höjd (m)</div>
+      </div>
+    </div>
+    <div style="margin-top:10px;font-size:12px;color:var(--muted);text-align:center">
+      Rörelseenergi: <span class="fc">E_k = ½·m·v²</span> &nbsp;|&nbsp; 1 Joule = 1 N·m = 1 W·s
+    </div>
+  </div>
+
+  <!-- GYLLENE REGELN -->
+  <div class="golden">
+    <h3>⚖️ Mekanikens gyllene regel</h3>
+    <div class="golden-rule">F₁ · s₁ = F₂ · s₂</div>
+    <p style="font-size:13px;color:#ffd9a0;line-height:1.6;margin-bottom:12px">
+      En enkel maskin kan aldrig ge mer arbete ut än du stoppar in. Du vinner kraft men förlorar sträcka (eller tvärtom). Det totala arbetet är konstant — ingen energi skapas!
+    </p>
+    <div class="machine-row">
+      <div class="machine">
+        <div class="m-icon">⚖️</div>
+        <div class="m-name">Hävstång</div>
+        <div class="m-desc">Lång kraftarm → liten kraft räcker. Ex: bräckjärn, sax, skohorn.</div>
+      </div>
+      <div class="machine">
+        <div class="m-icon">📐</div>
+        <div class="m-name">Lutande plan</div>
+        <div class="m-desc">Längre sträcka → lägre kraft. Ex: ramp för rullstol, skruvgänga.</div>
+      </div>
+      <div class="machine">
+        <div class="m-icon">🔩</div>
+        <div class="m-name">Talja/block</div>
+        <div class="m-desc">Fler rullblock → lägre kraft men längre snöre att dra. Ex: lyftkran.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ENERGIFORMER -->
+  <div class="ebox">
+    <h3>⚡ Energiformer &amp; energiprincipen</h3>
+    <div class="eforms">
+      <div class="eform"><div class="ef-icon">🏔️</div><div class="ef-name">Lägesenergi</div><div class="ef-ex">Boll högt upp. E = mgh</div></div>
+      <div class="eform"><div class="ef-icon">🏃</div><div class="ef-name">Rörelseenergi</div><div class="ef-ex">Bil i fart. E = ½mv²</div></div>
+      <div class="eform"><div class="ef-icon">🔥</div><div class="ef-name">Värmeenergi</div><div class="ef-ex">Friktion → värme</div></div>
+      <div class="eform"><div class="ef-icon">⚡</div><div class="ef-name">El-energi</div><div class="ef-ex">Ström i krets</div></div>
+      <div class="eform"><div class="ef-icon">☀️</div><div class="ef-name">Strålningsenergi</div><div class="ef-ex">Solljus, IR</div></div>
+      <div class="eform"><div class="ef-icon">⚗️</div><div class="ef-name">Kemisk energi</div><div class="ef-ex">Batteri, mat, bensin</div></div>
+    </div>
+    <div class="eprinc">🔁 <strong>Energiprincipen:</strong> Energi kan varken skapas eller förstöras — bara omvandlas. Totala energin i ett slutet system är alltid konstant.</div>
+  </div>
+
+  <div class="deck-label">Begrepp — klicka för att vända</div>
+  <div id="cardArea"></div>
+  <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:4px">Tryck på kortet för att se svaret</div>
+  <div class="card-nav">
+    <button class="btn-nav" onclick="prevCard()">← Föregående</button>
+    <span id="cardCounter" style="font-family:'JetBrains Mono',monospace;font-size:12px">1 / 21</span>
+    <button class="btn-nav" onclick="nextCard()">Nästa →</button>
+  </div>
+</div>
+
+<!-- ===== FÖRSTÅELSE ===== -->
+<div class="section" id="sec-forstaaelse">
+  <div class="stats-row" style="margin-top:16px">
+    <div class="stat"><div class="stat-val" id="fScore" style="color:var(--accent3)">0</div><div class="stat-lbl">Rätt</div></div>
+    <div class="stat"><div class="stat-val" id="fPct" style="color:var(--accent2)">0%</div><div class="stat-lbl">Klart</div></div>
+  </div>
+
+  <div class="fq-card">
+    <div class="fq-num">Fråga 1</div>
+    <div class="fq-q">Du håller en tung väska stilla i handen utan att röra dig. Utför du något fysikaliskt arbete?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAns(this,false,'F1')">Ja, musklerna arbetar hårt</button>
+      <button class="fq-opt" onclick="fAns(this,true,'F1')">Nej — inget fysikaliskt arbete sker eftersom sträckan s = 0 (W = F·s = 0)</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F1')">Ja, gravitationskraften utför arbete</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F1')">Det beror på vätskans temperatur</button>
+    </div>
+    <div class="fq-feedback" id="fb-F1"></div>
+  </div>
+
+  <div class="fq-card">
+    <div class="fq-num">Fråga 2</div>
+    <div class="fq-q">En rullstolsramp är längre men flackare än en trappa. Varför är det lättare att köra upp rampen?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAns(this,false,'F2')">Rampen kräver mindre totalt arbete</button>
+      <button class="fq-opt" onclick="fAns(this,true,'F2')">Gyllene regeln: längre sträcka → lägre kraft behövs (samma totala arbete)</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F2')">Friktionen är lägre på en ramp</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F2')">Gravitationskraften är svagare längs med rampen</button>
+    </div>
+    <div class="fq-feedback" id="fb-F2"></div>
+  </div>
+
+  <div class="fq-card">
+    <div class="fq-num">Fråga 3</div>
+    <div class="fq-q">En bil bromsar in och stannar. Vad händer med rörelseenergin?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAns(this,false,'F3')">Den försvinner helt — energi förstörs vid bromsning</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F3')">Den omvandlas tillbaka till lägesenergi</button>
+      <button class="fq-opt" onclick="fAns(this,true,'F3')">Den omvandlas till värmeenergi i bromsarna (och lite ljud) — energiprincipen gäller</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F3')">Den lagras i motorns svänghjul</button>
+    </div>
+    <div class="fq-feedback" id="fb-F3"></div>
+  </div>
+
+  <div class="fq-card">
+    <div class="fq-num">Fråga 4</div>
+    <div class="fq-q">Två motorer utför samma arbete (1 000 J) men den ena tar 2 s och den andra tar 10 s. Vilken har högre effekt?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAns(this,true,'F4')">Den snabbare (2 s): P = 1000/2 = 500 W mot 100 W</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F4')">Den långsammare — den sparar energi</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F4')">Effekten är densamma — arbetet är lika</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F4')">Det beror på motorns storlek</button>
+    </div>
+    <div class="fq-feedback" id="fb-F4"></div>
+  </div>
+
+  <div class="fq-card">
+    <div class="fq-num">Fråga 5</div>
+    <div class="fq-q">En sten kastas uppåt och når sin högsta punkt. Beskriv energiomvandlingen.</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAns(this,false,'F5')">Kemisk energi → elektrisk energi → rörelseenergi</button>
+      <button class="fq-opt" onclick="fAns(this,true,'F5')">Rörelseenergi (botten) → lägesenergi (toppen). Omvandlas tillbaka när stenen faller.</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F5')">Lägesenergi omvandlas till rörelseenergi under hela uppåtfärden</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F5')">Energin förstörs vid högsta punkten (v = 0)</button>
+    </div>
+    <div class="fq-feedback" id="fb-F5"></div>
+  </div>
+
+  <div class="fq-card">
+    <div class="fq-num">Fråga 6</div>
+    <div class="fq-q">Vad är enheten för arbete och vad är enheten för effekt?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAns(this,false,'F6')">Arbete: Watt (W) · Effekt: Joule (J)</button>
+      <button class="fq-opt" onclick="fAns(this,true,'F6')">Arbete: Joule (J) · Effekt: Watt (W = J/s)</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F6')">Arbete: Newton (N) · Effekt: Pascal (Pa)</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F6')">Båda mäts i Newton·meter (Nm)</button>
+    </div>
+    <div class="fq-feedback" id="fb-F6"></div>
+  </div>
+
+  <div class="fq-card">
+    <div class="fq-num">Fråga 7</div>
+    <div class="fq-q">Vad händer med en bols lägesenergi när den rullar utför en backe (friktionsfri)?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAns(this,false,'F7')">Lägesenergin försvinner</button>
+      <button class="fq-opt" onclick="fAns(this,true,'F7')">Lägesenergin omvandlas till rörelseenergi — bollen accelererar. Totala mekaniska energin bevaras.</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F7')">Lägesenergin omvandlas till värme p.g.a. tyngdkraften</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F7')">Rörelseenergin är konstant i en friktionsfri backe</button>
+    </div>
+    <div class="fq-feedback" id="fb-F7"></div>
+  </div>
+
+  <div class="fq-card">
+    <div class="fq-num">Fråga 8</div>
+    <div class="fq-q">Vad menas med att en lampa har effekten 60 W?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAns(this,false,'F8')">Den använder 60 Joule per minut</button>
+      <button class="fq-opt" onclick="fAns(this,true,'F8')">Den omvandlar 60 Joule energi varje sekund</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F8')">Den har en spänning på 60 Volt</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F8')">Den lyser 60 % av sin maximala ljusstyrka</button>
+    </div>
+    <div class="fq-feedback" id="fb-F8"></div>
+  </div>
+
+  <div class="fq-card">
+    <div class="fq-num">Fråga 9</div>
+    <div class="fq-q">En person använder ett bräckjärn (hävstång) för att lyfta ett tungt lock. Hävarmens kraftarm är 4× längre än motståndsarmen. Hur förändras kraften?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAns(this,false,'F9')">Kraften fördubblas</button>
+      <button class="fq-opt" onclick="fAns(this,true,'F9')">Kraften blir 4× mindre — men man måste trycka 4× längre sträcka (gyllene regeln)</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F9')">Kraften är oförändrad</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F9')">Kraften ökar med 4× och sträckan ökar också</button>
+    </div>
+    <div class="fq-feedback" id="fb-F9"></div>
+  </div>
+
+  <div class="fq-card">
+    <div class="fq-num">Fråga 10</div>
+    <div class="fq-q">Varför blir bromsar varma vid inbromsning?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAns(this,false,'F10')">Bromsvätska reagerar kemiskt med metallen</button>
+      <button class="fq-opt" onclick="fAns(this,true,'F10')">Rörelseenergi omvandlas till värmeenergi via friktion i bromsbeläggen — energiprincipen</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F10')">Elektrisk energi från motorn värmer bromsarna</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F10')">Luftmotstånd värmer bromsarnas yta</button>
+    </div>
+    <div class="fq-feedback" id="fb-F10"></div>
+  </div>
+
+  <div class="fq-card">
+    <div class="fq-num">Fråga 11</div>
+    <div class="fq-q">Vad är skillnaden mellan energi och effekt?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAns(this,false,'F11')">Det är samma sak, bara olika enheter</button>
+      <button class="fq-opt" onclick="fAns(this,true,'F11')">Energi är total mängd (J), effekt är hur snabbt den omvandlas (W = J/s)</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F11')">Effekt mäter lagrad energi, energi mäter förbrukad</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F11')">Energi gäller bara elektriska sammanhang</button>
+    </div>
+    <div class="fq-feedback" id="fb-F11"></div>
+  </div>
+
+  <div class="fq-card">
+    <div class="fq-num">Fråga 12</div>
+    <div class="fq-q">Vad menas med mekanisk energi?</div>
+    <div class="fq-opts">
+      <button class="fq-opt" onclick="fAns(this,false,'F12')">Enbart rörelseenergin hos ett föremål</button>
+      <button class="fq-opt" onclick="fAns(this,true,'F12')">Summan av lägesenergi + rörelseenergi. Bevaras i ett friktionsfritt system.</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F12')">Energin som frigörs vid kemiska reaktioner</button>
+      <button class="fq-opt" onclick="fAns(this,false,'F12')">Elektrisk energi omvandlad via en motor</button>
+    </div>
+    <div class="fq-feedback" id="fb-F12"></div>
+  </div>
+</div>
+
+<!-- ===== RÄKNA ===== -->
+<div class="section" id="sec-rakna">
+  <div style="margin-top:16px;margin-bottom:16px;background:rgba(162,89,255,.08);border:1px solid rgba(162,89,255,.25);border-radius:12px;padding:14px;font-size:13px;line-height:1.9;color:#d4b8ff">
+    <strong>📐 Formler:</strong><br>
+    <span class="fc">W = F · s</span> arbete (J) = kraft (N) × sträcka (m)<br>
+    <span class="fc">P = W / t</span> effekt (W) = arbete (J) / tid (s)<br>
+    <span class="fc">E_läges = m · g · h</span> g = 10 m/s²<br>
+    <span class="fc">F₁·s₁ = F₂·s₂</span> gyllene regeln
+  </div>
+
+  <div class="calc-card">
+    <div class="fq-num">Räkneuppgift 1</div>
+    <div class="calc-q">Du drar en låda med kraften 50 N över 4 meter. Hur stort är det utförda arbetet?</div>
+    <div class="calc-input">
+      <input type="number" class="calc-inp" id="r1" placeholder="?">
+      <span class="calc-unit">J</span>
+      <button class="btn-check" onclick="chk('r1',200,'r1-res','✅ Rätt! W = F·s = 50×4 = 200 J','❌ Fel. W = F · s = 50 N × 4 m = 200 J',2)">Kontrollera</button>
+    </div>
+    <div class="calc-result" id="r1-res"></div>
+  </div>
+
+  <div class="calc-card">
+    <div class="fq-num">Räkneuppgift 2</div>
+    <div class="calc-q">En hiss lyfter 800 N (en person) 3 meter på 5 sekunder. Hur stor är hissens effekt?</div>
+    <div class="calc-input">
+      <input type="number" class="calc-inp" id="r2" placeholder="?">
+      <span class="calc-unit">W</span>
+      <button class="btn-check" onclick="chk('r2',480,'r2-res','✅ Rätt! W = 800×3 = 2400 J, P = 2400/5 = 480 W','❌ Fel. W = 800×3 = 2400 J → P = W/t = 2400/5 = 480 W',5)">Kontrollera</button>
+    </div>
+    <div class="calc-result" id="r2-res"></div>
+  </div>
+
+  <div class="calc-card">
+    <div class="fq-num">Räkneuppgift 3</div>
+    <div class="calc-q">En sten (massa 2 kg) ligger 5 m högt. Hur stor är dess lägesenergi? (g = 10)</div>
+    <div class="calc-input">
+      <input type="number" class="calc-inp" id="r3" placeholder="?">
+      <span class="calc-unit">J</span>
+      <button class="btn-check" onclick="chk('r3',100,'r3-res','✅ Rätt! E = mgh = 2×10×5 = 100 J','❌ Fel. E_läges = m·g·h = 2×10×5 = 100 J',1)">Kontrollera</button>
+    </div>
+    <div class="calc-result" id="r3-res"></div>
+  </div>
+
+  <div class="calc-card">
+    <div class="fq-num">Räkneuppgift 4</div>
+    <div class="calc-q">Gyllene regeln: Du vill lyfta 400 N med en hävstång. Kraftarmen är 2 m, motståndsarmen 0,5 m. Hur stor kraft behöver du?</div>
+    <div class="calc-input">
+      <input type="number" class="calc-inp" id="r4" placeholder="?">
+      <span class="calc-unit">N</span>
+      <button class="btn-check" onclick="chk('r4',100,'r4-res','✅ Rätt! F₁·s₁ = F₂·s₂ → F₁·2 = 400·0,5 → F₁ = 100 N','❌ Fel. F₁·2 = 400·0,5 → F₁ = 200/2 = 100 N',2)">Kontrollera</button>
+    </div>
+    <div class="calc-result" id="r4-res"></div>
+  </div>
+
+  <div class="calc-card">
+    <div class="fq-num">Räkneuppgift 5</div>
+    <div class="calc-q">En motor med effekten 200 W arbetar i 30 sekunder. Hur mycket arbete utförs?</div>
+    <div class="calc-input">
+      <input type="number" class="calc-inp" id="r5" placeholder="?">
+      <span class="calc-unit">J</span>
+      <button class="btn-check" onclick="chk('r5',6000,'r5-res','✅ Rätt! W = P·t = 200×30 = 6000 J','❌ Fel. W = P · t = 200 W × 30 s = 6000 J',10)">Kontrollera</button>
+    </div>
+    <div class="calc-result" id="r5-res"></div>
+  </div>
+</div>
+
+<!-- ===== RESONEMANG ===== -->
+<div class="section" id="sec-resonemang">
+
+  <div class="res-card">
+    <span class="res-badge np">NP-liknande</span>
+    <div class="res-q">🔧 Blocknyckel — vem behöver minst kraft?</div>
+    <div class="res-context">Cornelia, Päivi och Meja ska dra åt en mutter med en blocknyckel. De håller handen på olika ställen: Cornelia nära muttern, Päivi i mitten, Meja längst ut på skaftet. Vem behöver minst kraft?</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <label>Vilket fysikaliskt samband avgör detta?</label>
+        <textarea class="res-textarea" placeholder="Vilken formel/princip är relevant?"></textarea>
+      </div>
+      <div class="res-step">
+        <label>Förklara med hävstångsprincipen</label>
+        <textarea class="res-textarea" placeholder="Kraftarm, hävarm... vad händer när kraftarmen är längre?"></textarea>
+      </div>
+      <div class="res-step">
+        <label>Slutsats — vem av de tre behöver minst kraft?</label>
+        <textarea class="res-textarea" placeholder="Motivera svaret..."></textarea>
+      </div>
+    </div>
+    <button class="btn-model" onclick="showModel('block')">Visa modellsvar</button>
+    <div class="model-ans" id="ma-block">
+      <h4>✅ Modellsvar (NP-nivå)</h4>
+      <p><strong>Samband:</strong> Hävstångsprincipen / gyllene regeln: F₁ · s₁ = F₂ · s₂. Motståndet (mutter) är konstant. Kraftarmen (avstånd hand–stödpunkt) avgör hur mycket kraft som krävs.</p>
+      <p style="margin-top:6px"><strong>Resonemang:</strong> Längre kraftarm → lägre kraft behövs för samma vridmoment. Meja håller längst ut → störst kraftarm → minst kraft krävs.</p>
+      <p style="margin-top:6px"><strong>Slutsats:</strong> Meja behöver minst kraft eftersom hennes hand sitter längst ifrån muttern (fulcrum), vilket ger den längsta kraftarmen.</p>
+      <div class="grade-row">
+        <span class="grade grade-e">E: Meja nämns korrekt</span>
+        <span class="grade grade-c">C: Kopplar till kraftarm/hävstång</span>
+        <span class="grade grade-a">A: Fullständig förklaring: F₁·s₁ = F₂·s₂, längre arm → lägre kraft</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="res-card">
+    <span class="res-badge res">Resonemang</span>
+    <div class="res-q">🎢 Energiomvandlingar på en rutschbana</div>
+    <div class="res-context">En 30 kg tung flicka sitter still högst upp på en 5 m hög rutschbana. Hon glider ner och har en hastighet av 8 m/s längst ner (antag att lite energi förloras till friktion).</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <label>Beräkna lägesenergin högst upp (g = 10)</label>
+        <textarea class="res-textarea" placeholder="E = m·g·h = ?"></textarea>
+      </div>
+      <div class="res-step">
+        <label>Vad händer med energin under nedfärden?</label>
+        <textarea class="res-textarea" placeholder="Beskriv omvandlingen med energiprincipen..."></textarea>
+      </div>
+      <div class="res-step">
+        <label>Varför är hastigheten inte exakt vad man räknar ut av mgh = ½mv²?</label>
+        <textarea class="res-textarea" placeholder="Vad tar friktion hand om?"></textarea>
+      </div>
+    </div>
+    <button class="btn-model" onclick="showModel('rutscha')">Visa modellsvar</button>
+    <div class="model-ans" id="ma-rutscha">
+      <h4>✅ Modellsvar</h4>
+      <p><strong>Lägesenergi:</strong> E = mgh = 30 × 10 × 5 = 1 500 J</p>
+      <p style="margin-top:6px"><strong>Omvandling:</strong> Lägesenergin omvandlas successivt till rörelseenergi under nedfärden. Om fri från friktion: E_rörelse = ½mv² = ½ × 30 × 64 = 960 J. Differensen (1500 − 960 = 540 J) har omvandlats till värme och ljud via friktion mot banan.</p>
+      <p style="margin-top:6px"><strong>Energiprincipen:</strong> Energi förstörs inte — den omvandlas. Totalt: 1 500 J = 960 J (rörelse) + 540 J (värme/ljud).</p>
+      <div class="grade-row">
+        <span class="grade grade-e">E: Beskriver läges → rörelseenergi</span>
+        <span class="grade grade-c">C: Beräknar E=mgh och kopplar till rörelseenergi</span>
+        <span class="grade grade-a">A: Energiprincipen, beräkning, förklaring av förluster</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="res-card">
+    <span class="res-badge res">Resonemang</span>
+    <div class="res-q">🏗️ Varför används en skruvgänga (som en trappa) för att lyfta tungt?</div>
+    <div class="res-context">En domkraft använder en skruv för att lyfta en bil. För varje varv man vrider skruvhandtaget stiger bilen bara några millimeter.</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <label>Koppla till mekanikens gyllene regel</label>
+        <textarea class="res-textarea" placeholder="Vad är 'sträckan' för handtaget vs. bilen?"></textarea>
+      </div>
+      <div class="res-step">
+        <label>Kan man lyfta en tyngre last än vad man orkar annars?</label>
+        <textarea class="res-textarea" placeholder="Ja eller nej och varför?"></textarea>
+      </div>
+    </div>
+    <button class="btn-model" onclick="showModel('skruv')">Visa modellsvar</button>
+    <div class="model-ans" id="ma-skruv">
+      <h4>✅ Modellsvar</h4>
+      <p><strong>Gyllene regeln:</strong> F₁ · s₁ = F₂ · s₂. Handtaget rör sig en lång sträcka (cirkelns omkrets × varv) men bilen lyfts bara millimeter. Lång sträcka in → stor kraft ut (bilen). Handkraften behöver vara liten.</p>
+      <p style="margin-top:6px"><strong>Kan man lyfta mer?</strong> Ja! Du kan lyfta en tyngd som är tusentals gånger din handkraft — men du måste vrida handtaget väldigt många varv. Det totala arbetet är detsamma: ingen energi skapas, du sprider ut ansträngningen över lång tid/sträcka.</p>
+    </div>
+  </div>
+
+  <div class="res-card">
+    <span class="res-badge np">NP-liknande</span>
+    <div class="res-q">💡 Energieffektivisering — jämför två glödlampor</div>
+    <div class="res-context">En vanlig glödlampa (60 W) och en LED-lampa (8 W) ger ungefär samma ljusstyrka. Glödlampan omvandlar 95% av energin till värme och 5% till ljus. LED-lampan omvandlar 80% till ljus och 20% till värme.</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <label>Beräkna hur mycket energi varje lampa använder på 1 timme (3600 s)</label>
+        <textarea class="res-textarea" placeholder="W = P·t = ? J för respektive lampa..."></textarea>
+      </div>
+      <div class="res-step">
+        <label>Resonera kring varför LED är bättre ur energisynpunkt</label>
+        <textarea class="res-textarea" placeholder="Koppling till effekt, energi och omvandlingsförluster..."></textarea>
+      </div>
+    </div>
+    <button class="btn-model" onclick="showModel('led')">Visa modellsvar</button>
+    <div class="model-ans" id="ma-led">
+      <h4>✅ Modellsvar</h4>
+      <p><strong>Glödlampa:</strong> W = 60 × 3600 = 216 000 J = 216 kJ. Av dessa → 5% = 10 800 J som ljus, 95% = 205 200 J som oanvändbar värme.</p>
+      <p style="margin-top:6px"><strong>LED:</strong> W = 8 × 3600 = 28 800 J = 28,8 kJ. Av dessa → 80% = 23 040 J som ljus, 20% = 5 760 J som värme.</p>
+      <p style="margin-top:6px"><strong>Slutsats:</strong> LED använder 7,5× mindre energi för samma ljusmängd. Energiprincipen: energin förstörs inte — den omvandlas, men glödlampan slösar med värme. LED är mer energieffektiv (lägre effekt + högre andel nyttig energi).</p>
+      <div class="grade-row">
+        <span class="grade grade-e">E: LED använder mindre energi</span>
+        <span class="grade grade-c">C: Beräknar W = P·t och jämför</span>
+        <span class="grade grade-a">A: Beräkning + energiomvandling + energiprincip + slutsats</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== NP-FRÅGOR ===== -->
+<div class="section" id="sec-np">
+  <div style="margin-top:16px;margin-bottom:16px;background:rgba(162,89,255,.08);border:1px solid rgba(162,89,255,.25);border-radius:12px;padding:14px;font-size:13px;line-height:1.6;color:#d4b8ff">
+    <strong>🎯 Riktiga &amp; NP-liknande frågor</strong> — svara alltid med motivering och visa beräkningar!
+  </div>
+
+  <div class="np-card">
+    <div class="np-header"><span class="np-logo">NP 2016</span><span class="np-year">Delprov A1 · Fråga 10</span></div>
+    <div class="np-q">Cornelia, Päivi och Meja ska dra åt en mutter med en blocknyckel. De diskuterar var på blocknyckeln de ska hålla sin hand för att behöva använda så liten kraft som möjligt. Förklara vem som kommer att behöva använda minst kraft för att dra åt muttern.</div>
+    <div class="res-steps" style="margin-top:10px">
+      <div class="res-step">
+        <label>Ditt svar — motivera med hävstångsprincipen</label>
+        <textarea class="res-textarea" placeholder="Nämn vem och förklara varför med rätt begrepp..." style="min-height:80px"></textarea>
+      </div>
+    </div>
+    <button class="btn-model" onclick="showModel('np1')">Visa exempelsvar (E/C/A)</button>
+    <div class="model-ans" id="ma-np1">
+      <h4>✅ Exempelsvar</h4>
+      <p><strong>E:</strong> "Meja behöver minst kraft eftersom hon håller längst ut."</p>
+      <p style="margin-top:6px"><strong>C:</strong> "Meja håller längst från muttern (störst kraftarm). Hävstångsprincipen: lång kraftarm → liten kraft behövs för att skapa samma vridmoment/kraft på muttern."</p>
+      <p style="margin-top:6px"><strong>A:</strong> "Meja. Hävstångsprincipen/gyllene regeln: F₁·s₁ = F₂·s₂. Kraft × hävarm = konstant. Mejas hävarm är längst → krävs minst kraft F₁. Cornelia har kortast hävarm → behöver störst kraft."</p>
+    </div>
+  </div>
+
+  <div class="np-card">
+    <div class="np-header"><span class="np-logo">NP-typ</span><span class="np-year">Flerval</span></div>
+    <div class="np-q">En elev lyfter en låda (tyngd 100 N) rakt upp 2 meter på 4 sekunder. Hur stor är effekten?</div>
+    <div class="fq-opts" style="margin-top:8px">
+      <button class="fq-opt" onclick="fAns(this,false,'NP2')">A. 25 W</button>
+      <button class="fq-opt" onclick="fAns(this,true,'NP2')">B. 50 W</button>
+      <button class="fq-opt" onclick="fAns(this,false,'NP2')">C. 200 W</button>
+      <button class="fq-opt" onclick="fAns(this,false,'NP2')">D. 800 W</button>
+    </div>
+    <div class="fq-feedback" id="fb-NP2"></div>
+  </div>
+
+  <div class="np-card">
+    <div class="np-header"><span class="np-logo">NP-typ</span><span class="np-year">Resonemang</span></div>
+    <div class="np-q">En rullstolsramp är 6 meter lång och höjer sig 1 meter. En person i rullstol (total tyngd 800 N) körs upp. Hur stor kraft (längs rampen) behövs, om vi bortser från friktion? Förklara kopplingen till gyllene regeln.</div>
+    <div class="res-steps" style="margin-top:10px">
+      <div class="res-step">
+        <label>Beräkning och förklaring</label>
+        <textarea class="res-textarea" placeholder="F₁·s₁ = F₂·s₂ → F_ramp × 6 = 800 × 1 → ?" style="min-height:80px"></textarea>
+      </div>
+    </div>
+    <button class="btn-model" onclick="showModel('np3')">Visa modellsvar</button>
+    <div class="model-ans" id="ma-np3">
+      <h4>✅ Modellsvar</h4>
+      <p><strong>Beräkning:</strong> F_ramp × 6 = 800 × 1 → F_ramp = 800/6 ≈ 133 N</p>
+      <p style="margin-top:6px"><strong>Gyllene regeln:</strong> Rampen är en enkel maskin (lutande plan). Längre sträcka (6 m) → lägre kraft (133 N) jämfört med direkt lyft (800 N × 1 m). Det totala arbetet är detsamma: 133 × 6 = 800 × 1 = 800 J. Ingen energi skapas eller förstörs.</p>
+    </div>
+  </div>
+
+  <div class="np-card">
+    <div class="np-header"><span class="np-logo">NP-typ</span><span class="np-year">Flerval — energiomvandling</span></div>
+    <div class="np-q">En vattenkraftturbin omvandlar energi. Vilken energiomvandling sker?</div>
+    <div class="fq-opts" style="margin-top:8px">
+      <button class="fq-opt" onclick="fAns(this,false,'NP4')">A. Elektrisk energi → rörelseenergi → lägesenergi</button>
+      <button class="fq-opt" onclick="fAns(this,false,'NP4')">B. Kemisk energi → värmeenergi → elektrisk energi</button>
+      <button class="fq-opt" onclick="fAns(this,true,'NP4')">C. Lägesenergi → rörelseenergi → elektrisk energi</button>
+      <button class="fq-opt" onclick="fAns(this,false,'NP4')">D. Strålningsenergi → rörelseenergi → elektrisk energi</button>
+    </div>
+    <div class="fq-feedback" id="fb-NP4"></div>
+  </div>
+</div>
+
+<script>
+const STORAGE_KEY = 'fysik_arbete_energi_effekt';
+const quizItems = Array(21).fill(null);
+const allCards=[
+  {tag:'Arbete',q:'Formeln för fysikaliskt arbete?',a:'W = F · s\nArbete (Joule) = kraft (Newton) × sträcka (meter)\nArbete utförs bara om föremålet rör sig i kraftens riktning.',hint:'W = F·s, enhet: Joule (J)'},
+  {tag:'Arbete',q:'När utförs INGET fysikaliskt arbete?',a:'1. Om föremålet inte rör sig (s = 0)\n2. Om kraften är vinkelrät mot rörelsen\nEx: hålla en väska stilla = inget arbete (s=0), trots muskelansträngning.',hint:'W = F·s → om s=0 är W=0'},
+  {tag:'Effekt',q:'Formeln för effekt?',a:'P = W / t\nEffekt (Watt) = arbete (Joule) / tid (sekunder)\nHög effekt = mycket arbete på kort tid.',hint:'1 W = 1 J/s'},
+  {tag:'Effekt',q:'Vad är enheten Watt (W)?',a:'Watt = Joule per sekund (J/s). 1 W = 1 J/s.\nEn 100 W lampa omvandlar 100 J energi varje sekund.',hint:'Uppkallad efter James Watt'},
+  {tag:'Energi',q:'Vad är lägesenergi?',a:'E_läges = m · g · h\nEnergi som lagras när ett föremål befinner sig på en höjd.\nm=massa (kg), g=10 m/s², h=höjd (m)\nEx: ett 2 kg block på 3 m höjd: E = 2·10·3 = 60 J',hint:'Lagras i höjd'},
+  {tag:'Energi',q:'Vad är rörelseenergi?',a:'E_rörelse = ½ · m · v²\nEnergi hos rörliga föremål. Ökar kvadratiskt med hastigheten!\nEx: dubbel hastighet → 4× mer rörelseenergi.',hint:'½mv², observera v²!'},
+  {tag:'Energi',q:'Vad är mekanisk energi?',a:'Summan av lägesenergi + rörelseenergi.\nE_mek = E_läges + E_rörelse\nI ett friktionsfritt system är mekanisk energi bevarad (konstant).',hint:'Läges + rörelse'},
+  {tag:'Energiprincipen',q:'Vad säger energiprincipen?',a:'Energi kan varken skapas eller förstöras — bara omvandlas från en form till en annan.\nTotala energin i ett slutet system är alltid konstant.',hint:'Naturens viktigaste lag'},
+  {tag:'Energiprincipen',q:'Vad händer med rörelseenergin när en bil bromsar?',a:'Rörelseenergin omvandlas till värmeenergi (och lite ljud) via friktion i bromsarna. Energiprincipen: ingen energi försvinner — den omvandlas.',hint:'Bromsarna blir varma'},
+  {tag:'Enkla maskiner',q:'Vad säger mekanikens gyllene regel?',a:'F₁ · s₁ = F₂ · s₂\nDen totala energin (arbetet) in = arbetet ut.\nEn maskin kan aldrig ge mer arbete ut än in.\nVinst i kraft → förlust i sträcka (och tvärtom).',hint:'Inget gratis — alltid kompromiss'},
+  {tag:'Enkla maskiner',q:'Hur fungerar en hävstång?',a:'En hävstång har en stödpunkt (fulcrum). Kraftarm × kraft = motståndsarm × last.\nLång kraftarm → liten kraft behövs.\nEx: bräckjärn, sax, skottkärra, skohorn.',hint:'Kraftarm × F = motståndsarm × last'},
+  {tag:'Enkla maskiner',q:'Hur fungerar ett lutande plan?',a:'En ramp är ett lutande plan. Längre ramp → lägre kraft behövs, men man går längre sträcka. Totalt arbete = detsamma.\nEx: rullstolsramp, lastbrygga, skruvgänga.',hint:'Längre sträcka → lägre kraft'},
+  {tag:'Enkla maskiner',q:'Hur fungerar en talja?',a:'En talja (block och tackla) fördelar lasten på flera repdelar. Fler rullblock → lägre kraft men man måste dra längre rep. Ex: lyftkran, segelbåts fall.',hint:'Fler block → lägre kraft, längre rep'},
+  {tag:'Enkla maskiner',q:'Vad är en hävarm?',a:'Avståndet från stödpunkten (fulcrum) till den punkt där kraften verkar.\nLängre hävarm → lägre kraft behövs för samma vridmoment.\nEx: skruva med lång nyckel vs. kort.',hint:'Längre arm = lättare'},
+  {tag:'Energiformer',q:'Nämn sex energiformer',a:'1. Rörelseenergi (kinetisk)\n2. Lägesenergi (potentiell)\n3. Värmeenergi (termisk)\n4. Elektrisk energi\n5. Strålningsenergi (ljus, IR, UV)\n6. Kemisk energi (batteri, mat, bränsle)\n(+ kärnenergi)',hint:'Alla kan omvandlas till varandra'},
+  {tag:'Energiformer',q:'Vilka energiomvandlingar sker i en vattenkraftstation?',a:'Lägesenergi (vatten högt upp) → Rörelseenergi (fallande vatten + turbin) → Elektrisk energi (generator)\nEnergi bevaras totalt, men lite omvandlas till värme via friktion.',hint:'Läges → rörelse → el'},
+  {tag:'Energiformer',q:'Vilka energiomvandlingar sker i en bensinmotor?',a:'Kemisk energi (bensin) → Värmeenergi (explosion) → Rörelseenergi (kolv/hjul)\nCa 30–40% nyttig rörelseenergi, resten värme (avgaser, motorvärme).',hint:'Kemisk → värme → rörelse'},
+  {tag:'Räkna',q:'En motor (500 W) arbetar 60 s. Hur mycket arbete?',a:'W = P · t = 500 × 60 = 30 000 J = 30 kJ\nOmvandla: P = W/t → W = P · t',hint:'W = P·t'},
+  {tag:'Räkna',q:'En person (60 kg) klättrar 3 m. Hur mycket lägesenergi?',a:'E = m · g · h = 60 × 10 × 3 = 1 800 J\nDettta är också det fysikaliska arbetet mot gravitationskraften.',hint:'E = mgh = 60×10×3'},
+  {tag:'Arbete',q:'Hur omvandlas energi i en pendel?',a:'Ytterläget: max lägesenergi, noll rörelseenergi.\nMitterläget (botten): noll lägesenergi, max rörelseenergi.\nOmvandlingarna sker kontinuerligt — i en friktionsfri pendel bevaras mekanisk energi.',hint:'Ständig omvandling läges↔rörelse'},
+  {tag:'Effekt',q:'Vad är skillnaden mellan energi och effekt?',a:'Energi (J) = total mängd lagrad/omvandlad energi.\nEffekt (W) = hur snabbt energin omvandlas.\nEn stark motor har hög effekt — den utför arbete snabbt.\n1 kWh = 3 600 000 J (elräkningens enhet)',hint:'Energi = mängd, Effekt = hastighet'},
+];
+
+let cIdx=0; const cardStates={};
+function renderCard(){
+  const c=allCards[cIdx];
+  const fl=cardStates[cIdx]==='flipped'||cardStates[cIdx]==='good'||cardStates[cIdx]==='bad';
+  document.getElementById('cardArea').innerHTML=`
+    <div class="card-wrap"><div class="card-inner ${fl?'flipped':''}" onclick="flipCard()">
+      <div class="card-front"><div class="card-tag">${c.tag}</div><div class="card-q">${c.q}</div>${c.hint?`<div class="card-hint">💡 ${c.hint}</div>`:''}</div>
+      <div class="card-back"><div class="card-tag" style="color:var(--accent)">Svar</div><div class="card-a">${c.a.replace(/\n/g,'<br>')}</div></div>
+    </div></div>
+    ${fl?`<div class="btn-row"><button class="btn-know" onclick="markCard('good')">✓ Kan det!</button><button class="btn-again" onclick="markCard('bad')">↺ Igen</button></div>`:''}`;
+  document.getElementById('cardCounter').textContent=`${cIdx+1} / ${allCards.length}`;
+  updateCardStats();
+}
+function flipCard(){if(cardStates[cIdx]==='good')return;cardStates[cIdx]='flipped';renderCard()}
+function prevCard(){cIdx=(cIdx-1+allCards.length)%allCards.length;renderCard()}
+function nextCard(){cIdx=(cIdx+1)%allCards.length;renderCard()}
+function markCard(s){cardStates[cIdx]=s;if(s==='good')setTimeout(()=>{nextCard()},300);else renderCard()}
+function updateCardStats(){
+  const g=Object.values(cardStates).filter(v=>v==='good').length;
+  document.getElementById('cGood').textContent=g;
+  document.getElementById('cLeft').textContent=allCards.length-g;
+  document.getElementById('cPct').textContent=Math.round((g/allCards.length)*100)+'%';
+  updateMainProgress();
+}
+
+const fbData={
+  F1:{ok:'✅ Rätt! W = F·s — om sträckan s = 0 är arbetet noll, oavsett hur stor kraften är.',err:'❌ Fel. Fysikaliskt arbete kräver rörelse i kraftens riktning. Stilla → s=0 → W=F·0=0 J.'},
+  F2:{ok:'✅ Rätt! Gyllene regeln: F₁·s₁ = F₂·s₂. Längre sträcka (ramp) → lägre kraft, men totalt arbete är lika.',err:'❌ Fel. Totala arbetet är detsamma. Rampen sprider ut arbetet över längre sträcka → lägre kraft krävs.'},
+  F3:{ok:'✅ Rätt! Energiprincipen: rörelseenergi kan inte försvinna, den omvandlas till värme och ljud via friktion.',err:'❌ Fel. Energi förstörs aldrig — den omvandlas. Bromsenergi → värme (bromsarna). Energiprincipen.'},
+  F4:{ok:'✅ Rätt! P = W/t. Samma arbete på kortare tid = högre effekt. 1000/2 = 500 W mot 1000/10 = 100 W.',err:'❌ Fel. P = W/t. Den snabbare motorn (2 s) har effekten 1000/2 = 500 W. Effekt är arbete PER sekund.'},
+  F5:{ok:'✅ Rätt! Rörelseenergi (handen ger stenen fart) → lägesenergi (stenen bromsar in och når toppen). Omvänt vid fallet.',err:'❌ Fel. Rörelseenergi omvandlas till lägesenergi under uppfärden. Lägesenergi är max vid toppen (v=0).'},
+  F6:{ok:'✅ Rätt! Arbete mäts i Joule (J = N·m). Effekt mäts i Watt (W = J/s).',err:'❌ Fel. Arbete = Joule (J). Effekt = Watt (W = J/s). Joule och Watt är inte utbytbara.'},
+  F7:{ok:'✅ Rätt! Friktionsfri → mekanisk energi bevaras. Lägesenergi omvandlas till rörelseenergi → bollen accelererar.',err:'❌ Fel. I en friktionsfri backe omvandlas lägesenergi → rörelseenergi. Bollen accelererar. Energi bevaras.'},
+  F8:{ok:'✅ Rätt! Effekt 60 W = 60 Joule per sekund omvandlas (ljus + värme).',err:'❌ Fel. Watt = Joule/sekund. En 60 W lampa förbrukar 60 J energi varje sekund.'},
+  F9:{ok:'✅ Rätt! Gyllene regeln: lång kraftarm → liten kraft. 4× längre arm → 4× lägre kraft (men 4× längre sträcka).',err:'❌ Fel. Gyllene regeln: F·s konstant. Kraftarm 4× längre → kraften 4× lägre. Men sträckan ökar 4×.'},
+  F10:{ok:'✅ Rätt! Rörelseenergi → värmeenergi via friktion i bromsbeläggen. Energiprincipen i praktiken.',err:'❌ Fel. Energiprincipen: rörelseenergi → värme (friktion i bromsarna). Energi omvandlas, inte förstörs.'},
+  F11:{ok:'✅ Rätt! Energi = mängd (J). Effekt = omvandlingshastighet (W = J/s). En stark motor = hög effekt.',err:'❌ Fel. Energi (J) = hur mycket. Effekt (W) = hur snabbt. P = W/t. Helt olika storlekar.'},
+  F12:{ok:'✅ Rätt! Mekanisk energi = E_läges + E_rörelse. Bevaras i ett friktionsfritt system.',err:'❌ Fel. Mekanisk energi = lägesenergi + rörelseenergi. Omvandlas mellan varandra i t.ex. pendlar och rutschbanor.'},
+  NP2:{ok:'✅ Rätt! W = F·s = 100×2 = 200 J. P = W/t = 200/4 = 50 W.',err:'❌ Fel. W = 100×2 = 200 J. P = W/t = 200/4 = 50 W. Svaret är B.'},
+  NP4:{ok:'✅ Rätt! Vatten faller (lägesenergi) → snurrar turbin (rörelseenergi) → generator producerar el (elektrisk energi).',err:'❌ Fel. Vattenkraft: Lägesenergi (vatten uppe) → rörelseenergi (fallande vatten) → elektrisk energi (generator). Svaret är C.'},
+};
+
+const fAnswered={};
+function fAns(btn,correct,id){
+  if(fAnswered[id]!==undefined)return;
+  fAnswered[id]=correct;
+  btn.parentElement.querySelectorAll('.fq-opt').forEach(o=>o.disabled=true);
+  btn.classList.add(correct?'correct':'wrong');
+  const fb=document.getElementById('fb-'+id);
+  if(fb){fb.textContent=correct?fbData[id].ok:fbData[id].err;fb.className='fq-feedback show '+(correct?'ok':'err');}
+  if(correct){
+    const s=document.getElementById('fScore');if(s)s.textContent=Object.values(fAnswered).filter(v=>v===true).length;
+    const p=document.getElementById('fPct');if(p){const t=Object.keys(fAnswered).length;p.textContent=Math.round((Object.values(fAnswered).filter(v=>v===true).length/t)*100)+'%';}
+  }
+  updateMainProgress();
+}
+
+function chk(inputId,correct,resultId,okMsg,errMsg,tol){
+  const val=parseFloat(document.getElementById(inputId).value);
+  const el=document.getElementById(resultId);
+  if(isNaN(val)){el.textContent='Ange ett tal.';el.className='calc-result show err';return;}
+  const ok=Math.abs(val-correct)<=tol;
+  el.textContent=ok?okMsg:errMsg;
+  el.className='calc-result show '+(ok?'ok':'err');
+  if(ok)updateMainProgress();
+}
+
+function showModel(id){document.getElementById('ma-'+id).classList.toggle('show')}
+
+function showTab(name,e){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('sec-'+name).classList.add('active');
+  if(e)e.currentTarget.classList.add('active');
+}
+
+function updateMainProgress() {
+  const good   = Object.values(cardStates).filter(v => v === 'good').length;
+  const fRight = Object.values(fAnswered).filter(v => v === true).length;
+  const total  = allCards.length + quizItems.length;
+  const pct    = Math.min(100, Math.round(((good + fRight) / total) * 100));
+  document.getElementById('mainProgress').style.width = pct + '%';
+  document.getElementById('progressText').textContent = (good + fRight) + ' av ' + total + ' klara';
+  localStorage.setItem(STORAGE_KEY + '_progress', JSON.stringify({
+    pct, good, fRight, total,
+    cardStates: Object.assign({}, cardStates),
+    fAnswered:  Object.assign({}, fAnswered),
+  }));
+}
+
+function restoreProgress() {
+  const raw = localStorage.getItem(STORAGE_KEY + '_progress');
+  if (!raw) return;
+  try {
+    const data = JSON.parse(raw);
+    if (data.cardStates) Object.entries(data.cardStates).forEach(([k,v]) => { cardStates[k] = v; });
+    if (data.fAnswered)  Object.entries(data.fAnswered).forEach(([k,v])  => { fAnswered[k] = v; });
+  } catch(e) {}
+}
+
+restoreProgress();
+renderCard();
+</script>
+</body>
+</html>

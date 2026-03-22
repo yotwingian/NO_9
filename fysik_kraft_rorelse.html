@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fysik åk 9 – Kraft & Rörelse</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f6f2;
+    --white: #ffffff;
+    --text: #1a1a2e;
+    --muted: #6b7280;
+    --border: #e2e0d8;
+    --accent: #2563a8;
+    --accent-light: #dbeafe;
+    --accent-hover: #1d4e8a;
+    --green: #15803d;
+    --green-light: #dcfce7;
+    --red: #b91c1c;
+    --red-light: #fee2e2;
+    --orange: #c2410c;
+    --orange-light: #ffedd5;
+    --yellow-light: #fef9c3;
+    --shadow: 0 2px 8px rgba(0,0,0,0.07);
+    --shadow-lg: 0 8px 24px rgba(0,0,0,0.10);
+    --radius: 10px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Source Sans 3', sans-serif; background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.6; min-height: 100vh; }
+
+  header { background: var(--white); border-bottom: 2px solid var(--border); padding: 0 24px; position: sticky; top: 0; z-index: 100; }
+  .header-inner { max-width: 860px; margin: 0 auto; display: flex; align-items: center; gap: 16px; padding: 14px 0; flex-wrap: wrap; }
+  .subject-badge { background: #059669; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; }
+  h1 { font-family: 'Lora', serif; font-size: 20px; font-weight: 700; color: var(--text); }
+  .header-meta { margin-left: auto; font-size: 13px; color: var(--muted); }
+  .progress-bar-wrap { width: 100%; height: 4px; background: var(--border); border-radius: 2px; margin-top: 6px; }
+  .progress-bar-fill { height: 100%; background: #059669; border-radius: 2px; transition: width .4s ease; width: 0%; }
+
+  .tabs { max-width: 860px; margin: 24px auto 0; padding: 0 16px; display: flex; gap: 4px; border-bottom: 2px solid var(--border); }
+  .tab-btn { background: none; border: none; border-bottom: 3px solid transparent; padding: 10px 18px 11px; font-family: 'Source Sans 3', sans-serif; font-size: 15px; font-weight: 600; color: var(--muted); cursor: pointer; transition: color .2s, border-color .2s; white-space: nowrap; margin-bottom: -2px; border-radius: 6px 6px 0 0; }
+  .tab-btn:hover { color: #059669; }
+  .tab-btn.active { color: #059669; border-bottom-color: #059669; }
+  .tab-badge { display: inline-block; background: var(--border); color: var(--muted); font-size: 11px; font-weight: 700; padding: 1px 6px; border-radius: 10px; margin-left: 5px; }
+  .tab-btn.active .tab-badge { background: #d1fae5; color: #059669; }
+
+  .content { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  .section-intro { background: #d1fae5; border-left: 4px solid #059669; border-radius: 0 var(--radius) var(--radius) 0; padding: 14px 18px; margin-bottom: 28px; font-size: 14px; color: #065f46; }
+  .section-intro strong { font-weight: 700; }
+
+  /* FLASHCARDS */
+  .flashcard-controls { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+  .fc-counter { font-size: 14px; color: var(--muted); font-weight: 600; }
+  .fc-progress { flex: 1; height: 6px; background: var(--border); border-radius: 3px; min-width: 80px; }
+  .fc-progress-fill { height: 100%; background: #059669; border-radius: 3px; transition: width .3s; }
+  .flashcard-scene { perspective: 1000px; height: 220px; margin-bottom: 20px; cursor: pointer; }
+  .flashcard { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform .5s cubic-bezier(.4,0,.2,1); }
+  .flashcard.flipped { transform: rotateY(180deg); }
+  .fc-face { position: absolute; inset: 0; backface-visibility: hidden; border-radius: var(--radius); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 28px 32px; text-align: center; box-shadow: var(--shadow-lg); }
+  .fc-front { background: var(--white); border: 2px solid var(--border); }
+  .fc-back { background: #064e3b; color: #fff; transform: rotateY(180deg); }
+  .fc-category { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #059669; margin-bottom: 10px; }
+  .fc-back .fc-category { color: #6ee7b7; }
+  .fc-question { font-family: 'Lora', serif; font-size: 19px; font-weight: 600; line-height: 1.4; color: var(--text); }
+  .fc-back .fc-question { color: #fff; font-size: 17px; }
+  .fc-hint { font-size: 13px; color: var(--muted); margin-top: 12px; }
+  .fc-back .fc-hint { color: #6ee7b7; }
+  .fc-tap-hint { position: absolute; bottom: 12px; right: 16px; font-size: 12px; color: var(--muted); }
+
+  .fc-category-filter { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
+  .filter-chip { font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 20px; border: 1.5px solid var(--border); background: var(--white); cursor: pointer; transition: all .15s; color: var(--muted); }
+  .filter-chip:hover, .filter-chip.active { border-color: #059669; background: #d1fae5; color: #059669; }
+
+  .fc-nav { display: flex; justify-content: center; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .btn { font-family: 'Source Sans 3', sans-serif; font-size: 14px; font-weight: 600; padding: 9px 20px; border-radius: 7px; cursor: pointer; transition: background .15s, transform .1s; border: 2px solid transparent; }
+  .btn:active { transform: scale(.97); }
+  .btn-primary { background: #059669; color: #fff; border-color: #059669; }
+  .btn-primary:hover { background: #047857; border-color: #047857; }
+  .btn-outline { background: var(--white); color: #059669; border-color: #059669; }
+  .btn-outline:hover { background: #d1fae5; }
+  .btn-green { background: var(--green); color: #fff; border-color: var(--green); }
+  .btn-red { background: var(--red); color: #fff; border-color: var(--red); }
+  .btn-sm { font-size: 13px; padding: 7px 14px; }
+
+  /* QUESTION CARDS */
+  .question-card { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 24px 26px; margin-bottom: 20px; box-shadow: var(--shadow); }
+  .question-card.done { border-color: #6ee7b7; }
+  .q-number { font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: #059669; margin-bottom: 6px; }
+  .q-text { font-family: 'Lora', serif; font-size: 17px; font-weight: 600; line-height: 1.5; margin-bottom: 16px; color: var(--text); }
+  .q-context { background: var(--yellow-light); border-left: 3px solid #eab308; border-radius: 0 6px 6px 0; padding: 10px 14px; font-size: 14px; margin-bottom: 16px; color: #713f12; }
+
+  .mc-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+  .mc-option { display: flex; align-items: flex-start; gap: 12px; padding: 12px 16px; border-radius: 8px; border: 2px solid var(--border); cursor: pointer; transition: all .15s; background: var(--white); }
+  .mc-option:hover:not(.disabled) { border-color: #059669; background: #d1fae5; }
+  .mc-option.correct { border-color: var(--green); background: var(--green-light); }
+  .mc-option.wrong { border-color: var(--red); background: var(--red-light); }
+  .mc-option.disabled { cursor: default; }
+  .mc-letter { width: 26px; height: 26px; min-width: 26px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: var(--muted); }
+  .mc-option.correct .mc-letter { background: var(--green); color: #fff; }
+  .mc-option.wrong .mc-letter { background: var(--red); color: #fff; }
+  .mc-text { font-size: 15px; line-height: 1.4; padding-top: 2px; }
+
+  .feedback-box { display: none; border-radius: 8px; padding: 12px 16px; font-size: 14px; line-height: 1.5; margin-top: 12px; }
+  .feedback-box.show { display: block; }
+  .feedback-box.correct { background: var(--green-light); border-left: 3px solid var(--green); color: #14532d; }
+  .feedback-box.wrong { background: var(--red-light); border-left: 3px solid var(--red); color: #7f1d1d; }
+  .feedback-box.info { background: var(--accent-light); border-left: 3px solid var(--accent); color: #1e3a6e; }
+
+  .open-textarea { width: 100%; border: 2px solid var(--border); border-radius: 8px; padding: 12px 14px; font-family: 'Source Sans 3', sans-serif; font-size: 15px; line-height: 1.5; resize: vertical; min-height: 90px; margin-bottom: 12px; transition: border-color .2s; background: var(--bg); color: var(--text); }
+  .open-textarea:focus { outline: none; border-color: #059669; background: var(--white); }
+
+  .model-answer { display: none; background: #f0f9ff; border: 1.5px solid #7dd3fc; border-radius: 8px; padding: 14px 16px; margin-top: 12px; }
+  .model-answer.show { display: block; }
+  .model-answer-label { font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: #0369a1; margin-bottom: 6px; }
+  .model-answer-text { font-size: 14px; line-height: 1.55; color: #0c4a6e; }
+  .model-answer-text strong { color: #0369a1; }
+
+  /* RESONEMANG */
+  .resonemang-card { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 26px; margin-bottom: 24px; box-shadow: var(--shadow); }
+  .res-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; margin-bottom: 12px; background: var(--orange-light); color: var(--orange); }
+  .res-tag.np { background: #ede9fe; color: #6d28d9; }
+  .res-scenario { background: var(--bg); border-radius: 8px; padding: 14px 16px; font-size: 15px; margin-bottom: 18px; border: 1.5px solid var(--border); font-style: italic; color: #374151; }
+  .res-steps { display: flex; flex-direction: column; gap: 16px; }
+  .res-step { background: var(--bg); border-radius: 8px; padding: 14px 16px; border: 1.5px solid var(--border); }
+  .res-step-label { font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #059669; margin-bottom: 6px; }
+  .res-step-q { font-size: 15px; font-weight: 600; margin-bottom: 10px; line-height: 1.4; }
+
+  /* NP */
+  .np-card { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 24px 26px; margin-bottom: 20px; box-shadow: var(--shadow); }
+  .np-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+  .np-year { font-size: 12px; font-weight: 700; background: #ede9fe; color: #6d28d9; padding: 3px 9px; border-radius: 4px; letter-spacing: .05em; }
+  .np-level { font-size: 12px; font-weight: 600; padding: 3px 9px; border-radius: 4px; }
+  .np-level.E { background: #dcfce7; color: #15803d; }
+  .np-level.C { background: #dbeafe; color: #1d4ed8; }
+  .np-level.A { background: #fef3c7; color: #92400e; }
+  .np-level.mixed { background: var(--orange-light); color: var(--orange); }
+
+  /* SCORE */
+  .score-panel { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 24px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap; box-shadow: var(--shadow); }
+  .score-item { text-align: center; }
+  .score-num { font-family: 'Lora', serif; font-size: 28px; font-weight: 700; color: #059669; line-height: 1; }
+  .score-label { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .score-divider { width: 1px; height: 40px; background: var(--border); }
+
+  /* FORMULA */
+  .formula-card { background: #064e3b; color: #fff; border-radius: var(--radius); padding: 20px 24px; margin-bottom: 28px; }
+  .formula-card h3 { font-family: 'Lora', serif; font-size: 16px; margin-bottom: 14px; color: #6ee7b7; }
+  .formula-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+  .formula-item { background: rgba(255,255,255,.08); border-radius: 8px; padding: 12px 14px; border: 1px solid rgba(255,255,255,.12); }
+  .formula-eq { font-size: 20px; font-weight: 700; font-family: 'Lora', serif; color: #fff; margin-bottom: 4px; }
+  .formula-desc { font-size: 12px; color: #6ee7b7; }
+
+  /* NEWTON BOX */
+  .newton-box { background: var(--white); border: 2px solid #e2e0d8; border-radius: var(--radius); padding: 18px 22px; margin-bottom: 24px; }
+  .newton-box h3 { font-family: 'Lora', serif; font-size: 15px; color: var(--text); margin-bottom: 12px; }
+  .newton-law { display: flex; gap: 14px; margin-bottom: 12px; align-items: flex-start; }
+  .newton-num { width: 32px; height: 32px; min-width: 32px; border-radius: 50%; background: #059669; color: #fff; font-weight: 700; font-size: 16px; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .newton-content strong { color: #059669; display: block; font-size: 14px; }
+  .newton-content span { font-size: 14px; color: var(--muted); }
+
+  @media (max-width: 600px) {
+    .tabs { gap: 0; overflow-x: auto; }
+    .tab-btn { font-size: 13px; padding: 9px 12px; }
+    .fc-question { font-size: 16px; }
+    h1 { font-size: 17px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <span class="subject-badge">Fysik åk 9</span>
+    <h1>Kraft &amp; Rörelse</h1>
+    <span class="header-meta" id="progressText">0 av 50 klara</span>
+  </div>
+  <div style="max-width:860px;margin:0 auto;padding:0 0 10px;">
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="mainProgress"></div></div>
+  </div>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('begrepp',event)">🃏 Begrepp <span class="tab-badge">26</span></button>
+  <button class="tab-btn" onclick="showTab('forstaaelse',event)">💡 Förståelse <span class="tab-badge">12</span></button>
+  <button class="tab-btn" onclick="showTab('resonemang',event)">🧠 Resonemang <span class="tab-badge">5</span></button>
+  <button class="tab-btn" onclick="showTab('np',event)">📋 NP-Frågor <span class="tab-badge">4</span></button>
+</div>
+
+<div class="content">
+
+<!-- ══════════ SEKTION 1: BEGREPP ══════════ -->
+<div id="sec-begrepp" class="section active">
+  <div class="section-intro">
+    <strong>Begrepp:</strong> Klicka på kortet för att se svaret. Markera vad du kan och vad du behöver öva mer på. Newtons lagar och rörelsediagram är extra viktiga!
+  </div>
+
+  <div class="formula-card">
+    <h3>📐 Viktiga formler att kunna</h3>
+    <div class="formula-grid">
+      <div class="formula-item"><div class="formula-eq">v = s / t</div><div class="formula-desc">Medelhastighet = sträcka / tid</div></div>
+      <div class="formula-item"><div class="formula-eq">F = m × a</div><div class="formula-desc">Newtons 2:a lag — Kraft = massa × acceleration</div></div>
+      <div class="formula-item"><div class="formula-eq">G = m × g</div><div class="formula-desc">Tyngdkraft, g ≈ 10 N/kg på jordens yta</div></div>
+      <div class="formula-item"><div class="formula-eq">p = F / A</div><div class="formula-desc">Tryck = Kraft / Area (Pascal)</div></div>
+    </div>
+  </div>
+
+  <div class="newton-box">
+    <h3>⚡ Newtons tre rörelselagar — lär dem utantill</h3>
+    <div class="newton-law">
+      <div class="newton-num">1</div>
+      <div class="newton-content">
+        <strong>Tröghetslagens (1:a lagen)</strong>
+        <span>En kropp fortsätter att vara i vila eller röra sig rätlinjigt med konstant hastighet om ingen resultantkraft verkar på den. Ingen kraft = ingen förändring.</span>
+      </div>
+    </div>
+    <div class="newton-law">
+      <div class="newton-num">2</div>
+      <div class="newton-content">
+        <strong>Accelerationslagen (2:a lagen)</strong>
+        <span>Resultantkraften på ett föremål är lika med föremålets massa gånger dess acceleration: F = m × a. Stor kraft på liten massa = stor acceleration.</span>
+      </div>
+    </div>
+    <div class="newton-law">
+      <div class="newton-num">3</div>
+      <div class="newton-content">
+        <strong>Verkan–motverkan (3:e lagen)</strong>
+        <span>För varje kraft finns alltid en lika stor motriktat kraft. Om du trycker mot en vägg trycker väggen lika hårt tillbaka. Krafterna verkar på OLIKA kroppar.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="fc-category-filter" id="fcFilter">
+    <span class="filter-chip active" onclick="filterCards('all',this)">Alla kort</span>
+    <span class="filter-chip" onclick="filterCards('rorelse',this)">Rörelse</span>
+    <span class="filter-chip" onclick="filterCards('newton',this)">Newtons lagar</span>
+    <span class="filter-chip" onclick="filterCards('kraft',this)">Krafter</span>
+    <span class="filter-chip" onclick="filterCards('tyngdpunkt',this)">Tyngdpunkt &amp; balans</span>
+    <span class="filter-chip" onclick="filterCards('special',this)">Speciella rörelser</span>
+  </div>
+
+  <div class="flashcard-controls">
+    <span class="fc-counter" id="fcCounter">1 / 26</span>
+    <div class="fc-progress"><div class="fc-progress-fill" id="fcProgressFill"></div></div>
+    <button class="btn btn-outline btn-sm" onclick="shuffleCards()">🔀 Blanda</button>
+  </div>
+
+  <div class="flashcard-scene" onclick="flipCard()">
+    <div class="flashcard" id="flashcard">
+      <div class="fc-face fc-front">
+        <div class="fc-category" id="fcCat"></div>
+        <div class="fc-question" id="fcQ">Laddar...</div>
+        <div class="fc-hint" id="fcHint"></div>
+        <div class="fc-tap-hint">👆 Klicka för att vända</div>
+      </div>
+      <div class="fc-face fc-back">
+        <div class="fc-category" id="fcCatBack">Svar</div>
+        <div class="fc-question" id="fcA"></div>
+        <div class="fc-hint" id="fcExtra"></div>
+        <div class="fc-tap-hint" style="color:#6ee7b7">👆 Klicka för att vända</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fc-nav">
+    <button class="btn btn-outline" onclick="prevCard()">← Föregående</button>
+    <button class="btn btn-red btn-sm" onclick="markCard(false)">✗ Kunde inte</button>
+    <button class="btn btn-green btn-sm" onclick="markCard(true)">✓ Kunde!</button>
+    <button class="btn btn-primary" onclick="nextCard()">Nästa →</button>
+  </div>
+
+  <div style="margin-top:20px;display:flex;justify-content:center;gap:16px;font-size:14px;color:var(--muted);">
+    <span>✅ Kan: <strong id="fcGood">0</strong></span>
+    <span>❌ Öva mer: <strong id="fcBad">0</strong></span>
+    <span>⬜ Osedd: <strong id="fcUnseen" style="color:#059669">26</strong></span>
+  </div>
+</div>
+
+<!-- ══════════ SEKTION 2: FÖRSTÅELSE ══════════ -->
+<div id="sec-forstaaelse" class="section">
+  <div class="section-intro">
+    <strong>Förståelse:</strong> Förklara, analysera och räkna — E- och C-nivå. Välj rätt svar eller skriv din förklaring och jämför med modelsvaret.
+  </div>
+
+  <div class="score-panel">
+    <div class="score-item"><div class="score-num" id="fScore">0</div><div class="score-label">Rätt svar</div></div>
+    <div class="score-divider"></div>
+    <div class="score-item"><div class="score-num" id="fTotal">12</div><div class="score-label">Frågor totalt</div></div>
+    <div class="score-divider"></div>
+    <div class="score-item"><div class="score-num" id="fPct">0%</div><div class="score-label">Andel rätt</div></div>
+  </div>
+
+  <!-- F1 -->
+  <div class="question-card" id="fq1">
+    <div class="q-number">Fråga 1 · Medelhastighet</div>
+    <div class="q-text">En cyklist cyklar 3 km på 10 minuter. Vad är medelhastig­heten i m/s?</div>
+    <div class="mc-options">
+      <div class="mc-option" onclick="checkMC(this,'fq1',false,'A')"><div class="mc-letter">A</div><div class="mc-text">0,3 m/s</div></div>
+      <div class="mc-option" onclick="checkMC(this,'fq1',false,'B')"><div class="mc-letter">B</div><div class="mc-text">18 m/s</div></div>
+      <div class="mc-option" onclick="checkMC(this,'fq1',true,'C')"><div class="mc-letter">C</div><div class="mc-text">5 m/s</div></div>
+      <div class="mc-option" onclick="checkMC(this,'fq1',false,'D')"><div class="mc-letter">D</div><div class="mc-text">50 m/s</div></div>
+    </div>
+    <div class="feedback-box" id="fb-fq1"></div>
+  </div>
+
+  <!-- F2 -->
+  <div class="question-card" id="fq2">
+    <div class="q-number">Fråga 2 · Newtons 1:a lag</div>
+    <div class="q-text">En astronaut kastar en boll i rymden (vakuum, utan tyngdkraft). Vad händer med bollen?</div>
+    <div class="mc-options">
+      <div class="mc-option" onclick="checkMC(this,'fq2',false,'A')"><div class="mc-letter">A</div><div class="mc-text">Den stannar omedelbart — inga krafter driver den framåt</div></div>
+      <div class="mc-option" onclick="checkMC(this,'fq2',false,'B')"><div class="mc-letter">B</div><div class="mc-text">Den rör sig framåt men saktar ner gradvis</div></div>
+      <div class="mc-option" onclick="checkMC(this,'fq2',true,'C')"><div class="mc-letter">C</div><div class="mc-text">Den fortsätter i rak linje med konstant hastighet för evigt</div></div>
+      <div class="mc-option" onclick="checkMC(this,'fq2',false,'D')"><div class="mc-letter">D</div><div class="mc-text">Den accelererar hela tiden eftersom det inte finns något motstånd</div></div>
+    </div>
+    <div class="feedback-box" id="fb-fq2"></div>
+  </div>
+
+  <!-- F3 -->
+  <div class="question-card" id="fq3">
+    <div class="q-number">Fråga 3 · Newtons 2:a lag</div>
+    <div class="q-text">En kraft på 30 N verkar på ett föremål med massan 6 kg. Vilken acceleration får föremålet?</div>
+    <div class="mc-options">
+      <div class="mc-option" onclick="checkMC(this,'fq3',false,'A')"><div class="mc-letter">A</div><div class="mc-text">0,2 m/s²</div></div>
+      <div class="mc-option" onclick="checkMC(this,'fq3',true,'B')"><div class="mc-letter">B</div><div class="mc-text">5 m/s²</div></div>
+      <div class="mc-option" onclick="checkMC(this,'fq3',false,'C')"><div class="mc-letter">C</div><div class="mc-text">180 m/s²</div></div>
+      <div class="mc-option" onclick="checkMC(this,'fq3',false,'D')"><div class="mc-letter">D</div><div class="mc-text">36 m/s²</div></div>
+    </div>
+    <div class="feedback-box" id="fb-fq3"></div>
+  </div>
+
+  <!-- F4 -->
+  <div class="question-card" id="fq4">
+    <div class="q-number">Fråga 4 · Tyngd vs massa</div>
+    <div class="q-text">En astronaut väger 70 kg på jorden. På månen är gravitationen ungefär 1/6 av jordens. Vad stämmer om astronauten på månen?</div>
+    <div class="mc-options">
+      <div class="mc-option" onclick="checkMC(this,'fq4',false,'A')"><div class="mc-letter">A</div><div class="mc-text">Massan är 70/6 ≈ 12 kg och tyngden är 70 × 10 = 700 N</div></div>
+      <div class="mc-option" onclick="checkMC(this,'fq4',true,'B')"><div class="mc-letter">B</div><div class="mc-text">Massan är fortfarande 70 kg, men tyngden är bara ca 117 N (70 × 10/6)</div></div>
+      <div class="mc-option" onclick="checkMC(this,'fq4',false,'C')"><div class="mc-letter">C</div><div class="mc-text">Både massa och tyngd minskar till 1/6</div></div>
+      <div class="mc-option" onclick="checkMC(this,'fq4',false,'D')"><div class="mc-letter">D</div><div class="mc-text">Tyngden är 70 kg och massan är 700 N</div></div>
+    </div>
+    <div class="feedback-box" id="fb-fq4"></div>
+  </div>
+
+  <!-- F5 -->
+  <div class="question-card" id="fq5">
+    <div class="q-number">Fråga 5 · Friktion</div>
+    <div class="q-text">Friktion kan vara både nyttig och onyttig. Ge ett exempel på vardera och förklara kort varför.</div>
+    <textarea class="open-textarea" id="ota-fq5" placeholder="Nyttig friktion: ... Onyttig friktion: ..."></textarea>
+    <div style="display:flex;gap:10px;"><button class="btn btn-outline btn-sm" onclick="showModel('fq5')">Visa modellsvar</button></div>
+    <div class="model-answer" id="ma-fq5">
+      <div class="model-answer-label">📖 Modellsvar</div>
+      <div class="model-answer-text"><strong>Nyttig:</strong> Bromsarna på en cykel — friktionen mellan bromsklossar och fälgen omvandlar rörelseenergi till värme och saktar ner hjulet. Utan friktion kan vi inte gå, köra eller hålla i saker. <br><br><strong>Onyttig:</strong> Friktion i ett kugghju lsystem eller motor — energi förloras som värme och maskindelar slits ut. Minskas med smörjmedel/olja.</div>
+    </div>
+  </div>
+
+  <!-- F6 -->
+  <div class="question-card" id="fq6">
+    <div class="q-number">Fråga 6 · Newtons 3:e lag</div>
+    <div class="q-text">En simmare trycker bakåt mot vattnet med sin hand. Vad händer och varför? Vilket av Newtons lagar förklarar det?</div>
+    <div class="mc-options">
+      <div class="mc-option" onclick="checkMC(this,'fq6',false,'A')"><div class="mc-letter">A</div><div class="mc-text">Vattnet ger inget motstånd — simmaren tar sig framåt tack vare sin kraft</div></div>
+      <div class="mc-option" onclick="checkMC(this,'fq6',false,'B')"><div class="mc-letter">B</div><div class="mc-text">Newtons 2:a lag: F = m × a gör att simmaren accelererar</div></div>
+      <div class="mc-option" onclick="checkMC(this,'fq6',true,'C')"><div class="mc-letter">C</div><div class="mc-text">Newtons 3:e lag: vattnet ger en lika stor kraft framåt på simmaren — verkan och motverkan</div></div>
+      <div class="mc-option" onclick="checkMC(this,'fq6',false,'D')"><div class="mc-letter">D</div><div class="mc-text">Newtons 1:a lag: simmaren är redan i rörelse och fortsätter</div></div>
+    </div>
+    <div class="feedback-box" id="fb-fq6"></div>
+  </div>
+
+  <!-- F7 -->
+  <div class="question-card" id="fq7">
+    <div class="q-number">Fråga 7 · Rörelsediagram</div>
+    <div class="q-text">En bil startar från stillastående och accelererar i 5 sekunder till 20 m/s, sedan kör den med konstant hastighet i 10 sekunder. Beskriv hur ett v-t-diagram (hastighet–tid) ser ut.</div>
+    <textarea class="open-textarea" placeholder="Beskriv grafens form för de båda faserna..."></textarea>
+    <div style="display:flex;gap:10px;"><button class="btn btn-outline btn-sm" onclick="showModel('fq7')">Visa modellsvar</button></div>
+    <div class="model-answer" id="ma-fq7">
+      <div class="model-answer-label">📖 Modellsvar</div>
+      <div class="model-answer-text"><strong>Fas 1 (0–5 s):</strong> En rät linje som stiger från 0 till 20 m/s — detta är accelererad rörelse (konstant acceleration = rät linje i v-t-diagram). Lutningen = accelerationen = 20/5 = 4 m/s². <br><br><strong>Fas 2 (5–15 s):</strong> En horisontell rät linje på 20 m/s — konstant (likformig) rörelse, ingen acceleration. <br><br><em>Tips: I ett s-t-diagram (sträcka–tid) är likformig rörelse en rät linje, och accelererad rörelse en kurva (parabel).</em></div>
+    </div>
+  </div>
+
+  <!-- F8 -->
+  <div class="question-card" id="fq8">
+    <div class="q-number">Fråga 8 · Tröghet i vardagen</div>
+    <div class="q-text">Varför är det viktigt att ha säkerhetsbälte i en bil? Förklara med hjälp av tröghet och Newtons 1:a lag.</div>
+    <textarea class="open-textarea" placeholder="Vad händer med kroppen när bilen bromsar plötsligt?"></textarea>
+    <div style="display:flex;gap:10px;"><button class="btn btn-outline btn-sm" onclick="showModel('fq8')">Visa modellsvar</button></div>
+    <div class="model-answer" id="ma-fq8">
+      <div class="model-answer-label">📖 Modellsvar</div>
+      <div class="model-answer-text">Enligt Newtons 1:a lag vill kroppen fortsätta med sin ursprungliga hastighet när bilen bromsar plötsligt — det är tröghet. Utan säkerhetsbälte kastas kroppen framåt mot rutan med bilens ursprungliga hastighet. <strong>Säkerhetsbältet</strong> applicerar en bromsande kraft på kroppen och tar upp rörelseenergin successivt, vilket förhindrar att kroppen krockar med ratten eller vindskärmen.</div>
+    </div>
+  </div>
+
+  <!-- F9 -->
+  <div class="question-card" id="fq9">
+    <div class="q-number">Fråga 9 · Tyngdpunkt</div>
+    <div class="q-text">Varför tippar ett föremål om man knuffar det hårt åt sidan?</div>
+    <div class="mc-options">
+      <div class="mc-option" onclick="checkMC(this,'fq9',false,'A')"><div class="mc-letter">A</div><div class="mc-text">Föremålet har för liten massa</div></div>
+      <div class="mc-option" onclick="checkMC(this,'fq9',true,'B')"><div class="mc-letter">B</div><div class="mc-text">Tyngdpunktens lodlinje hamnar utanför stödytan — tyngdkraften skapar ett vältande moment</div></div>
+      <div class="mc-option" onclick="checkMC(this,'fq9',false,'C')"><div class="mc-letter">C</div><div class="mc-text">Friktionen är för liten mot underlaget</div></div>
+      <div class="mc-option" onclick="checkMC(this,'fq9',false,'D')"><div class="mc-letter">D</div><div class="mc-text">Tyngdkraften ökar när föremålet lutar</div></div>
+    </div>
+    <div class="feedback-box" id="fb-fq9"></div>
+  </div>
+
+  <!-- F10 -->
+  <div class="question-card" id="fq10">
+    <div class="q-number">Fråga 10 · Kaströrelse</div>
+    <div class="q-text">En boll kastas horisontellt från en klippa. En annan boll tappas rakt ner från samma höjd samtidigt. Vilken landar först?</div>
+    <div class="mc-options">
+      <div class="mc-option" onclick="checkMC(this,'fq10',false,'A')"><div class="mc-letter">A</div><div class="mc-text">Den kastade bollen — den har mer rörelseenergi</div></div>
+      <div class="mc-option" onclick="checkMC(this,'fq10',false,'B')"><div class="mc-letter">B</div><div class="mc-text">Den tappade bollen — den åker rakt ner utan bromsande luftmotstånd</div></div>
+      <div class="mc-option" onclick="checkMC(this,'fq10',true,'C')"><div class="mc-letter">C</div><div class="mc-text">De landar exakt samtidigt — tyngdkraften verkar lika på båda oberoende av horisontalrörelsen</div></div>
+      <div class="mc-option" onclick="checkMC(this,'fq10',false,'D')"><div class="mc-letter">D</div><div class="mc-text">Det beror på kastens styrka</div></div>
+    </div>
+    <div class="feedback-box" id="fb-fq10"></div>
+  </div>
+
+  <!-- F11 -->
+  <div class="question-card" id="fq11">
+    <div class="q-number">Fråga 11 · Centripetalkraft</div>
+    <div class="q-text">En bil svänger i en kurva. Vad är det som håller bilen kvar i kurvan och inte låter den åka rakt framåt?</div>
+    <textarea class="open-textarea" placeholder="Namnge kraften och förklara varifrån den kommer..."></textarea>
+    <div style="display:flex;gap:10px;"><button class="btn btn-outline btn-sm" onclick="showModel('fq11')">Visa modellsvar</button></div>
+    <div class="model-answer" id="ma-fq11">
+      <div class="model-answer-label">📖 Modellsvar</div>
+      <div class="model-answer-text">Det är <strong>centripetalkraften</strong> — en kraft riktad mot mittpunkten av kurvan. För en bil i en kurva kommer den från <strong>friktionen</strong> mellan däck och vägbana. Utan friktion (t.ex. på is) glider bilen rakt ut ur kurvan — trögheten vill att bilen ska fortsätta rakt fram. Centripetalkraften "böjer" rörelsen till en cirkulär bana. Ju snabbare fart och snävare kurva, desto mer centripetalkraft krävs.</div>
+    </div>
+  </div>
+
+  <!-- F12 -->
+  <div class="question-card" id="fq12">
+    <div class="q-number">Fråga 12 · Fritt fall</div>
+    <div class="q-text">En sten tappas från ett torn och faller fritt i 4 sekunder (luftmotstånd försummas, g = 10 m/s²). Hur snabbt rör sig stenen när den träffar marken?</div>
+    <div class="mc-options">
+      <div class="mc-option" onclick="checkMC(this,'fq12',false,'A')"><div class="mc-letter">A</div><div class="mc-text">10 m/s</div></div>
+      <div class="mc-option" onclick="checkMC(this,'fq12',false,'B')"><div class="mc-letter">B</div><div class="mc-text">20 m/s</div></div>
+      <div class="mc-option" onclick="checkMC(this,'fq12',true,'C')"><div class="mc-letter">C</div><div class="mc-text">40 m/s</div></div>
+      <div class="mc-option" onclick="checkMC(this,'fq12',false,'D')"><div class="mc-letter">D</div><div class="mc-text">160 m/s</div></div>
+    </div>
+    <div class="feedback-box" id="fb-fq12"></div>
+  </div>
+</div>
+
+<!-- ══════════ SEKTION 3: RESONEMANG ══════════ -->
+<div id="sec-resonemang" class="section">
+  <div class="section-intro">
+    <strong>Resonemang:</strong> Träna på att resonera i led, precis som provet kräver. Koppla alltid fysiken till en konsekvens och vidare till ett samhälls- eller vardagsperspektiv.
+  </div>
+
+  <!-- R1: Sportrullstol -->
+  <div class="resonemang-card">
+    <span class="res-tag np">NP 2018 · Delprov A1</span>
+    <div class="q-text">Scenario: Klas och sportrullstolen</div>
+    <div class="res-scenario">Klas tävlar i friidrott för rullstolsburna. Hans sportrullstol är konstruerad för att kunna svänga i hög hastighet utan att välta.</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <div class="res-step-label">Steg 1 — E-nivå</div>
+        <div class="res-step-q">Vad är tyngdpunkt och stödyta, och vad avgör om ett föremål välter?</div>
+        <textarea class="open-textarea" placeholder="Definiera begreppen och förklara sambandet..."></textarea>
+        <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa svar</button>
+        <div class="feedback-box info"><strong>Tyngdpunkt:</strong> den punkt där hela föremålets tyngd kan anses verka — tyngdkraftens angreppspunkt. <strong>Stödyta:</strong> den yta som bildas av de kontaktpunkter föremålet vilar på. Föremålet välter när tyngdpunktens <strong>lodlinje</strong> (rakt neråt från tyngdpunkten) hamnar utanför stödytan.</div>
+      </div>
+      <div class="res-step">
+        <div class="res-step-label">Steg 2 — C-nivå</div>
+        <div class="res-step-q">Ge två exempel på konstruktionsdrag hos sportrullstolen som gör den svårare att välta i hög hastighet. Förklara varför varje drag hjälper.</div>
+        <textarea class="open-textarea" style="min-height:110px;" placeholder="Drag 1: ... Det hjälper för att...&#10;Drag 2: ... Det hjälper för att..."></textarea>
+        <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa modellsvar</button>
+        <div class="feedback-box info"><strong>Drag 1 — Breda hjul / stor spårvidd:</strong> Hjulen är placerade långt ut åt sidorna → stödytan blir bredare → tyngdpunktens lodlinje måste röra sig längre ut åt sidan innan den lämnar stödytan → svårare att välta. <br><br><strong>Drag 2 — Lågt sittläge / låg tyngdpunkt:</strong> Sitsen är lågt placerad → tyngdpunkten är låg → vid sidluftning rör sig tyngdpunktens lodlinje lite → svårare att välta. Tänk: en lastbil välter lättare än en bred racingbil.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- R2: Blocknyckel/hävstång -->
+  <div class="resonemang-card">
+    <span class="res-tag np">NP 2017 · Delprov A1</span>
+    <div class="q-text">Scenario: Dra åt en mutter med blocknyckel</div>
+    <div class="res-scenario">Cornelia, Päivi och Meja ska dra åt en mutter med en blocknyckel. De diskuterar var de ska hålla i nyckeln för att behöva använda så liten kraft som möjligt. Cornelia håller längst ut, Päivi i mitten och Meja närmast muttern.</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <div class="res-step-label">Steg 1 — E-nivå</div>
+        <div class="res-step-q">Vem behöver använda minst kraft? Förklara varför med begreppet hävarm.</div>
+        <textarea class="open-textarea" placeholder="Vem av de tre och varför?"></textarea>
+        <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa svar</button>
+        <div class="feedback-box info"><strong>Cornelia</strong> — hon håller längst ut på nyckeln. Ju längre <strong>hävarm</strong> (avståndet från vridpunkten/muttern till kraftens angreppspunkt), desto större <strong>vridmoment</strong> vid samma kraft. Formeln är: Vridmoment = Kraft × Hävarm. Samma vridmoment med längre hävarm → man kan använda mindre kraft. Det är precis principen bakom en hävstång.</div>
+      </div>
+      <div class="res-step">
+        <div class="res-step-label">Steg 2 — C-nivå</div>
+        <div class="res-step-q">Namnge tre exempel från vardagen där vi drar nytta av hävstångsprincipen och kortfattat förklara varför i varje fall.</div>
+        <textarea class="open-textarea" style="min-height:100px;" placeholder="1. ... 2. ... 3. ..."></textarea>
+        <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa modellsvar</button>
+        <div class="feedback-box info">1. <strong>Bräckjärn:</strong> lång hävarm → liten kraft lyfter tunga spikar/lock. 2. <strong>Saxar och tång:</strong> greppet långt från skärkanten ger stort vridmoment med lite handkraft. 3. <strong>Dörhandtag:</strong> placerat långt från gångjärnet (vridpunkten) — liten kraft räcker för att öppna dörren. 4. <strong>Underarmen:</strong> muskeln fäster nära armbågen (kort hävarm) men handen rör sig långt — utbyte av kraft mot rörelse.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- R3: Däck och friktion -->
+  <div class="resonemang-card">
+    <span class="res-tag np">NP 2018 · Delprov A2</span>
+    <div class="q-text">Scenario: Dubbade eller dubbfria vinterdäck?</div>
+    <div class="res-scenario">Dubbade vinterdäck: bromssträcka 40 m på is, 0,85 l/mil, partikelhalten i luften ca 20 µg/m³. Dubbfria vinterdäck: bromssträcka 50 m på is, 0,80 l/mil, partikelhalten ca 2 µg/m³.</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <div class="res-step-label">Steg 1 — E-nivå</div>
+        <div class="res-step-q">Vad är friktion och varför är bromssträckan kortare med dubbade däck på is?</div>
+        <textarea class="open-textarea" placeholder="Förklara friktion och koppla till dubbarna..."></textarea>
+        <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa svar</button>
+        <div class="feedback-box info"><strong>Friktion</strong> är en kraft som motverkar rörelse mellan två ytor i kontakt. Dubbarna biter sig fast i isen och ökar friktionen kraftigt — friktionskraften är större → bromsar mer effektivt → kortare bromssträcka. Utan dubbar är kontakten gummi-mot-is glatt och friktionen låg.</div>
+      </div>
+      <div class="res-step">
+        <div class="res-step-label">Steg 2 — A-nivå</div>
+        <div class="res-step-q">Ta ställning för ett däckval och motivera med minst två resonemang i två led. Väg trafiksäkerhet mot miljöpåverkan.</div>
+        <textarea class="open-textarea" style="min-height:120px;" placeholder="Ställningstagande: ...\n\nResonemang 1 (för): ... → vilket leder till ...\nResonemang 2 (för): ... → vilket leder till ...\nResonemang mot: ..."></textarea>
+        <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa modellsvar</button>
+        <div class="feedback-box info"><strong>Exempel: Dubbade däck</strong><br><br>✅ <em>För (led 1–2):</em> Kortare bromssträcka på is (40 vs 50 m) → vid en nödbromssituation i 50 km/h är 10 m skillnaden mellan att hinna stanna och att krocka → räddar liv.<br>✅ <em>För (led 1–2):</em> Bättre väggrepp → föraren kan hålla kontrollen i kurvor på hal vägbana → minskar risken för singelolyckor.<br>❌ <em>Mot:</em> Partiklar från asfalten (20 vs 2 µg/m³) → 10 gånger högre partikelhalter i stadsmiljö → ökar risken för luftvägssjukdomar hos boende längs gatorna.<br><br><em>Observera: Provet värdesätter att du motiverar ditt val med naturvetenskapliga begrepp och resonerar i led — det finns inget "fel" svar om argumenten är väl underbyggda.</em></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- R4 -->
+  <div class="resonemang-card">
+    <span class="res-tag">Resonemang i flera led</span>
+    <div class="q-text">Scenario: Krockkuddar i bilar</div>
+    <div class="res-scenario">Moderna bilar har krockkuddar som löser ut på bråkdels­sekunder vid en kollision.</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <div class="res-step-label">Steg 1 — C-nivå</div>
+        <div class="res-step-q">Förklara med Newtons lagar varför krockkuddar minskar skaderisken. Inkludera begreppen kraft, tid och impuls.</div>
+        <textarea class="open-textarea" placeholder="Tänk: vilken kraft verkar på kroppen och hur förändras den med kudden?"></textarea>
+        <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa svar</button>
+        <div class="feedback-box info">Vid en krock stannar bilen momentant men kroppen vill fortsätta framåt (Newtons 1:a lag — tröghet). Kroppen måste bromsas — en kraft måste verka på den. Utan krockkudde: hård yta (ratt/ruta) → stor kraft under mycket kort tid → allvarliga skador. Med krockkudde: mjuk yta → kroppen bromsas upp under <strong>längre tid</strong> → samma impulse (kraft × tid) men spridd över längre tid → <strong>kraften per ögonblick blir mycket lägre</strong> → skaderisken minskar drastiskt.</div>
+      </div>
+      <div class="res-step">
+        <div class="res-step-label">Steg 2 — A-nivå</div>
+        <div class="res-step-q">Resonera om hur krockkuddar ur ett samhällsperspektiv påverkar samhällsekonomin och sjukvården. Resonera i två led.</div>
+        <textarea class="open-textarea" placeholder="Led 1: ... → Led 2: ..."></textarea>
+        <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa modellsvar</button>
+        <div class="feedback-box info"><strong>Led 1–2:</strong> Krockkuddar minskar allvarlighetsgraden av skador vid trafikolyckor → färre personer behöver intensivvård och lång rehabilitering → sjukvårdens kostnader minskar och resurser frigörs till annan vård. <br><br><strong>Led 3–4:</strong> Färre allvarligt skadade i trafiken → fler personer kan återgå till arbete snabbare → lägre kostnader för sjukförsäkring och produktionsbortfall → positiv effekt på samhällsekonomin.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- R5 -->
+  <div class="resonemang-card">
+    <span class="res-tag">Resonemang i flera led</span>
+    <div class="q-text">Scenario: Astronaut i tyngdlöshet</div>
+    <div class="res-scenario">Astronauter på rymdstationen ISS befinner sig i en tillstånd som kallas tyngdlöshet — trots att jordens dragningskraft fortfarande verkar på dem.</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <div class="res-step-label">Steg 1 — C-nivå</div>
+        <div class="res-step-q">Förklara varför astronauterna upplevs vara i tyngdlöshet trots att gravitationen från jorden är kvar (ca 90% av markgravitationen på ISS:s höjd).</div>
+        <textarea class="open-textarea" placeholder="Tänk: vad händer med ett föremål i fritt fall runt jorden?"></textarea>
+        <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa svar</button>
+        <div class="feedback-box info">ISS och astronauterna <strong>faller konstant mot jorden</strong> — men planeten "kurvar undan" precis lika snabbt tack vare rymdstationens höga hastighet (ca 28 000 km/h). Det kallas ett <strong>fritt fall i omloppsbana</strong>. Eftersom stationen och astronauterna faller med exakt samma acceleration finns ingen normalkraft mot golvet → astronauterna flötar. Det är samma känsla som i en hiss som faller fritt.</div>
+      </div>
+      <div class="res-step">
+        <div class="res-step-label">Steg 2 — A-nivå</div>
+        <div class="res-step-q">Resonera om en konkret konsekvens av tyngdlöshet för den mänskliga kroppen, och vad det innebär för framtida rymdresor till Mars (ca 7 månaders resa).</div>
+        <textarea class="open-textarea" placeholder="Välj en fysisk effekt och resonera i led..."></textarea>
+        <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa modellsvar</button>
+        <div class="feedback-box info"><strong>Konsekvens:</strong> Utan gravitationsbelastning bryts <strong>ben­densiteten</strong> ner — kroppen uppfattar att det inte behövs tunga ben utan belastning → astronauter förlorar upp till 1–2% av bentäthet per månad. <br><br><strong>Konsekvens för Mars-resa:</strong> Under 7 månader kan benförlusten bli så stor att astronauterna inte kan stå upp och röra sig när de anländer till Mars → de behöver intensivt rehabiliteringsprogram. Mars har ca 38% av jordens gravitation, vilket hjälper men inte löser problemet. Forskare arbetar med centrifugssystem i rymdskepp som simulerar tyngdkraft för att motverka detta.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ SEKTION 4: NP-FRÅGOR ══════════ -->
+<div id="sec-np" class="section">
+  <div class="section-intro">
+    <strong>NP-Frågor:</strong> Ordagrant hämtade ur nationella proven 2017–2018. Svara som om det är skarpt läge — skriv ut ditt resonemang fullt ut.
+  </div>
+
+  <!-- NP1: Blocknyckel -->
+  <div class="np-card">
+    <div class="np-header"><span class="np-year">NP 2017 · Delprov A1</span><span class="np-level C">C-nivå</span></div>
+    <div class="q-text">Cornelia, Päivi och Meja ska dra åt en mutter med en blocknyckel. De diskuterar var på blocknyckeln de ska hålla sin hand för att behöva använda så liten kraft som möjligt. Cornelia håller längst ut på nyckeln, Päivi i mitten och Meja närmast muttern. Förklara vem som kommer att behöva använda minst kraft för att dra åt muttern.</div>
+    <textarea class="open-textarea" style="min-height:100px;" placeholder="Namnge personen och förklara med hävarmsbegreppen..."></textarea>
+    <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa bedömningskommentar</button>
+    <div class="model-answer">
+      <div class="model-answer-label">📋 Bedömningskommentar</div>
+      <div class="model-answer-text"><strong>E:</strong> Cornelia — hon håller längst ut. <br><strong>C:</strong> Förklaring med hävarm: längre hävarm → samma vridmoment uppnås med mindre kraft (Moment = Kraft × Hävarm). <br><strong>A:</strong> Kopplar till Mekanikens gyllene regel: man vinner på kraft men förlorar på rörelselängden — handen rör sig längre men med mindre kraft.</div>
+    </div>
+  </div>
+
+  <!-- NP2: Rullstol -->
+  <div class="np-card">
+    <div class="np-header"><span class="np-year">NP 2018 · Delprov A1</span><span class="np-level mixed">C–A-nivå</span></div>
+    <div class="q-text">När Klas tävlar i friidrott för rullstolsburna använder han en sportrullstol. Sportrullstolen är konstruerad för att kunna svänga i hög hastighet utan att välta. Ge två exempel på vad som gör att sportrullstolen kan svänga i hög hastighet utan att välta. Förklara varför.</div>
+    <textarea class="open-textarea" style="min-height:110px;" placeholder="Exempel 1: [Konstruktionsdrag] — Förklaring: ...&#10;Exempel 2: [Konstruktionsdrag] — Förklaring: ..."></textarea>
+    <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa bedömningskommentar</button>
+    <div class="model-answer">
+      <div class="model-answer-label">📋 Bedömningskommentar</div>
+      <div class="model-answer-text"><strong>E:</strong> Nämner ett korrekt konstruktionsdrag utan fullständig förklaring. <br><strong>C:</strong> Ger två drag med korrekt koppling till tyngdpunkt och/eller stödyta: t.ex. breda hjul ökar stödytan / lågt sittläge sänker tyngdpunkten. <br><strong>A:</strong> Förklarar mekanismen fullständigt — lodlinjens position relativt stödytan, och hur konstruktionen håller lodlinjen innanför stödytan även vid kraftig lutning i kurvan.</div>
+    </div>
+  </div>
+
+  <!-- NP3: Däck -->
+  <div class="np-card">
+    <div class="np-header"><span class="np-year">NP 2018 · Delprov A2</span><span class="np-level A">A-nivå</span></div>
+    <div class="q-text">Ta ställning för dubbade eller dubbfria vinterdäck. Formulera två resonemang i två led som talar för det vinterdäck du valt, och ett resonemang i två led som talar emot något av de två vinterdäcken. Var saklig och använd naturvetenskapliga begrepp.</div>
+    <div class="q-context">💡 Fakta: Dubbade = 40 m bromssträcka på is, 20 µg/m³ partiklar. Dubbfria = 50 m bromssträcka, 2 µg/m³ partiklar.</div>
+    <textarea class="open-textarea" style="min-height:140px;" placeholder="Ställningstagande: ...\n\nFör (1): ... → ...\nFör (2): ... → ...\nMot: ... → ..."></textarea>
+    <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa bedömningskommentar</button>
+    <div class="model-answer">
+      <div class="model-answer-label">📋 Bedömningskommentar</div>
+      <div class="model-answer-text"><strong>E:</strong> Tar ställning och nämner ett argument. <br><strong>C:</strong> Resonerar i led för minst ett argument (orsak → konsekvens). <br><strong>A:</strong> Tre väl underbyggda resonemang i två led med naturvetenskapliga begrepp (friktion, bromssträcka, partiklar, luftkvalitet, hälsa). Väger för mot emot. Är saklig — inga tyckanden utan bevis.</div>
+    </div>
+  </div>
+
+  <!-- NP4 -->
+  <div class="np-card">
+    <div class="np-header"><span class="np-year">NP 2017 · Delprov A2</span><span class="np-level A">A-nivå</span></div>
+    <div class="q-text">Ta ställning för fler kärnkraftverk eller fler vattenkraftverk. Formulera två resonemang i två led som talar för den energikälla du valt, och ett resonemang i två led som talar emot någon av de två energikällorna. Var saklig och använd naturvetenskapliga begrepp.</div>
+    <div class="q-context">💡 Kärnkraft: 25 miljarder kWh/år, urantillgångar för 2500 år, 30–50 ton radioaktivt avfall/år, 3 olyckor på 40 år. Vattenkraft: 80 miljoner kWh/år, förnybar, dämmer vattendrag, stora landmassor under vatten.</div>
+    <textarea class="open-textarea" style="min-height:140px;" placeholder="Ställningstagande: ...\n\nFör (1): ... → ...\nFör (2): ... → ...\nMot: ... → ..."></textarea>
+    <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa bedömningskommentar</button>
+    <div class="model-answer">
+      <div class="model-answer-label">📋 Bedömningskommentar</div>
+      <div class="model-answer-text"><strong>E:</strong> Tar ställning, anger minst ett argument. <br><strong>C:</strong> Resonerar i led — t.ex. "Kärnkraft ger inga koldioxidutsläpp vid drift → bidrar inte till växthuseffekten." <br><strong>A:</strong> Tre resonemang i led med korrekt fysik och samhällsperspektiv. Använder begrepp: fission, halvieringstid, ekosystem, biomassa. Ingen av källorna är "rätt svar" — bedömning görs på argumentens kvalitet.</div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /content -->
+
+<script>
+const STORAGE_KEY = 'fysik_kraft_rorelse';
+const quizItems = Array(12).fill(null);
+const allCards = [
+  // RÖRELSE
+  {cat:'rorelse',catLabel:'Rörelse',q:'Vad är medelhastighet och hur beräknas den?',a:'Medelhastighet = total sträcka / total tid. v = s / t. Enheten är m/s eller km/h. Medelhastigheten säger inget om hur fort man rör sig vid enskilda ögonblick — bara genomsnittet.',hint:'v = s / t'},
+  {cat:'rorelse',catLabel:'Rörelse',q:'Vad är skillnaden mellan likformig och accelererad rörelse?',a:'Likformig rörelse: konstant hastighet, ingen acceleration. I ett v-t-diagram: horisontell linje. I s-t-diagram: rät linje.\nAccelererad rörelse: hastigheten ökar. I v-t-diagram: stigande linje. I s-t-diagram: kurva (parabel).',hint:'Konstant hastighet vs ökande hastighet'},
+  {cat:'rorelse',catLabel:'Rörelse',q:'Vad är retarderad rörelse?',a:'Retarderad rörelse = inbromsning — hastigheten minskar. Accelerationen är negativ. I v-t-diagrammet är linjen fallande. Exempel: en bil som bromsar in mot ett rödljus.',hint:'Inbromsning = negativ acceleration'},
+  {cat:'rorelse',catLabel:'Rörelse',q:'Hur läser man av ett sträcka-tid-diagram (s-t)?',a:'Lutningen på en s-t-kurva anger hastigheten. Brant lutning = hög hastighet. Horisontell linje = stillastående. En kurva (parabel uppåt) = accelererad rörelse. En rät linje = likformig rörelse.',hint:'Lutning = hastighet'},
+  {cat:'rorelse',catLabel:'Rörelse',q:'Hur läser man av ett hastighet-tid-diagram (v-t)?',a:'Lutningen på en v-t-kurva anger accelerationen. Ytan under kurvan (arean) anger tillryggalagd sträcka. Horisontell linje = likformig rörelse. Stigande linje = acceleration. Fallande linje = retardation.',hint:'Area = sträcka, lutning = acceleration'},
+
+  // NEWTON
+  {cat:'newton',catLabel:'Newtons lagar',q:'Formulera Newtons 1:a lag (Tröghetslagens)',a:'En kropp i vila förblir i vila, och en kropp i rörelse fortsätter att röra sig i rät linje med konstant hastighet — om ingen resultantkraft verkar på den. Rörelsetillståndet ändras bara om en kraft verkar.',hint:'Ingen kraft = ingen förändring'},
+  {cat:'newton',catLabel:'Newtons lagar',q:'Formulera Newtons 2:a lag (Accelerationslagen)',a:'Resultantkraften på ett föremål är lika med föremålets massa gånger dess acceleration: F = m × a. Stor kraft på liten massa ger stor acceleration. Enhet för kraft: Newton (N).',hint:'F = m × a'},
+  {cat:'newton',catLabel:'Newtons lagar',q:'Formulera Newtons 3:e lag (Verkan–motverkan)',a:'För varje kraft (verkan) finns alltid en lika stor men motriktat kraft (motverkan). De verkar alltid på OLIKA föremål. Exempel: du hoppar ner från en båt — du rör dig framåt, båten rör sig bakåt.',hint:'Lika stor, men motriktat, på ANDRA kroppen'},
+  {cat:'newton',catLabel:'Newtons lagar',q:'Vad är tröghet?',a:'Tröghet är ett föremåls benägenhet att motstå förändringar i sitt rörelsetillstånd — vila förblir vila, rörelse förblir rörelse, med konstant hastighet och riktning. Massan är ett mått på tröghet: större massa = mer tröghet.',hint:'Massan mäter tröghet'},
+  {cat:'newton',catLabel:'Newtons lagar',q:'Vad menas med resultantkraft?',a:'Resultantkraften är den sammanlagda (vektoriella) summan av alla krafter som verkar på ett föremål. Om krafterna är lika stora och motriktade är resultantkraften noll → föremålet är i jämvikt (ingen acceleration).',hint:'Alla krafters vektorsumma'},
+
+  // KRAFTER
+  {cat:'kraft',catLabel:'Krafter',q:'Vad är tyngdkraft / gravitationskraft?',a:'Tyngdkraften är attraktionskraften mellan föremål med massa — framförallt jordens dragning på föremål. G = m × g, där g ≈ 10 N/kg på jordens yta. Tyngdkraften riktar sig alltid rakt neråt mot jordens centrum.',hint:'G = m × g, g = 10 N/kg'},
+  {cat:'kraft',catLabel:'Krafter',q:'Vad är skillnaden mellan massa och tyngd (vikt)?',a:'Massa (kg): mängden materia i ett föremål — ändras inte var i universum du befinner dig.\nTyngd (N): gravitationskraften på föremålet — beror på lokal gravitation. På månen har du samma massa men lägre tyngd (G = m × g_månen).',hint:'Massa = kg, Tyngd = N = m × g'},
+  {cat:'kraft',catLabel:'Krafter',q:'Vad är en Dynamometer (Newtonmeter) och vad mäter den?',a:'En dynamometer mäter krafter i Newton (N). Den består av en fjäder som töjs ut proportionellt mot den kraft som drar i den (Hookes lag). Används för att mäta tyngdkrafter och andra krafter.',hint:'Mäter kraft i Newton'},
+  {cat:'kraft',catLabel:'Krafter',q:'Vad är friktion och vilka faktorer påverkar den?',a:'Friktion är en motverkande kraft som uppstår när två ytor glider mot varandra. Påverkas av: 1) Normalkraften (hur hårt ytorna trycks mot varandra), 2) ytornas beskaffenhet (hur hala/grova). Friktionskraften är oberoende av kontaktytan.',hint:'Normalkraft × friktionskoefficient'},
+  {cat:'kraft',catLabel:'Krafter',q:'Vad är centripetalkraft och centrifugalkraft?',a:'Centripetalkraft: den verkliga kraft som riktar sig mot mittpunkten av cirkelrörelsen — krävs för att hålla ett föremål i cirkelbana. Alltid riktad inåt. Exempel: friktionen på ett däck.\nCentrifugalkraft: den skenbara kraft man "känner" mot utsidan i en kurva — det är i verkligheten bara tröghet.',hint:'Centripetal = inåt (riktig kraft)'},
+
+  // TYNGDPUNKT
+  {cat:'tyngdpunkt',catLabel:'Tyngdpunkt & balans',q:'Vad är tyngdpunkt?',a:'Tyngdpunkten är den punkt där ett föremåls totala massa kan anses vara koncentrerad — gravitationens angreppspunkt. Ett symmetriskt föremål har tyngdpunkten i centrum. Låg tyngdpunkt = stabilare föremål.',hint:'Tyngdkraftens angreppspunkt'},
+  {cat:'tyngdpunkt',catLabel:'Tyngdpunkt & balans',q:'Vad är stödyta och hur påverkar den stabiliteten?',a:'Stödytan är den yta (eller polygon) som bildas av kontaktpunkterna mot underlaget. Stor stödyta = stabilt. Litet föremål välter om tyngdpunktens lodlinje (rakt neråt) hamnar utanför stödytan.',hint:'Stor stödyta = stabilt'},
+  {cat:'tyngdpunkt',catLabel:'Tyngdpunkt & balans',q:'Vad är en hävstång och hur fungerar den?',a:'En hävstång är ett styvt föremål (t.ex. bräda, nyckel) med en vridpunkt. Vridmoment = Kraft × Hävarm. Lång hävarm → liten kraft ger stort vridmoment. Principen: man vinner kraft men förlorar rörelselängd.',hint:'Moment = Kraft × Hävarm'},
+  {cat:'tyngdpunkt',catLabel:'Tyngdpunkt & balans',q:'Vad är lodlinjen och när är ett föremål i jämvikt?',a:'Lodlinjen är en imaginär vertikal linje som går rakt neråt från tyngdpunkten. Föremålet är i stabil jämvikt när lodlinjen passerar inom stödytan. Hamnar lodlinjen utanför stödytan välter föremålet.',hint:'Lodlinje innanför stödyta = stabil'},
+
+  // SPECIELLA RÖRELSER
+  {cat:'special',catLabel:'Speciella rörelser',q:'Vad är ett fritt fall?',a:'Fritt fall är rörelse under enbart inverkan av gravitationskraften (ingen luftmotstånd). Alla föremål faller med samma acceleration g ≈ 10 m/s² oberoende av massa. Hastigheten ökar med 10 m/s varje sekund.',hint:'g = 10 m/s², oberoende av massa'},
+  {cat:'special',catLabel:'Speciella rörelser',q:'Vad är en kaströrelse?',a:'Kaströrelse är sammansatt av en horisontell likformig rörelse (konstant hastighet) och en vertikal fri-fallsrörelse (acceleration nedåt). De är oberoende av varandra. En horisontellt kastad boll och en tapp boll träffar marken samtidigt.',hint:'Horisontell + vertikal rörelse oberoende'},
+  {cat:'special',catLabel:'Speciella rörelser',q:'Vad är centralrörelse (cirkulär rörelse)?',a:'Centralrörelse är när ett föremål rör sig i en cirkelbana med konstant fart. Hastigheten (som vektor) ändrar riktning hela tiden → det finns alltid en acceleration mot cirkelns centrum. Centripetalkraften håller föremålet i banan.',hint:'Konstant fart, ändrad riktning'},
+  {cat:'special',catLabel:'Speciella rörelser',q:'Vad händer om centripetalkraften försvinner under cirkelrörelse?',a:'Utan centripetalkraft fortsätter föremålet rakt framåt (tangentiellt) — Newtons 1:a lag. Exempel: ett snurrat bollutkast, ett däck som tappar greppet i en kurva, en hammare i hammarkast. Föremålet "flyger iväg" tangentiellt.',hint:'Newton 1: rakt framåt utan kraft'},
+];
+
+let deck = [...allCards];
+let currentIdx = 0;
+let cardStates = {};
+
+function shuffle(arr) {
+  for (let i = arr.length-1; i>0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]] = [arr[j],arr[i]];
+  }
+}
+function filterCards(cat, el) {
+  document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  deck = cat==='all' ? [...allCards] : allCards.filter(c=>c.cat===cat);
+  currentIdx = 0;
+  document.getElementById('flashcard').classList.remove('flipped');
+  renderCard();
+}
+function shuffleCards() {
+  shuffle(deck); currentIdx = 0;
+  document.getElementById('flashcard').classList.remove('flipped');
+  renderCard();
+}
+function renderCard() {
+  const card = deck[currentIdx];
+  if (!card) return;
+  document.getElementById('fcCat').textContent = card.catLabel;
+  document.getElementById('fcCatBack').textContent = card.catLabel + ' — Svar';
+  document.getElementById('fcQ').textContent = card.q;
+  document.getElementById('fcHint').textContent = card.hint ? '💡 ' + card.hint : '';
+  document.getElementById('fcA').textContent = card.a;
+  document.getElementById('fcCounter').textContent = (currentIdx+1) + ' / ' + deck.length;
+  document.getElementById('fcProgressFill').style.width = (deck.length>1 ? (currentIdx/(deck.length-1))*100 : 100) + '%';
+  updateFcStats();
+}
+function flipCard() { document.getElementById('flashcard').classList.toggle('flipped'); }
+function prevCard() { document.getElementById('flashcard').classList.remove('flipped'); currentIdx=(currentIdx-1+deck.length)%deck.length; renderCard(); }
+function nextCard() { document.getElementById('flashcard').classList.remove('flipped'); currentIdx=(currentIdx+1)%deck.length; renderCard(); }
+function markCard(correct) {
+  cardStates[deck[currentIdx].q] = correct ? 'good' : 'bad';
+  updateFcStats(); nextCard();
+}
+function updateFcStats() {
+  let good=0, bad=0;
+  Object.values(cardStates).forEach(v=>{ if(v==='good') good++; else bad++; });
+  document.getElementById('fcGood').textContent = good;
+  document.getElementById('fcBad').textContent = bad;
+  document.getElementById('fcUnseen').textContent = Math.max(0, allCards.length - good - bad);
+  updateMainProgress();
+}
+
+// FÖRSTÅELSE
+let fScore = 0;
+const fAnswered = {};
+const correctMap = {fq1:'C',fq2:'C',fq3:'B',fq4:'B',fq6:'C',fq9:'B',fq10:'C',fq12:'C'};
+const feedbackCorrect = {
+  fq1: 'v = s/t = 3000 m / 600 s = 5 m/s. Kom ihåg att omvandla km→m och min→s!',
+  fq2: 'Newtons 1:a lag: inga krafter = ingen förändring av rörelsetillståndet. För evigt rakt.',
+  fq3: 'a = F/m = 30/6 = 5 m/s². Omstäldes Newtons 2:a lag.',
+  fq4: 'Massan är en inneboende egenskap — ändras aldrig. Tyngd beror på g: G = m × g.',
+  fq6: 'Newtons 3:e lag: vattnet ger en lika stor kraft framåt mot simmaren.',
+  fq9: 'Lodlinjen utanför stödytan → tyngdkraften skapar ett vältande moment. Klassisk mekanik!',
+  fq10: 'Kaströrelsens vertikala och horisontella delar är oberoende — samma nedfallstid.',
+  fq12: 'v = g × t = 10 × 4 = 40 m/s. Varje sekund i fritt fall lägger till 10 m/s.'
+};
+const feedbackWrong = {
+  fq1: 'Omvandla: 3 km = 3000 m, 10 min = 600 s. Sedan v = 3000/600 = 5 m/s.',
+  fq2: 'Newtons 1:a lag: utan kraft ingen förändring. I rymden finns ingen friktion som saktar ner.',
+  fq3: 'Omställ F = m × a till a = F/m = 30 ÷ 6 = 5 m/s².',
+  fq4: 'Massa mäts i kg och är konstant. Tyngd mäts i N och beror på g.',
+  fq6: 'Det är Newtons 3:e lag — verkan–motverkan. Vattnet ger en lika stor kraft TILLBAKA.',
+  fq9: 'Tyngdpunktens lodlinje måste vara innanför stödytan för att föremålet ska stå stadigt.',
+  fq10: 'Kaströrelsens vertikala rörelse (fallet) är helt oberoende av den horisontella — samma falltid.',
+  fq12: 'v = g × t = 10 m/s² × 4 s = 40 m/s. Inte 4 × 4.'
+};
+
+function checkMC(el, qId, isCorrect, letter) {
+  if (fAnswered[qId]) return;
+  fAnswered[qId] = true;
+  el.parentElement.querySelectorAll('.mc-option').forEach(o => {
+    o.classList.add('disabled'); o.onclick = null;
+  });
+  const fb = document.getElementById('fb-'+qId);
+  if (isCorrect) {
+    el.classList.add('correct');
+    fb.className = 'feedback-box correct show';
+    fb.innerHTML = '✅ <strong>Rätt!</strong> ' + (feedbackCorrect[qId]||'');
+    fScore++;
+    document.getElementById(qId)?.classList.add('done');
+  } else {
+    el.classList.add('wrong');
+    el.parentElement.querySelectorAll('.mc-option').forEach(o => {
+      if (o.querySelector('.mc-letter').textContent === correctMap[qId]) o.classList.add('correct');
+    });
+    fb.className = 'feedback-box wrong show';
+    fb.innerHTML = '❌ <strong>Fel.</strong> ' + (feedbackWrong[qId]||'');
+  }
+  document.getElementById('fScore').textContent = fScore;
+  const total = Object.keys(fAnswered).filter(k=>!k.startsWith('np')).length;
+  document.getElementById('fPct').textContent = total > 0 ? Math.round((fScore/total)*100)+'%' : '0%';
+  updateMainProgress();
+}
+
+function showModel(qId) { document.getElementById('ma-'+qId).classList.add('show'); }
+
+function showTab(name, e) {
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('sec-'+name).classList.add('active');
+  if(e) e.currentTarget.classList.add('active');
+}
+
+function updateMainProgress() {
+  const good   = Object.values(cardStates).filter(v => v === 'good').length;
+  const fRight = Object.entries(fAnswered).filter(([k,v]) => v === true && !k.startsWith('np')).length;
+  const total  = allCards.length + quizItems.length;
+  const pct    = Math.min(100, Math.round(((good + fRight) / total) * 100));
+  document.getElementById('mainProgress').style.width = pct + '%';
+  document.getElementById('progressText').textContent = (good + fRight) + ' av ' + total + ' klara';
+  localStorage.setItem(STORAGE_KEY + '_progress', JSON.stringify({
+    pct, good, fRight, total,
+    cardStates: Object.assign({}, cardStates),
+    fAnswered:  Object.assign({}, fAnswered),
+  }));
+}
+
+function restoreProgress() {
+  const raw = localStorage.getItem(STORAGE_KEY + '_progress');
+  if (!raw) return;
+  try {
+    const data = JSON.parse(raw);
+    if (data.cardStates) Object.entries(data.cardStates).forEach(([k,v]) => { cardStates[k] = v; });
+    if (data.fAnswered)  Object.entries(data.fAnswered).forEach(([k,v])  => { fAnswered[k] = v; });
+  } catch(e) {}
+}
+
+restoreProgress();
+renderCard();
+</script>
+</body>
+</html>
