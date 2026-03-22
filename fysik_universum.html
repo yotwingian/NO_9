@@ -437,6 +437,7 @@ body::before {
   border-radius: 5px; cursor: pointer; letter-spacing: 0.08em; transition: all 0.15s;
 }
 .reset-btn:hover { color: var(--accent); border-color: var(--accent); }
+.progress-wrap .reset-btn { flex-shrink: 0; }
 
 /* ── Resonemang ── */
 .res-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 1.2rem; overflow: hidden; }
@@ -489,6 +490,7 @@ body::before {
 <div class="progress-wrap">
   <div class="progress-bar-bg"><div class="progress-bar-fg" id="mainProgress"></div></div>
   <span id="progressText">0 av 0 klara</span>
+  <button type="button" class="reset-btn" onclick="resetChapter()">Nollställ kapitel</button>
 </div>
 
 <!-- TABS -->
@@ -1226,6 +1228,20 @@ function restoreProgress() {
     if (data.cardStates) Object.entries(data.cardStates).forEach(([k,v]) => { cardStates[k] = v; });
     if (data.fAnswered)  Object.entries(data.fAnswered).forEach(([k,v])  => { fAnswered[k] = v; });
   } catch(e) {}
+}
+
+function resetChapter() {
+  if (!confirm('Nollställa all progress för det här kapitlet?')) return;
+  localStorage.removeItem(STORAGE_KEY + '_progress');
+  allCards.forEach((_, i) => { cardStates[i] = 'unseen'; });
+  Object.keys(fAnswered).forEach(k => { delete fAnswered[k]; });
+  currentCard = 0;
+  repeatMode = false;
+  if (typeof quizCorrect !== 'undefined') { quizCorrect = 0; quizAnswered = 0; }
+  renderCard();
+  if (typeof buildQuiz === 'function') buildQuiz();
+  if (typeof applyRestoredQuiz === 'function') applyRestoredQuiz();
+  updateMainProgress();
 }
 
 // ── Init ──

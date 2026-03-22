@@ -28,6 +28,9 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 .progress-bar-bg{flex:1;height:6px;background:var(--border2);border-radius:3px;overflow:hidden}
 .progress-bar-fg{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:3px;transition:width .4s ease;width:0%}
 #progressText{font-family:'JetBrains Mono',var(--mono);font-size:.7rem;color:var(--muted);white-space:nowrap}
+.reset-btn{font-family:'JetBrains Mono',var(--mono);font-size:.65rem;padding:.3rem .8rem;border:1px solid var(--border2);background:transparent;color:var(--muted);border-radius:5px;cursor:pointer;letter-spacing:.08em;transition:all .15s}
+.reset-btn:hover{color:var(--accent);border-color:var(--accent)}
+.progress-wrap .reset-btn{flex-shrink:0}
 
 .tabs{display:flex;background:var(--card);border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
@@ -179,6 +182,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 <div class="progress-wrap">
   <div class="progress-bar-bg"><div class="progress-bar-fg" id="mainProgress"></div></div>
   <span id="progressText">0 av 48 klara</span>
+  <button type="button" class="reset-btn" onclick="resetChapter()">Nollställ kapitel</button>
 </div>
 
 <div class="tabs">
@@ -951,6 +955,20 @@ function restoreProgress() {
     }
     if (data.fAnswered)  Object.entries(data.fAnswered).forEach(([k,v])  => { fAnswered[k] = v; });
   } catch(e) {}
+}
+
+function resetChapter() {
+  if (!confirm('Nollställa all progress för det här kapitlet?')) return;
+  localStorage.removeItem(STORAGE_KEY + '_progress');
+  allCards.forEach((_, i) => { cardStates[i] = 'unseen'; });
+  Object.keys(fAnswered).forEach(k => { delete fAnswered[k]; });
+  currentCard = 0;
+  repeatMode = false;
+  if (typeof quizCorrect !== 'undefined') { quizCorrect = 0; quizAnswered = 0; }
+  renderCard();
+  if (typeof buildQuiz === 'function') buildQuiz();
+  if (typeof applyRestoredQuiz === 'function') applyRestoredQuiz();
+  updateMainProgress();
 }
 
 restoreProgress();
