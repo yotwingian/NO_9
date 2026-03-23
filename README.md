@@ -2,8 +2,7 @@
 
 Interaktiv studieplattform inför **nationella provet i fysik (åk 9)**: flashkort, förståelsefrågor, resonemang och NP-frågor per kapitel. Framsteg sparas lokalt i webbläsaren (`localStorage`).
 
-**Live (GitHub Pages):** [https://DITTNAMN.github.io/np-fysik/](https://DITTNAMN.github.io/np-fysik/)  
-(Byt ut `DITTNAMN` och repo-namn mot ditt GitHub-användarnamn och det repo du publicerar från.)
+**Live (GitHub Pages):** [https://yotwingian.github.io/NO_9/](https://yotwingian.github.io/NO_9/)
 
 ---
 
