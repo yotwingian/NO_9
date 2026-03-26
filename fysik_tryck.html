@@ -125,6 +125,8 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 .fq-opt:hover:not(:disabled){border-color:var(--accent);background:rgba(58,142,255,.08)}
 .fq-opt.correct{background:rgba(6,214,160,.15);border-color:var(--accent3);color:var(--accent3)}
 .fq-opt.wrong{background:rgba(255,77,109,.12);border-color:var(--bad);color:var(--bad)}
+.fq-card.answered-correct{border-color:rgba(6,214,160,.45)}
+.fq-card.answered-wrong{border-color:rgba(255,77,109,.35)}
 .fq-feedback{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:13px;line-height:1.5;display:none}
 .fq-feedback.show{display:block}
 .fq-feedback.ok{background:rgba(6,214,160,.1);border-left:3px solid var(--accent3);color:#a0f0d5}
@@ -908,16 +910,46 @@ const fbTexts={
 const fAnswered={};
 function fAns(btn,correct,id){
   if(fAnswered[id]!==undefined)return;
-  fAnswered[id]=correct;
-  btn.parentElement.querySelectorAll('.fq-opt').forEach(o=>o.disabled=true);
-  btn.classList.add(correct?'correct':'wrong');
+  const isRight = !!correct;
+  fAnswered[id]=isRight;
+  const opts = btn.parentElement.querySelectorAll('.fq-opt');
+  opts.forEach(o=>{
+    o.disabled=true;
+    if((o.getAttribute('onclick') || '').includes("true,'" + id + "'")) o.classList.add('correct');
+  });
+  if(!isRight) btn.classList.add('wrong');
   const fb=document.getElementById('fb-'+id);
-  if(fb){fb.textContent=correct?fbTexts[id].ok:fbTexts[id].err;fb.className='fq-feedback show '+(correct?'ok':'err');}
-  if(correct){
+  if(fb){fb.textContent=isRight?fbTexts[id].ok:fbTexts[id].err;fb.className='fq-feedback show '+(isRight?'ok':'err');}
+  const qEl = btn.closest('.fq-card');
+  if(qEl) qEl.classList.add(isRight ? 'answered-correct' : 'answered-wrong');
+  if(isRight){
     const s=document.getElementById('fScore');if(s)s.textContent=Object.values(fAnswered).filter(v=>v===true).length;
     const p=document.getElementById('fPct');if(p)p.textContent=Math.round((Object.values(fAnswered).filter(v=>v===true).length/Object.keys(fAnswered).length)*100)+'%';
   }
   updateMainProgress();
+}
+function applyRestoredAnswers(){
+  Object.entries(fAnswered).forEach(([id,val])=>{
+    const isRight = (val === true || val === 'true');
+    const fb=document.getElementById('fb-'+id);
+    const optsWrap = fb ? fb.previousElementSibling : null;
+    if(!optsWrap) return;
+    const opts = optsWrap.querySelectorAll('.fq-opt');
+    opts.forEach(o=>{
+      o.disabled = true;
+      if((o.getAttribute('onclick') || '').includes("true,'" + id + "'")) o.classList.add('correct');
+    });
+    const qEl = optsWrap.closest('.fq-card');
+    if(qEl) qEl.classList.add(isRight ? 'answered-correct' : 'answered-wrong');
+    if(fb && fbTexts[id]){
+      fb.textContent = isRight ? fbTexts[id].ok : fbTexts[id].err;
+      fb.className = 'fq-feedback show ' + (isRight ? 'ok' : 'err');
+    }
+  });
+  const right = Object.values(fAnswered).filter(v => v === true || v === 'true').length;
+  const answered = Object.keys(fAnswered).length;
+  const s=document.getElementById('fScore'); if(s) s.textContent=right;
+  const p=document.getElementById('fPct'); if(p) p.textContent=(answered?Math.round((right/answered)*100):0)+'%';
 }
 
 function chk(inputId,correct,resultId,okMsg,errMsg,tol){
@@ -987,6 +1019,7 @@ function resetChapter() {
 
 restoreProgress();
 renderCard();
+applyRestoredAnswers();
 </script>
 </body>
 </html>
