@@ -18,6 +18,7 @@
   --accent: #f97316;
   --accent2: #fb923c;
   --good: #22c55e;
+  --accent3: var(--good);
   --bad: #ef4444;
   --warn: #eab308;
   --blue: #3b82f6;
@@ -464,6 +465,21 @@ body {
 .f-feedback.correct-fb { background: rgba(34,197,94,0.07); border: 1px solid rgba(34,197,94,0.25); color: #86efac; }
 .f-feedback.wrong-fb   { background: rgba(239,68,68,0.07); border: 1px solid rgba(239,68,68,0.2); color: #fca5a5; }
 
+/* RÄKNA (calc) */
+.fq-num{font-size:11px;font-weight:700;letter-spacing:1px;color:var(--muted);text-transform:uppercase;margin-bottom:6px}
+.calc-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:14px}
+.calc-q{font-weight:700;font-size:15px;margin-bottom:14px;line-height:1.5}
+.calc-input{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.calc-inp{background:var(--card2);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:9px 14px;font-family:var(--mono);font-size:14px;width:130px;outline:none}
+.calc-inp:focus{border-color:var(--accent)}
+.calc-unit{color:var(--muted);font-size:13px}
+.btn-check{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:9px 18px;cursor:pointer;font-family:var(--mono);font-weight:700;font-size:13px}
+.calc-result{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:13px;display:none}
+.calc-result.show{display:block}
+.calc-result.ok{background:rgba(34,197,94,.1);border-left:3px solid var(--accent3);color:#86efac}
+.calc-result.err{background:rgba(239,68,68,.1);border-left:3px solid var(--bad);color:#fca5a5}
+.formula-chip{background:rgba(58,142,255,.15);border:1px solid rgba(58,142,255,.3);border-radius:6px;padding:3px 9px;font-family:var(--mono);font-size:13px;display:inline-block;margin:2px;color:var(--blue)}
+
 .quiz-summary {
   display: flex;
   align-items: center;
@@ -675,6 +691,7 @@ body {
 <div class="tabs">
   <button class="tab-btn active" onclick="showTab('begrepp',event)">🃏 Begrepp <span class="tab-count" id="tc-begrepp">22</span></button>
   <button class="tab-btn" onclick="showTab('forsta',event)">💡 Förståelse <span class="tab-count">12</span></button>
+  <button class="tab-btn" onclick="showTab('rakna',event)">🔢 Räkna <span class="tab-count">5</span></button>
   <button class="tab-btn" onclick="showTab('resonemang',event)">🧠 Resonemang <span class="tab-count">4</span></button>
   <button class="tab-btn" onclick="showTab('np',event)">📋 NP-frågor <span class="tab-count">4</span></button>
 </div>
@@ -779,6 +796,74 @@ body {
   </div>
 
   <div id="quizContainer"></div>
+</div>
+
+<!-- ════════════════════════════════
+     TAB 3: RÄKNA
+════════════════════════════════ -->
+<div class="section" id="sec-rakna">
+  <div style="margin-top:16px;margin-bottom:16px;background:rgba(58,142,255,.08);border:1px solid rgba(58,142,255,.25);border-radius:12px;padding:14px;font-size:13px;line-height:1.8;color:#a8d4ff">
+    <strong>📐 Formler att använda:</strong><br>
+    <span class="formula-chip">N = N₀ · (½)^(t/T½)</span> kvarvarande mängd<br>
+    <span class="formula-chip">T½ = halveringstid</span><br>
+    <span class="formula-chip">n = t / T½</span> antal halveringstider<br>
+    <span class="formula-chip">(½)^n</span> kvarvarande andel
+  </div>
+
+  <div class="calc-card">
+    <div class="fq-num">Räkneuppgift 1</div>
+    <div class="calc-q">Ett ämne har halveringstiden 10 år. Du börjar med 800 g. Hur mycket finns kvar efter 20 år?</div>
+    <div class="calc-input">
+      <input type="number" class="calc-inp" id="r1" placeholder="?" step="1">
+      <span class="calc-unit">g</span>
+      <button class="btn-check" onclick="chk('r1',200,'r1-res','✅ Rätt! n=2 halveringstider → 800×(½)²= 200 g','❌ Fel. n=2 halveringstider → 800×(½)²= 200 g',0.5)">Kontrollera</button>
+    </div>
+    <div class="calc-result" id="r1-res"></div>
+  </div>
+
+  <div class="calc-card">
+    <div class="fq-num">Räkneuppgift 2</div>
+    <div class="calc-q">Halveringstiden är 8 dagar. Du börjar med 160 g. Hur mycket finns kvar efter 24 dagar?</div>
+    <div class="calc-input">
+      <input type="number" class="calc-inp" id="r2" placeholder="?" step="0.1">
+      <span class="calc-unit">g</span>
+      <button class="btn-check" onclick="chk('r2',20,'r2-res','✅ Rätt! n=3 → 160×(½)³ = 160/8 = 20 g','❌ Fel. n=3 → 160×(½)³ = 160/8 = 20 g',0.5)">Kontrollera</button>
+    </div>
+    <div class="calc-result" id="r2-res"></div>
+  </div>
+
+  <div class="calc-card">
+    <div class="fq-num">Räkneuppgift 3</div>
+    <div class="calc-q">Du har 500 g. Efter 3 halveringstider, hur mycket finns kvar?</div>
+    <div class="calc-input">
+      <input type="number" class="calc-inp" id="r3" placeholder="?" step="0.1">
+      <span class="calc-unit">g</span>
+      <button class="btn-check" onclick="chk('r3',62.5,'r3-res','✅ Rätt! 500×(½)³ = 500/8 = 62,5 g','❌ Fel. 500×(½)³ = 500/8 = 62,5 g',0.5)">Kontrollera</button>
+    </div>
+    <div class="calc-result" id="r3-res"></div>
+  </div>
+
+  <div class="calc-card">
+    <div class="fq-num">Räkneuppgift 4</div>
+    <div class="calc-q">Halveringstiden är 5 år. Hur lång tid tar det att minska 1000 till 125?</div>
+    <div class="calc-input">
+      <input type="number" class="calc-inp" id="r4" placeholder="?" step="1">
+      <span class="calc-unit">år</span>
+      <button class="btn-check" onclick="chk('r4',15,'r4-res','✅ Rätt! 1000→500→250→125 = 3 halveringstider = 15 år','❌ Fel. 1000→500→250→125 = 3 halveringstider = 15 år',0.5)">Kontrollera</button>
+    </div>
+    <div class="calc-result" id="r4-res"></div>
+  </div>
+
+  <div class="calc-card">
+    <div class="fq-num">Räkneuppgift 5</div>
+    <div class="calc-q">Du börjar med 640 g. Efter 40 år finns det 40 g kvar. Vad är halveringstiden?</div>
+    <div class="calc-input">
+      <input type="number" class="calc-inp" id="r5" placeholder="?" step="1">
+      <span class="calc-unit">år</span>
+      <button class="btn-check" onclick="chk('r5',10,'r5-res','✅ Rätt! 640→320→160→80→40 = 4 steg → 40/4 = 10 år','❌ Fel. 640→320→160→80→40 = 4 steg → 40/4 = 10 år',0.5)">Kontrollera</button>
+    </div>
+    <div class="calc-result" id="r5-res"></div>
+  </div>
 </div>
 
 <!-- ════════════════════════════════
@@ -1140,6 +1225,7 @@ function getSkipIndices() {
   return allCards.map((_, i) => i).filter(i => cardStates[i] === 'skip');
 }
 const fAnswered = {};
+const calcAnswered = {};
 let quizCorrect = 0;
 let quizAnswered = 0;
 
@@ -1378,6 +1464,51 @@ function resetQuiz() {
   updateMainProgress();
 }
 
+// ══════════════════════════════════════════
+// RÄKNING (calc) logic
+// ══════════════════════════════════════════
+function chk(inputId, correct, resultId, okMsg, errMsg, tol) {
+  if (calcAnswered[inputId] !== undefined) return;
+
+  const inp = document.getElementById(inputId);
+  const res = document.getElementById(resultId);
+  const val = parseFloat(inp?.value);
+
+  if (!inp || !res || Number.isNaN(val)) {
+    if (res) {
+      res.textContent = 'Ange ett tal.';
+      res.className = 'calc-result show err';
+    }
+    return;
+  }
+
+  const ok = Math.abs(val - correct) <= tol;
+  const msg = ok ? okMsg : errMsg;
+  res.textContent = msg;
+  res.className = 'calc-result show ' + (ok ? 'ok' : 'err');
+
+  calcAnswered[inputId] = { correct: ok, msg };
+  inp.disabled = true;
+
+  updateMainProgress();
+}
+
+function applyRestoredCalc() {
+  for (let i = 1; i <= 5; i++) {
+    const id = 'r' + i;
+    const state = calcAnswered[id];
+    if (state === undefined) continue;
+
+    const res = document.getElementById(id + '-res');
+    const inp = document.getElementById(id);
+    if (res) {
+      res.textContent = state.msg;
+      res.className = 'calc-result show ' + (state.correct ? 'ok' : 'err');
+    }
+    if (inp) inp.disabled = true;
+  }
+}
+
 // ── Toggles ──
 function toggleRes(id) {
   const body = document.getElementById(id);
@@ -1397,14 +1528,16 @@ function toggleNP(id) {
 function updateMainProgress() {
   const good   = Object.values(cardStates).filter(v => v === 'good').length;
   const fRight = Object.values(fAnswered).filter(v => v === true).length;
-  const total  = allCards.length + quizItems.length;
-  const pct    = Math.min(100, Math.round(((good + fRight) / total) * 100));
+  const calcRight = Object.values(calcAnswered).filter(v => v && v.correct).length;
+  const total  = allCards.length + quizItems.length + 5; // 5 calc-uppgifter i "Räkna"
+  const pct    = Math.min(100, Math.round(((good + fRight + calcRight) / total) * 100));
   document.getElementById('mainProgress').style.width = pct + '%';
-  document.getElementById('progressText').textContent = (good + fRight) + ' av ' + total + ' klara';
+  document.getElementById('progressText').textContent = (good + fRight + calcRight) + ' av ' + total + ' klara';
   localStorage.setItem(STORAGE_KEY + '_progress', JSON.stringify({
-    pct, good, fRight, total,
+    pct, good, fRight, calcRight, total,
     cardStates: Object.assign({}, cardStates),
     fAnswered:  Object.assign({}, fAnswered),
+    calcAnswered: Object.assign({}, calcAnswered),
   }));
 }
 
@@ -1415,6 +1548,7 @@ function restoreProgress() {
     const data = JSON.parse(raw);
     if (data.cardStates) Object.entries(data.cardStates).forEach(([k,v]) => { cardStates[k] = v; });
     if (data.fAnswered)  Object.entries(data.fAnswered).forEach(([k,v])  => { fAnswered[k] = v; });
+    if (data.calcAnswered) Object.entries(data.calcAnswered).forEach(([k,v]) => { calcAnswered[k] = v; });
   } catch(e) {}
 }
 
@@ -1423,6 +1557,14 @@ function resetChapter() {
   localStorage.removeItem(STORAGE_KEY + '_progress');
   allCards.forEach((_, i) => { cardStates[i] = 'unseen'; });
   Object.keys(fAnswered).forEach(k => { delete fAnswered[k]; });
+  Object.keys(calcAnswered).forEach(k => { delete calcAnswered[k]; });
+  for (let i = 1; i <= 5; i++) {
+    const id = 'r' + i;
+    const inp = document.getElementById(id);
+    const res = document.getElementById(id + '-res');
+    if (inp) inp.disabled = false;
+    if (res) { res.textContent = ''; res.className = 'calc-result'; }
+  }
   currentCard = 0;
   repeatMode = false;
   if (typeof quizCorrect !== 'undefined') { quizCorrect = 0; quizAnswered = 0; }
@@ -1437,6 +1579,7 @@ restoreProgress();
 renderCard();
 buildQuiz();
 applyRestoredQuiz();
+applyRestoredCalc();
 </script>
 </body>
 </html>
