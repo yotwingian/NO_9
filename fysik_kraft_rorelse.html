@@ -33,6 +33,10 @@
     --shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
     --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.45);
     --radius: 10px;
+    /* Calc-aliases (matchar CSS-mönster från andra fysikfiler) */
+    --accent2: var(--accent-blue);
+    --accent3: var(--green);
+    --bad: var(--red);
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Source Sans 3', sans-serif; background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.6; min-height: 100vh; }
@@ -282,6 +286,21 @@
   .feedback-box.wrong { background: var(--red-light); border-left: 3px solid var(--red); color: #ffb3c1; }
   .feedback-box.info { background: rgba(58, 142, 255, 0.12); border-left: 3px solid var(--accent-blue); color: #a8c8ff; }
 
+  /* ── RÄKNA (calc) ───────────────────────────── */
+  .fq-num{font-size:11px;font-weight:700;letter-spacing:1px;color:var(--muted);text-transform:uppercase;margin-bottom:6px}
+  .calc-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:14px}
+  .calc-q{font-weight:700;font-size:15px;margin-bottom:14px;line-height:1.5}
+  .calc-input{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .calc-inp{background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:9px 14px;font-family:'JetBrains Mono',monospace;font-size:14px;width:130px;outline:none}
+  .calc-inp:focus{border-color:var(--accent)}
+  .calc-unit{color:var(--muted);font-size:13px}
+  .btn-check{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:9px 18px;cursor:pointer;font-family:'Source Sans 3',sans-serif;font-weight:700;font-size:13px}
+  .calc-result{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:13px;display:none}
+  .calc-result.show{display:block}
+  .calc-result.ok{background:rgba(6,214,160,.1);border-left:3px solid var(--accent3);color:#a0f0d5}
+  .calc-result.err{background:rgba(255,77,109,.1);border-left:3px solid var(--bad);color:#ffb3c1}
+  .formula-chip{background:rgba(58,142,255,.15);border:1px solid rgba(58,142,255,.3);border-radius:6px;padding:3px 9px;font-family:'JetBrains Mono',monospace;font-size:13px;display:inline-block;margin:2px;color:var(--accent2)}
+
   .open-textarea { width: 100%; border: 2px solid var(--border); border-radius: 8px; padding: 12px 14px; font-family: 'Source Sans 3', sans-serif; font-size: 15px; line-height: 1.5; resize: vertical; min-height: 90px; margin-bottom: 12px; transition: border-color .2s; background: var(--surface); color: var(--text); }
   .open-textarea:focus { outline: none; border-color: var(--accent); background: var(--card); }
 
@@ -360,6 +379,7 @@
 <div class="tabs">
   <button class="tab-btn active" onclick="showTab('begrepp',event)">🃏 Begrepp <span class="tab-count">26</span></button>
   <button class="tab-btn" onclick="showTab('forstaaelse',event)">💡 Förståelse <span class="tab-count">12</span></button>
+  <button class="tab-btn" onclick="showTab('rakna',event)">🔢 Räkna <span class="tab-count">5</span></button>
   <button class="tab-btn" onclick="showTab('resonemang',event)">🧠 Resonemang <span class="tab-count">5</span></button>
   <button class="tab-btn" onclick="showTab('np',event)">📋 NP-Frågor <span class="tab-count">4</span></button>
 </div>
@@ -605,6 +625,77 @@
       <div class="mc-option" onclick="checkMC(this,'fq12',false,'D')"><div class="mc-letter">D</div><div class="mc-text">160 m/s</div></div>
     </div>
     <div class="feedback-box" id="fb-fq12"></div>
+  </div>
+</div>
+
+<!-- ══════════ SEKTION 2.5: RÄKNA ══════════ -->
+<div id="sec-rakna" class="section">
+  <div style="margin-top:16px;margin-bottom:16px;background:rgba(58,142,255,.08);border:1px solid rgba(58,142,255,.25);border-radius:12px;padding:14px;font-size:13px;line-height:1.8;color:#a8d4ff">
+    <strong>📐 Formler att använda:</strong><br>
+    <span class="formula-chip">v = s / t</span> medelhastighet<br>
+    <span class="formula-chip">a = Δv / t</span> acceleration<br>
+    <span class="formula-chip">F = m · a</span> kraft<br>
+    <span class="formula-chip">G = m · g</span> tyngdkraft (g = 10 m/s²)
+  </div>
+
+  <!-- Räkneuppgift 1 -->
+  <div class="calc-card">
+    <div class="fq-num">Räkneuppgift 1</div>
+    <div class="calc-q">En bil kör 180 km på 2 timmar. Hur stor är medelhastigheten i km/h?</div>
+    <div class="calc-input">
+      <input type="number" class="calc-inp" id="r1" placeholder="?" step="1">
+      <span class="calc-unit">km/h</span>
+      <button class="btn-check" onclick="chk('r1',90,'r1-res','✅ Rätt! v = 180/2 = 90 km/h','❌ Fel. v = 180/2 = 90 km/h',0.5)">Kontrollera</button>
+    </div>
+    <div class="calc-result" id="r1-res"></div>
+  </div>
+
+  <!-- Räkneuppgift 2 -->
+  <div class="calc-card">
+    <div class="fq-num">Räkneuppgift 2</div>
+    <div class="calc-q">En cyklist accelererar från 0 till 10 m/s på 5 sekunder. Hur stor är accelerationen?</div>
+    <div class="calc-input">
+      <input type="number" class="calc-inp" id="r2" placeholder="?" step="0.1">
+      <span class="calc-unit">m/s²</span>
+      <button class="btn-check" onclick="chk('r2',2,'r2-res','✅ Rätt! a = 10/5 = 2 m/s²','❌ Fel. a = 10/5 = 2 m/s²',0.05)">Kontrollera</button>
+    </div>
+    <div class="calc-result" id="r2-res"></div>
+  </div>
+
+  <!-- Räkneuppgift 3 -->
+  <div class="calc-card">
+    <div class="fq-num">Räkneuppgift 3</div>
+    <div class="calc-q">En kraft på 200 N verkar på en låda med massan 40 kg. Hur stor är accelerationen?</div>
+    <div class="calc-input">
+      <input type="number" class="calc-inp" id="r3" placeholder="?" step="0.1">
+      <span class="calc-unit">m/s²</span>
+      <button class="btn-check" onclick="chk('r3',5,'r3-res','✅ Rätt! a = F/m = 200/40 = 5 m/s²','❌ Fel. a = F/m = 200/40 = 5 m/s²',0.05)">Kontrollera</button>
+    </div>
+    <div class="calc-result" id="r3-res"></div>
+  </div>
+
+  <!-- Räkneuppgift 4 -->
+  <div class="calc-card">
+    <div class="fq-num">Räkneuppgift 4</div>
+    <div class="calc-q">Hur stor är tyngdkraften på ett föremål med massan 25 kg? (g = 10 m/s²)</div>
+    <div class="calc-input">
+      <input type="number" class="calc-inp" id="r4" placeholder="?" step="1">
+      <span class="calc-unit">N</span>
+      <button class="btn-check" onclick="chk('r4',250,'r4-res','✅ Rätt! G = m·g = 25×10 = 250 N','❌ Fel. G = m·g = 25×10 = 250 N',0.5)">Kontrollera</button>
+    </div>
+    <div class="calc-result" id="r4-res"></div>
+  </div>
+
+  <!-- Räkneuppgift 5 -->
+  <div class="calc-card">
+    <div class="fq-num">Räkneuppgift 5</div>
+    <div class="calc-q">En löpare springer 400 m på 50 sekunder. Hur stor är medelhastigheten i m/s?</div>
+    <div class="calc-input">
+      <input type="number" class="calc-inp" id="r5" placeholder="?" step="0.1">
+      <span class="calc-unit">m/s</span>
+      <button class="btn-check" onclick="chk('r5',8,'r5-res','✅ Rätt! v = 400/50 = 8 m/s','❌ Fel. v = 400/50 = 8 m/s',0.05)">Kontrollera</button>
+    </div>
+    <div class="calc-result" id="r5-res"></div>
   </div>
 </div>
 
@@ -983,6 +1074,7 @@ function nextCard() {
 // FÖRSTÅELSE
 let fScore = 0;
 const fAnswered = {};
+const calcAnswered = {};
 const correctMap = {fq1:'C',fq2:'C',fq3:'B',fq4:'B',fq6:'C',fq9:'B',fq10:'C',fq12:'C'};
 const feedbackCorrect = {
   fq1: 'v = s/t = 3000 m / 600 s = 5 m/s. Kom ihåg att omvandla km→m och min→s!',
@@ -1032,6 +1124,52 @@ function checkMC(el, qId, isCorrect, letter) {
   updateMainProgress();
 }
 
+// ══════════════════════════════════════════
+// RÄKNING (calc) logic
+// ══════════════════════════════════════════
+function chk(inputId, correct, resultId, okMsg, errMsg, tol) {
+  if (calcAnswered[inputId] !== undefined) return;
+
+  const val = parseFloat(document.getElementById(inputId).value);
+  const el = document.getElementById(resultId);
+
+  if (isNaN(val)) {
+    el.textContent = 'Ange ett tal.';
+    el.className = 'calc-result show err';
+    return;
+  }
+
+  const ok = Math.abs(val - correct) <= tol;
+  const msg = ok ? okMsg : errMsg;
+
+  el.textContent = msg;
+  el.className = 'calc-result show ' + (ok ? 'ok' : 'err');
+
+  calcAnswered[inputId] = { correct: ok, msg };
+
+  const inp = document.getElementById(inputId);
+  if (inp) inp.disabled = true;
+
+  updateMainProgress();
+}
+
+function applyRestoredCalc() {
+  for (let i = 1; i <= 5; i++) {
+    const id = 'r' + i;
+    const state = calcAnswered[id];
+    if (state === undefined) continue;
+
+    const res = document.getElementById(id + '-res');
+    if (res) {
+      res.textContent = state.msg;
+      res.className = 'calc-result show ' + (state.correct ? 'ok' : 'err');
+    }
+
+    const inp = document.getElementById(id);
+    if (inp) inp.disabled = true;
+  }
+}
+
 function showModel(qId) { document.getElementById('ma-'+qId).classList.add('show'); }
 
 function showTab(name, e) {
@@ -1044,14 +1182,16 @@ function showTab(name, e) {
 function updateMainProgress() {
   const good   = Object.values(cardStates).filter(v => v === 'good').length;
   const fRight = Object.entries(fAnswered).filter(([k,v]) => v === true && !k.startsWith('np')).length;
-  const total  = allCards.length + quizItems.length;
-  const pct    = Math.min(100, Math.round(((good + fRight) / total) * 100));
+  const calcRight = Object.values(calcAnswered).filter(v => v && v.correct).length;
+  const total  = allCards.length + quizItems.length + 5;
+  const pct    = Math.min(100, Math.round(((good + fRight + calcRight) / total) * 100));
   document.getElementById('mainProgress').style.width = pct + '%';
-  document.getElementById('progressText').textContent = (good + fRight) + ' av ' + total + ' klara';
+  document.getElementById('progressText').textContent = (good + fRight + calcRight) + ' av ' + total + ' klara';
   localStorage.setItem(STORAGE_KEY + '_progress', JSON.stringify({
-    pct, good, fRight, total,
+    pct, good, fRight, calcRight, total,
     cardStates: Object.assign({}, cardStates),
     fAnswered:  Object.assign({}, fAnswered),
+    calcAnswered: Object.assign({}, calcAnswered),
   }));
 }
 
@@ -1071,6 +1211,7 @@ function restoreProgress() {
       });
     }
     if (data.fAnswered)  Object.entries(data.fAnswered).forEach(([k,v])  => { fAnswered[k] = v; });
+    if (data.calcAnswered) Object.entries(data.calcAnswered).forEach(([k,v]) => { calcAnswered[k] = v; });
   } catch(e) {}
 }
 
@@ -1079,6 +1220,14 @@ function resetChapter() {
   localStorage.removeItem(STORAGE_KEY + '_progress');
   allCards.forEach((_, i) => { cardStates[i] = 'unseen'; });
   Object.keys(fAnswered).forEach(k => { delete fAnswered[k]; });
+  Object.keys(calcAnswered).forEach(k => { delete calcAnswered[k]; });
+  for (let i = 1; i <= 5; i++) {
+    const id = 'r' + i;
+    const inp = document.getElementById(id);
+    if (inp) inp.disabled = false;
+    const res = document.getElementById(id + '-res');
+    if (res) { res.textContent = ''; res.className = 'calc-result'; }
+  }
   currentCard = 0;
   repeatMode = false;
   if (typeof quizCorrect !== 'undefined') { quizCorrect = 0; quizAnswered = 0; }
@@ -1089,6 +1238,7 @@ function resetChapter() {
 }
 
 restoreProgress();
+applyRestoredCalc();
 renderCard();
 </script>
 </body>
