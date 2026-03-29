@@ -314,7 +314,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 
   <div class="repeat-mode-strip" id="repeatModeStrip" aria-live="polite">Repetera-läge · <span id="repeatLeftCount">0</span> kvar</div>
 
-  <div class="flashcard-scene" onclick="flipCard()">
+  <div class="flashcard-scene" role="button" tabindex="0" aria-label="Flashkort — klicka för att vända" onclick="flipCard()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();flipCard();}">
     <div class="flashcard-inner" id="fcInner">
       <div class="card-side card-front">
         <div class="card-side-label">Begrepp — klicka för att vända</div>
@@ -502,7 +502,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="fq-num">Räkneuppgift 1</div>
     <div class="calc-q">Du drar en låda med kraften 50 N över 4 meter. Hur stort är det utförda arbetet?</div>
     <div class="calc-input">
-      <input type="number" class="calc-inp" id="r1" placeholder="?">
+      <input type="number" class="calc-inp" id="r1" placeholder="?" aria-label="Svar: utfört arbete i joule">
       <span class="calc-unit">J</span>
       <button class="btn-check" onclick="chk('r1',200,'r1-res','✅ Rätt! W = F·s = 50×4 = 200 J','❌ Fel. W = F · s = 50 N × 4 m = 200 J',2)">Kontrollera</button>
     </div>
@@ -513,7 +513,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="fq-num">Räkneuppgift 2</div>
     <div class="calc-q">En hiss lyfter 800 N (en person) 3 meter på 5 sekunder. Hur stor är hissens effekt?</div>
     <div class="calc-input">
-      <input type="number" class="calc-inp" id="r2" placeholder="?">
+      <input type="number" class="calc-inp" id="r2" placeholder="?" aria-label="Svar: hissens effekt i watt">
       <span class="calc-unit">W</span>
       <button class="btn-check" onclick="chk('r2',480,'r2-res','✅ Rätt! W = 800×3 = 2400 J, P = 2400/5 = 480 W','❌ Fel. W = 800×3 = 2400 J → P = W/t = 2400/5 = 480 W',5)">Kontrollera</button>
     </div>
@@ -524,7 +524,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="fq-num">Räkneuppgift 3</div>
     <div class="calc-q">En sten (massa 2 kg) ligger 5 m högt. Hur stor är dess lägesenergi? (g = 10)</div>
     <div class="calc-input">
-      <input type="number" class="calc-inp" id="r3" placeholder="?">
+      <input type="number" class="calc-inp" id="r3" placeholder="?" aria-label="Svar: lägesenergi i joule">
       <span class="calc-unit">J</span>
       <button class="btn-check" onclick="chk('r3',100,'r3-res','✅ Rätt! E = mgh = 2×10×5 = 100 J','❌ Fel. E_läges = m·g·h = 2×10×5 = 100 J',1)">Kontrollera</button>
     </div>
@@ -535,7 +535,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="fq-num">Räkneuppgift 4</div>
     <div class="calc-q">Gyllene regeln: Du vill lyfta 400 N med en hävstång. Kraftarmen är 2 m, motståndsarmen 0,5 m. Hur stor kraft behöver du?</div>
     <div class="calc-input">
-      <input type="number" class="calc-inp" id="r4" placeholder="?">
+      <input type="number" class="calc-inp" id="r4" placeholder="?" aria-label="Svar: kraft på hävstången i newton">
       <span class="calc-unit">N</span>
       <button class="btn-check" onclick="chk('r4',100,'r4-res','✅ Rätt! F₁·s₁ = F₂·s₂ → F₁·2 = 400·0,5 → F₁ = 100 N','❌ Fel. F₁·2 = 400·0,5 → F₁ = 200/2 = 100 N',2)">Kontrollera</button>
     </div>
@@ -546,7 +546,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="fq-num">Räkneuppgift 5</div>
     <div class="calc-q">En motor med effekten 200 W arbetar i 30 sekunder. Hur mycket arbete utförs?</div>
     <div class="calc-input">
-      <input type="number" class="calc-inp" id="r5" placeholder="?">
+      <input type="number" class="calc-inp" id="r5" placeholder="?" aria-label="Svar: utfört arbete i joule vid given effekt och tid">
       <span class="calc-unit">J</span>
       <button class="btn-check" onclick="chk('r5',6000,'r5-res','✅ Rätt! W = P·t = 200×30 = 6000 J','❌ Fel. W = P · t = 200 W × 30 s = 6000 J',10)">Kontrollera</button>
     </div>
@@ -564,15 +564,15 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="res-steps">
       <div class="res-step">
         <label>Vilket fysikaliskt samband avgör detta?</label>
-        <textarea class="res-textarea" placeholder="Vilken formel/princip är relevant?"></textarea>
+        <textarea class="res-textarea" placeholder="Vilken formel/princip är relevant?" aria-label="Blocknyckel: vilket samband avgör vem som behöver minst kraft?"></textarea>
       </div>
       <div class="res-step">
         <label>Förklara med hävstångsprincipen</label>
-        <textarea class="res-textarea" placeholder="Kraftarm, hävarm... vad händer när kraftarmen är längre?"></textarea>
+        <textarea class="res-textarea" placeholder="Kraftarm, hävarm... vad händer när kraftarmen är längre?" aria-label="Förklara med hävstångsprincipen"></textarea>
       </div>
       <div class="res-step">
         <label>Slutsats — vem av de tre behöver minst kraft?</label>
-        <textarea class="res-textarea" placeholder="Motivera svaret..."></textarea>
+        <textarea class="res-textarea" placeholder="Motivera svaret..." aria-label="Slutsats: vem behöver minst kraft?"></textarea>
       </div>
     </div>
     <button class="btn-model" onclick="showModel('block')">Visa modellsvar</button>
@@ -596,15 +596,15 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="res-steps">
       <div class="res-step">
         <label>Beräkna lägesenergin högst upp (g = 10)</label>
-        <textarea class="res-textarea" placeholder="E = m·g·h = ?"></textarea>
+        <textarea class="res-textarea" placeholder="E = m·g·h = ?" aria-label="Rutschbana: beräkna lägesenergi högst upp"></textarea>
       </div>
       <div class="res-step">
         <label>Vad händer med energin under nedfärden?</label>
-        <textarea class="res-textarea" placeholder="Beskriv omvandlingen med energiprincipen..."></textarea>
+        <textarea class="res-textarea" placeholder="Beskriv omvandlingen med energiprincipen..." aria-label="Vad händer med energin under nedfärden?"></textarea>
       </div>
       <div class="res-step">
         <label>Varför är hastigheten inte exakt vad man räknar ut av mgh = ½mv²?</label>
-        <textarea class="res-textarea" placeholder="Vad tar friktion hand om?"></textarea>
+        <textarea class="res-textarea" placeholder="Vad tar friktion hand om?" aria-label="Varför motsvarar inte hastigheten exakt mgh = ½mv²?"></textarea>
       </div>
     </div>
     <button class="btn-model" onclick="showModel('rutscha')">Visa modellsvar</button>
@@ -628,11 +628,11 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="res-steps">
       <div class="res-step">
         <label>Koppla till mekanikens gyllene regel</label>
-        <textarea class="res-textarea" placeholder="Vad är 'sträckan' för handtaget vs. bilen?"></textarea>
+        <textarea class="res-textarea" placeholder="Vad är 'sträckan' för handtaget vs. bilen?" aria-label="Skruvgänga: koppla till gyllene regeln"></textarea>
       </div>
       <div class="res-step">
         <label>Kan man lyfta en tyngre last än vad man orkar annars?</label>
-        <textarea class="res-textarea" placeholder="Ja eller nej och varför?"></textarea>
+        <textarea class="res-textarea" placeholder="Ja eller nej och varför?" aria-label="Kan domkraften lyfta tyngre än handkraften?"></textarea>
       </div>
     </div>
     <button class="btn-model" onclick="showModel('skruv')">Visa modellsvar</button>
@@ -650,11 +650,11 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="res-steps">
       <div class="res-step">
         <label>Beräkna hur mycket energi varje lampa använder på 1 timme (3600 s)</label>
-        <textarea class="res-textarea" placeholder="W = P·t = ? J för respektive lampa..."></textarea>
+        <textarea class="res-textarea" placeholder="W = P·t = ? J för respektive lampa..." aria-label="LED och glödlampa: energi på en timme"></textarea>
       </div>
       <div class="res-step">
         <label>Resonera kring varför LED är bättre ur energisynpunkt</label>
-        <textarea class="res-textarea" placeholder="Koppling till effekt, energi och omvandlingsförluster..."></textarea>
+        <textarea class="res-textarea" placeholder="Koppling till effekt, energi och omvandlingsförluster..." aria-label="Varför är LED bättre ur energisynpunkt?"></textarea>
       </div>
     </div>
     <button class="btn-model" onclick="showModel('led')">Visa modellsvar</button>
@@ -684,7 +684,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="res-steps" style="margin-top:10px">
       <div class="res-step">
         <label>Ditt svar — motivera med hävstångsprincipen</label>
-        <textarea class="res-textarea" placeholder="Nämn vem och förklara varför med rätt begrepp..." style="min-height:80px"></textarea>
+        <textarea class="res-textarea" placeholder="Nämn vem och förklara varför med rätt begrepp..." style="min-height:80px" aria-label="NP: blocknyckel — vem behöver minst kraft?"></textarea>
       </div>
     </div>
     <button class="btn-model" onclick="showModel('np1')">Visa exempelsvar (E/C/A)</button>
@@ -714,7 +714,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="res-steps" style="margin-top:10px">
       <div class="res-step">
         <label>Beräkning och förklaring</label>
-        <textarea class="res-textarea" placeholder="F₁·s₁ = F₂·s₂ → F_ramp × 6 = 800 × 1 → ?" style="min-height:80px"></textarea>
+        <textarea class="res-textarea" placeholder="F₁·s₁ = F₂·s₂ → F_ramp × 6 = 800 × 1 → ?" style="min-height:80px" aria-label="NP: rullstolsramp och gyllene regeln"></textarea>
       </div>
     </div>
     <button class="btn-model" onclick="showModel('np3')">Visa modellsvar</button>

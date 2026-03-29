@@ -329,7 +329,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 
   <div class="repeat-mode-strip" id="repeatModeStrip" aria-live="polite">Repetera-läge · <span id="repeatLeftCount">0</span> kvar</div>
 
-  <div class="flashcard-scene" onclick="flipCard()">
+  <div class="flashcard-scene" role="button" tabindex="0" aria-label="Flashkort — klicka för att vända" onclick="flipCard()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();flipCard();}">
     <div class="flashcard-inner" id="fcInner">
       <div class="card-side card-front">
         <div class="card-side-label">Begrepp — klicka för att vända</div>
@@ -515,7 +515,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="fq-num">Räkneuppgift 1</div>
     <div class="calc-q">En kropp har massan 500 g och volymen 250 cm³. Vad är densiteten?</div>
     <div class="calc-input">
-      <input type="number" class="calc-inp" id="r1" placeholder="?" step="0.1">
+      <input type="number" class="calc-inp" id="r1" placeholder="?" step="0.1" aria-label="Svar: densitet i g/cm³">
       <span class="calc-unit">g/cm³</span>
       <button class="btn-check" onclick="checkCalc('r1',2,'r1-res','Rätt! ρ = 500/250 = 2 g/cm³','Fel. ρ = m/V = 500 g ÷ 250 cm³ = 2 g/cm³',0.05)">Kontrollera</button>
     </div>
@@ -526,7 +526,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="fq-num">Räkneuppgift 2</div>
     <div class="calc-q">Järn har densiteten 7,87 g/cm³. Vad är massan av ett järnstycke med volymen 10 cm³?</div>
     <div class="calc-input">
-      <input type="number" class="calc-inp" id="r2" placeholder="?" step="0.1">
+      <input type="number" class="calc-inp" id="r2" placeholder="?" step="0.1" aria-label="Svar: massa av järnstycke i gram">
       <span class="calc-unit">g</span>
       <button class="btn-check" onclick="checkCalc('r2',78.7,'r2-res','Rätt! m = ρ·V = 7,87 × 10 = 78,7 g','Fel. m = ρ · V = 7,87 g/cm³ × 10 cm³ = 78,7 g',1)">Kontrollera</button>
     </div>
@@ -537,7 +537,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="fq-num">Räkneuppgift 3</div>
     <div class="calc-q">En flytande vätska väger 800 g och har densiteten 0,8 g/cm³. Vad är volymen?</div>
     <div class="calc-input">
-      <input type="number" class="calc-inp" id="r3" placeholder="?" step="1">
+      <input type="number" class="calc-inp" id="r3" placeholder="?" step="1" aria-label="Svar: volym av vätska i cm³">
       <span class="calc-unit">cm³</span>
       <button class="btn-check" onclick="checkCalc('r3',1000,'r3-res','Rätt! V = m/ρ = 800/0,8 = 1000 cm³','Fel. V = m / ρ = 800 g ÷ 0,8 g/cm³ = 1000 cm³',10)">Kontrollera</button>
     </div>
@@ -548,7 +548,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="fq-num">Räkneuppgift 4</div>
     <div class="calc-q">Vatten har densiteten 1 g/cm³. Flyter ett föremål med densiteten 0,6 g/cm³?<br><small style="color:var(--muted)">Skriv 1 = flyter, 2 = sjunker</small></div>
     <div class="calc-input">
-      <input type="number" class="calc-inp" id="r4" placeholder="1 eller 2" step="1" min="1" max="2">
+      <input type="number" class="calc-inp" id="r4" placeholder="1 eller 2" step="1" min="1" max="2" aria-label="Svar: 1 om föremålet flyter, 2 om det sjunker">
       <button class="btn-check" onclick="checkCalc('r4',1,'r4-res','Rätt! Densitet < 1 g/cm³ → flyter. Lyftkraften > tyngdkraften.','Fel. Svaret är 1 (flyter). Om ρ_föremål < ρ_vätska → flyter.',0.1)">Kontrollera</button>
     </div>
     <div class="calc-result" id="r4-res"></div>
@@ -558,7 +558,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="fq-num">Räkneuppgift 5</div>
     <div class="calc-q">En kub av aluminium (ρ = 2,7 g/cm³) har sidan 3 cm. Vad är massan? (V = s³)</div>
     <div class="calc-input">
-      <input type="number" class="calc-inp" id="r5" placeholder="?" step="0.1">
+      <input type="number" class="calc-inp" id="r5" placeholder="?" step="0.1" aria-label="Svar: massa av aluminiumkub i gram">
       <span class="calc-unit">g</span>
       <button class="btn-check" onclick="checkCalc('r5',72.9,'r5-res','Rätt! V = 3³ = 27 cm³, m = 2,7 × 27 = 72,9 g','Fel. V = 3×3×3 = 27 cm³, m = ρ·V = 2,7 × 27 = 72,9 g',1)">Kontrollera</button>
     </div>
@@ -576,15 +576,15 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="res-steps">
       <div class="res-step">
         <label>Steg 1 — Vad händer med luften när den värms?</label>
-        <textarea class="res-textarea" placeholder="Skriv ditt svar här..."></textarea>
+        <textarea class="res-textarea" placeholder="Skriv ditt svar här..." aria-label="Rispapperslykta: vad händer med luften när den värms?"></textarea>
       </div>
       <div class="res-step">
         <label>Steg 2 — Koppla till densitet</label>
-        <textarea class="res-textarea" placeholder="Hur förändras densiteten?"></textarea>
+        <textarea class="res-textarea" placeholder="Hur förändras densiteten?" aria-label="Rispapperslykta: koppla till densitet"></textarea>
       </div>
       <div class="res-step">
         <label>Steg 3 — Koppla till lyftkraft/rörelse</label>
-        <textarea class="res-textarea" placeholder="Varför stiger den uppåt?"></textarea>
+        <textarea class="res-textarea" placeholder="Varför stiger den uppåt?" aria-label="Rispapperslykta: lyftkraft och rörelse"></textarea>
       </div>
     </div>
     <button class="btn-model" onclick="showModel('lykta')">Visa modellsvar</button>
@@ -608,15 +608,15 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="res-steps">
       <div class="res-step">
         <label>Varför duger inte pentan?</label>
-        <textarea class="res-textarea" placeholder="Tänk på kokpunkt och svenska sommrar..."></textarea>
+        <textarea class="res-textarea" placeholder="Tänk på kokpunkt och svenska sommrar..." aria-label="Termometer: varför duger inte pentan?"></textarea>
       </div>
       <div class="res-step">
         <label>Varför duger inte glykol?</label>
-        <textarea class="res-textarea" placeholder="Tänk på smältpunkt och svenska vintrar..."></textarea>
+        <textarea class="res-textarea" placeholder="Tänk på smältpunkt och svenska vintrar..." aria-label="Termometer: varför duger inte glykol?"></textarea>
       </div>
       <div class="res-step">
         <label>Varför passar etanol?</label>
-        <textarea class="res-textarea" placeholder="Visa att etanol täcker hela temperaturspannet..."></textarea>
+        <textarea class="res-textarea" placeholder="Visa att etanol täcker hela temperaturspannet..." aria-label="Termometer: varför passar etanol?"></textarea>
       </div>
     </div>
     <button class="btn-model" onclick="showModel('termo')">Visa modellsvar</button>
@@ -640,11 +640,11 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="res-steps">
       <div class="res-step">
         <label>Beskriv vad som händer med luften ovanför land under dagen</label>
-        <textarea class="res-textarea" placeholder="Varför värms landet snabbare än havet?"></textarea>
+        <textarea class="res-textarea" placeholder="Varför värms landet snabbare än havet?" aria-label="Sjöbris: luft ovanför land under dagen"></textarea>
       </div>
       <div class="res-step">
         <label>Förklara vindriktningen med densitet och tryck</label>
-        <textarea class="res-textarea" placeholder="Vad händer med lufttrycket ovanför land vs hav?"></textarea>
+        <textarea class="res-textarea" placeholder="Vad händer med lufttrycket ovanför land vs hav?" aria-label="Sjöbris: vindriktning med densitet och tryck"></textarea>
       </div>
     </div>
     <button class="btn-model" onclick="showModel('sjobris')">Visa modellsvar</button>
@@ -663,11 +663,11 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="res-steps">
       <div class="res-step">
         <label>Förklara vad som händer med ljus som träffar mörk respektive ljus yta</label>
-        <textarea class="res-textarea" placeholder="Absorbera vs reflektera..."></textarea>
+        <textarea class="res-textarea" placeholder="Absorbera vs reflektera..." aria-label="Mörka kläder: ljus mot yta"></textarea>
       </div>
       <div class="res-step">
         <label>Rekommendation och motivering</label>
-        <textarea class="res-textarea" placeholder="Vilken färg bör spelarna välja och varför?"></textarea>
+        <textarea class="res-textarea" placeholder="Vilken färg bör spelarna välja och varför?" aria-label="Rekommendation om tröjfärg i värme"></textarea>
       </div>
     </div>
     <button class="btn-model" onclick="showModel('farg')">Visa modellsvar</button>
@@ -722,7 +722,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="res-steps">
       <div class="res-step">
         <label>Ditt svar</label>
-        <textarea class="res-textarea" placeholder="Förklara varför etanol passar bäst — motivera med smält- och kokpunkter..."></textarea>
+        <textarea class="res-textarea" placeholder="Förklara varför etanol passar bäst — motivera med smält- och kokpunkter..." aria-label="NP: termometer med etanol, pentan och glykol"></textarea>
       </div>
     </div>
     <button class="btn-model" onclick="showModel('np2')">Visa exempelsvar (E/C/A)</button>
@@ -743,11 +743,11 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="res-steps">
       <div class="res-step">
         <label>a) Hypotes — vilket tyg absorberar minst, och varför?</label>
-        <textarea class="res-textarea" placeholder="Skriv din hypotes med motivering..."></textarea>
+        <textarea class="res-textarea" placeholder="Skriv din hypotes med motivering..." aria-label="NP: hypotes om vilket tyg absorberar minst strålning"></textarea>
       </div>
       <div class="res-step">
         <label>b) Undersökningsmetod — beskriv steg för steg</label>
-        <textarea class="res-textarea" placeholder="Vilka material, hur mäter du, vad håller du konstant?..." style="min-height:100px"></textarea>
+        <textarea class="res-textarea" placeholder="Vilka material, hur mäter du, vad håller du konstant?..." style="min-height:100px" aria-label="NP: beskriv undersökningsmetod för tyg och värmestrålning"></textarea>
       </div>
     </div>
     <button class="btn-model" onclick="showModel('np3')">Visa modellsvar</button>

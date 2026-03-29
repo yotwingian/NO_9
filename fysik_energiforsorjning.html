@@ -509,7 +509,7 @@ body {
 
   <div class="repeat-mode-strip" id="repeatModeStrip" aria-live="polite">Repetera-läge · <span id="repeatLeftCount">0</span> kvar</div>
 
-  <div class="flashcard-scene" onclick="flipCard()">
+  <div class="flashcard-scene" role="button" tabindex="0" aria-label="Flashkort — klicka för att vända" onclick="flipCard()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();flipCard();}">
     <div class="flashcard-inner" id="fcInner">
       <div class="card-side card-front">
         <div class="card-side-label">Begrepp — klicka för att vända</div>
@@ -558,7 +558,7 @@ body {
     <div class="fq-num">Räkneuppgift 1</div>
     <div class="calc-q">En vindturbin producerar 500 kW i 3 timmar. Hur stor energimängd blir det i kWh?</div>
     <div class="calc-input">
-      <input type="number" class="calc-inp" id="r1" placeholder="?" step="1">
+      <input type="number" class="calc-inp" id="r1" placeholder="?" step="1" aria-label="Svar: energi från vindkraft i kWh">
       <span class="calc-unit">kWh</span>
       <button class="btn-check" onclick="chk('r1',1500,'r1-res','✅ Rätt! E = P · t = 500 kW · 3 h = 1500 kWh','❌ Fel. E = P · t = 500 kW · 3 h = 1500 kWh',0.5)">Kontrollera</button>
     </div>
@@ -569,7 +569,7 @@ body {
     <div class="fq-num">Räkneuppgift 2</div>
     <div class="calc-q">En maskin får in 800 MW och ger 560 MW ut. Hur stor verkningsgrad får du i procent?</div>
     <div class="calc-input">
-      <input type="number" class="calc-inp" id="r2" placeholder="?" step="1">
+      <input type="number" class="calc-inp" id="r2" placeholder="?" step="1" aria-label="Svar: verkningsgrad i procent">
       <span class="calc-unit">%</span>
       <button class="btn-check" onclick="chk('r2',70,'r2-res','✅ Rätt! η = P_out / P_in · 100% = 560/800 · 100% = 70%','❌ Fel. η = P_out / P_in · 100% = 560/800 · 100% = 70%',0.5)">Kontrollera</button>
     </div>
@@ -580,7 +580,7 @@ body {
     <div class="fq-num">Räkneuppgift 3</div>
     <div class="calc-q">En elvärmare har effekten 2000 W och är på i 1 timme. Hur stor energi används i kJ?</div>
     <div class="calc-input">
-      <input type="number" class="calc-inp" id="r3" placeholder="?" step="1">
+      <input type="number" class="calc-inp" id="r3" placeholder="?" step="1" aria-label="Svar: energi från elvärmare i kJ">
       <span class="calc-unit">kJ</span>
       <button class="btn-check" onclick="chk('r3',7200,'r3-res','✅ Rätt! E = P · t = 2000 W · 3600 s = 7 200 000 J = 7200 kJ','❌ Fel. E = P · t = 2000 W · 3600 s = 7 200 000 J = 7200 kJ',1)">Kontrollera</button>
     </div>
@@ -591,7 +591,7 @@ body {
     <div class="fq-num">Räkneuppgift 4</div>
     <div class="calc-q">En solpanel tar emot 10000 W och ger 1500 W ut. Hur stor verkningsgrad får den?</div>
     <div class="calc-input">
-      <input type="number" class="calc-inp" id="r4" placeholder="?" step="0.1">
+      <input type="number" class="calc-inp" id="r4" placeholder="?" step="0.1" aria-label="Svar: verkningsgrad för solpanel i procent">
       <span class="calc-unit">%</span>
       <button class="btn-check" onclick="chk('r4',15,'r4-res','✅ Rätt! η = P_out / P_in · 100% = 1500/10000 · 100% = 15%','❌ Fel. η = P_out / P_in · 100% = 1500/10000 · 100% = 15%',0.5)">Kontrollera</button>
     </div>
@@ -602,7 +602,7 @@ body {
     <div class="fq-num">Räkneuppgift 5</div>
     <div class="calc-q">En hushållslampa på 10 W är tänd 8 timmar per dygn i 30 dagar. Hur stor energimängd används i kWh?</div>
     <div class="calc-input">
-      <input type="number" class="calc-inp" id="r5" placeholder="?" step="0.01">
+      <input type="number" class="calc-inp" id="r5" placeholder="?" step="0.01" aria-label="Svar: energimängd för lampa över 30 dygn i kWh">
       <span class="calc-unit">kWh</span>
       <button class="btn-check" onclick="chk('r5',2.4,'r5-res','✅ Rätt! 8 h/d × 30 d = 240 h → E = P·t = 10 W · 240 h = 2400 Wh = 2,4 kWh','❌ Fel. 8 h/d × 30 d = 240 h → E = P·t = 10 W · 240 h = 2400 Wh = 2,4 kWh',0.05)">Kontrollera</button>
     </div>
@@ -634,11 +634,11 @@ body {
         <label>Fråga</label>
         <div style="font-size:0.84rem;line-height:1.6;color:var(--text);margin-bottom:8px">Argumentera för varför det är viktigt att minska beroendet av fossila bränslen. Resonera utifrån två olika naturvetenskapliga perspektiv i två led vardera.</div>
         <label>Perspektiv 1 (t.ex. klimat)</label>
-        <textarea class="res-textarea" placeholder="Led 1 … Led 2 …"></textarea>
+        <textarea class="res-textarea" placeholder="Led 1 … Led 2 …" aria-label="Minska fossilberoende: perspektiv 1, två led"></textarea>
       </div>
       <div class="res-step">
         <label>Perspektiv 2 (t.ex. resurser)</label>
-        <textarea class="res-textarea" placeholder="Led 1 … Led 2 …"></textarea>
+        <textarea class="res-textarea" placeholder="Led 1 … Led 2 …" aria-label="Minska fossilberoende: perspektiv 2, två led"></textarea>
       </div>
     </div>
     <button type="button" class="btn-model" onclick="showModel('k9r1')">Visa exempelsvar (E/C/A)</button>
@@ -659,19 +659,19 @@ body {
     <div class="res-steps">
       <div class="res-step">
         <label>Ditt ställningstagande</label>
-        <textarea class="res-textarea" placeholder="Jag väljer dubbade / dubbfria …"></textarea>
+        <textarea class="res-textarea" placeholder="Jag väljer dubbade / dubbfria …" aria-label="Ställningstagande: dubbade eller dubbfria däck"></textarea>
       </div>
       <div class="res-step">
         <label>Resonemang 1 FÖR (två led)</label>
-        <textarea class="res-textarea" placeholder="Fakta → konsekvens …"></textarea>
+        <textarea class="res-textarea" placeholder="Fakta → konsekvens …" aria-label="Vinterdäck: resonemang 1 för ditt val"></textarea>
       </div>
       <div class="res-step">
         <label>Resonemang 2 FÖR (två led)</label>
-        <textarea class="res-textarea" placeholder="Fakta → konsekvens …"></textarea>
+        <textarea class="res-textarea" placeholder="Fakta → konsekvens …" aria-label="Vinterdäck: resonemang 2 för ditt val"></textarea>
       </div>
       <div class="res-step">
         <label>Resonemang EMOT något av alternativen (två led)</label>
-        <textarea class="res-textarea" placeholder="Mot dubbade eller mot dubbfria …"></textarea>
+        <textarea class="res-textarea" placeholder="Mot dubbade eller mot dubbfria …" aria-label="Vinterdäck: resonemang emot alternativet"></textarea>
       </div>
     </div>
     <button type="button" class="btn-model" onclick="showModel('k9r2')">Visa exempelsvar (E/C/A)</button>
@@ -690,11 +690,11 @@ body {
     <div class="res-steps">
       <div class="res-step">
         <label>a) Naturvetenskaplig fördel</label>
-        <textarea class="res-textarea" placeholder="Ge ett exempel … Med koppling till energi eller klimat …"></textarea>
+        <textarea class="res-textarea" placeholder="Ge ett exempel … Med koppling till energi eller klimat …" aria-label="Passivhus: naturvetenskaplig fördel"></textarea>
       </div>
       <div class="res-step">
         <label>b) Källkritik — Miljönytta.se (Svenskt Näringsliv)</label>
-        <textarea class="res-textarea" placeholder="Två perspektiv på trovärdighet …"></textarea>
+        <textarea class="res-textarea" placeholder="Två perspektiv på trovärdighet …" aria-label="Källkritik: Miljönytta.se"></textarea>
       </div>
     </div>
     <button type="button" class="btn-model" onclick="showModel('k9r3')">Visa exempelsvar (E/C/A)</button>
@@ -715,11 +715,11 @@ body {
         <label>Fråga</label>
         <div style="font-size:0.84rem;line-height:1.6;color:var(--text);margin-bottom:8px">Argumentera för varför det är viktigt att inte utsätta sig för stora mängder solstrålning. Ditt svar ska innehålla två resonemang i två led — ett om värmestrålning och ett om UV-strålning.</div>
         <label>Värmestrålning</label>
-        <textarea class="res-textarea" placeholder="Två led: mekanism → konsekvens …"></textarea>
+        <textarea class="res-textarea" placeholder="Två led: mekanism → konsekvens …" aria-label="Solstrålning: värmestrålning, två led"></textarea>
       </div>
       <div class="res-step">
         <label>UV-strålning</label>
-        <textarea class="res-textarea" placeholder="Två led: mekanism → konsekvens …"></textarea>
+        <textarea class="res-textarea" placeholder="Två led: mekanism → konsekvens …" aria-label="Solstrålning: UV-strålning, två led"></textarea>
       </div>
     </div>
     <button type="button" class="btn-model" onclick="showModel('k9r4')">Visa exempelsvar (E/C/A)</button>

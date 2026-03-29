@@ -327,7 +327,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 
   <div class="repeat-mode-strip" id="repeatModeStrip" aria-live="polite">Repetera-läge · <span id="repeatLeftCount">0</span> kvar</div>
 
-  <div class="flashcard-scene" onclick="flipCard()">
+  <div class="flashcard-scene" role="button" tabindex="0" aria-label="Flashkort — klicka för att vända" onclick="flipCard()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();flipCard();}">
     <div class="flashcard-inner" id="fcInner">
       <div class="card-side card-front">
         <div class="card-side-label">Begrepp — klicka för att vända</div>
@@ -499,15 +499,15 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="res-steps">
       <div class="res-step">
         <label>Välj ett användningsområde och beskriv möjligheten</label>
-        <textarea class="res-textarea" placeholder="Ex: Fosterdiagnostik — vad kan man se/göra?"></textarea>
+        <textarea class="res-textarea" placeholder="Ex: Fosterdiagnostik — vad kan man se/göra?" aria-label="Ultraljud: möjligheter i vården"></textarea>
       </div>
       <div class="res-step">
         <label>Beskriv en risk med samma användning</label>
-        <textarea class="res-textarea" placeholder="Vad kan gå fel eller ha negativa konsekvenser?"></textarea>
+        <textarea class="res-textarea" placeholder="Vad kan gå fel eller ha negativa konsekvenser?" aria-label="Ultraljud: risker och nackdelar"></textarea>
       </div>
       <div class="res-step">
         <label>Hur påverkar möjligheten/risken levnadsvillkoren?</label>
-        <textarea class="res-textarea" placeholder="Koppla till samhälle, hälsa, ekonomi..."></textarea>
+        <textarea class="res-textarea" placeholder="Koppla till samhälle, hälsa, ekonomi..." aria-label="Ultraljud: etik och samhällsperspektiv"></textarea>
       </div>
     </div>
     <button class="btn-model" onclick="showModel('ultra')">Visa modellsvar</button>
@@ -534,11 +534,11 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="res-steps">
       <div class="res-step">
         <label>Månen — ljusvågor eller ljudvågor? Varför?</label>
-        <textarea class="res-textarea" placeholder="Tänk på vad som finns (eller inte finns) mellan Jorden och Månen..."></textarea>
+        <textarea class="res-textarea" placeholder="Tänk på vad som finns (eller inte finns) mellan Jorden och Månen..." aria-label="Ljud i rymden: medium mellan Jorden och Månen"></textarea>
       </div>
       <div class="res-step">
         <label>Havsbotten — ljusvågor eller ljudvågor? Varför?</label>
-        <textarea class="res-textarea" placeholder="Vad är skillnaden i medium här?"></textarea>
+        <textarea class="res-textarea" placeholder="Vad är skillnaden i medium här?" aria-label="Ljud på Månen kontra Jorden"></textarea>
       </div>
     </div>
     <button class="btn-model" onclick="showModel('manen')">Visa modellsvar</button>
@@ -561,11 +561,11 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="res-steps">
       <div class="res-step">
         <label>a) Hypotes — vilken lins ger bredast ljussken? Motivera med optik.</label>
-        <textarea class="res-textarea" placeholder="Konvex samlar, konkav sprider... vilken ger bredast sken?"></textarea>
+        <textarea class="res-textarea" placeholder="Konvex samlar, konkav sprider... vilken ger bredast sken?" aria-label="Strålkastare: konvex eller konkav för brett sken?"></textarea>
       </div>
       <div class="res-step">
         <label>b) Beskriv hur undersökningen kan genomföras steg för steg</label>
-        <textarea class="res-textarea" placeholder="Material, metod, vad hålls konstant, hur mäts resultatet?" style="min-height:80px"></textarea>
+        <textarea class="res-textarea" placeholder="Material, metod, vad hålls konstant, hur mäts resultatet?" style="min-height:80px" aria-label="Undersökning: jämför optiska fiber"></textarea>
       </div>
     </div>
     <button class="btn-model" onclick="showModel('cykel')">Visa modellsvar</button>
@@ -593,11 +593,11 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="res-steps">
       <div class="res-step">
         <label>Förklara vad som händer i ögat vid närsynthet</label>
-        <textarea class="res-textarea" placeholder="Var hamnar fokus? Framför eller bakom näthinnan?"></textarea>
+        <textarea class="res-textarea" placeholder="Var hamnar fokus? Framför eller bakom näthinnan?" aria-label="Närsynthet: var hamnar bilden?"></textarea>
       </div>
       <div class="res-step">
         <label>Vilken lins behöver Mattias, vilken behöver Fatima?</label>
-        <textarea class="res-textarea" placeholder="Konkav eller konvex — och varför för var och en?"></textarea>
+        <textarea class="res-textarea" placeholder="Konkav eller konvex — och varför för var och en?" aria-label="Närsynthet och översynthet: val av glasögon"></textarea>
       </div>
     </div>
     <button class="btn-model" onclick="showModel('ogon')">Visa modellsvar</button>
@@ -620,7 +620,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="np-q">Ultraljud är ljud som har frekvenser över 20 000 Hz. Utgå från fosterdiagnostik eller ekolod — uppge en möjlighet och en risk, och förklara hur de påverkar människors levnadsvillkor.</div>
     <div class="res-steps" style="margin-top:10px">
       <div class="res-step"><label>Ditt svar</label>
-        <textarea class="res-textarea" placeholder="Möjlighet: ... Risk: ... Levnadsvillkor: ..." style="min-height:90px"></textarea>
+        <textarea class="res-textarea" placeholder="Möjlighet: ... Risk: ... Levnadsvillkor: ..." style="min-height:90px" aria-label="UV-strålning: möjlighet, risk och levnadsvillkor"></textarea>
       </div>
     </div>
     <button class="btn-model" onclick="showModel('np1')">Visa exempelsvar (E/C/A)</button>
@@ -649,7 +649,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="np-q">För att mäta stora avstånd kan ljusvågor eller ljudvågor användas. Vilket används till Månen och vilket till havsbotten? Förklara varför.</div>
     <div class="res-steps" style="margin-top:10px">
       <div class="res-step"><label>Ditt svar</label>
-        <textarea class="res-textarea" placeholder="Månen: ... för att ... Havsbotten: ... för att ..." style="min-height:80px"></textarea>
+        <textarea class="res-textarea" placeholder="Månen: ... för att ... Havsbotten: ... för att ..." style="min-height:80px" aria-label="Ljus eller ljud för avstånd till Månen respektive havsdjup"></textarea>
       </div>
     </div>
     <button class="btn-model" onclick="showModel('np3')">Visa modellsvar</button>
@@ -665,10 +665,10 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="np-q">Vilken cykelbelysning ger bredast ljussken: konvex, konkav eller plan lins? Skriv en hypotes och en undersökningsmetod.</div>
     <div class="res-steps" style="margin-top:10px">
       <div class="res-step"><label>a) Hypotes med motivering</label>
-        <textarea class="res-textarea" placeholder="Vilken lins och varför? Koppla till konvergens/divergens..."></textarea>
+        <textarea class="res-textarea" placeholder="Vilken lins och varför? Koppla till konvergens/divergens..." aria-label="Projektor: val av lins"></textarea>
       </div>
       <div class="res-step"><label>b) Undersökningsmetod steg för steg</label>
-        <textarea class="res-textarea" placeholder="Material, utförande, kontrollvariabler, avläsning..." style="min-height:80px"></textarea>
+        <textarea class="res-textarea" placeholder="Material, utförande, kontrollvariabler, avläsning..." style="min-height:80px" aria-label="Undersökning: ljusbrytning genom prisma"></textarea>
       </div>
     </div>
     <button class="btn-model" onclick="showModel('np4')">Visa modellsvar</button>

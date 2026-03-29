@@ -880,7 +880,7 @@ body {
 
   <div class="repeat-mode-strip" id="repeatModeStrip" aria-live="polite">Repetera-läge · <span id="repeatLeftCount">0</span> kvar</div>
 
-  <div class="flashcard-scene" onclick="flipCard()">
+  <div class="flashcard-scene" role="button" tabindex="0" aria-label="Flashkort — klicka för att vända" onclick="flipCard()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();flipCard();}">
     <div class="flashcard-inner" id="fcInner">
       <div class="card-side card-front">
         <div class="card-side-label">Begrepp — klicka för att vända</div>
@@ -931,7 +931,7 @@ body {
     <div class="fq-num">Räkneuppgift 1</div>
     <div class="calc-q">Ett ämne har halveringstiden 10 år. Du börjar med 800 g. Hur mycket finns kvar efter 20 år?</div>
     <div class="calc-input">
-      <input type="number" class="calc-inp" id="r1" placeholder="?" step="1">
+      <input type="number" class="calc-inp" id="r1" placeholder="?" step="1" aria-label="Svar: kvarvarande massa efter två halveringstider, i gram">
       <span class="calc-unit">g</span>
       <button class="btn-check" onclick="chk('r1',200,'r1-res','✅ Rätt! n=2 halveringstider → 800×(½)²= 200 g','❌ Fel. n=2 halveringstider → 800×(½)²= 200 g',0.5)">Kontrollera</button>
     </div>
@@ -942,7 +942,7 @@ body {
     <div class="fq-num">Räkneuppgift 2</div>
     <div class="calc-q">Halveringstiden är 8 dagar. Du börjar med 160 g. Hur mycket finns kvar efter 24 dagar?</div>
     <div class="calc-input">
-      <input type="number" class="calc-inp" id="r2" placeholder="?" step="0.1">
+      <input type="number" class="calc-inp" id="r2" placeholder="?" step="0.1" aria-label="Svar: kvarvarande massa efter tre halveringstider, i gram">
       <span class="calc-unit">g</span>
       <button class="btn-check" onclick="chk('r2',20,'r2-res','✅ Rätt! n=3 → 160×(½)³ = 160/8 = 20 g','❌ Fel. n=3 → 160×(½)³ = 160/8 = 20 g',0.5)">Kontrollera</button>
     </div>
@@ -953,7 +953,7 @@ body {
     <div class="fq-num">Räkneuppgift 3</div>
     <div class="calc-q">Du har 500 g. Efter 3 halveringstider, hur mycket finns kvar?</div>
     <div class="calc-input">
-      <input type="number" class="calc-inp" id="r3" placeholder="?" step="0.1">
+      <input type="number" class="calc-inp" id="r3" placeholder="?" step="0.1" aria-label="Svar: kvarvarande massa efter tre halveringstider från 500 g, i gram">
       <span class="calc-unit">g</span>
       <button class="btn-check" onclick="chk('r3',62.5,'r3-res','✅ Rätt! 500×(½)³ = 500/8 = 62,5 g','❌ Fel. 500×(½)³ = 500/8 = 62,5 g',0.5)">Kontrollera</button>
     </div>
@@ -964,7 +964,7 @@ body {
     <div class="fq-num">Räkneuppgift 4</div>
     <div class="calc-q">Halveringstiden är 5 år. Hur lång tid tar det att minska 1000 till 125?</div>
     <div class="calc-input">
-      <input type="number" class="calc-inp" id="r4" placeholder="?" step="1">
+      <input type="number" class="calc-inp" id="r4" placeholder="?" step="1" aria-label="Svar: tid i år för att minska mängden till en åttondel">
       <span class="calc-unit">år</span>
       <button class="btn-check" onclick="chk('r4',15,'r4-res','✅ Rätt! 1000→500→250→125 = 3 halveringstider = 15 år','❌ Fel. 1000→500→250→125 = 3 halveringstider = 15 år',0.5)">Kontrollera</button>
     </div>
@@ -975,7 +975,7 @@ body {
     <div class="fq-num">Räkneuppgift 5</div>
     <div class="calc-q">Du börjar med 640 g. Efter 40 år finns det 40 g kvar. Vad är halveringstiden?</div>
     <div class="calc-input">
-      <input type="number" class="calc-inp" id="r5" placeholder="?" step="1">
+      <input type="number" class="calc-inp" id="r5" placeholder="?" step="1" aria-label="Svar: halveringstid i år">
       <span class="calc-unit">år</span>
       <button class="btn-check" onclick="chk('r5',10,'r5-res','✅ Rätt! 640→320→160→80→40 = 4 steg → 40/4 = 10 år','❌ Fel. 640→320→160→80→40 = 4 steg → 40/4 = 10 år',0.5)">Kontrollera</button>
     </div>
@@ -1007,7 +1007,7 @@ body {
         <label>Fråga</label>
         <div style="font-size:0.84rem;line-height:1.6;color:var(--text);margin-bottom:8px">Varför består skyddsrocken av just bly? Och varför måste personalen skydda kroppen överhuvudtaget — vad händer om de utsätts för strålning dag efter dag?</div>
         <label>Ditt svar</label>
-        <textarea class="res-textarea" placeholder="Skriv ditt resonemang här..."></textarea>
+        <textarea class="res-textarea" placeholder="Skriv ditt resonemang här..." aria-label="Röntgen: varför bly i skyddsrock och risker vid upprepad strålning"></textarea>
       </div>
     </div>
     <button type="button" class="btn-model" onclick="showModel('k7r1')">Visa exempelsvar (E/C/A)</button>
@@ -1028,11 +1028,11 @@ body {
         <label>Fråga</label>
         <div style="font-size:0.84rem;line-height:1.6;color:var(--text);margin-bottom:8px">Förklara hur upptäckten av kärnklyvning har påverkat människors levnadsvillkor — resonera utifrån ett lokalt perspektiv OCH ett globalt perspektiv.</div>
         <label>Lokalt perspektiv</label>
-        <textarea class="res-textarea" placeholder="Lokalt: orsak → konsekvens..."></textarea>
+        <textarea class="res-textarea" placeholder="Lokalt: orsak → konsekvens..." aria-label="Kärnklyvning: lokala konsekvenser"></textarea>
       </div>
       <div class="res-step">
         <label>Globalt perspektiv</label>
-        <textarea class="res-textarea" placeholder="Globalt: orsak → konsekvens..."></textarea>
+        <textarea class="res-textarea" placeholder="Globalt: orsak → konsekvens..." aria-label="Kärnklyvning: globala konsekvenser"></textarea>
       </div>
     </div>
     <button type="button" class="btn-model" onclick="showModel('k7r2')">Visa exempelsvar (E/C/A)</button>
@@ -1053,7 +1053,7 @@ body {
         <label>Fråga</label>
         <div style="font-size:0.84rem;line-height:1.6;color:var(--text);margin-bottom:8px">Resonera kring varför det ändå är klokt att följa försiktighetsrekommendationen — även om bevisen för skada är svaga. Använd två naturvetenskapliga led i ditt resonemang.</div>
         <label>Ditt svar</label>
-        <textarea class="res-textarea" placeholder="Led 1 … Led 2 …"></textarea>
+        <textarea class="res-textarea" placeholder="Led 1 … Led 2 …" aria-label="Radioaktivt avfall: resonemang i två led"></textarea>
       </div>
     </div>
     <button type="button" class="btn-model" onclick="showModel('k7r3')">Visa exempelsvar (E/C/A)</button>
@@ -1074,19 +1074,19 @@ body {
     <div class="res-steps">
       <div class="res-step">
         <label>Ditt ställningstagande</label>
-        <textarea class="res-textarea" placeholder="Jag väljer kärnkraft / vattenkraft eftersom …"></textarea>
+        <textarea class="res-textarea" placeholder="Jag väljer kärnkraft / vattenkraft eftersom …" aria-label="Ställningstagande: kärnkraft eller vattenkraft"></textarea>
       </div>
       <div class="res-step">
         <label>Resonemang 1 FÖR ditt val (två led)</label>
-        <textarea class="res-textarea" placeholder="Fakta → konsekvens …"></textarea>
+        <textarea class="res-textarea" placeholder="Fakta → konsekvens …" aria-label="Resonemang 1 för vald energikälla (kärn- eller vattenkraft)"></textarea>
       </div>
       <div class="res-step">
         <label>Resonemang 2 FÖR ditt val (två led)</label>
-        <textarea class="res-textarea" placeholder="Fakta → konsekvens …"></textarea>
+        <textarea class="res-textarea" placeholder="Fakta → konsekvens …" aria-label="Resonemang 2 för vald energikälla (kärn- eller vattenkraft)"></textarea>
       </div>
       <div class="res-step">
         <label>Resonemang EMOT något av alternativen (två led)</label>
-        <textarea class="res-textarea" placeholder="Mot kärnkraft eller mot vattenkraft …"></textarea>
+        <textarea class="res-textarea" placeholder="Mot kärnkraft eller mot vattenkraft …" aria-label="Resonemang emot vald eller alternativ energikälla"></textarea>
       </div>
     </div>
     <button type="button" class="btn-model" onclick="showModel('k7r4')">Visa exempelsvar (E/C/A) — exempel för kärnkraft</button>

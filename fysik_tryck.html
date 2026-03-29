@@ -139,7 +139,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 .card-side-label{font-family:var(--mono);font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem}
 .card-front .card-side-label{color:var(--accent)}
 .card-text{font-size:1rem;font-weight:600;line-height:1.5;color:var(--text);white-space:pre-line}
-.card-back .card-text{font-size:.88rem;font-weight:400;color:#cbd5e1}
+.card-back .card-text{font-size:.88rem;font-weight:400;color:var(--text)}
 .card-hint{margin-top:1rem;font-size:.72rem;color:var(--muted)}
 .card-actions{display:flex;gap:.75rem;justify-content:center;margin-bottom:2.5rem;flex-wrap:wrap}
 .card-btn{font-family:'Outfit',sans-serif;font-size:.8rem;font-weight:600;padding:.55rem 1.3rem;border-radius:8px;border:1px solid var(--border2);background:var(--card2);color:var(--muted);cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:.4rem}
@@ -337,7 +337,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 
   <div class="repeat-mode-strip" id="repeatModeStrip" aria-live="polite">Repetera-läge · <span id="repeatLeftCount">0</span> kvar</div>
 
-  <div class="flashcard-scene" onclick="flipCard()">
+  <div class="flashcard-scene" role="button" tabindex="0" aria-label="Flashkort — klicka för att vända" onclick="flipCard()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();flipCard();}">
     <div class="flashcard-inner" id="fcInner">
       <div class="card-side card-front">
         <div class="card-side-label">Begrepp — klicka för att vända</div>
@@ -525,7 +525,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="fq-num">Räkneuppgift 1</div>
     <div class="calc-q">En låda (10 kg) vilar på ett bord. Lådan har bottenytan 0,5 m². Tyngdkraften är 100 N. Hur stort är trycket mot bordet?</div>
     <div class="calc-input">
-      <input type="number" class="calc-inp" id="r1" placeholder="?" step="1">
+      <input type="number" class="calc-inp" id="r1" placeholder="?" step="1" aria-label="Svar: tryck mot bordet i pascal">
       <span class="calc-unit">Pa</span>
       <button class="btn-check" onclick="chk('r1',200,'r1-res','✅ Rätt! p = F/A = 100/0,5 = 200 Pa','❌ Fel. p = F/A = 100 N ÷ 0,5 m² = 200 Pa',5)">Kontrollera</button>
     </div>
@@ -547,7 +547,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="fq-num">Räkneuppgift 3</div>
     <div class="calc-q">Hur stort är vätsketrycket 5 meter ner i en sjö? (ρ_vatten = 1000 kg/m³, g = 10 m/s²)</div>
     <div class="calc-input">
-      <input type="number" class="calc-inp" id="r3" placeholder="?" step="100">
+      <input type="number" class="calc-inp" id="r3" placeholder="?" step="100" aria-label="Svar: vätsketryck på djupet i pascal">
       <span class="calc-unit">Pa</span>
       <button class="btn-check" onclick="chk('r3',50000,'r3-res','✅ Rätt! p = ρgh = 1000 × 10 × 5 = 50 000 Pa','❌ Fel. p = ρ·g·h = 1000 × 10 × 5 = 50 000 Pa',500)">Kontrollera</button>
     </div>
@@ -558,7 +558,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="fq-num">Räkneuppgift 4</div>
     <div class="calc-q">En träkub (V = 0,001 m³) ligger i vatten. Lyftkraften? (ρ_vatten = 1000 kg/m³, g = 10)</div>
     <div class="calc-input">
-      <input type="number" class="calc-inp" id="r4" placeholder="?" step="0.1">
+      <input type="number" class="calc-inp" id="r4" placeholder="?" step="0.1" aria-label="Svar: lyftkraft på träkub i newton">
       <span class="calc-unit">N</span>
       <button class="btn-check" onclick="chk('r4',10,'r4-res','✅ Rätt! F_L = ρ·V·g = 1000 × 0,001 × 10 = 10 N','❌ Fel. F_L = ρ_vatten · V · g = 1000 × 0,001 × 10 = 10 N',0.2)">Kontrollera</button>
     </div>
@@ -569,7 +569,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="fq-num">Räkneuppgift 5</div>
     <div class="calc-q">Föremålet väger 15 N i luft och 9 N i vatten. Hur stor är lyftkraften?</div>
     <div class="calc-input">
-      <input type="number" class="calc-inp" id="r5" placeholder="?" step="0.1">
+      <input type="number" class="calc-inp" id="r5" placeholder="?" step="0.1" aria-label="Svar: lyftkraft när tyngd i luft och vatten är given, i newton">
       <span class="calc-unit">N</span>
       <button class="btn-check" onclick="chk('r5',6,'r5-res','✅ Rätt! F_L = 15 − 9 = 6 N','❌ Fel. Lyftkraft = tyngd i luft − tyngd i vätska = 15 − 9 = 6 N',0.1)">Kontrollera</button>
     </div>
@@ -587,15 +587,15 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="res-steps">
       <div class="res-step">
         <label>Steg 1 — Saltvatten vs. sötvatten: vad skiljer i densitet?</label>
-        <textarea class="res-textarea" placeholder="Vad gör saltet med vattnet?"></textarea>
+        <textarea class="res-textarea" placeholder="Vad gör saltet med vattnet?" aria-label="Steg 1: saltvatten och sötvatten — vad skiljer i densitet?"></textarea>
       </div>
       <div class="res-step">
         <label>Steg 2 — Hur påverkas lyftkraften?</label>
-        <textarea class="res-textarea" placeholder="F_L = ρ·V·g — vad händer när ρ ändras?"></textarea>
+        <textarea class="res-textarea" placeholder="F_L = ρ·V·g — vad händer när ρ ändras?" aria-label="Steg 2: hur påverkas lyftkraften?"></textarea>
       </div>
       <div class="res-step">
         <label>Steg 3 — Slutsats: var kan fartyget frakta mer last?</label>
-        <textarea class="res-textarea" placeholder="I saltvatten eller sötvatten?"></textarea>
+        <textarea class="res-textarea" placeholder="I saltvatten eller sötvatten?" aria-label="Steg 3: var kan fartyget frakta mer last?"></textarea>
       </div>
     </div>
     <button class="btn-model" onclick="showModel('fartyg')">Visa modellsvar</button>
@@ -619,11 +619,11 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="res-steps">
       <div class="res-step">
         <label>Beräkna trycket för klacken (area = 1 cm² = 0,0001 m²)</label>
-        <textarea class="res-textarea" placeholder="p = F/A = ?"></textarea>
+        <textarea class="res-textarea" placeholder="p = F/A = ?" aria-label="Beräkna trycket för klacken"></textarea>
       </div>
       <div class="res-step">
         <label>Jämför och förklara konsekvensen (parkettgolv, snö, mjukt underlag)</label>
-        <textarea class="res-textarea" placeholder="Varför sjunker klacken igenom snö men inte platta skor?"></textarea>
+        <textarea class="res-textarea" placeholder="Varför sjunker klacken igenom snö men inte platta skor?" aria-label="Jämför tryck för klack och platta skor, konsekvenser"></textarea>
       </div>
     </div>
     <button class="btn-model" onclick="showModel('klack')">Visa modellsvar</button>
@@ -642,11 +642,11 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="res-steps">
       <div class="res-step">
         <label>Varför stiger ballongen? (koppla till densitet och lyftkraft)</label>
-        <textarea class="res-textarea" placeholder="Jämför densiteten hos varm och kall luft..."></textarea>
+        <textarea class="res-textarea" placeholder="Jämför densiteten hos varm och kall luft..." aria-label="Varför stiger luftballong — densitet och lyftkraft"></textarea>
       </div>
       <div class="res-step">
         <label>Hur sjunker piloten kontrollerat?</label>
-        <textarea class="res-textarea" placeholder="Vad händer när varm luft släpps ut?"></textarea>
+        <textarea class="res-textarea" placeholder="Vad händer när varm luft släpps ut?" aria-label="Hur sjunker ballongen kontrollerat?"></textarea>
       </div>
     </div>
     <button class="btn-model" onclick="showModel('ballong')">Visa modellsvar</button>
@@ -665,11 +665,11 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="res-steps">
       <div class="res-step">
         <label>Förklara hur ett sugrör fungerar på Jorden</label>
-        <textarea class="res-textarea" placeholder="Vad händer med trycket inuti röret? Vad driver vätskan upp?"></textarea>
+        <textarea class="res-textarea" placeholder="Vad händer med trycket inuti röret? Vad driver vätskan upp?" aria-label="Förklara hur sugrör fungerar på Jorden"></textarea>
       </div>
       <div class="res-step">
         <label>Varför fungerar det inte utan atmosfärstryck?</label>
-        <textarea class="res-textarea" placeholder="Vad saknas på Månen?"></textarea>
+        <textarea class="res-textarea" placeholder="Vad saknas på Månen?" aria-label="Varför fungerar inte sugrör utan atmosfärstryck?"></textarea>
       </div>
     </div>
     <button class="btn-model" onclick="showModel('sugrör')">Visa modellsvar</button>
@@ -702,7 +702,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="res-steps" style="margin-top:12px">
       <div class="res-step">
         <label>Ditt svar</label>
-        <textarea class="res-textarea" placeholder="Förklara sambandet: salthalt → densitet → lyftkraft → last..." style="min-height:90px"></textarea>
+        <textarea class="res-textarea" placeholder="Förklara sambandet: salthalt → densitet → lyftkraft → last..." style="min-height:90px" aria-label="NP: svar om salthalt, densitet och last på fartyg"></textarea>
       </div>
     </div>
     <button class="btn-model" onclick="showModel('np1')">Visa exempelsvar (E/C/A)</button>
@@ -738,11 +738,11 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="res-steps" style="margin-top:12px">
       <div class="res-step">
         <label>Beräkning: total area och tryck</label>
-        <textarea class="res-textarea" placeholder="A_total = 40 × 0,00005 = ? m², sedan p = F/A = ?"></textarea>
+        <textarea class="res-textarea" placeholder="A_total = 40 × 0,00005 = ? m², sedan p = F/A = ?" aria-label="NP: beräkning area och tryck för stilettklack"></textarea>
       </div>
       <div class="res-step">
         <label>Förklaring: varför är trycket viktigt?</label>
-        <textarea class="res-textarea" placeholder="Vad händer om man istället har en liten area..."></textarea>
+        <textarea class="res-textarea" placeholder="Vad händer om man istället har en liten area..." aria-label="NP: följdfråga om area och tryck"></textarea>
       </div>
     </div>
     <button class="btn-model" onclick="showModel('np3')">Visa modellsvar</button>

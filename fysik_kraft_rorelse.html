@@ -521,7 +521,7 @@
 
   <div class="repeat-mode-strip" id="repeatModeStrip" aria-live="polite">Repetera-läge · <span id="repeatLeftCount">0</span> kvar</div>
 
-  <div class="flashcard-scene" onclick="flipCard()">
+  <div class="flashcard-scene" role="button" tabindex="0" aria-label="Flashkort — klicka för att vända" onclick="flipCard()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();flipCard();}">
     <div class="flashcard-inner" id="fcInner">
       <div class="card-side card-front">
         <div class="card-side-label">Begrepp — klicka för att vända</div>
@@ -613,7 +613,7 @@
   <div class="question-card" id="fq5">
     <div class="q-number">Fråga 5 · Friktion</div>
     <div class="q-text">Friktion kan vara både nyttig och onyttig. Ge ett exempel på vardera och förklara kort varför.</div>
-    <textarea class="open-textarea" id="ota-fq5" placeholder="Nyttig friktion: ... Onyttig friktion: ..."></textarea>
+    <textarea class="open-textarea" id="ota-fq5" placeholder="Nyttig friktion: ... Onyttig friktion: ..." aria-label="Exempel på nyttig och onyttig friktion"></textarea>
     <div style="display:flex;gap:10px;"><button class="btn btn-outline btn-sm" onclick="showModel('fq5')">Visa modellsvar</button></div>
     <div class="model-answer" id="ma-fq5">
       <div class="model-answer-label">📖 Modellsvar</div>
@@ -638,7 +638,7 @@
   <div class="question-card" id="fq7">
     <div class="q-number">Fråga 7 · Rörelsediagram</div>
     <div class="q-text">En bil startar från stillastående och accelererar i 5 sekunder till 20 m/s, sedan kör den med konstant hastighet i 10 sekunder. Beskriv hur ett v-t-diagram (hastighet–tid) ser ut.</div>
-    <textarea class="open-textarea" placeholder="Beskriv grafens form för de båda faserna..."></textarea>
+    <textarea class="open-textarea" placeholder="Beskriv grafens form för de båda faserna..." aria-label="Förklara hastighetsgraf vid fritt fall"></textarea>
     <div style="display:flex;gap:10px;"><button class="btn btn-outline btn-sm" onclick="showModel('fq7')">Visa modellsvar</button></div>
     <div class="model-answer" id="ma-fq7">
       <div class="model-answer-label">📖 Modellsvar</div>
@@ -650,7 +650,7 @@
   <div class="question-card" id="fq8">
     <div class="q-number">Fråga 8 · Tröghet i vardagen</div>
     <div class="q-text">Varför är det viktigt att ha säkerhetsbälte i en bil? Förklara med hjälp av tröghet och Newtons 1:a lag.</div>
-    <textarea class="open-textarea" placeholder="Vad händer med kroppen när bilen bromsar plötsligt?"></textarea>
+    <textarea class="open-textarea" placeholder="Vad händer med kroppen när bilen bromsar plötsligt?" aria-label="Tröghet: kroppen vid plötslig inbromsning"></textarea>
     <div style="display:flex;gap:10px;"><button class="btn btn-outline btn-sm" onclick="showModel('fq8')">Visa modellsvar</button></div>
     <div class="model-answer" id="ma-fq8">
       <div class="model-answer-label">📖 Modellsvar</div>
@@ -688,7 +688,7 @@
   <div class="question-card" id="fq11">
     <div class="q-number">Fråga 11 · Centripetalkraft</div>
     <div class="q-text">En bil svänger i en kurva. Vad är det som håller bilen kvar i kurvan och inte låter den åka rakt framåt?</div>
-    <textarea class="open-textarea" placeholder="Namnge kraften och förklara varifrån den kommer..."></textarea>
+    <textarea class="open-textarea" placeholder="Namnge kraften och förklara varifrån den kommer..." aria-label="Tyngdpunkt och tyngdkraftens angreppspunkt"></textarea>
     <div style="display:flex;gap:10px;"><button class="btn btn-outline btn-sm" onclick="showModel('fq11')">Visa modellsvar</button></div>
     <div class="model-answer" id="ma-fq11">
       <div class="model-answer-label">📖 Modellsvar</div>
@@ -725,7 +725,7 @@
     <div class="fq-num">Räkneuppgift 1</div>
     <div class="calc-q">En bil kör 180 km på 2 timmar. Hur stor är medelhastigheten i km/h?</div>
     <div class="calc-input">
-      <input type="number" class="calc-inp" id="r1" placeholder="?" step="1">
+      <input type="number" class="calc-inp" id="r1" placeholder="?" step="1" aria-label="Svar: medelhastighet i km/h">
       <span class="calc-unit">km/h</span>
       <button class="btn-check" onclick="chk('r1',90,'r1-res','✅ Rätt! v = 180/2 = 90 km/h','❌ Fel. v = 180/2 = 90 km/h',0.5)">Kontrollera</button>
     </div>
@@ -737,7 +737,7 @@
     <div class="fq-num">Räkneuppgift 2</div>
     <div class="calc-q">En cyklist accelererar från 0 till 10 m/s på 5 sekunder. Hur stor är accelerationen?</div>
     <div class="calc-input">
-      <input type="number" class="calc-inp" id="r2" placeholder="?" step="0.1">
+      <input type="number" class="calc-inp" id="r2" placeholder="?" step="0.1" aria-label="Svar: acceleration i m/s²">
       <span class="calc-unit">m/s²</span>
       <button class="btn-check" onclick="chk('r2',2,'r2-res','✅ Rätt! a = 10/5 = 2 m/s²','❌ Fel. a = 10/5 = 2 m/s²',0.05)">Kontrollera</button>
     </div>
@@ -749,7 +749,7 @@
     <div class="fq-num">Räkneuppgift 3</div>
     <div class="calc-q">En kraft på 200 N verkar på en låda med massan 40 kg. Hur stor är accelerationen?</div>
     <div class="calc-input">
-      <input type="number" class="calc-inp" id="r3" placeholder="?" step="0.1">
+      <input type="number" class="calc-inp" id="r3" placeholder="?" step="0.1" aria-label="Svar: acceleration från kraft och massa, i m/s²">
       <span class="calc-unit">m/s²</span>
       <button class="btn-check" onclick="chk('r3',5,'r3-res','✅ Rätt! a = F/m = 200/40 = 5 m/s²','❌ Fel. a = F/m = 200/40 = 5 m/s²',0.05)">Kontrollera</button>
     </div>
@@ -761,7 +761,7 @@
     <div class="fq-num">Räkneuppgift 4</div>
     <div class="calc-q">Hur stor är tyngdkraften på ett föremål med massan 25 kg? (g = 10 m/s²)</div>
     <div class="calc-input">
-      <input type="number" class="calc-inp" id="r4" placeholder="?" step="1">
+      <input type="number" class="calc-inp" id="r4" placeholder="?" step="1" aria-label="Svar: tyngdkraft i newton">
       <span class="calc-unit">N</span>
       <button class="btn-check" onclick="chk('r4',250,'r4-res','✅ Rätt! G = m·g = 25×10 = 250 N','❌ Fel. G = m·g = 25×10 = 250 N',0.5)">Kontrollera</button>
     </div>
@@ -773,7 +773,7 @@
     <div class="fq-num">Räkneuppgift 5</div>
     <div class="calc-q">En löpare springer 400 m på 50 sekunder. Hur stor är medelhastigheten i m/s?</div>
     <div class="calc-input">
-      <input type="number" class="calc-inp" id="r5" placeholder="?" step="0.1">
+      <input type="number" class="calc-inp" id="r5" placeholder="?" step="0.1" aria-label="Svar: medelhastighet i m/s">
       <span class="calc-unit">m/s</span>
       <button class="btn-check" onclick="chk('r5',8,'r5-res','✅ Rätt! v = 400/50 = 8 m/s','❌ Fel. v = 400/50 = 8 m/s',0.05)">Kontrollera</button>
     </div>
@@ -796,14 +796,14 @@
       <div class="res-step">
         <div class="res-step-label">Steg 1 — E-nivå</div>
         <div class="res-step-q">Vad är tyngdpunkt och stödyta, och vad avgör om ett föremål välter?</div>
-        <textarea class="open-textarea" placeholder="Definiera begreppen och förklara sambandet..."></textarea>
+        <textarea class="open-textarea" placeholder="Definiera begreppen och förklara sambandet..." aria-label="Sportrullstol: tyngdpunkt och stödyta"></textarea>
         <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa svar</button>
         <div class="feedback-box info"><strong>Tyngdpunkt:</strong> den punkt där hela föremålets tyngd kan anses verka — tyngdkraftens angreppspunkt. <strong>Stödyta:</strong> den yta som bildas av de kontaktpunkter föremålet vilar på. Föremålet välter när tyngdpunktens <strong>lodlinje</strong> (rakt neråt från tyngdpunkten) hamnar utanför stödytan.</div>
       </div>
       <div class="res-step">
         <div class="res-step-label">Steg 2 — C-nivå</div>
         <div class="res-step-q">Ge två exempel på konstruktionsdrag hos sportrullstolen som gör den svårare att välta i hög hastighet. Förklara varför varje drag hjälper.</div>
-        <textarea class="open-textarea" style="min-height:110px;" placeholder="Drag 1: ... Det hjälper för att...&#10;Drag 2: ... Det hjälper för att..."></textarea>
+        <textarea class="open-textarea" style="min-height:110px;" placeholder="Drag 1: ... Det hjälper för att...&#10;Drag 2: ... Det hjälper för att..." aria-label="Två konstruktionsdrag på sportrullstol"></textarea>
         <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa modellsvar</button>
         <div class="feedback-box info"><strong>Drag 1 — Breda hjul / stor spårvidd:</strong> Hjulen är placerade långt ut åt sidorna → stödytan blir bredare → tyngdpunktens lodlinje måste röra sig längre ut åt sidan innan den lämnar stödytan → svårare att välta. <br><br><strong>Drag 2 — Lågt sittläge / låg tyngdpunkt:</strong> Sitsen är lågt placerad → tyngdpunkten är låg → vid sidluftning rör sig tyngdpunktens lodlinje lite → svårare att välta. Tänk: en lastbil välter lättare än en bred racingbil.</div>
       </div>
@@ -819,14 +819,14 @@
       <div class="res-step">
         <div class="res-step-label">Steg 1 — E-nivå</div>
         <div class="res-step-q">Vem behöver använda minst kraft? Förklara varför med begreppet hävarm.</div>
-        <textarea class="open-textarea" placeholder="Vem av de tre och varför?"></textarea>
+        <textarea class="open-textarea" placeholder="Vem av de tre och varför?" aria-label="Blocknyckel: vem behöver minst kraft?"></textarea>
         <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa svar</button>
         <div class="feedback-box info"><strong>Cornelia</strong> — hon håller längst ut på nyckeln. Ju längre <strong>hävarm</strong> (avståndet från vridpunkten/muttern till kraftens angreppspunkt), desto större <strong>vridmoment</strong> vid samma kraft. Formeln är: Vridmoment = Kraft × Hävarm. Samma vridmoment med längre hävarm → man kan använda mindre kraft. Det är precis principen bakom en hävstång.</div>
       </div>
       <div class="res-step">
         <div class="res-step-label">Steg 2 — C-nivå</div>
         <div class="res-step-q">Namnge tre exempel från vardagen där vi drar nytta av hävstångsprincipen och kortfattat förklara varför i varje fall.</div>
-        <textarea class="open-textarea" style="min-height:100px;" placeholder="1. ... 2. ... 3. ..."></textarea>
+        <textarea class="open-textarea" style="min-height:100px;" placeholder="1. ... 2. ... 3. ..." aria-label="Newtons lagar: lista och kort förklaring"></textarea>
         <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa modellsvar</button>
         <div class="feedback-box info">1. <strong>Bräckjärn:</strong> lång hävarm → liten kraft lyfter tunga spikar/lock. 2. <strong>Saxar och tång:</strong> greppet långt från skärkanten ger stort vridmoment med lite handkraft. 3. <strong>Dörhandtag:</strong> placerat långt från gångjärnet (vridpunkten) — liten kraft räcker för att öppna dörren. 4. <strong>Underarmen:</strong> muskeln fäster nära armbågen (kort hävarm) men handen rör sig långt — utbyte av kraft mot rörelse.</div>
       </div>
@@ -842,14 +842,14 @@
       <div class="res-step">
         <div class="res-step-label">Steg 1 — E-nivå</div>
         <div class="res-step-q">Vad är friktion och varför är bromssträckan kortare med dubbade däck på is?</div>
-        <textarea class="open-textarea" placeholder="Förklara friktion och koppla till dubbarna..."></textarea>
+        <textarea class="open-textarea" placeholder="Förklara friktion och koppla till dubbarna..." aria-label="Dubbade däck och friktion"></textarea>
         <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa svar</button>
         <div class="feedback-box info"><strong>Friktion</strong> är en kraft som motverkar rörelse mellan två ytor i kontakt. Dubbarna biter sig fast i isen och ökar friktionen kraftigt — friktionskraften är större → bromsar mer effektivt → kortare bromssträcka. Utan dubbar är kontakten gummi-mot-is glatt och friktionen låg.</div>
       </div>
       <div class="res-step">
         <div class="res-step-label">Steg 2 — A-nivå</div>
         <div class="res-step-q">Ta ställning för ett däckval och motivera med minst två resonemang i två led. Väg trafiksäkerhet mot miljöpåverkan.</div>
-        <textarea class="open-textarea" style="min-height:120px;" placeholder="Ställningstagande: ...\n\nResonemang 1 (för): ... → vilket leder till ...\nResonemang 2 (för): ... → vilket leder till ...\nResonemang mot: ..."></textarea>
+        <textarea class="open-textarea" style="min-height:120px;" placeholder="Ställningstagande: ...\n\nResonemang 1 (för): ... → vilket leder till ...\nResonemang 2 (för): ... → vilket leder till ...\nResonemang mot: ..." aria-label="Ställningstagande vinterdäck med resonemang för och emot"></textarea>
         <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa modellsvar</button>
         <div class="feedback-box info"><strong>Exempel: Dubbade däck</strong><br><br>✅ <em>För (led 1–2):</em> Kortare bromssträcka på is (40 vs 50 m) → vid en nödbromssituation i 50 km/h är 10 m skillnaden mellan att hinna stanna och att krocka → räddar liv.<br>✅ <em>För (led 1–2):</em> Bättre väggrepp → föraren kan hålla kontrollen i kurvor på hal vägbana → minskar risken för singelolyckor.<br>❌ <em>Mot:</em> Partiklar från asfalten (20 vs 2 µg/m³) → 10 gånger högre partikelhalter i stadsmiljö → ökar risken för luftvägssjukdomar hos boende längs gatorna.<br><br><em>Observera: Provet värdesätter att du motiverar ditt val med naturvetenskapliga begrepp och resonerar i led — det finns inget "fel" svar om argumenten är väl underbyggda.</em></div>
       </div>
@@ -865,14 +865,14 @@
       <div class="res-step">
         <div class="res-step-label">Steg 1 — C-nivå</div>
         <div class="res-step-q">Förklara med Newtons lagar varför krockkuddar minskar skaderisken. Inkludera begreppen kraft, tid och impuls.</div>
-        <textarea class="open-textarea" placeholder="Tänk: vilken kraft verkar på kroppen och hur förändras den med kudden?"></textarea>
+        <textarea class="open-textarea" placeholder="Tänk: vilken kraft verkar på kroppen och hur förändras den med kudden?" aria-label="Krockkuddar: Newtons lagar och impuls"></textarea>
         <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa svar</button>
         <div class="feedback-box info">Vid en krock stannar bilen momentant men kroppen vill fortsätta framåt (Newtons 1:a lag — tröghet). Kroppen måste bromsas — en kraft måste verka på den. Utan krockkudde: hård yta (ratt/ruta) → stor kraft under mycket kort tid → allvarliga skador. Med krockkudde: mjuk yta → kroppen bromsas upp under <strong>längre tid</strong> → samma impulse (kraft × tid) men spridd över längre tid → <strong>kraften per ögonblick blir mycket lägre</strong> → skaderisken minskar drastiskt.</div>
       </div>
       <div class="res-step">
         <div class="res-step-label">Steg 2 — A-nivå</div>
         <div class="res-step-q">Resonera om hur krockkuddar ur ett samhällsperspektiv påverkar samhällsekonomin och sjukvården. Resonera i två led.</div>
-        <textarea class="open-textarea" placeholder="Led 1: ... → Led 2: ..."></textarea>
+        <textarea class="open-textarea" placeholder="Led 1: ... → Led 2: ..." aria-label="Krockkuddar: samhällsekonomi och sjukvård"></textarea>
         <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa modellsvar</button>
         <div class="feedback-box info"><strong>Led 1–2:</strong> Krockkuddar minskar allvarlighetsgraden av skador vid trafikolyckor → färre personer behöver intensivvård och lång rehabilitering → sjukvårdens kostnader minskar och resurser frigörs till annan vård. <br><br><strong>Led 3–4:</strong> Färre allvarligt skadade i trafiken → fler personer kan återgå till arbete snabbare → lägre kostnader för sjukförsäkring och produktionsbortfall → positiv effekt på samhällsekonomin.</div>
       </div>
@@ -888,14 +888,14 @@
       <div class="res-step">
         <div class="res-step-label">Steg 1 — C-nivå</div>
         <div class="res-step-q">Förklara varför astronauterna upplevs vara i tyngdlöshet trots att gravitationen från jorden är kvar (ca 90% av markgravitationen på ISS:s höjd).</div>
-        <textarea class="open-textarea" placeholder="Tänk: vad händer med ett föremål i fritt fall runt jorden?"></textarea>
+        <textarea class="open-textarea" placeholder="Tänk: vad händer med ett föremål i fritt fall runt jorden?" aria-label="Tyngdlöshet på ISS: fritt fall i bana"></textarea>
         <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa svar</button>
         <div class="feedback-box info">ISS och astronauterna <strong>faller konstant mot jorden</strong> — men planeten "kurvar undan" precis lika snabbt tack vare rymdstationens höga hastighet (ca 28 000 km/h). Det kallas ett <strong>fritt fall i omloppsbana</strong>. Eftersom stationen och astronauterna faller med exakt samma acceleration finns ingen normalkraft mot golvet → astronauterna flötar. Det är samma känsla som i en hiss som faller fritt.</div>
       </div>
       <div class="res-step">
         <div class="res-step-label">Steg 2 — A-nivå</div>
         <div class="res-step-q">Resonera om en konkret konsekvens av tyngdlöshet för den mänskliga kroppen, och vad det innebär för framtida rymdresor till Mars (ca 7 månaders resa).</div>
-        <textarea class="open-textarea" placeholder="Välj en fysisk effekt och resonera i led..."></textarea>
+        <textarea class="open-textarea" placeholder="Välj en fysisk effekt och resonera i led..." aria-label="Tyngdlöshet: effekt på kroppen och Mars-resa"></textarea>
         <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa modellsvar</button>
         <div class="feedback-box info"><strong>Konsekvens:</strong> Utan gravitationsbelastning bryts <strong>ben­densiteten</strong> ner — kroppen uppfattar att det inte behövs tunga ben utan belastning → astronauter förlorar upp till 1–2% av bentäthet per månad. <br><br><strong>Konsekvens för Mars-resa:</strong> Under 7 månader kan benförlusten bli så stor att astronauterna inte kan stå upp och röra sig när de anländer till Mars → de behöver intensivt rehabiliteringsprogram. Mars har ca 38% av jordens gravitation, vilket hjälper men inte löser problemet. Forskare arbetar med centrifugssystem i rymdskepp som simulerar tyngdkraft för att motverka detta.</div>
       </div>
@@ -913,7 +913,7 @@
   <div class="np-card">
     <div class="np-header"><span class="np-year">NP 2017 · Delprov A1</span><span class="np-level C">C-nivå</span></div>
     <div class="q-text">Cornelia, Päivi och Meja ska dra åt en mutter med en blocknyckel. De diskuterar var på blocknyckeln de ska hålla sin hand för att behöva använda så liten kraft som möjligt. Cornelia håller längst ut på nyckeln, Päivi i mitten och Meja närmast muttern. Förklara vem som kommer att behöva använda minst kraft för att dra åt muttern.</div>
-    <textarea class="open-textarea" style="min-height:100px;" placeholder="Namnge personen och förklara med hävarmsbegreppen..."></textarea>
+    <textarea class="open-textarea" style="min-height:100px;" placeholder="Namnge personen och förklara med hävarmsbegreppen..." aria-label="NP: blocknyckel och minst kraft"></textarea>
     <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa bedömningskommentar</button>
     <div class="model-answer">
       <div class="model-answer-label">📋 Bedömningskommentar</div>
@@ -925,7 +925,7 @@
   <div class="np-card">
     <div class="np-header"><span class="np-year">NP 2018 · Delprov A1</span><span class="np-level mixed">C–A-nivå</span></div>
     <div class="q-text">När Klas tävlar i friidrott för rullstolsburna använder han en sportrullstol. Sportrullstolen är konstruerad för att kunna svänga i hög hastighet utan att välta. Ge två exempel på vad som gör att sportrullstolen kan svänga i hög hastighet utan att välta. Förklara varför.</div>
-    <textarea class="open-textarea" style="min-height:110px;" placeholder="Exempel 1: [Konstruktionsdrag] — Förklaring: ...&#10;Exempel 2: [Konstruktionsdrag] — Förklaring: ..."></textarea>
+    <textarea class="open-textarea" style="min-height:110px;" placeholder="Exempel 1: [Konstruktionsdrag] — Förklaring: ...&#10;Exempel 2: [Konstruktionsdrag] — Förklaring: ..." aria-label="NP: sportrullstol och sväng i hög hastighet"></textarea>
     <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa bedömningskommentar</button>
     <div class="model-answer">
       <div class="model-answer-label">📋 Bedömningskommentar</div>
@@ -938,7 +938,7 @@
     <div class="np-header"><span class="np-year">NP 2018 · Delprov A2</span><span class="np-level A">A-nivå</span></div>
     <div class="q-text">Ta ställning för dubbade eller dubbfria vinterdäck. Formulera två resonemang i två led som talar för det vinterdäck du valt, och ett resonemang i två led som talar emot något av de två vinterdäcken. Var saklig och använd naturvetenskapliga begrepp.</div>
     <div class="q-context">💡 Fakta: Dubbade = 40 m bromssträcka på is, 20 µg/m³ partiklar. Dubbfria = 50 m bromssträcka, 2 µg/m³ partiklar.</div>
-    <textarea class="open-textarea" style="min-height:140px;" placeholder="Ställningstagande: ...\n\nFör (1): ... → ...\nFör (2): ... → ...\nMot: ... → ..."></textarea>
+    <textarea class="open-textarea" style="min-height:140px;" placeholder="Ställningstagande: ...\n\nFör (1): ... → ...\nFör (2): ... → ...\nMot: ... → ..." aria-label="NP: ställningstagande dubbade eller dubbfria däck"></textarea>
     <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa bedömningskommentar</button>
     <div class="model-answer">
       <div class="model-answer-label">📋 Bedömningskommentar</div>
@@ -951,7 +951,7 @@
     <div class="np-header"><span class="np-year">NP 2017 · Delprov A2</span><span class="np-level A">A-nivå</span></div>
     <div class="q-text">Ta ställning för fler kärnkraftverk eller fler vattenkraftverk. Formulera två resonemang i två led som talar för den energikälla du valt, och ett resonemang i två led som talar emot någon av de två energikällorna. Var saklig och använd naturvetenskapliga begrepp.</div>
     <div class="q-context">💡 Kärnkraft: 25 miljarder kWh/år, urantillgångar för 2500 år, 30–50 ton radioaktivt avfall/år, 3 olyckor på 40 år. Vattenkraft: 80 miljoner kWh/år, förnybar, dämmer vattendrag, stora landmassor under vatten.</div>
-    <textarea class="open-textarea" style="min-height:140px;" placeholder="Ställningstagande: ...\n\nFör (1): ... → ...\nFör (2): ... → ...\nMot: ... → ..."></textarea>
+    <textarea class="open-textarea" style="min-height:140px;" placeholder="Ställningstagande: ...\n\nFör (1): ... → ...\nFör (2): ... → ...\nMot: ... → ..." aria-label="NP: ställningstagande kärnkraft eller vattenkraft"></textarea>
     <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa bedömningskommentar</button>
     <div class="model-answer">
       <div class="model-answer-label">📋 Bedömningskommentar</div>

@@ -653,7 +653,7 @@ body::before {
 
   <div class="repeat-mode-strip" id="repeatModeStrip" aria-live="polite">Repetera-läge · <span id="repeatLeftCount">0</span> kvar</div>
 
-  <div class="flashcard-scene" onclick="flipCard()">
+  <div class="flashcard-scene" role="button" tabindex="0" aria-label="Flashkort — klicka för att vända" onclick="flipCard()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();flipCard();}">
     <div class="flashcard-inner" id="fcInner">
       <div class="card-side card-front">
         <div class="card-side-label">Begrepp — klicka för att vända</div>
@@ -709,11 +709,11 @@ body::before {
         <label>Fråga</label>
         <div style="font-size:0.84rem;line-height:1.6;color:var(--text);margin-bottom:8px">Vilket används för att mäta avståndet till Månen? Och vilket används för att mäta havsdjup? Förklara varför för vardera fallet.</div>
         <label>Avstånd till Månen</label>
-        <textarea class="res-textarea" placeholder="Ljus eller ljud? Varför?"></textarea>
+        <textarea class="res-textarea" placeholder="Ljus eller ljud? Varför?" aria-label="Mätning av avstånd till Månen: ljus eller ljud?"></textarea>
       </div>
       <div class="res-step">
         <label>Havsdjup</label>
-        <textarea class="res-textarea" placeholder="Ljus eller ljud? Varför?"></textarea>
+        <textarea class="res-textarea" placeholder="Ljus eller ljud? Varför?" aria-label="Mätning av havsdjup: ljus eller ljud?"></textarea>
       </div>
     </div>
     <button type="button" class="btn-model" onclick="showModel('k8r1')">Visa exempelsvar (E/C/A)</button>
@@ -734,7 +734,7 @@ body::before {
         <label>Fråga</label>
         <div style="font-size:0.84rem;line-height:1.6;color:var(--text);margin-bottom:8px">Beskriv stjärnans livscykel i ordning — från nebulosa till slutstadiet. Förklara vad som händer och varför i varje steg.</div>
         <label>Ditt svar</label>
-        <textarea class="res-textarea" placeholder="Nebulosa → … → slutstadium (nämn också massiva stjärnor om du kan)"></textarea>
+        <textarea class="res-textarea" placeholder="Nebulosa → … → slutstadium (nämn också massiva stjärnor om du kan)" aria-label="Stjärnans livscykel från nebulosa till slutstadium"></textarea>
       </div>
     </div>
     <button type="button" class="btn-model" onclick="showModel('k8r2')">Visa exempelsvar (E/C/A)</button>
@@ -755,7 +755,7 @@ body::before {
         <label>Fråga</label>
         <div style="font-size:0.84rem;line-height:1.6;color:var(--text);margin-bottom:8px">Förklara hur en ökad medeltemperatur påverkar uppkomsten av var och en av de tre naturkatastroferna: översvämning, torka och orkan.</div>
         <label>Ditt svar</label>
-        <textarea class="res-textarea" placeholder="Översvämning … Torka … Orkan …"></textarea>
+        <textarea class="res-textarea" placeholder="Översvämning … Torka … Orkan …" aria-label="Naturkatastrofer och högre medeltemperatur"></textarea>
       </div>
     </div>
     <button type="button" class="btn-model" onclick="showModel('k8r3')">Visa exempelsvar (E/C/A)</button>
@@ -776,7 +776,7 @@ body::before {
         <label>Fråga</label>
         <div style="font-size:0.84rem;line-height:1.6;color:var(--text);margin-bottom:8px">Vad är Big Bang-teorin och vilka observationer stöder den? Resonera i minst två led.</div>
         <label>Ditt svar</label>
-        <textarea class="res-textarea" placeholder="Teorin … Observation 1 … Observation 2 …"></textarea>
+        <textarea class="res-textarea" placeholder="Teorin … Observation 1 … Observation 2 …" aria-label="Big Bang-teorin och observationer som stöder den"></textarea>
       </div>
     </div>
     <button type="button" class="btn-model" onclick="showModel('k8r4')">Visa exempelsvar (E/C/A)</button>

@@ -858,7 +858,7 @@
 
   <div class="repeat-mode-strip" id="repeatModeStrip" aria-live="polite">Repetera-läge · <span id="repeatLeftCount">0</span> kvar</div>
 
-  <div class="flashcard-scene" onclick="flipCard()">
+  <div class="flashcard-scene" role="button" tabindex="0" aria-label="Flashkort — klicka för att vända" onclick="flipCard()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();flipCard();}">
     <div class="flashcard-inner" id="fcInner">
       <div class="card-side card-front">
         <div class="card-side-label">Begrepp — klicka för att vända</div>
@@ -967,7 +967,7 @@
   <div class="question-card" id="fq6">
     <div class="q-number">Fråga 6 · Magnetism</div>
     <div class="q-text">En elektromagnet kan stängas av och sättas på. En vanlig permanent magnet kan inte det. Vad gör en elektromagnet magnetisk?</div>
-    <textarea class="open-textarea" id="ota-fq6" placeholder="Skriv din förklaring här..."></textarea>
+    <textarea class="open-textarea" id="ota-fq6" placeholder="Skriv din förklaring här..." aria-label="Förståelsefråga 6: skriv förklaring"></textarea>
     <div style="display:flex;gap:10px;">
       <button class="btn btn-outline btn-sm" onclick="showModel('fq6')">Visa modellsvar</button>
     </div>
@@ -981,7 +981,7 @@
   <div class="question-card" id="fq7">
     <div class="q-number">Fråga 7 · Transformatorn</div>
     <div class="q-text">Varför används transformatorer när el transporteras långa sträckor i kraftledningar?</div>
-    <textarea class="open-textarea" id="ota-fq7" placeholder="Skriv din förklaring här..."></textarea>
+    <textarea class="open-textarea" id="ota-fq7" placeholder="Skriv din förklaring här..." aria-label="Förståelsefråga 7: skriv förklaring"></textarea>
     <div style="display:flex;gap:10px;">
       <button class="btn btn-outline btn-sm" onclick="showModel('fq7')">Visa modellsvar</button>
     </div>
@@ -995,7 +995,7 @@
   <div class="question-card" id="fq8">
     <div class="q-number">Fråga 8 · Effektlagen</div>
     <div class="q-text">En hushållsapparat drar 10 A när den kopplas in på 230 V. Hur stor effekt har apparaten? Visa uträkning.</div>
-    <textarea class="open-textarea" id="ota-fq8" placeholder="Skriv din uträkning och svar här..."></textarea>
+    <textarea class="open-textarea" id="ota-fq8" placeholder="Skriv din uträkning och svar här..." aria-label="Förståelsefråga 8: uträkning"></textarea>
     <div style="display:flex;gap:10px;">
       <button class="btn btn-outline btn-sm" onclick="showModel('fq8')">Visa modellsvar</button>
     </div>
@@ -1009,7 +1009,7 @@
   <div class="question-card" id="fq9">
     <div class="q-number">Fråga 9 · Statisk elektricitet &amp; influens</div>
     <div class="q-text">När du drar ett kamm genom håret och sedan håller den nära små pappersremsor — vad händer och varför?</div>
-    <textarea class="open-textarea" id="ota-fq9" placeholder="Förklara med begreppen laddning och influens..."></textarea>
+    <textarea class="open-textarea" id="ota-fq9" placeholder="Förklara med begreppen laddning och influens..." aria-label="Förståelsefråga 9: laddning och influens"></textarea>
     <div style="display:flex;gap:10px;">
       <button class="btn btn-outline btn-sm" onclick="showModel('fq9')">Visa modellsvar</button>
     </div>
@@ -1036,7 +1036,7 @@
   <div class="question-card" id="fq11">
     <div class="q-number">Fråga 11 · Generator</div>
     <div class="q-text">En generator och en motor är konstruerade på liknande sätt men gör motsatta saker. Förklara skillnaden.</div>
-    <textarea class="open-textarea" id="ota-fq11" placeholder="Förklara vad en generator resp. en motor omvandlar..."></textarea>
+    <textarea class="open-textarea" id="ota-fq11" placeholder="Förklara vad en generator resp. en motor omvandlar..." aria-label="Förståelsefråga 11: generator och motor"></textarea>
     <div style="display:flex;gap:10px;">
       <button class="btn btn-outline btn-sm" onclick="showModel('fq11')">Visa modellsvar</button>
     </div>
@@ -1050,7 +1050,7 @@
   <div class="question-card" id="fq12">
     <div class="q-number">Fråga 12 · Säkring &amp; NP 2016</div>
     <div class="q-text">I ett rum finns ett antal elektriska apparater, alla kopplade till samma eluttag. När alla används samtidigt bryts strömmen. Förklara varför strömmen plötsligt bryts.</div>
-    <textarea class="open-textarea" id="ota-fq12" placeholder="Använd begreppen ström, överbelastning och säkring..."></textarea>
+    <textarea class="open-textarea" id="ota-fq12" placeholder="Använd begreppen ström, överbelastning och säkring..." aria-label="Förståelsefråga 12: säkring och överbelastning"></textarea>
     <div style="display:flex;gap:10px;">
       <button class="btn btn-outline btn-sm" onclick="showModel('fq12')">Visa modellsvar</button>
     </div>
@@ -1079,7 +1079,7 @@
     <div class="fq-num">Räkneuppgift 1</div>
     <div class="calc-q">En lampa är kopplad till 12 V och har en resistans på 6 Ω. Hur stor är strömmen genom lampan?</div>
     <div class="calc-input">
-      <input type="number" class="calc-inp" id="r1" placeholder="?" step="0.1">
+      <input type="number" class="calc-inp" id="r1" placeholder="?" step="0.1" aria-label="Svar: ström genom lampa i ampere">
       <span class="calc-unit">A</span>
       <button class="btn-check" onclick="chk('r1',2,'r1-res','✅ Rätt! I = U/R = 12/6 = 2 A','❌ Fel. I = U/R = 12/6 = 2 A',0.05)">Kontrollera</button>
     </div>
@@ -1090,7 +1090,7 @@
     <div class="fq-num">Räkneuppgift 2</div>
     <div class="calc-q">En elmotor drar 3 A vid spänningen 230 V. Hur stor är effekten?</div>
     <div class="calc-input">
-      <input type="number" class="calc-inp" id="r2" placeholder="?" step="1">
+      <input type="number" class="calc-inp" id="r2" placeholder="?" step="1" aria-label="Svar: effekt för elmotor i watt">
       <span class="calc-unit">W</span>
       <button class="btn-check" onclick="chk('r2',690,'r2-res','✅ Rätt! P = U·I = 230×3 = 690 W','❌ Fel. P = U·I = 230 V × 3 A = 690 W',1)">Kontrollera</button>
     </div>
@@ -1101,7 +1101,7 @@
     <div class="fq-num">Räkneuppgift 3</div>
     <div class="calc-q">En fläkt använder 60 W i 30 minuter (1800 s). Hur mycket energi förbrukar den?</div>
     <div class="calc-input">
-      <input type="number" class="calc-inp" id="r3" placeholder="?" step="1000">
+      <input type="number" class="calc-inp" id="r3" placeholder="?" step="1000" aria-label="Svar: energi förbrukad av fläkt i joule">
       <span class="calc-unit">J</span>
       <button class="btn-check" onclick="chk('r3',108000,'r3-res','✅ Rätt! E = P·t = 60×1800 = 108 000 J','❌ Fel. E = P·t = 60 W × 1800 s = 108 000 J',1000)">Kontrollera</button>
     </div>
@@ -1112,7 +1112,7 @@
     <div class="fq-num">Räkneuppgift 4</div>
     <div class="calc-q">Spänningen över ett motstånd är 9 V och strömmen är 0,5 A. Hur stor är resistansen?</div>
     <div class="calc-input">
-      <input type="number" class="calc-inp" id="r4" placeholder="?" step="0.1">
+      <input type="number" class="calc-inp" id="r4" placeholder="?" step="0.1" aria-label="Svar: resistans i ohm">
       <span class="calc-unit">Ω</span>
       <button class="btn-check" onclick="chk('r4',18,'r4-res','✅ Rätt! R = U/I = 9/0,5 = 18 Ω','❌ Fel. R = U/I = 9/0,5 = 18 Ω',0.1)">Kontrollera</button>
     </div>
@@ -1123,7 +1123,7 @@
     <div class="fq-num">Räkneuppgift 5</div>
     <div class="calc-q">En glödlampa på 100 W är tänd i 2 timmar (7200 s). Hur stor är energiförbrukningen i kJ?</div>
     <div class="calc-input">
-      <input type="number" class="calc-inp" id="r5" placeholder="?" step="1">
+      <input type="number" class="calc-inp" id="r5" placeholder="?" step="1" aria-label="Svar: energiförbrukning för lampa i kilojoule">
       <span class="calc-unit">kJ</span>
       <button class="btn-check" onclick="chk('r5',720,'r5-res','✅ Rätt! E = 100×7200 = 720 000 J = 720 kJ','❌ Fel. E = 100 W × 7200 s = 720 000 J = 720 kJ',1)">Kontrollera</button>
     </div>
@@ -1149,21 +1149,21 @@
       <div class="res-step">
         <div class="res-step-label">Steg 1 — E-nivå</div>
         <div class="res-step-q">Vad är skillnaden mellan likström och växelström?</div>
-        <textarea class="open-textarea" placeholder="Förklara med egna ord..."></textarea>
+        <textarea class="open-textarea" placeholder="Förklara med egna ord..." aria-label="Likström och växelström: skillnad"></textarea>
         <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa svar</button>
         <div class="feedback-box info">Likström (DC) flödar alltid i samma riktning — som från ett batteri. Växelström (AC) byter riktning många gånger per sekund (50 Hz i Sverige). Solpaneler ger likström, elnätet använder växelström.</div>
       </div>
       <div class="res-step">
         <div class="res-step-label">Steg 2 — C-nivå</div>
         <div class="res-step-q">Varför kan man inte direkt använda en transformator för att höja DC-spänningen från 48 V till 230 V?</div>
-        <textarea class="open-textarea" placeholder="Tänk på hur en transformator fungerar..."></textarea>
+        <textarea class="open-textarea" placeholder="Tänk på hur en transformator fungerar..." aria-label="Transformatorns funktion i solcellsinstallation"></textarea>
         <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa svar</button>
         <div class="feedback-box info">En transformator fungerar genom att ett <strong>varierande magnetfält</strong> i primärspolen inducerar en ström i sekundärspolen. Likström ger ett <strong>konstant</strong> magnetfält — inget varierande fält → ingen inducerad ström → transformatorn fungerar inte. Man behöver en växelriktare (inverter) som omvandlar DC till AC först.</div>
       </div>
       <div class="res-step">
         <div class="res-step-label">Steg 3 — A-nivå</div>
         <div class="res-step-q">Resonera i två led om hur övergången till solenergi i hemmet kan påverka miljön — både positivt och negativt.</div>
-        <textarea class="open-textarea" style="min-height:110px;" placeholder="Resonera: Konsekvens 1... → vilket leder till... Konsekvens 2..."></textarea>
+        <textarea class="open-textarea" style="min-height:110px;" placeholder="Resonera: Konsekvens 1... → vilket leder till... Konsekvens 2..." aria-label="Solceller: ekonomi och miljö i två led"></textarea>
         <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa modellsvar</button>
         <div class="feedback-box info"><strong>Positivt (2 led):</strong> Solpaneler producerar el utan att förbränna fossila bränslen → mindre koldioxidutsläpp → minskad växthuseffekt och klimatpåverkan. <br><br><strong>Negativt (2 led):</strong> Tillverkning av solpaneler kräver sällsynta metaller som måste brytas → gruvdrift skadar miljön lokalt och kräver energi → nettomiljövinsten tar tid att uppnå (energiåterbetalningstid ca 1–3 år).</div>
       </div>
@@ -1179,21 +1179,21 @@
       <div class="res-step">
         <div class="res-step-label">Steg 1 — E-nivå</div>
         <div class="res-step-q">Vad gör en jordfelsbrytare? Förklara hur den skiljer sig från en vanlig säkring.</div>
-        <textarea class="open-textarea" placeholder="Beskriv funktionen..."></textarea>
+        <textarea class="open-textarea" placeholder="Beskriv funktionen..." aria-label="Jordfelsbrytare: funktion"></textarea>
         <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa svar</button>
         <div class="feedback-box info">En <strong>säkring</strong> skyddar mot för hög ström (överbelastning och kortslutning). En <strong>jordfelsbrytare</strong> mäter skillnaden i ström mellan fasledan och nolledan — om el läcker ut via en person (strömläckage) är skillnaden > 30 mA och brytaren löser ut på millisekunder. Säkringen löser inte ut vid ett sådant litet strömläckage, men det är nog för att döda en människa.</div>
       </div>
       <div class="res-step">
         <div class="res-step-label">Steg 2 — C-nivå</div>
         <div class="res-step-q">I ett badrum är risken för elolyckor extra stor. Förklara varför med hjälp av kunskaper om ledare och isolatorer.</div>
-        <textarea class="open-textarea" placeholder="Tänk på vad vatten gör med ledningsförmågan..."></textarea>
+        <textarea class="open-textarea" placeholder="Tänk på vad vatten gör med ledningsförmågan..." aria-label="Vatten och elektrisk ledningsförmåga"></textarea>
         <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa svar</button>
         <div class="feedback-box info">Vatten (särskilt saltvatten/svett) är en <strong>ledare</strong> — det innehåller joner som kan transportera elektrisk laddning. Torr hud är en relativt bra <strong>isolator</strong>, men våt hud leder ström mycket bättre. I ett badrum omges man av vatten och fukt, vilket dramatiskt sänker kroppens resistans och ökar risken för att en elstöt ska bli dödlig. Strömmen kan ta vägen via kroppen till jord.</div>
       </div>
       <div class="res-step">
         <div class="res-step-label">Steg 3 — A-nivå</div>
         <div class="res-step-q">Resonera om varför det är viktigt med elsäkerhetsregler ur ett samhällsperspektiv — resonera i minst två led.</div>
-        <textarea class="open-textarea" style="min-height:110px;" placeholder="Tänk: Individ → samhälle → ekonomi/miljö..."></textarea>
+        <textarea class="open-textarea" style="min-height:110px;" placeholder="Tänk: Individ → samhälle → ekonomi/miljö..." aria-label="Våt elektrisk utrustning: konsekvenser"></textarea>
         <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa modellsvar</button>
         <div class="feedback-box info"><strong>Led 1:</strong> Elsäkerhetsregler minskar risken för elolyckor → färre skadade och döda privatpersoner och hantverkare, vilket minskar mänskligt lidande. <br><br><strong>Led 2:</strong> Brandfarliga installationer orsakar varje år hundratals bränder i Sverige → brandsläckning, sjukvård och återuppbyggnad kostar samhället miljarder kronor och belastar sjukvårds- och räddningstjänstresurser. Satsning på elsäkerhet är därmed ett samhällsekonomiskt lönsamt preventivt arbete.</div>
       </div>
@@ -1209,14 +1209,14 @@
       <div class="res-step">
         <div class="res-step-label">Steg 1 — E-nivå</div>
         <div class="res-step-q">Vad är en elektromagnet och varför kan man reglera dess styrka?</div>
-        <textarea class="open-textarea" placeholder="Förklara principen..."></textarea>
+        <textarea class="open-textarea" placeholder="Förklara principen..." aria-label="Faradayinduktion: princip"></textarea>
         <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa svar</button>
         <div class="feedback-box info">En elektromagnet är en spole av ledande tråd lindad runt en järnkärna. Ström genom spolen skapar ett <strong>magnetfält</strong>. Styrkan kan regleras genom att ändra strömstyrkan eller antalet lindningar. Fördelen mot en permanent magnet är att den kan stängas av.</div>
       </div>
       <div class="res-step">
         <div class="res-step-label">Steg 2 — A-nivå</div>
         <div class="res-step-q">Förklara i två led varför en patient med pacemaker inte bör genomgå MRI, och vad detta innebär för sjukvården.</div>
-        <textarea class="open-textarea" style="min-height:110px;" placeholder="Led 1: Vad händer med pacemakern? Led 2: Konsekvens för patienten och sjukvårdens möjligheter..."></textarea>
+        <textarea class="open-textarea" style="min-height:110px;" placeholder="Led 1: Vad händer med pacemakern? Led 2: Konsekvens för patienten och sjukvårdens möjligheter..." aria-label="Pacemakern och magnetfält: resonemang i två led"></textarea>
         <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa modellsvar</button>
         <div class="feedback-box info"><strong>Led 1:</strong> MRI-kamerans extremt starka magnetfält kan inducera ström i pacemakerns metalldelar och elektronik → pacemakern kan sluta fungera korrekt eller sända felaktiga pulser till hjärtat → livsfarligt för patienten. <br><br><strong>Led 2:</strong> Sjukvården måste använda alternativa undersökningsmetoder (t.ex. röntgen, ultraljud, CT) för patienter med pacemaker, vilket kan ge sämre bildkvalitet för vissa vävnadstyper. Detta begränsar diagnostiska möjligheter och kan fördröja diagnos → visar hur teknologiska landvinningar alltid medför etiska avvägningar och begränsningar.</div>
       </div>
@@ -1232,14 +1232,14 @@
       <div class="res-step">
         <div class="res-step-label">Steg 1 — E-nivå</div>
         <div class="res-step-q">Ge ett exempel på vad ett hushåll kan göra för att förhindra att elektriska apparater skadas vid ett åskväder.</div>
-        <textarea class="open-textarea" placeholder="Beskriv en praktisk åtgärd..."></textarea>
+        <textarea class="open-textarea" placeholder="Beskriv en praktisk åtgärd..." aria-label="Äldre spis och jordat uttag: åtgärd"></textarea>
         <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa svar</button>
         <div class="feedback-box info">Dra ur stickproppen på känsliga apparater (TV, dator) ur vägguttaget under åskvädret. En blixt kan orsaka ett kraftigt spänningsspikar i elnätet som sprider sig via ledningarna och skadar elektroniken. Alternativt: använda ett överspänningsskydd (en typ av grenuttag med inbyggt skydd).</div>
       </div>
       <div class="res-step">
         <div class="res-step-label">Steg 2 — C-nivå</div>
         <div class="res-step-q">Förklara vad som fysikaliskt händer vid ett blixtnedslag som kan skada apparaterna. Koppla till begreppen laddning, spänning och ström.</div>
-        <textarea class="open-textarea" placeholder="Förklara den fysikaliska mekanismen..."></textarea>
+        <textarea class="open-textarea" placeholder="Förklara den fysikaliska mekanismen..." aria-label="Vad händer vid kortslutning"></textarea>
         <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa svar</button>
         <div class="feedback-box info">Åskmolnet bygger upp en stor negativ <strong>laddning</strong>. Marken och byggnader induceras till positiv laddning (influens). När spänningsskillnaden är tillräckligt stor bryter luftens isolerande förmåga — en gnista (blixten) uppstår. Den enorma <strong>ström</strong>pulsen kan fortplantas via elnätet som en spänningsspik med tusentals volt. Elektronik är känslig för spänningar utanför sitt normalintervall och kan bli kortsluten eller bränd.</div>
       </div>
@@ -1255,14 +1255,14 @@
       <div class="res-step">
         <div class="res-step-label">Steg 1 — E-nivå</div>
         <div class="res-step-q">Beskriv skillnaden mellan serie- och parallellkoppling när det gäller vad som händer om en lampa går sönder.</div>
-        <textarea class="open-textarea" placeholder="Förklara för båda kopplingstyperna..."></textarea>
+        <textarea class="open-textarea" placeholder="Förklara för båda kopplingstyperna..." aria-label="Serie och parallellkoppling av lampor"></textarea>
         <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa svar</button>
         <div class="feedback-box info"><strong>Seriekoppling:</strong> Det finns bara en strömväg. Om en lampa går sönder (tråden bryts) bryts hela kretsen → alla lampor slocknar. <br><strong>Parallellkoppling:</strong> Varje lampa har en egen strömväg. Om en lampa går sönder fortsätter strömmen i de andra grenarna → bara den sönder lampan slocknar.</div>
       </div>
       <div class="res-step">
         <div class="res-step-label">Steg 2 — C-nivå</div>
         <div class="res-step-q">Vid seriekoppling av 10 lampor på 230 V — vilken spänning får varje lampa? Varför lyser de svagare än vid parallellkoppling?</div>
-        <textarea class="open-textarea" placeholder="Räkna och förklara..."></textarea>
+        <textarea class="open-textarea" placeholder="Räkna och förklara..." aria-label="Motstånd i serie: beräkning och förklaring"></textarea>
         <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa svar</button>
         <div class="feedback-box info">Vid seriekoppling delar lamporna på den totala spänningen: 230 V ÷ 10 = <strong>23 V per lampa</strong>. En lampa konstruerad för 230 V får bara 23 V → den lyser mycket svagare. Vid parallellkoppling får varje lampa hela 230 V → full ljusstyrka. Det är varför gamla julgransbelysningar alltid var svagare och det var svårt att hitta den trasiga lampan.</div>
       </div>
@@ -1278,7 +1278,7 @@
       <div class="res-step">
         <div class="res-step-label">Steg 1 — E-nivå</div>
         <div class="res-step-q">Var i kretsen ska säkringen placeras för att strömmen alltid bryts om det uppstår ett fel i NÅGON av de fyra apparaterna? Förklara varför.</div>
-        <textarea class="open-textarea" placeholder="Tänk på var all ström måste passera..."></textarea>
+        <textarea class="open-textarea" placeholder="Tänk på var all ström måste passera..." aria-label="Vilken säkring löser ut först"></textarea>
         <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa svar</button>
         <div class="feedback-box info">Säkringen ska placeras i <strong>huvudledningen</strong> — det vill säga i den del av kretsen som all ström måste passera, innan kretsen förgrenar sig till de fyra grenarna. Vid ett fel i vilken som helst apparat ökar strömmen i huvudledningen, och säkringen löser ut. Om säkringen placeras i en av grenarna skyddar den bara den apparat som är i just den grenen.</div>
       </div>
@@ -1303,7 +1303,7 @@
       <span class="np-level E">E-nivå</span>
     </div>
     <div class="q-text">Vad kan ett hushåll göra för att förhindra att elektriska apparater, till exempel TV och dator, skadas vid ett åskväder? Ge ett exempel.</div>
-    <textarea class="open-textarea" placeholder="Skriv ditt svar..."></textarea>
+    <textarea class="open-textarea" placeholder="Skriv ditt svar..." aria-label="NP: öppet svar"></textarea>
     <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa ledtråd / bedömning</button>
     <div class="model-answer">
       <div class="model-answer-label">📋 Bedömningskommentar</div>
@@ -1334,7 +1334,7 @@
       <span class="np-level C">C-nivå</span>
     </div>
     <div class="q-text">I ett rum finns ett antal elektriska apparater. Alla apparater är kopplade till samma eluttag. När alla apparater används samtidigt bryts strömmen. Förklara varför strömmen plötsligt bryts när alla apparater används samtidigt.</div>
-    <textarea class="open-textarea" style="min-height:100px;" placeholder="Skriv din förklaring — tänk: ström, parallellkoppling, säkring, överbelastning..."></textarea>
+    <textarea class="open-textarea" style="min-height:100px;" placeholder="Skriv din förklaring — tänk: ström, parallellkoppling, säkring, överbelastning..." aria-label="NP: parallellkoppling och säkring"></textarea>
     <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa bedömningskommentar</button>
     <div class="model-answer">
       <div class="model-answer-label">📋 Bedömningskommentar</div>
@@ -1350,7 +1350,7 @@
     </div>
     <div class="q-text">Figuren visar en elektrisk krets med fyra inkopplade apparater (parallellkopplade). Apparaterna har olika effekt. I kretsen finns en säkring som gör att strömmen i kretsen bryts om det uppstår ett elektriskt fel i någon av apparaterna. I vilken av punkterna A–E ska en säkring placeras för att strömmen i kretsen ALLTID ska brytas om det uppstår ett elektriskt fel i NÅGON av apparaterna? Förklara varför.</div>
     <div class="q-context">💡 Tänk dig fyra parallella grenar och en gemensam ledning. Punkt A–D är i varje gren, punkt E är i huvudledningen (innan förgreningen).</div>
-    <textarea class="open-textarea" style="min-height:100px;" placeholder="Ange vilken punkt och förklara varför just den..."></textarea>
+    <textarea class="open-textarea" style="min-height:100px;" placeholder="Ange vilken punkt och förklara varför just den..." aria-label="NP: värmeskydd och varm punkt i kabel"></textarea>
     <button class="btn btn-outline btn-sm" onclick="this.nextElementSibling.classList.add('show')">Visa bedömningskommentar</button>
     <div class="model-answer">
       <div class="model-answer-label">📋 Bedömningskommentar</div>
