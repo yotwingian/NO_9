@@ -20,7 +20,7 @@
 [data-theme="dark"]{
   --bg:#0d0d0f;--surface:#161618;--card:#1e1e22;--border:#2a2a32;
   --accent:#a259ff;--accent2:#f5a623;--accent3:#39d353;
-  --bad:#ff4d6d;--text:#e2e2f0;--muted:#6b6b80;
+  --bad:#ff4d6d;--text:#e2e2f0;--muted:#94a3b8;
   --good:#39d353;--warn:#f5a623;
   --mono:'JetBrains Mono',monospace;--card2:#18181c;--border2:#33333c;
   --header-grad-start:#1a0a2e;--golden-a:#1f1400;--golden-b:#2a1c00;--golden-border:rgba(245,166,35,.35);
@@ -91,7 +91,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 .ef-icon{font-size:22px;margin-bottom:4px}
 .ef-name{font-size:12px;font-weight:700;margin-bottom:3px}
 .ef-ex{font-size:10px;color:var(--muted);line-height:1.4}
-.eprinc{background:rgba(57,211,83,.08);border:1px solid rgba(57,211,83,.25);border-radius:10px;padding:12px 14px;margin-top:10px;font-size:13px;color:#a8f0b3;line-height:1.6;text-align:center}
+.eprinc{background:rgba(57,211,83,.08);border:1px solid rgba(57,211,83,.25);border-radius:10px;padding:12px 14px;margin-top:10px;font-size:13px;color:var(--text);line-height:1.6;text-align:center}
 
 /* CARDS */
 .stats-row{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
@@ -141,21 +141,21 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 .fq-card.answered-wrong{border-color:rgba(255,77,109,.35)}
 .fq-feedback{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:13px;line-height:1.5;display:none}
 .fq-feedback.show{display:block}
-.fq-feedback.ok{background:rgba(57,211,83,.1);border-left:3px solid var(--accent3);color:#a8f0b3}
-.fq-feedback.err{background:rgba(255,77,109,.1);border-left:3px solid var(--bad);color:#ffb3c1}
+.fq-feedback.ok{background:rgba(57,211,83,.1);border-left:3px solid var(--accent3);color:var(--good)}
+.fq-feedback.err{background:rgba(255,77,109,.1);border-left:3px solid var(--bad);color:var(--bad)}
 
 /* RÄKNA */
 .calc-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:14px}
 .calc-q{font-weight:700;font-size:15px;margin-bottom:14px;line-height:1.5}
 .calc-input{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.calc-inp{background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:9px 14px;font-family:'JetBrains Mono',monospace;font-size:14px;width:130px;outline:none}
+.calc-inp{background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:9px 14px;font-family:'JetBrains Mono',monospace;font-size:14px;width:130px}
 .calc-inp:focus{border-color:var(--accent)}
 .calc-unit{color:var(--muted);font-size:13px}
 .btn-check{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:9px 18px;cursor:pointer;font-family:'Outfit',sans-serif;font-weight:700;font-size:13px}
 .calc-result{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:13px;display:none}
 .calc-result.show{display:block}
-.calc-result.ok{background:rgba(57,211,83,.1);border-left:3px solid var(--accent3);color:#a8f0b3}
-.calc-result.err{background:rgba(255,77,109,.1);border-left:3px solid var(--bad);color:#ffb3c1}
+.calc-result.ok{background:rgba(57,211,83,.1);border-left:3px solid var(--accent3);color:var(--good)}
+.calc-result.err{background:rgba(255,77,109,.1);border-left:3px solid var(--bad);color:var(--bad)}
 
 /* RESONEMANG */
 .res-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;margin-bottom:16px}
@@ -163,16 +163,16 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 .res-badge.np{background:rgba(162,89,255,.2);color:var(--accent)}
 .res-badge.res{background:rgba(245,166,35,.2);color:var(--accent2)}
 .res-q{font-weight:700;font-size:15px;line-height:1.5;margin-bottom:12px}
-.res-context{background:var(--surface);border-left:3px solid var(--accent2);border-radius:0 8px 8px 0;padding:12px 14px;margin-bottom:14px;font-size:13px;color:#ffd9a0;line-height:1.6}
+.res-context{background:var(--surface);border-left:3px solid var(--accent2);border-radius:0 8px 8px 0;padding:12px 14px;margin-bottom:14px;font-size:13px;color:var(--text);line-height:1.6}
 .res-steps{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
 .res-step{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
 .res-step label{font-size:12px;font-weight:700;color:var(--muted);display:block;margin-bottom:6px;letter-spacing:1px;text-transform:uppercase}
-.res-textarea{width:100%;background:transparent;border:none;color:var(--text);font-family:'Outfit',sans-serif;font-size:13px;resize:none;outline:none;min-height:60px;line-height:1.6}
+.res-textarea{width:100%;background:transparent;border:none;color:var(--text);font-family:'Outfit',sans-serif;font-size:13px;resize:none;min-height:60px;line-height:1.6}
 .btn-model{background:transparent;border:1px solid var(--accent2);color:var(--accent2);padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;transition:all .2s}
 .btn-model:hover{background:rgba(245,166,35,.1)}
 .model-ans{margin-top:10px;background:rgba(245,166,35,.05);border:1px solid rgba(245,166,35,.2);border-radius:10px;padding:14px;font-size:13px;line-height:1.6;display:none}
 .model-ans.show{display:block}
-.model-ans h4{color:var(--accent2);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.model-ans h3{color:var(--accent2);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
 .grade-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
 .grade{font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px}
 .grade-e{background:rgba(162,89,255,.2);color:var(--accent)}
@@ -237,6 +237,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 
 <!-- ===== BEGREPP ===== -->
 <div class="section active" id="sec-begrepp">
+  <h2 class="tab-section-h2">Begrepp</h2>
   <!-- FORMULAS -->
   <div class="fbox">
     <h3>📐 Tre nyckelformler</h3>
@@ -266,7 +267,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
   <div class="golden">
     <h3>⚖️ Mekanikens gyllene regel</h3>
     <div class="golden-rule">F₁ · s₁ = F₂ · s₂</div>
-    <p style="font-size:13px;color:#ffd9a0;line-height:1.6;margin-bottom:12px">
+    <p style="font-size:13px;color:var(--text);line-height:1.6;margin-bottom:12px">
       En enkel maskin kan aldrig ge mer arbete ut än du stoppar in. Du vinner kraft men förlorar sträcka (eller tvärtom). Det totala arbetet är konstant — ingen energi skapas!
     </p>
     <div class="machine-row">
@@ -338,6 +339,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 
 <!-- ===== FÖRSTÅELSE ===== -->
 <div class="section" id="sec-forstaaelse">
+  <h2 class="tab-section-h2">Förståelse</h2>
   <div class="stats-row" style="margin-top:16px">
     <div class="stat"><div class="stat-val" id="fScore" style="color:var(--accent3)">0</div><div class="stat-lbl">Rätt</div></div>
     <div class="stat"><div class="stat-val" id="fPct" style="color:var(--accent2)">0%</div><div class="stat-lbl">Klart</div></div>
@@ -490,7 +492,8 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 
 <!-- ===== RÄKNA ===== -->
 <div class="section" id="sec-rakna">
-  <div style="margin-top:16px;margin-bottom:16px;background:rgba(162,89,255,.08);border:1px solid rgba(162,89,255,.25);border-radius:12px;padding:14px;font-size:13px;line-height:1.9;color:#d4b8ff">
+  <h2 class="tab-section-h2">Räkna</h2>
+  <div style="margin-top:16px;margin-bottom:16px;background:rgba(162,89,255,.08);border:1px solid rgba(162,89,255,.25);border-radius:12px;padding:14px;font-size:13px;line-height:1.9;color:var(--text)">
     <strong>📐 Formler:</strong><br>
     <span class="fc">W = F · s</span> arbete (J) = kraft (N) × sträcka (m)<br>
     <span class="fc">P = W / t</span> effekt (W) = arbete (J) / tid (s)<br>
@@ -556,6 +559,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 
 <!-- ===== RESONEMANG ===== -->
 <div class="section" id="sec-resonemang">
+  <h2 class="tab-section-h2">Resonemang</h2>
 
   <div class="res-card">
     <span class="res-badge np">NP-liknande</span>
@@ -577,7 +581,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     </div>
     <button class="btn-model" onclick="showModel('block')">Visa modellsvar</button>
     <div class="model-ans" id="ma-block">
-      <h4>✅ Modellsvar (NP-nivå)</h4>
+      <h3>✅ Modellsvar (NP-nivå)</h3>
       <p><strong>Samband:</strong> Hävstångsprincipen / gyllene regeln: F₁ · s₁ = F₂ · s₂. Motståndet (mutter) är konstant. Kraftarmen (avstånd hand–stödpunkt) avgör hur mycket kraft som krävs.</p>
       <p style="margin-top:6px"><strong>Resonemang:</strong> Längre kraftarm → lägre kraft behövs för samma vridmoment. Meja håller längst ut → störst kraftarm → minst kraft krävs.</p>
       <p style="margin-top:6px"><strong>Slutsats:</strong> Meja behöver minst kraft eftersom hennes hand sitter längst ifrån muttern (fulcrum), vilket ger den längsta kraftarmen.</p>
@@ -609,7 +613,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     </div>
     <button class="btn-model" onclick="showModel('rutscha')">Visa modellsvar</button>
     <div class="model-ans" id="ma-rutscha">
-      <h4>✅ Modellsvar</h4>
+      <h3>✅ Modellsvar</h3>
       <p><strong>Lägesenergi:</strong> E = mgh = 30 × 10 × 5 = 1 500 J</p>
       <p style="margin-top:6px"><strong>Omvandling:</strong> Lägesenergin omvandlas successivt till rörelseenergi under nedfärden. Om fri från friktion: E_rörelse = ½mv² = ½ × 30 × 64 = 960 J. Differensen (1500 − 960 = 540 J) har omvandlats till värme och ljud via friktion mot banan.</p>
       <p style="margin-top:6px"><strong>Energiprincipen:</strong> Energi förstörs inte — den omvandlas. Totalt: 1 500 J = 960 J (rörelse) + 540 J (värme/ljud).</p>
@@ -637,7 +641,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     </div>
     <button class="btn-model" onclick="showModel('skruv')">Visa modellsvar</button>
     <div class="model-ans" id="ma-skruv">
-      <h4>✅ Modellsvar</h4>
+      <h3>✅ Modellsvar</h3>
       <p><strong>Gyllene regeln:</strong> F₁ · s₁ = F₂ · s₂. Handtaget rör sig en lång sträcka (cirkelns omkrets × varv) men bilen lyfts bara millimeter. Lång sträcka in → stor kraft ut (bilen). Handkraften behöver vara liten.</p>
       <p style="margin-top:6px"><strong>Kan man lyfta mer?</strong> Ja! Du kan lyfta en tyngd som är tusentals gånger din handkraft — men du måste vrida handtaget väldigt många varv. Det totala arbetet är detsamma: ingen energi skapas, du sprider ut ansträngningen över lång tid/sträcka.</p>
     </div>
@@ -659,7 +663,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     </div>
     <button class="btn-model" onclick="showModel('led')">Visa modellsvar</button>
     <div class="model-ans" id="ma-led">
-      <h4>✅ Modellsvar</h4>
+      <h3>✅ Modellsvar</h3>
       <p><strong>Glödlampa:</strong> W = 60 × 3600 = 216 000 J = 216 kJ. Av dessa → 5% = 10 800 J som ljus, 95% = 205 200 J som oanvändbar värme.</p>
       <p style="margin-top:6px"><strong>LED:</strong> W = 8 × 3600 = 28 800 J = 28,8 kJ. Av dessa → 80% = 23 040 J som ljus, 20% = 5 760 J som värme.</p>
       <p style="margin-top:6px"><strong>Slutsats:</strong> LED använder 7,5× mindre energi för samma ljusmängd. Energiprincipen: energin förstörs inte — den omvandlas, men glödlampan slösar med värme. LED är mer energieffektiv (lägre effekt + högre andel nyttig energi).</p>
@@ -674,7 +678,8 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 
 <!-- ===== NP-FRÅGOR ===== -->
 <div class="section" id="sec-np">
-  <div style="margin-top:16px;margin-bottom:16px;background:rgba(162,89,255,.08);border:1px solid rgba(162,89,255,.25);border-radius:12px;padding:14px;font-size:13px;line-height:1.6;color:#d4b8ff">
+  <h2 class="tab-section-h2">NP-frågor</h2>
+  <div style="margin-top:16px;margin-bottom:16px;background:rgba(162,89,255,.08);border:1px solid rgba(162,89,255,.25);border-radius:12px;padding:14px;font-size:13px;line-height:1.6;color:var(--text)">
     <strong>🎯 Riktiga &amp; NP-liknande frågor</strong> — svara alltid med motivering och visa beräkningar!
   </div>
 
@@ -689,7 +694,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     </div>
     <button class="btn-model" onclick="showModel('np1')">Visa exempelsvar (E/C/A)</button>
     <div class="model-ans" id="ma-np1">
-      <h4>✅ Exempelsvar</h4>
+      <h3>✅ Exempelsvar</h3>
       <p><strong>E:</strong> "Meja behöver minst kraft eftersom hon håller längst ut."</p>
       <p style="margin-top:6px"><strong>C:</strong> "Meja håller längst från muttern (störst kraftarm). Hävstångsprincipen: lång kraftarm → liten kraft behövs för att skapa samma vridmoment/kraft på muttern."</p>
       <p style="margin-top:6px"><strong>A:</strong> "Meja. Hävstångsprincipen/gyllene regeln: F₁·s₁ = F₂·s₂. Kraft × hävarm = konstant. Mejas hävarm är längst → krävs minst kraft F₁. Cornelia har kortast hävarm → behöver störst kraft."</p>
@@ -719,7 +724,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     </div>
     <button class="btn-model" onclick="showModel('np3')">Visa modellsvar</button>
     <div class="model-ans" id="ma-np3">
-      <h4>✅ Modellsvar</h4>
+      <h3>✅ Modellsvar</h3>
       <p><strong>Beräkning:</strong> F_ramp × 6 = 800 × 1 → F_ramp = 800/6 ≈ 133 N</p>
       <p style="margin-top:6px"><strong>Gyllene regeln:</strong> Rampen är en enkel maskin (lutande plan). Längre sträcka (6 m) → lägre kraft (133 N) jämfört med direkt lyft (800 N × 1 m). Det totala arbetet är detsamma: 133 × 6 = 800 × 1 = 800 J. Ingen energi skapas eller förstörs.</p>
     </div>

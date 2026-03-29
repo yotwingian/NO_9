@@ -1,3 +1,11 @@
+.tab-section-h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0 0 1rem;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+
 .theme-toggle {
   position: absolute;
   top: 1rem;
@@ -15,4 +23,28 @@
 .theme-toggle:hover {
   background: var(--card);
   border-color: var(--border2);
+}
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--accent, #2563eb);
+  outline-offset: 2px;
+}
+
+.tab-btn:focus-visible,
+.card-btn:focus-visible,
+.fq-opt:focus-visible,
+.f-opt:focus-visible,
+.mc-option:focus-visible,
+.calc-inp:focus-visible,
+.res-textarea:focus-visible,
+.open-textarea:focus-visible,
+.flashcard-scene:focus-visible,
+.subject-btn:focus-visible,
+.reset-all-btn:focus-visible,
+.tab-reset-btn:focus-visible,
+.back-link:focus-visible,
+.btn-check:focus-visible,
+.btn-model:focus-visible,
+.btn:focus-visible {
+  outline: 2px solid var(--accent, #2563eb);
+  outline-offset: 2px;
 }

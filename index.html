@@ -16,6 +16,7 @@
   --border2: #d0d5e0;
   --text: #1a1f2e;
   --muted: #6b7280;
+  --accent: #2563eb;
   --mono: 'JetBrains Mono', monospace;
   --hero-grad-top: #e8ecf4;
   --hero-star: rgba(0, 0, 0, 0.12);
@@ -29,7 +30,7 @@
   --border: #1e2330;
   --border2: #272f42;
   --text: #e2e8f0;
-  --muted: #64748b;
+  --muted: #94a3b8;
   --hero-grad-top: #0d1020;
   --hero-star: rgba(255, 255, 255, 0.35);
   --ch-coming-bg: rgba(10, 12, 16, 0.72);
@@ -249,7 +250,7 @@ function buildGrids() {
     section.className = 'subject-section' + (subject.id === activeSubject ? ' active' : '');
     section.dataset.sid = subject.id;
 
-    const label = document.createElement('div');
+    const label = document.createElement('h2');
     label.className = 'grid-label';
     label.textContent = subject.icon + '  ' + subject.label + ' — välj ett kapitel';
     section.appendChild(label);

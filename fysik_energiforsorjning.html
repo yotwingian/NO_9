@@ -34,7 +34,7 @@
   --border: #1a2b1e;
   --border2: #223328;
   --text: #e2e8f0;
-  --muted: #64748b;
+  --muted: #94a3b8;
   --accent: #22c55e;
   --accent2: #4ade80;
   --good: #22c55e;
@@ -293,13 +293,13 @@ body {
 }
 .f-opt:hover:not(:disabled) { color: var(--text); border-color: #2d4a35; background: rgba(255,255,255,0.03); }
 .f-opt .opt-letter { font-family: var(--mono); font-size: 0.7rem; font-weight: 600; color: var(--accent); min-width: 1.1rem; margin-top: 0.1rem; }
-.f-opt.correct { border-color: var(--good); background: rgba(34,197,94,0.08); color: #86efac; }
-.f-opt.wrong   { border-color: var(--bad);  background: rgba(239,68,68,0.08);  color: #fca5a5; }
+.f-opt.correct { border-color: var(--good); background: rgba(34,197,94,0.08); color: var(--good); }
+.f-opt.wrong   { border-color: var(--bad);  background: rgba(239,68,68,0.08);  color: var(--bad); }
 .f-opt:disabled { cursor: default; }
 .f-feedback { display: none; margin-top: 0.8rem; padding: 0.7rem 0.9rem; border-radius: 8px; font-size: 0.82rem; line-height: 1.55; }
 .f-feedback.show { display: block; }
-.f-feedback.correct-fb { background: rgba(34,197,94,0.07); border: 1px solid rgba(34,197,94,0.25); color: #86efac; }
-.f-feedback.wrong-fb   { background: rgba(239,68,68,0.07); border: 1px solid rgba(239,68,68,0.2);  color: #fca5a5; }
+.f-feedback.correct-fb { background: rgba(34,197,94,0.07); border: 1px solid rgba(34,197,94,0.25); color: var(--good); }
+.f-feedback.wrong-fb   { background: rgba(239,68,68,0.07); border: 1px solid rgba(239,68,68,0.2);  color: var(--bad); }
 .quiz-summary { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 0.5rem; }
 
 /* RÄKNA (calc) */
@@ -307,14 +307,14 @@ body {
 .calc-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:14px}
 .calc-q{font-weight:700;font-size:15px;margin-bottom:14px;line-height:1.5}
 .calc-input{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.calc-inp{background:var(--card2);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:9px 14px;font-family:var(--mono);font-size:14px;width:130px;outline:none}
+.calc-inp{background:var(--card2);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:9px 14px;font-family:var(--mono);font-size:14px;width:130px}
 .calc-inp:focus{border-color:var(--accent)}
 .calc-unit{color:var(--muted);font-size:13px}
 .btn-check{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:9px 18px;cursor:pointer;font-family:var(--mono);font-weight:700;font-size:13px}
 .calc-result{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:13px;display:none}
 .calc-result.show{display:block}
-.calc-result.ok{background:rgba(34,197,94,.1);border-left:3px solid var(--accent3);color:#86efac}
-.calc-result.err{background:rgba(239,68,68,.1);border-left:3px solid var(--bad);color:#fca5a5}
+.calc-result.ok{background:rgba(34,197,94,.1);border-left:3px solid var(--accent3);color:var(--good)}
+.calc-result.err{background:rgba(239,68,68,.1);border-left:3px solid var(--bad);color:var(--bad)}
 .formula-chip{background:rgba(58,142,255,.15);border:1px solid rgba(58,142,255,.3);border-radius:6px;padding:3px 9px;font-family:var(--mono);font-size:13px;display:inline-block;margin:2px;color:var(--blue)}
 .quiz-score { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); }
 .reset-btn {
@@ -333,12 +333,12 @@ body {
 .res-steps { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
 .res-step { background: var(--card2); border: 1px solid var(--border2); border-radius: 10px; padding: 12px 14px; }
 .res-step label { font-size: 12px; font-weight: 700; color: var(--muted); display: block; margin-bottom: 6px; letter-spacing: 0.06em; text-transform: uppercase; }
-.res-textarea { width: 100%; background: transparent; border: none; color: var(--text); font-family: 'Inter', sans-serif; font-size: 0.82rem; resize: vertical; outline: none; min-height: 60px; line-height: 1.6; }
+.res-textarea { width: 100%; background: transparent; border: none; color: var(--text); font-family: 'Inter', sans-serif; font-size: 0.82rem; resize: vertical; min-height: 60px; line-height: 1.6; }
 .btn-model { background: transparent; border: 1px solid var(--accent2); color: var(--accent2); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-family: var(--mono); font-weight: 700; font-size: 12px; transition: all 0.2s; }
 .btn-model:hover { background: rgba(34,197,94,0.08); }
 .model-ans { margin-top: 10px; background: rgba(58,142,255,0.06); border: 1px solid rgba(58,142,255,0.22); border-radius: 10px; padding: 14px; font-size: 0.82rem; line-height: 1.65; display: none; }
 .model-ans.show { display: block; }
-.model-ans h4 { color: var(--accent2); font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px; }
+.model-ans h3 { color: var(--accent2); font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px; }
 .grade-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
 .grade { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 6px; }
 .grade-e { background: rgba(58,142,255,0.15); color: var(--accent); }
@@ -348,12 +348,12 @@ body {
 .level-block { margin-bottom: 0.8rem; }
 .level-label { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.2rem 0.6rem; border-radius: 4px; display: inline-block; margin-bottom: 0.4rem; }
 .lvl-e { background: rgba(34,197,94,0.12); color: var(--good); border: 1px solid rgba(34,197,94,0.25); }
-.lvl-c { background: rgba(59,130,246,0.12); color: #93c5fd; border: 1px solid rgba(59,130,246,0.25); }
-.lvl-a { background: rgba(168,85,247,0.12); color: #d8b4fe; border: 1px solid rgba(168,85,247,0.25); }
+.lvl-c { background: rgba(59,130,246,0.12); color: var(--text); border: 1px solid rgba(59,130,246,0.25); }
+.lvl-a { background: rgba(168,85,247,0.12); color: var(--text); border: 1px solid rgba(168,85,247,0.25); }
 .level-block p { font-size: 0.83rem; color: var(--muted); line-height: 1.65; padding-left: 0.5rem; }
 
 /* ── NP ── */
-.np-intro { background: rgba(34,197,94,0.05); border: 1px solid rgba(34,197,94,0.2); border-radius: 10px; padding: 0.9rem 1.1rem; margin-bottom: 1.5rem; font-size: 0.82rem; color: #86efac; line-height: 1.6; }
+.np-intro { background: rgba(34,197,94,0.05); border: 1px solid rgba(34,197,94,0.2); border-radius: 10px; padding: 0.9rem 1.1rem; margin-bottom: 1.5rem; font-size: 0.82rem; color: var(--text); line-height: 1.6; }
 .np-question { background: var(--card); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 1.2rem; overflow: hidden; }
 .np-qheader { display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 1.4rem; cursor: pointer; gap: 1rem; }
 .np-qheader:hover { background: rgba(255,255,255,0.02); }
@@ -363,7 +363,7 @@ body {
 .np-body.show { display: block; }
 .np-scenario { font-size: 0.84rem; color: var(--muted); line-height: 1.75; margin: 1rem 0; padding: 0.9rem 1.1rem; background: var(--card2); border-radius: 8px; border-left: 3px solid var(--accent); }
 .np-task { font-size: 0.88rem; font-weight: 600; color: var(--text); margin: 0.8rem 0 1rem; line-height: 1.5; }
-.np-tip { font-size: 0.78rem; color: #93c5fd; line-height: 1.6; margin-top: 0.6rem; padding: 0.6rem 0.8rem; background: rgba(59,130,246,0.06); border: 1px solid rgba(59,130,246,0.15); border-radius: 6px; }
+.np-tip { font-size: 0.78rem; color: var(--text); line-height: 1.6; margin-top: 0.6rem; padding: 0.6rem 0.8rem; background: rgba(59,130,246,0.06); border: 1px solid rgba(59,130,246,0.15); border-radius: 6px; }
 
 /* ── Energiomvandlingskedja ── */
 .chain {
@@ -432,6 +432,7 @@ body {
      TAB 1: BEGREPP
 ════════════════════════════════ -->
 <div class="section active" id="sec-begrepp">
+  <h2 class="tab-section-h2">Begrepp</h2>
 
   <!-- Energiformer -->
   <div class="infobox-title" style="font-family:var(--mono);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.8rem;">⚡ Sex energiformer att kunna</div>
@@ -535,6 +536,7 @@ body {
      TAB 2: FÖRSTÅELSE
 ════════════════════════════════ -->
 <div class="section" id="sec-forsta">
+  <h2 class="tab-section-h2">Förståelse</h2>
   <div class="quiz-summary">
     <span class="quiz-score" id="quizScore">Rätt: 0 / 0</span>
     <button class="reset-btn" onclick="resetQuiz()">↺ Börja om</button>
@@ -546,7 +548,8 @@ body {
      TAB 3: RÄKNA
 ════════════════════════════════ -->
 <div class="section" id="sec-rakna">
-  <div style="margin-top:16px;margin-bottom:16px;background:rgba(58,142,255,.08);border:1px solid rgba(58,142,255,.25);border-radius:12px;padding:14px;font-size:13px;line-height:1.8;color:#a8d4ff">
+  <h2 class="tab-section-h2">Räkna</h2>
+  <div style="margin-top:16px;margin-bottom:16px;background:rgba(58,142,255,.08);border:1px solid rgba(58,142,255,.25);border-radius:12px;padding:14px;font-size:13px;line-height:1.8;color:var(--text)">
     <strong>📐 Formler att använda:</strong><br>
     <span class="formula-chip">P = E/t</span> effekt<br>
     <span class="formula-chip">E = P · t</span> energi<br>
@@ -614,6 +617,7 @@ body {
      TAB 3: RESONEMANG
 ════════════════════════════════ -->
 <div class="section" id="sec-resonemang">
+  <h2 class="tab-section-h2">Resonemang</h2>
 
   <div class="infobox" style="margin-bottom:1.5rem">
     <div class="infobox-title">💡 Ställningstagande — NP-mall</div>
@@ -643,7 +647,7 @@ body {
     </div>
     <button type="button" class="btn-model" onclick="showModel('k9r1')">Visa exempelsvar (E/C/A)</button>
     <div class="model-ans" id="ma-k9r1">
-      <h4>Exempelsvar</h4>
+      <h3>Exempelsvar</h3>
       <p><strong>E:</strong> Fossila bränslen ger koldioxid som är dåligt för miljön. De tar slut också.</p>
       <p style="margin-top:8px"><strong>C:</strong> Klimatperspektiv: Förbränning av fossila bränslen frigör koldioxid som lagrats i miljontals år → halten CO₂ i atmosfären ökar → växthuseffekten förstärks → medeltemperaturen stiger → extremväder och havsnivåhöjning. Resursperspektiv: Fossila bränslen är icke-förnybara → de bildas på geologiska tidsskalor (miljoner år) → när de är slut finns inga mer → energiförsörjningen kraschar om vi inte ställt om i tid.</p>
       <p style="margin-top:8px"><strong>A:</strong> Klimatperspektiv: Fossila bränslen (kol, olja, naturgas) innehåller kol som bundits ur atmosfären för hundratals miljoner år sedan. Vid förbränning frigörs CO₂ tillbaka på årtionden — en flödesrubbning som atmosfären inte hinner anpassa sig till → CO₂-halten ökar (från 280 ppm förindustriellt till &gt;420 ppm idag) → förstärkt växthuseffekt → temperaturökning med kaskadeffekter (glaciärsmältning, havsförsurning, extremväder). Resursperspektiv: Fossila bränslen är ändliga — de bildas under geologiska tidsperioder och bryts på industriell skala sedan 1800-talet. Oljepeak och gasfyndigheternas ändlighet innebär att priserna stiger och geopolitiska konflikter om resurser ökar → samhällen som inte ställt om till förnybara alternativ drabbas av energifattigdom och instabilitet.</p>
@@ -676,7 +680,7 @@ body {
     </div>
     <button type="button" class="btn-model" onclick="showModel('k9r2')">Visa exempelsvar (E/C/A)</button>
     <div class="model-ans" id="ma-k9r2">
-      <h4>Exempelsvar</h4>
+      <h3>Exempelsvar</h3>
       <p><strong>E (dubbfria):</strong> Jag väljer dubbfria. De ger mindre partiklar i luften, vilket är bra för miljön. De drar också lite mindre bränsle. Men de bromsar lite längre på is.</p>
       <p style="margin-top:8px"><strong>C (dubbfria):</strong> FÖR: Dubbfria däck river upp 10 gånger färre partiklar från asfalten (2 vs 20 μg/m³) → bättre luftkvalitet i städer → färre luftvägssjukdomar. FÖR: Lägre bränsleförbrukning (0,80 vs 0,85 l/mil) → mindre koldioxidutsläpp per körd mil → lägre klimatpåverkan. EMOT dubbade: Dubbarnas slitage på asfalt frigör fina partiklar som är särskilt skadliga för barn och äldre med luftvägssjukdomar.</p>
       <p style="margin-top:8px"><strong>A (dubbade):</strong> FÖR: Dubbade däck ger 40 m bromssträcka på is jämfört med 50 m för dubbfria — 10 meters kortare bromssträcka kan vara skillnaden mellan en olycka och ett undvikande vid låga hastigheter på isiga vägar, vilket är primär trafiksäkerhet. FÖR: Sverige har långa vintrar med is och hårdpackad snö i inlandet; dubbens mekaniska grepp mot isskorpan ger ett fysikaliskt förankrat friktionsgrepp som lamellmönstret i dubbfria däck inte kan matcha på ren is. EMOT dubbfria: Dubbfria däck slits 50&nbsp;% snabbare (3 mm vs 2 mm per 1000 km) → kortare livslängd → fler däckbyten → mer resursåtgång och avfall, vilket delvis motverkar den lägre bränsleförbrukningen ur ett livscykelperspektiv.</p>
@@ -699,7 +703,7 @@ body {
     </div>
     <button type="button" class="btn-model" onclick="showModel('k9r3')">Visa exempelsvar (E/C/A)</button>
     <div class="model-ans" id="ma-k9r3">
-      <h4>Exempelsvar</h4>
+      <h3>Exempelsvar</h3>
       <p><strong>E:</strong> a) Passivhus använder mindre energi, vilket är bra för miljön. b) Sidan drivs av ett näringsorgan som kan vilja sälja något. Det kan göra informationen vinklad.</p>
       <p style="margin-top:8px"><strong>C:</strong> a) Passivhus förbrukar ~36&nbsp;% mindre energi per m² än vanliga hus (70 vs 110 kWh/m² och år) → lägre koldioxidutsläpp om energin kommer från fossila källor → minskad klimatpåverkan. b) Perspektiv 1 (avsändare): Källan är Svenskt Näringsliv — ett intresseorgan för företag. De kan ha ekonomiska intressen av att framhäva byggsektorns miljöarbete, vilket kan innebära att nackdelar med passivhus tonas ned. Perspektiv 2 (ålder): Artikeln är från 2008 — byggnormer och teknik har förändrats sedan dess, nyare data kan ge en annan bild.</p>
       <p style="margin-top:8px"><strong>A:</strong> a) Passivhus minimerar värmeförluster genom välisolerad klimatskärm (väggar, tak, fönster med lågt U-värde) och värmeåtervinning från ventilationsluft. Termodynamiskt innebär det att energiflödet ut ur byggnaden minskar drastiskt (Q = U·A·ΔT) → behovet av tillförd energi minskar med &gt;35&nbsp;% → lägre primärenergianvändning och utsläpp under hela byggnadens livstid. b) Trovärdighet perspektiv 1 (intressekonflikt): Miljönytta.se drivs av Svenskt Näringsliv vars syfte är att gynna svenska företag — inklusive byggbranschen. Framställningen kan vara selektiv: positiva resultat lyfts, potentiella nackdelar (höga byggkostnader, fuktproblem i täta konstruktioner) nämns inte, vilket minskar trovärdigheten för en nyanserad vetenskaplig bedömning. b) Trovärdighet perspektiv 2 (primärkälla saknas): Siffrorna (70 kWh/m²) hänvisas inte till oberoende vetenskapliga mätningar eller peer-reviewade studier — det är en webbartikel utan källhänvisningar, vilket gör det svårt att verifiera påståendena oberoende.</p>
@@ -724,7 +728,7 @@ body {
     </div>
     <button type="button" class="btn-model" onclick="showModel('k9r4')">Visa exempelsvar (E/C/A)</button>
     <div class="model-ans" id="ma-k9r4">
-      <h4>Exempelsvar</h4>
+      <h3>Exempelsvar</h3>
       <p><strong>E:</strong> Solen strålar ut UV som kan ge hudcancer. Värmestrålning kan ge solsting.</p>
       <p style="margin-top:8px"><strong>C:</strong> UV-strålning: UV-strålning har kort våglängd och hög energi → kan skada DNA i hudceller → ökad risk för hudcancer (melanom). Värmestrålning: Infraröd strålning absorberas av kroppen som värme → vid kraftig exponering stiger kroppstemperaturen → risk för värmeslag och uttorkning, som kan vara livsfarligt.</p>
       <p style="margin-top:8px"><strong>A:</strong> UV-strålning: UV-B-strålning (280–315 nm) har tillräcklig fotonenergi för att bryta kovalenta bindningar i DNA-molekylen → bidrar till tymindimerbildning → om DNA-reparationsmekanismerna inte hinner rätta till skadan kan mutationer ackumuleras i hudceller → okontrollerad celldelning → hudcancer (basalcellscancer, skivepitelcancer, melanom). Risken ökar vid upprepade brännskador. Värmestrålning: Infraröd strålning (IR) absorberas effektivt av kroppsvävnad och omvandlas till termisk energi. Vid långvarig intensiv exponering (t.ex. direkt sol utan skydd) kan kroppens termoreglering (svettning, vasodilation) inte kompensera → kärntemperaturen stiger &gt; 40&nbsp;°C → denaturering av enzymer och proteiner → värmeslag med risk för organsvikt och dödsfall. Dehydrering vid svettning förvärrar situationen ytterligare.</p>
@@ -737,6 +741,7 @@ body {
      TAB 4: NP-FRÅGOR
 ════════════════════════════════ -->
 <div class="section" id="sec-np">
+  <h2 class="tab-section-h2">NP-frågor</h2>
 
   <div class="np-intro">
     📋 Dessa frågor är hämtade direkt från eller utformade i stil med riktiga Nationella Prov. Öppna frågorna och försök svara i flera led — E, C och A visas när du öppnar.

@@ -42,7 +42,7 @@
   --bad: #ff4d6d;
   --warn: #ffd23f;
   --text: #dde3f5;
-  --muted: #6b7599;
+  --muted: #94a3b8;
   --good: #06d6a0;
   --mono: 'JetBrains Mono', monospace;
   --card2: #151a2a;
@@ -166,21 +166,21 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 .fq-card.answered-wrong{border-color:rgba(255,77,109,.35)}
 .fq-feedback{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:13px;line-height:1.5;display:none}
 .fq-feedback.show{display:block}
-.fq-feedback.ok{background:rgba(6,214,160,.1);border-left:3px solid var(--accent3);color:#a0f0d5}
-.fq-feedback.err{background:rgba(255,77,109,.1);border-left:3px solid var(--bad);color:#ffb3c1}
+.fq-feedback.ok{background:rgba(6,214,160,.1);border-left:3px solid var(--accent3);color:var(--good)}
+.fq-feedback.err{background:rgba(255,77,109,.1);border-left:3px solid var(--bad);color:var(--bad)}
 
 /* RÄKNA */
 .calc-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:14px}
 .calc-q{font-weight:700;font-size:15px;margin-bottom:14px;line-height:1.5}
 .calc-input{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.calc-inp{background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:9px 14px;font-family:'JetBrains Mono',monospace;font-size:14px;width:130px;outline:none}
+.calc-inp{background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:9px 14px;font-family:'JetBrains Mono',monospace;font-size:14px;width:130px}
 .calc-inp:focus{border-color:var(--accent)}
 .calc-unit{color:var(--muted);font-size:13px}
 .btn-check{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:9px 18px;cursor:pointer;font-family:'Outfit',sans-serif;font-weight:700;font-size:13px}
 .calc-result{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:13px;display:none}
 .calc-result.show{display:block}
-.calc-result.ok{background:rgba(6,214,160,.1);border-left:3px solid var(--accent3);color:#a0f0d5}
-.calc-result.err{background:rgba(255,77,109,.1);border-left:3px solid var(--bad);color:#ffb3c1}
+.calc-result.ok{background:rgba(6,214,160,.1);border-left:3px solid var(--accent3);color:var(--good)}
+.calc-result.err{background:rgba(255,77,109,.1);border-left:3px solid var(--bad);color:var(--bad)}
 .formula-chip{background:rgba(58,142,255,.15);border:1px solid rgba(58,142,255,.3);border-radius:6px;padding:3px 9px;font-family:'JetBrains Mono',monospace;font-size:13px;display:inline-block;margin:2px;color:var(--accent2)}
 
 /* RESONEMANG */
@@ -189,16 +189,16 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 .res-badge.np{background:rgba(58,142,255,.2);color:var(--accent)}
 .res-badge.res{background:rgba(255,210,63,.2);color:var(--warn)}
 .res-q{font-weight:700;font-size:15px;line-height:1.5;margin-bottom:12px}
-.res-context{background:var(--surface);border-left:3px solid var(--accent2);border-radius:0 8px 8px 0;padding:12px 14px;margin-bottom:14px;font-size:13px;color:#a8d4ff;line-height:1.6}
+.res-context{background:var(--surface);border-left:3px solid var(--accent2);border-radius:0 8px 8px 0;padding:12px 14px;margin-bottom:14px;font-size:13px;color:var(--text);line-height:1.6}
 .res-steps{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
 .res-step{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
 .res-step label{font-size:12px;font-weight:700;color:var(--muted);display:block;margin-bottom:6px;letter-spacing:1px;text-transform:uppercase}
-.res-textarea{width:100%;background:transparent;border:none;color:var(--text);font-family:'Outfit',sans-serif;font-size:13px;resize:none;outline:none;min-height:60px;line-height:1.6}
+.res-textarea{width:100%;background:transparent;border:none;color:var(--text);font-family:'Outfit',sans-serif;font-size:13px;resize:none;min-height:60px;line-height:1.6}
 .btn-model{background:transparent;border:1px solid var(--accent2);color:var(--accent2);padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;transition:all .2s}
 .btn-model:hover{background:rgba(0,212,255,.1)}
 .model-ans{margin-top:10px;background:rgba(0,212,255,.05);border:1px solid rgba(0,212,255,.2);border-radius:10px;padding:14px;font-size:13px;line-height:1.6;display:none}
 .model-ans.show{display:block}
-.model-ans h4{color:var(--accent2);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.model-ans h3{color:var(--accent2);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
 .grade-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
 .grade{font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px}
 .grade-e{background:rgba(58,142,255,.2);color:var(--accent)}
@@ -260,6 +260,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 
 <!-- ===== BEGREPP ===== -->
 <div class="section active" id="sec-begrepp">
+  <h2 class="tab-section-h2">Begrepp</h2>
 
   <!-- FORMULAS -->
   <div class="formula-box">
@@ -361,6 +362,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 
 <!-- ===== FÖRSTÅELSE ===== -->
 <div class="section" id="sec-forstaaelse">
+  <h2 class="tab-section-h2">Förståelse</h2>
   <div class="stats-row" style="margin-top:16px">
     <div class="stat"><div class="stat-val" id="fScore" style="color:var(--accent3)">0</div><div class="stat-lbl">Rätt</div></div>
     <div class="stat"><div class="stat-val" id="fPct" style="color:var(--accent2)">0%</div><div class="stat-lbl">Klart</div></div>
@@ -513,7 +515,8 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 
 <!-- ===== RÄKNA ===== -->
 <div class="section" id="sec-rakna">
-  <div style="margin-top:16px;margin-bottom:16px;background:rgba(58,142,255,.08);border:1px solid rgba(58,142,255,.25);border-radius:12px;padding:14px;font-size:13px;line-height:1.8;color:#a8d4ff">
+  <h2 class="tab-section-h2">Räkna</h2>
+  <div style="margin-top:16px;margin-bottom:16px;background:rgba(58,142,255,.08);border:1px solid rgba(58,142,255,.25);border-radius:12px;padding:14px;font-size:13px;line-height:1.8;color:var(--text)">
     <strong>📐 Formler att använda:</strong><br>
     <span class="formula-chip">p = F / A</span> tryck (Pa) = kraft (N) / area (m²)<br>
     <span class="formula-chip">p = ρ · g · h</span> vätsketryck; g = 10 m/s²<br>
@@ -579,6 +582,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 
 <!-- ===== RESONEMANG ===== -->
 <div class="section" id="sec-resonemang">
+  <h2 class="tab-section-h2">Resonemang</h2>
 
   <div class="res-card">
     <span class="res-badge np">NP-liknande</span>
@@ -600,7 +604,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     </div>
     <button class="btn-model" onclick="showModel('fartyg')">Visa modellsvar</button>
     <div class="model-ans" id="ma-fartyg">
-      <h4>✅ Modellsvar (NP-nivå)</h4>
+      <h3>✅ Modellsvar (NP-nivå)</h3>
       <p><strong>Steg 1:</strong> Salt höjer vattnets densitet. Saltvatten (t.ex. Medelhavet, ρ ≈ 1 025 kg/m³) är tätare än sötvatten (ρ = 1 000 kg/m³).</p>
       <p style="margin-top:6px"><strong>Steg 2:</strong> Lyftkraften beräknas via F_L = ρ_vätska · V · g. Ju högre densitet hos vätskan → desto större lyftkraft på fartyget (för samma nedsänkt volym).</p>
       <p style="margin-top:6px"><strong>Steg 3:</strong> I saltvatten är lyftkraften större → fartyget flyter högre (djupgåendet minskar). Det kan då lasta mer utan att sjunka. I sötvatten är lyftkraften mindre → fartyget sjunker djupare → måste lasta av last för att inte gå under.</p>
@@ -628,7 +632,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     </div>
     <button class="btn-model" onclick="showModel('klack')">Visa modellsvar</button>
     <div class="model-ans" id="ma-klack">
-      <h4>✅ Modellsvar</h4>
+      <h3>✅ Modellsvar</h3>
       <p><strong>Klack:</strong> p = F/A = 600 / 0,0001 = 6 000 000 Pa = 6 MPa — enormt tryck!</p>
       <p style="margin-top:6px"><strong>Platt sko:</strong> p = 600 / 0,02 = 30 000 Pa — 200× lägre tryck.</p>
       <p style="margin-top:6px"><strong>Konsekvens:</strong> Stilettklacken koncentrerar hela kroppstyngden på 1 cm² → kan skada parkettgolv, sjunker igenom snö/mjuk jord. Platta skor fördelar kraften över stor area → lägre tryck → skadar inte underlaget. Samma kraft, helt olika tryck beroende på area.</p>
@@ -651,7 +655,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     </div>
     <button class="btn-model" onclick="showModel('ballong')">Visa modellsvar</button>
     <div class="model-ans" id="ma-ballong">
-      <h4>✅ Modellsvar</h4>
+      <h3>✅ Modellsvar</h3>
       <p><strong>Stiger:</strong> Brännaren värmer luften inuti → den expanderar → densiteten sjunker. Ballongen + varm luft får lägre genomsnittsdensitet än omgivande kall luft → lyftkraften överstiger tyngdkraften → stiger (Arkimedes princip).</p>
       <p style="margin-top:6px"><strong>Sjunker:</strong> Piloten öppnar ventilen → varm luft strömmar ut, ersätts av kallare → densiteten ökar → ballongen + last blir tyngre → sjunker kontrollerat.</p>
       <p style="margin-top:6px"><strong>Konstant höjd:</strong> Lyftkraft = tyngdkraft. Piloten justerar brännaren för att hålla rätt lufttemperatur.</p>
@@ -674,7 +678,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     </div>
     <button class="btn-model" onclick="showModel('sugrör')">Visa modellsvar</button>
     <div class="model-ans" id="ma-sugrör">
-      <h4>✅ Modellsvar</h4>
+      <h3>✅ Modellsvar</h3>
       <p><strong>På Jorden:</strong> Sugning skapar undertryck inuti röret. Atmosfärens tryck (≈101 325 Pa) på vätskan utanför är högre → trycket driver vätskan upp i röret. Det är inte "sugkraften" som lyfter — det är lufttrycket som trycker upp.</p>
       <p style="margin-top:6px"><strong>På Månen:</strong> Det finns inget atmosfärstryck. Inget tryck verkar på vätskan utifrån → inget kan trycka upp den i röret → sugrör fungerar inte. Astronauter dricker från slutna trycksatta förpackningar istället.</p>
       <div class="grade-row">
@@ -688,8 +692,9 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 
 <!-- ===== NP-FRÅGOR ===== -->
 <div class="section" id="sec-np">
+  <h2 class="tab-section-h2">NP-frågor</h2>
 
-  <div style="margin-top:16px;margin-bottom:16px;background:rgba(58,142,255,.08);border:1px solid rgba(58,142,255,.25);border-radius:12px;padding:14px;font-size:13px;line-height:1.6;color:#a8d4ff">
+  <div style="margin-top:16px;margin-bottom:16px;background:rgba(58,142,255,.08);border:1px solid rgba(58,142,255,.25);border-radius:12px;padding:14px;font-size:13px;line-height:1.6;color:var(--text)">
     <strong>🎯 Riktiga NP-frågor</strong> från ämnesproven 2016. Motivera alltid dina svar!
   </div>
 
@@ -707,7 +712,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     </div>
     <button class="btn-model" onclick="showModel('np1')">Visa exempelsvar (E/C/A)</button>
     <div class="model-ans" id="ma-np1">
-      <h4>✅ Exempelsvar</h4>
+      <h3>✅ Exempelsvar</h3>
       <p><strong>E:</strong> "I saltvatten flyter fartyget högre och kan ta mer last."</p>
       <p style="margin-top:6px"><strong>C:</strong> "Saltvatten har högre densitet än sötvatten. Lyftkraften är större i saltvatten → fartyget flyter högre → kan lasta mer utan att sjunka djupare än tillåtet. I sötvatten (lägre densitet) är lyftkraften mindre → fartyget måste lasta av."</p>
       <p style="margin-top:6px"><strong>A:</strong> Komplett svar som kopplar salthalt → densitet stiger → F_L = ρ·V·g ökar → fartyget flyter med samma last men djupgåendet minskar → mer last möjlig. Tydlig kedja av orsak och verkan med rätt begrepp.</p>
@@ -747,7 +752,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     </div>
     <button class="btn-model" onclick="showModel('np3')">Visa modellsvar</button>
     <div class="model-ans" id="ma-np3">
-      <h4>✅ Modellsvar</h4>
+      <h3>✅ Modellsvar</h3>
       <p><strong>Beräkning:</strong> A_total = 40 × 0,00005 = 0,002 m²<br>p = F/A = 750 / 0,002 = 375 000 Pa = 375 kPa</p>
       <p style="margin-top:6px"><strong>Förklaring:</strong> Spikskor sprider vikten på många spikar → lägre tryck per spik → sjunker inte ner i myren. Jämför: om man bara stod på EN spik: p = 750/0,00005 = 15 000 000 Pa → sjunker direkt. Stor area = litet tryck (p = F/A).</p>
     </div>

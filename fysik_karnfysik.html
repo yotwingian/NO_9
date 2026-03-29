@@ -34,7 +34,7 @@
   --border: #252a38;
   --border2: #2e3548;
   --text: #e2e8f0;
-  --muted: #64748b;
+  --muted: #94a3b8;
   --accent: #f97316;
   --accent2: #fb923c;
   --good: #22c55e;
@@ -444,9 +444,9 @@ body {
   padding: 0.15rem 0.5rem;
   border-radius: 4px;
 }
-.rb-alpha { background: rgba(239,68,68,0.15); color: #fca5a5; border: 1px solid rgba(239,68,68,0.3); }
-.rb-beta  { background: rgba(234,179,8,0.15); color: #fde68a; border: 1px solid rgba(234,179,8,0.3); }
-.rb-gamma { background: rgba(59,130,246,0.15); color: #93c5fd; border: 1px solid rgba(59,130,246,0.3); }
+.rb-alpha { background: rgba(239,68,68,0.15); color: var(--bad); border: 1px solid rgba(239,68,68,0.3); }
+.rb-beta  { background: rgba(234,179,8,0.15); color: var(--text); border: 1px solid rgba(234,179,8,0.3); }
+.rb-gamma { background: rgba(59,130,246,0.15); color: var(--text); border: 1px solid rgba(59,130,246,0.3); }
 
 /* ── Förståelse-quiz ── */
 .f-question {
@@ -499,8 +499,8 @@ body {
   min-width: 1.1rem;
   margin-top: 0.1rem;
 }
-.f-opt.correct { border-color: var(--good); background: rgba(34,197,94,0.08); color: #86efac; }
-.f-opt.wrong   { border-color: var(--bad); background: rgba(239,68,68,0.08); color: #fca5a5; }
+.f-opt.correct { border-color: var(--good); background: rgba(34,197,94,0.08); color: var(--good); }
+.f-opt.wrong   { border-color: var(--bad); background: rgba(239,68,68,0.08); color: var(--bad); }
 .f-opt:disabled { cursor: default; }
 
 .f-feedback {
@@ -512,22 +512,22 @@ body {
   line-height: 1.55;
 }
 .f-feedback.show { display: block; }
-.f-feedback.correct-fb { background: rgba(34,197,94,0.07); border: 1px solid rgba(34,197,94,0.25); color: #86efac; }
-.f-feedback.wrong-fb   { background: rgba(239,68,68,0.07); border: 1px solid rgba(239,68,68,0.2); color: #fca5a5; }
+.f-feedback.correct-fb { background: rgba(34,197,94,0.07); border: 1px solid rgba(34,197,94,0.25); color: var(--good); }
+.f-feedback.wrong-fb   { background: rgba(239,68,68,0.07); border: 1px solid rgba(239,68,68,0.2); color: var(--bad); }
 
 /* RÄKNA (calc) */
 .fq-num{font-size:11px;font-weight:700;letter-spacing:1px;color:var(--muted);text-transform:uppercase;margin-bottom:6px}
 .calc-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:14px}
 .calc-q{font-weight:700;font-size:15px;margin-bottom:14px;line-height:1.5}
 .calc-input{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.calc-inp{background:var(--card2);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:9px 14px;font-family:var(--mono);font-size:14px;width:130px;outline:none}
+.calc-inp{background:var(--card2);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:9px 14px;font-family:var(--mono);font-size:14px;width:130px}
 .calc-inp:focus{border-color:var(--accent)}
 .calc-unit{color:var(--muted);font-size:13px}
 .btn-check{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:9px 18px;cursor:pointer;font-family:var(--mono);font-weight:700;font-size:13px}
 .calc-result{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:13px;display:none}
 .calc-result.show{display:block}
-.calc-result.ok{background:rgba(34,197,94,.1);border-left:3px solid var(--accent3);color:#86efac}
-.calc-result.err{background:rgba(239,68,68,.1);border-left:3px solid var(--bad);color:#fca5a5}
+.calc-result.ok{background:rgba(34,197,94,.1);border-left:3px solid var(--accent3);color:var(--good)}
+.calc-result.err{background:rgba(239,68,68,.1);border-left:3px solid var(--bad);color:var(--bad)}
 .formula-chip{background:rgba(58,142,255,.15);border:1px solid rgba(58,142,255,.3);border-radius:6px;padding:3px 9px;font-family:var(--mono);font-size:13px;display:inline-block;margin:2px;color:var(--blue)}
 
 .quiz-summary {
@@ -612,7 +612,6 @@ body {
   font-family: 'Inter', sans-serif;
   font-size: 0.82rem;
   resize: vertical;
-  outline: none;
   min-height: 60px;
   line-height: 1.6;
 }
@@ -640,7 +639,7 @@ body {
   display: none;
 }
 .model-ans.show { display: block; }
-.model-ans h4 {
+.model-ans h3 {
   color: var(--accent2);
   font-size: 11px;
   font-weight: 700;
@@ -673,8 +672,8 @@ body {
   margin-bottom: 0.4rem;
 }
 .lvl-e { background: rgba(34,197,94,0.12); color: var(--good); border: 1px solid rgba(34,197,94,0.25); }
-.lvl-c { background: rgba(59,130,246,0.12); color: #93c5fd; border: 1px solid rgba(59,130,246,0.25); }
-.lvl-a { background: rgba(168,85,247,0.12); color: #d8b4fe; border: 1px solid rgba(168,85,247,0.25); }
+.lvl-c { background: rgba(59,130,246,0.12); color: var(--text); border: 1px solid rgba(59,130,246,0.25); }
+.lvl-a { background: rgba(168,85,247,0.12); color: var(--text); border: 1px solid rgba(168,85,247,0.25); }
 
 .level-block p {
   font-size: 0.83rem;
@@ -691,7 +690,7 @@ body {
   padding: 0.9rem 1.1rem;
   margin-bottom: 1.5rem;
   font-size: 0.82rem;
-  color: #fdba74;
+  color: var(--text);
   line-height: 1.6;
 }
 .np-question {
@@ -751,14 +750,13 @@ body {
 }
 .np-tip {
   font-size: 0.78rem;
-  color: var(--muted);
   line-height: 1.6;
   margin-top: 0.5rem;
   padding: 0.6rem 0.8rem;
   background: rgba(59,130,246,0.06);
   border: 1px solid rgba(59,130,246,0.15);
   border-radius: 6px;
-  color: #93c5fd;
+  color: var(--text);
 }
 
 @media (max-width: 600px) {
@@ -817,6 +815,7 @@ body {
      TAB 1: BEGREPP (FLASHCARDS)
 ════════════════════════════════ -->
 <div class="section active" id="sec-begrepp">
+  <h2 class="tab-section-h2">Begrepp</h2>
 
   <!-- Atom-info box -->
   <div class="infobox">
@@ -848,21 +847,21 @@ body {
         <td>Heliumkärna (2p + 2n)</td>
         <td>~cm</td>
         <td>Papper / hud</td>
-        <td style="color:#fca5a5">Stark ★★★</td>
+        <td style="color:var(--text)">Stark ★★★</td>
       </tr>
       <tr>
         <td><span class="rad-badge rb-beta">β beta</span></td>
         <td>Elektron (e⁻)</td>
         <td>~meter</td>
         <td>Aluminiumplåt (~mm)</td>
-        <td style="color:#fde68a">Medel ★★☆</td>
+        <td style="color:var(--text)">Medel ★★☆</td>
       </tr>
       <tr>
         <td><span class="rad-badge rb-gamma">γ gamma</span></td>
         <td>Elektromagnetisk strålning</td>
         <td>Hundratals meter</td>
         <td>Tjockt bly / betong</td>
-        <td style="color:#93c5fd">Svag ★☆☆</td>
+        <td style="color:var(--text)">Svag ★☆☆</td>
       </tr>
     </tbody>
   </table>
@@ -906,6 +905,7 @@ body {
      TAB 2: FÖRSTÅELSE
 ════════════════════════════════ -->
 <div class="section" id="sec-forsta">
+  <h2 class="tab-section-h2">Förståelse</h2>
 
   <div class="quiz-summary">
     <span class="quiz-score" id="quizScore">Rätt: 0 / 0</span>
@@ -919,7 +919,8 @@ body {
      TAB 3: RÄKNA
 ════════════════════════════════ -->
 <div class="section" id="sec-rakna">
-  <div style="margin-top:16px;margin-bottom:16px;background:rgba(58,142,255,.08);border:1px solid rgba(58,142,255,.25);border-radius:12px;padding:14px;font-size:13px;line-height:1.8;color:#a8d4ff">
+  <h2 class="tab-section-h2">Räkna</h2>
+  <div style="margin-top:16px;margin-bottom:16px;background:rgba(58,142,255,.08);border:1px solid rgba(58,142,255,.25);border-radius:12px;padding:14px;font-size:13px;line-height:1.8;color:var(--text)">
     <strong>📐 Formler att använda:</strong><br>
     <span class="formula-chip">N = N₀ · (½)^(t/T½)</span> kvarvarande mängd<br>
     <span class="formula-chip">T½ = halveringstid</span><br>
@@ -987,6 +988,7 @@ body {
      TAB 3: RESONEMANG
 ════════════════════════════════ -->
 <div class="section" id="sec-resonemang">
+  <h2 class="tab-section-h2">Resonemang</h2>
 
   <div class="infobox" style="margin-bottom:1.5rem">
     <div class="infobox-title">💡 Hur man resonerar i flera led</div>
@@ -1012,7 +1014,7 @@ body {
     </div>
     <button type="button" class="btn-model" onclick="showModel('k7r1')">Visa exempelsvar (E/C/A)</button>
     <div class="model-ans" id="ma-k7r1">
-      <h4>Exempelsvar</h4>
+      <h3>Exempelsvar</h3>
       <p><strong>E:</strong> Bly stoppar röntgenstrålning. Personalen måste skydda sig eftersom strålning är skadlig för kroppen.</p>
       <p style="margin-top:8px"><strong>C:</strong> Bly är ett tätt material med hög densitet som absorberar joniserande strålning effektivt. Röntgenstrålning är joniserande, vilket innebär att den kan slå loss elektroner från atomer i kroppens celler. Vid upprepade doser ackumuleras skadan i DNA och kan leda till cellmutationer.</p>
       <p style="margin-top:8px"><strong>A:</strong> Bly har hög atomnummer och densitet, vilket gör att det absorberar röntgenstrålarnas fotoner innan de når kroppen. Röntgenstrålning är joniserande strålning — den har tillräcklig energi för att jonisera atomer i levande vävnad. Även om en enstaka dos är liten, är risken kumulativ: daglig exponering ökar risken för DNA-skador som kan leda till cancer. Skyddsrocken skyddar de mest strålningskänsliga organen (benmärg, gonader) som är viktiga för blodbildning och fortplantning.</p>
@@ -1037,7 +1039,7 @@ body {
     </div>
     <button type="button" class="btn-model" onclick="showModel('k7r2')">Visa exempelsvar (E/C/A)</button>
     <div class="model-ans" id="ma-k7r2">
-      <h4>Exempelsvar</h4>
+      <h3>Exempelsvar</h3>
       <p><strong>E:</strong> Lokalt: Kärnkraftverk ger el till hushåll och industri. Globalt: Kärnvapen har förändrat världspolitiken.</p>
       <p style="margin-top:8px"><strong>C:</strong> Lokalt: Kärnkraftverk producerar stora mängder el utan koldioxidutsläpp, vilket gjort el billigare och tillgängligare i länder som Sverige och Frankrike — det påverkar vardagen för miljoner människor direkt. Globalt: Kärnvapenutvecklingen efter 1945 skapade ett nytt säkerhetspolitiskt klimat (det kalla kriget) och risken för kärnvapenkrig påverkade hela världens geopolitik.</p>
       <p style="margin-top:8px"><strong>A:</strong> Lokalt: Kärnkraftverk kan förse ett helt land med stabil baskraft utan koldioxidutsläpp under drift, vilket bidragit till lägre elpris och minskad luftförorening i regioner med kärnkraft. Samtidigt skapas radioaktivt avfall som måste lagras säkert i hundratusentals år — en lokal miljörisk och ett ansvar för kommande generationer. Globalt: Kärnvapnen som utvecklades ur samma fysik har förändrat maktbalansen i världen — kärnvapenmakterna avhåller sig från direkta konflikter (avskräckningsdoktrin), men spridningsrisken (proliferation) till instabila stater är ett globalt hot. Kärnkraftsolyckor som Tjernobyl och Fukushima visar att konsekvenserna kan vara gränsöverskridande.</p>
@@ -1058,7 +1060,7 @@ body {
     </div>
     <button type="button" class="btn-model" onclick="showModel('k7r3')">Visa exempelsvar (E/C/A)</button>
     <div class="model-ans" id="ma-k7r3">
-      <h4>Exempelsvar</h4>
+      <h3>Exempelsvar</h3>
       <p><strong>E:</strong> Strålning från mobiltelefoner kan påverka kroppen. Barn är mer känsliga och bör därför använda handsfree.</p>
       <p style="margin-top:8px"><strong>C:</strong> Radiovågor från mobiltelefoner absorberas delvis av kroppsvävnad och omvandlas till värme. Eftersom forskningen inte kan utesluta långtidseffekter, och barn har tunnare skallar och längre återstående exponeringstid, är försiktighetsrekommendationen rimlig även utan säkra bevis för skada.</p>
       <p style="margin-top:8px"><strong>A:</strong> Mobiltelefoners radiovågor är icke-joniserande strålning — de har inte tillräcklig energi för att bryta kemiska bindningar eller jonisera atomer som röntgenstrålning. Den primära effekten är termisk: vävnad absorberar energin och värms upp. Försiktighetsrekommendationen motiveras av att långtidsstudier på barn saknas, att barns hjärna fortfarande utvecklas och att exponeringstiden under en livstid är längre för dagens barn än för tidigare generationer. Principen "försiktighet vid osäkerhet" är en etablerad vetenskaplig och etisk hållning när konsekvenserna potentiellt är allvarliga och irreversibla.</p>
@@ -1091,7 +1093,7 @@ body {
     </div>
     <button type="button" class="btn-model" onclick="showModel('k7r4')">Visa exempelsvar (E/C/A) — exempel för kärnkraft</button>
     <div class="model-ans" id="ma-k7r4">
-      <h4>Exempelsvar (utgångspunkt kärnkraft — du kan också välja vattenkraft med motsvarande struktur)</h4>
+      <h3>Exempelsvar (utgångspunkt kärnkraft — du kan också välja vattenkraft med motsvarande struktur)</h3>
       <p><strong>E (kärnkraft):</strong> Kärnkraft producerar mycket el. Det ger inga koldioxidutsläpp. Men det finns radioaktivt avfall.</p>
       <p style="margin-top:8px"><strong>C (kärnkraft):</strong> FÖR: Kärnkraft producerar 300 gånger mer energi per anläggning än vattenkraft → ett fåtal verk kan förse hela landet med el. FÖR: Under drift släpper kärnkraft inte ut koldioxid → bidrar inte till växthuseffekten. EMOT vattenkraft: Dammar lägger stora landytor under vatten → ekosystem och livsmiljöer för djur och växter förstörs permanent.</p>
       <p style="margin-top:8px"><strong>A (kärnkraft):</strong> FÖR: Med 25 miljarder kWh per verk och år kan ett land täcka nationell elenergibehov med ett fåtal anläggningar, vilket ger en stabil och planerbar elproduktion oberoende av väder och årstid. FÖR: Kärnkraftens livscykelutsläpp av koldioxid är bland de lägsta av alla energikällor → ett viktigt bidrag i omställningen bort från fossila bränslen. EMOT kärnkraft: Det radioaktiva avfallet (30–50 ton/år) förblir farligt i hundratusentals år och kräver djupförvar i geologiskt stabila bergrum — en miljö- och säkerhetsrisk som kommande generationer ärver utan att ha haft nytta av energin.</p>
@@ -1103,6 +1105,7 @@ body {
      TAB 4: NP-FRÅGOR
 ════════════════════════════════ -->
 <div class="section" id="sec-np">
+  <h2 class="tab-section-h2">NP-frågor</h2>
 
   <div class="np-intro">
     📋 Dessa frågor är hämtade direkt från eller utformade i stil med riktiga Nationella Prov. Öppna frågorna och försök svara i flera led — E, C och A visas när du öppnar.

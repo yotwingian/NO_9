@@ -19,7 +19,7 @@
 [data-theme="dark"]{
   --bg:#070d12;--surface:#0e1a22;--card:#162230;--border:#1e3040;
   --accent:#00e5ff;--accent2:#76ff7a;--accent3:#ffb347;
-  --bad:#ff4d6d;--text:#d8eef8;--muted:#4a7080;
+  --bad:#ff4d6d;--text:#d8eef8;--muted:#94a3b8;
   --good:#76ff7a;--warn:#ffb347;
   --mono:'JetBrains Mono',monospace;--card2:#121a24;--border2:#2a3a4a;
   --header-grad-start:#010d12;--np-grad-a:#020e16;--np-grad-b:#041825;--np-border:rgba(0,229,255,.3);
@@ -89,7 +89,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 .og-icon{font-size:22px;margin-bottom:5px}
 .og-name{font-size:12px;font-weight:700;margin-bottom:3px}
 .og-desc{font-size:10px;color:var(--muted);line-height:1.4}
-.refraction-rule{background:rgba(118,255,122,.08);border:1px solid rgba(118,255,122,.25);border-radius:10px;padding:11px 14px;margin-top:10px;font-size:12px;color:#b0ffb3;line-height:1.6}
+.refraction-rule{background:rgba(118,255,122,.08);border:1px solid rgba(118,255,122,.25);border-radius:10px;padding:11px 14px;margin-top:10px;font-size:12px;color:var(--text);line-height:1.6}
 
 /* CARDS */
 .stats-row{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
@@ -139,8 +139,8 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 .fq-card.answered-wrong{border-color:rgba(255,77,109,.35)}
 .fq-feedback{margin-top:8px;padding:9px 13px;border-radius:9px;font-size:12px;line-height:1.5;display:none}
 .fq-feedback.show{display:block}
-.fq-feedback.ok{background:rgba(118,255,122,.08);border-left:3px solid var(--accent2);color:#b0ffb3}
-.fq-feedback.err{background:rgba(255,77,109,.08);border-left:3px solid var(--bad);color:#ffb3c1}
+.fq-feedback.ok{background:rgba(118,255,122,.08);border-left:3px solid var(--accent2);color:var(--good)}
+.fq-feedback.err{background:rgba(255,77,109,.08);border-left:3px solid var(--bad);color:var(--bad)}
 
 /* RESONEMANG / NP */
 .res-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:14px}
@@ -148,16 +148,16 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 .res-badge.np{background:rgba(0,229,255,.15);color:var(--accent)}
 .res-badge.res{background:rgba(255,179,71,.15);color:var(--accent3)}
 .res-q{font-weight:700;font-size:14px;line-height:1.5;margin-bottom:10px}
-.res-context{background:var(--surface);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:10px 13px;margin-bottom:12px;font-size:12px;color:#a0d8f0;line-height:1.6}
+.res-context{background:var(--surface);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:10px 13px;margin-bottom:12px;font-size:12px;color:var(--text);line-height:1.6}
 .res-steps{display:flex;flex-direction:column;gap:7px;margin-bottom:10px}
 .res-step{background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:10px 13px}
 .res-step label{font-size:11px;font-weight:700;color:var(--muted);display:block;margin-bottom:5px;letter-spacing:1px;text-transform:uppercase}
-.res-textarea{width:100%;background:transparent;border:none;color:var(--text);font-family:'Outfit',sans-serif;font-size:13px;resize:none;outline:none;min-height:55px;line-height:1.6}
+.res-textarea{width:100%;background:transparent;border:none;color:var(--text);font-family:'Outfit',sans-serif;font-size:13px;resize:none;min-height:55px;line-height:1.6}
 .btn-model{background:transparent;border:1px solid var(--accent);color:var(--accent);padding:7px 15px;border-radius:8px;cursor:pointer;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;transition:all .2s}
 .btn-model:hover{background:rgba(0,229,255,.08)}
 .model-ans{margin-top:10px;background:rgba(0,229,255,.04);border:1px solid rgba(0,229,255,.18);border-radius:9px;padding:13px;font-size:12px;line-height:1.6;display:none}
 .model-ans.show{display:block}
-.model-ans h4{color:var(--accent);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:7px}
+.model-ans h3{color:var(--accent);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:7px}
 .grade-row{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
 .grade{font-size:11px;font-weight:700;padding:3px 9px;border-radius:5px}
 .grade-e{background:rgba(0,229,255,.15);color:var(--accent)}
@@ -213,6 +213,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 
 <!-- ===== BEGREPP ===== -->
 <div class="section active" id="sec-begrepp">
+  <h2 class="tab-section-h2">Begrepp</h2>
   <!-- LJUD REFERENS -->
   <div class="wave-box">
     <h3>🔊 Ljud — vågor &amp; frekvens</h3>
@@ -351,6 +352,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 
 <!-- ===== FÖRSTÅELSE ===== -->
 <div class="section" id="sec-forstaaelse">
+  <h2 class="tab-section-h2">Förståelse</h2>
   <div class="stats-row" style="margin-top:14px">
     <div class="stat"><div class="stat-val" id="fScore" style="color:var(--accent2)">0</div><div class="stat-lbl">Rätt</div></div>
     <div class="stat"><div class="stat-val" id="fPct" style="color:var(--accent3)">0%</div><div class="stat-lbl">Klart</div></div>
@@ -491,6 +493,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 
 <!-- ===== RESONEMANG ===== -->
 <div class="section" id="sec-resonemang">
+  <h2 class="tab-section-h2">Resonemang</h2>
 
   <div class="res-card">
     <span class="res-badge np">NP 2016</span>
@@ -512,7 +515,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     </div>
     <button class="btn-model" onclick="showModel('ultra')">Visa modellsvar</button>
     <div class="model-ans" id="ma-ultra">
-      <h4>✅ Modellsvar</h4>
+      <h3>✅ Modellsvar</h3>
       <p><strong>Fosterdiagnostik:</strong><br>
       Möjlighet: Ultraljud kan avbilda foster utan joniserande strålning → läkare kan se om fostret utvecklas normalt, identifiera missbildningar tidigt och planera förlossning. Förbättrar levnadsvillkor: fler barn föds friska, komplikationer förebyggs, ger trygghet för föräldrar.<br><br>
       Risk: Felaktiga diagnoser (falskt alarm) → onödig oro eller onödiga ingrepp. Kan leda till etiska dilemman (selektiv abort). Eller: om tekniken missbrukas för könsselektion i vissa kulturer → påverkar samhällsstrukturen negativt.</p>
@@ -543,7 +546,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     </div>
     <button class="btn-model" onclick="showModel('manen')">Visa modellsvar</button>
     <div class="model-ans" id="ma-manen">
-      <h4>✅ Modellsvar (NP 2018)</h4>
+      <h3>✅ Modellsvar (NP 2018)</h3>
       <p><strong>Månen → Ljusvågor (laserpulser/radar):</strong> Rymden mellan Jorden och Månen är vakuum — inget material finns. Ljud är mekaniska tryckvågor och kräver ett medium för att fortplantas. EM-strålning (ljus, radar) behöver inget medium och kan resa genom vakuum → enda alternativet.</p>
       <p style="margin-top:6px"><strong>Havsbotten → Ljudvågor (ekolod/sonar):</strong> Havet är fyllt med vatten — ett utmärkt medium för ljud (ljud rör sig ca 1 500 m/s i vatten, snabbare än i luft). Ljuset däremot absorberas och sprids snabbt i vatten på stora djup → fungerar inte på långa avstånd. Ekolod: sänder ut ultraljudspuls, mäter tid till eko → beräknar djup.</p>
       <div class="grade-row">
@@ -570,7 +573,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     </div>
     <button class="btn-model" onclick="showModel('cykel')">Visa modellsvar</button>
     <div class="model-ans" id="ma-cykel">
-      <h4>✅ Modellsvar (NP 2017)</h4>
+      <h3>✅ Modellsvar (NP 2017)</h3>
       <p><strong>a) Hypotes:</strong> Konkav lins ger bredast ljussken. En konkav lins divergerar (sprider) ljusstrålar utåt → ljusskenet sprids brett. En konvex lins konvergerar ljuset mot en brännpunkt → smalt, koncentrerat sken. Plan lins påverkar inte ljusets riktning nämnvärt.</p>
       <p style="margin-top:6px"><strong>b) Metod:</strong>
       1. Montera en lampa (ljuskälla) i cykelbelysningens hållare.<br>
@@ -602,7 +605,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     </div>
     <button class="btn-model" onclick="showModel('ogon')">Visa modellsvar</button>
     <div class="model-ans" id="ma-ogon">
-      <h4>✅ Modellsvar</h4>
+      <h3>✅ Modellsvar</h3>
       <p><strong>Närsynthet (Mattias):</strong> Ögat är för långt eller linsen för kraftig → ljus från avlägsna föremål fokuseras framför näthinnan → suddigt på långt håll.<br>Åtgärd: konkav (spridande) lins → sprider ljuset lite innan det träffar ögat → fokus flyttas bakåt till näthinnan.</p>
       <p style="margin-top:6px"><strong>Översynthet (Fatima):</strong> Ögat är för kort eller linsen för svag → ljus från nära föremål fokuseras bakom näthinnan → suddigt på nära håll.<br>Åtgärd: konvex (samlande) lins → samlar ljuset lite extra → fokus flyttas framåt till näthinnan.</p>
     </div>
@@ -611,7 +614,8 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 
 <!-- ===== NP-FRÅGOR ===== -->
 <div class="section" id="sec-np">
-  <div style="margin-top:14px;margin-bottom:14px;background:rgba(0,229,255,.06);border:1px solid rgba(0,229,255,.2);border-radius:11px;padding:12px;font-size:13px;line-height:1.6;color:#a0d8f0">
+  <h2 class="tab-section-h2">NP-frågor</h2>
+  <div style="margin-top:14px;margin-bottom:14px;background:rgba(0,229,255,.06);border:1px solid rgba(0,229,255,.2);border-radius:11px;padding:12px;font-size:13px;line-height:1.6;color:var(--text)">
     <strong>🎯 Riktiga NP-frågor</strong> från 2016, 2017 och 2018 — motivera alltid med begrepp!
   </div>
 
@@ -625,7 +629,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     </div>
     <button class="btn-model" onclick="showModel('np1')">Visa exempelsvar (E/C/A)</button>
     <div class="model-ans" id="ma-np1">
-      <h4>✅ Exempelsvar</h4>
+      <h3>✅ Exempelsvar</h3>
       <p><strong>E:</strong> "Fosterdiagnostik: man kan se om barnet är friskt (möjlighet). Risk: man kanske oroar sig i onödan."</p>
       <p style="margin-top:6px"><strong>C:</strong> "Möjlighet: ultraljud visar fostrets organ utan skadlig strålning → läkare kan tidigt se om något är fel → bättre levnadsvillkor (fler friska födslar). Risk: feldiagnos → onödig oro eller fel behandlingsbeslut."</p>
       <p style="margin-top:6px"><strong>A:</strong> Resonemang i minst 2 led för varje aspekt. Ex: "Ekolod möjliggör att mäta havsbottens topografi → fiskebåtar hittar fiskstim effektivare → mer mat produceras → förbättrar levnadsvillkor i fiskeberoende samhällen. Risk: ultraljud kan störa valar som navigerar med ekolokalisering → de simmar vilse → kan stranda → biologisk mångfald hotas → påverkar marina ekosystem."</p>
@@ -654,7 +658,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     </div>
     <button class="btn-model" onclick="showModel('np3')">Visa modellsvar</button>
     <div class="model-ans" id="ma-np3">
-      <h4>✅ Modellsvar</h4>
+      <h3>✅ Modellsvar</h3>
       <p><strong>Månen:</strong> Ljusvågor (laserpulser). Rymden är vakuum — ljud kräver ett medium och kan inte fortplantas. EM-strålning (ljus) behöver inget medium.</p>
       <p style="margin-top:6px"><strong>Havsbotten:</strong> Ljudvågor (ekolod/sonar). Havsvatten är ett bra medium för ljud (ca 1 500 m/s). Ljuset absorberas snabbt av vatten på djupa avstånd och fungerar inte.</p>
     </div>
@@ -673,7 +677,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
     </div>
     <button class="btn-model" onclick="showModel('np4')">Visa modellsvar</button>
     <div class="model-ans" id="ma-np4">
-      <h4>✅ Modellsvar</h4>
+      <h3>✅ Modellsvar</h3>
       <p><strong>a) Hypotes:</strong> Konkav lins ger bredast sken. Den divergerar (sprider) ljuset utåt. Konvex lins konvergerar mot brännpunkt → smalt. Plan lins påverkar knappt riktningen.</p>
       <p style="margin-top:6px"><strong>b) Metod:</strong> 1) Montera identisk lampa i cykellyktans hållare. 2) Sätt i konvex lins, tänd, mät ljusknets bredd på vägg i 1 m avstånd. 3) Byt till konkav lins, mät. 4) Byt till plan, mät. Kontrollvariabler: samma lampa, avstånd, mätpunkt. Bredast markering = bredast sken.</p>
     </div>

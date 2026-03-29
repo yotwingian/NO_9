@@ -33,7 +33,7 @@
   --border: #1e2438;
   --border2: #252d46;
   --text: #e2e8f0;
-  --muted: #64748b;
+  --muted: #94a3b8;
   --accent: #a855f7;
   --accent2: #c084fc;
   --good: #22c55e;
@@ -497,13 +497,13 @@ body::before {
 }
 .f-opt:hover:not(:disabled) { color: var(--text); border-color: #3a4562; background: rgba(255,255,255,0.03); }
 .f-opt .opt-letter { font-family: var(--mono); font-size: 0.7rem; font-weight: 600; color: var(--accent); min-width: 1.1rem; margin-top: 0.1rem; }
-.f-opt.correct { border-color: var(--good); background: rgba(34,197,94,0.08); color: #86efac; }
-.f-opt.wrong   { border-color: var(--bad); background: rgba(239,68,68,0.08); color: #fca5a5; }
+.f-opt.correct { border-color: var(--good); background: rgba(34,197,94,0.08); color: var(--good); }
+.f-opt.wrong   { border-color: var(--bad); background: rgba(239,68,68,0.08); color: var(--bad); }
 .f-opt:disabled { cursor: default; }
 .f-feedback { display: none; margin-top: 0.8rem; padding: 0.7rem 0.9rem; border-radius: 8px; font-size: 0.82rem; line-height: 1.55; }
 .f-feedback.show { display: block; }
-.f-feedback.correct-fb { background: rgba(34,197,94,0.07); border: 1px solid rgba(34,197,94,0.25); color: #86efac; }
-.f-feedback.wrong-fb   { background: rgba(239,68,68,0.07); border: 1px solid rgba(239,68,68,0.2); color: #fca5a5; }
+.f-feedback.correct-fb { background: rgba(34,197,94,0.07); border: 1px solid rgba(34,197,94,0.25); color: var(--good); }
+.f-feedback.wrong-fb   { background: rgba(239,68,68,0.07); border: 1px solid rgba(239,68,68,0.2); color: var(--bad); }
 .quiz-summary { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 0.5rem; }
 .quiz-score { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); }
 .reset-btn {
@@ -524,12 +524,12 @@ body::before {
 .res-steps { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
 .res-step { background: var(--card2); border: 1px solid var(--border2); border-radius: 10px; padding: 12px 14px; }
 .res-step label { font-size: 12px; font-weight: 700; color: var(--muted); display: block; margin-bottom: 6px; letter-spacing: 0.06em; text-transform: uppercase; }
-.res-textarea { width: 100%; background: transparent; border: none; color: var(--text); font-family: 'Inter', sans-serif; font-size: 0.82rem; resize: vertical; outline: none; min-height: 60px; line-height: 1.6; }
+.res-textarea { width: 100%; background: transparent; border: none; color: var(--text); font-family: 'Inter', sans-serif; font-size: 0.82rem; resize: vertical; min-height: 60px; line-height: 1.6; }
 .btn-model { background: transparent; border: 1px solid var(--accent2); color: var(--accent2); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-family: var(--mono); font-weight: 700; font-size: 12px; transition: all 0.2s; }
 .btn-model:hover { background: rgba(168,85,247,0.08); }
 .model-ans { margin-top: 10px; background: rgba(58,142,255,0.06); border: 1px solid rgba(58,142,255,0.22); border-radius: 10px; padding: 14px; font-size: 0.82rem; line-height: 1.65; display: none; }
 .model-ans.show { display: block; }
-.model-ans h4 { color: var(--accent2); font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px; }
+.model-ans h3 { color: var(--accent2); font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px; }
 .grade-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
 .grade { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 6px; }
 .grade-e { background: rgba(58,142,255,0.15); color: var(--accent); }
@@ -539,12 +539,12 @@ body::before {
 .level-block { margin-bottom: 0.8rem; }
 .level-label { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.2rem 0.6rem; border-radius: 4px; display: inline-block; margin-bottom: 0.4rem; }
 .lvl-e { background: rgba(34,197,94,0.12); color: var(--good); border: 1px solid rgba(34,197,94,0.25); }
-.lvl-c { background: rgba(59,130,246,0.12); color: #93c5fd; border: 1px solid rgba(59,130,246,0.25); }
-.lvl-a { background: rgba(168,85,247,0.12); color: #d8b4fe; border: 1px solid rgba(168,85,247,0.25); }
+.lvl-c { background: rgba(59,130,246,0.12); color: var(--text); border: 1px solid rgba(59,130,246,0.25); }
+.lvl-a { background: rgba(168,85,247,0.12); color: var(--text); border: 1px solid rgba(168,85,247,0.25); }
 .level-block p { font-size: 0.83rem; color: var(--muted); line-height: 1.65; padding-left: 0.5rem; }
 
 /* ── NP ── */
-.np-intro { background: rgba(168,85,247,0.06); border: 1px solid rgba(168,85,247,0.2); border-radius: 10px; padding: 0.9rem 1.1rem; margin-bottom: 1.5rem; font-size: 0.82rem; color: #d8b4fe; line-height: 1.6; }
+.np-intro { background: rgba(168,85,247,0.06); border: 1px solid rgba(168,85,247,0.2); border-radius: 10px; padding: 0.9rem 1.1rem; margin-bottom: 1.5rem; font-size: 0.82rem; color: var(--text); line-height: 1.6; }
 .np-question { background: var(--card); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 1.2rem; overflow: hidden; }
 .np-qheader { display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 1.4rem; cursor: pointer; gap: 1rem; }
 .np-qheader:hover { background: rgba(255,255,255,0.02); }
@@ -554,7 +554,7 @@ body::before {
 .np-body.show { display: block; }
 .np-scenario { font-size: 0.84rem; color: var(--muted); line-height: 1.75; margin: 1rem 0; padding: 0.9rem 1.1rem; background: var(--card2); border-radius: 8px; border-left: 3px solid var(--accent); }
 .np-task { font-size: 0.88rem; font-weight: 600; color: var(--text); margin: 0.8rem 0 1rem; line-height: 1.5; }
-.np-tip { font-size: 0.78rem; color: #93c5fd; line-height: 1.6; margin-top: 0.5rem; padding: 0.6rem 0.8rem; background: rgba(59,130,246,0.06); border: 1px solid rgba(59,130,246,0.15); border-radius: 6px; }
+.np-tip { font-size: 0.78rem; color: var(--text); line-height: 1.6; margin-top: 0.5rem; padding: 0.6rem 0.8rem; background: rgba(59,130,246,0.06); border: 1px solid rgba(59,130,246,0.15); border-radius: 6px; }
 
 @media (max-width: 600px) {
   .header h1 { font-size: 1.5rem; }
@@ -607,6 +607,7 @@ body::before {
      TAB 1: BEGREPP
 ════════════════════════════════ -->
 <div class="section active" id="sec-begrepp">
+  <h2 class="tab-section-h2">Begrepp</h2>
 
   <div class="infobox">
     <div class="infobox-title">📏 Viktiga avstånd — ofta på NP!</div>
@@ -635,7 +636,7 @@ body::before {
       <span class="lc-step hl">Nebulosa</span><span class="lc-arrow">→</span>
       <span class="lc-step hl">Stjärna (fusion)</span><span class="lc-arrow">→</span>
       <span class="lc-step hl">Röd superjätte</span><span class="lc-arrow">→</span>
-      <span class="lc-step" style="border-color:#ef4444;color:#fca5a5">Supernova</span><span class="lc-arrow">→</span>
+      <span class="lc-step" style="border-color:#ef4444;color:var(--bad)">Supernova</span><span class="lc-arrow">→</span>
       <span class="lc-step end">Neutronstjärna / Svart hål</span>
     </div>
   </div>
@@ -679,6 +680,7 @@ body::before {
      TAB 2: FÖRSTÅELSE
 ════════════════════════════════ -->
 <div class="section" id="sec-forsta">
+  <h2 class="tab-section-h2">Förståelse</h2>
   <div class="quiz-summary">
     <span class="quiz-score" id="quizScore">Rätt: 0 / 0</span>
     <button class="reset-btn" onclick="resetQuiz()">↺ Börja om</button>
@@ -690,6 +692,7 @@ body::before {
      TAB 3: RESONEMANG
 ════════════════════════════════ -->
 <div class="section" id="sec-resonemang">
+  <h2 class="tab-section-h2">Resonemang</h2>
 
   <div class="infobox" style="margin-bottom:1.5rem">
     <div class="infobox-title">💡 Resonemang i två led</div>
@@ -718,7 +721,7 @@ body::before {
     </div>
     <button type="button" class="btn-model" onclick="showModel('k8r1')">Visa exempelsvar (E/C/A)</button>
     <div class="model-ans" id="ma-k8r1">
-      <h4>Exempelsvar</h4>
+      <h3>Exempelsvar</h3>
       <p><strong>E:</strong> Till Månen används ljus. I havet används ljud. Ljud kan inte färdas i rymden.</p>
       <p style="margin-top:8px"><strong>C:</strong> Ljusvågor används till Månen eftersom ljus kan färdas genom vakuum — rymden saknar luft. Ljudvågor däremot behöver ett medium (materia) för att fortplanta sig och kan inte färdas i vakuum. I havet används ljudvågor (ekolod) eftersom vatten är ett utmärkt medium för ljud, som färdas ca 1&nbsp;500 m/s där — och ljuset absorberas snabbt på djupt vatten.</p>
       <p style="margin-top:8px"><strong>A:</strong> Ljusvågor är elektromagnetisk strålning och behöver inget medium — de fortplantar sig i vakuum med hastigheten 3×10<sup>8</sup> m/s. Därför används laserljus för att mäta avstånd till Månen (ca 384&nbsp;400 km); pulsen skickas och reflekteras mot retroreflektorer som Apollo-astronauterna lämnade, och restiden ger exakt avstånd. Ljudvågor är mekaniska vågor som kräver ett medium och kan inte existera i vakuum — de är oanvändbara i rymden. I havet fungerar ekolod utmärkt: vatten har hög densitet och låg kompressibilitet vilket gör att ljud färdas snabbt (~1&nbsp;500 m/s) och effektivt; pulsen studsar mot botten och returntiden ger djupet. Ljus fungerar däremot dåligt på stora havsdjup eftersom det absorberas och sprids i vatten.</p>
@@ -739,7 +742,7 @@ body::before {
     </div>
     <button type="button" class="btn-model" onclick="showModel('k8r2')">Visa exempelsvar (E/C/A)</button>
     <div class="model-ans" id="ma-k8r2">
-      <h4>Exempelsvar</h4>
+      <h3>Exempelsvar</h3>
       <p><strong>E:</strong> En stjärna bildas ur gas, sedan lyser den länge som en vanlig stjärna, och till slut dör den och kan bli en vit dvärg eller svart hål.</p>
       <p style="margin-top:8px"><strong>C:</strong> Nebulosa → tyngdkraften samlar ihop gas och damm → temperaturen stiger tills fusion startar → stjärnan lyser stabilt (som Solen nu) → när vätet tar slut sväller den till en röd jätte → yttre skal kastas ut (planetarisk nebulosa) → kärnan kvar som vit dvärg. Mer massiva stjärnor exploderar som supernova och lämnar neutronstjärna eller svart hål.</p>
       <p style="margin-top:8px"><strong>A:</strong> 1. Nebulosa: gravitation komprimerar gas och damm → tryck och temperatur ökar. 2. Protostjärna: när kärntemperaturen når ~10 miljoner K startar vätets fusion till helium — energin skapar ett strålningstryck utåt som balanserar gravitationen → stjärnan i jämvikt (huvudserien). 3. Röd jätte: när vätereserven i kärnan töms kollapsar kärnan, ytterskiktet expanderar och svalnar → röd jätte. Heliumfusion kan starta. 4. Sollik stjärna: yttre skalen blåser ut som planetarisk nebulosa, kärnan kvar som vit dvärg (degenerat elektronsystem, svalnar gradvis). 5. Massiv stjärna: om massan &gt; 8 solmassor → supernova-explosion → neutronstjärna (degenerat neutronsystem) eller svart hål om massan är tillräcklig för att gravitationen övervinner allt.</p>
@@ -760,7 +763,7 @@ body::before {
     </div>
     <button type="button" class="btn-model" onclick="showModel('k8r3')">Visa exempelsvar (E/C/A)</button>
     <div class="model-ans" id="ma-k8r3">
-      <h4>Exempelsvar</h4>
+      <h3>Exempelsvar</h3>
       <p><strong>E:</strong> När det blir varmare smälter is och havsnivån stiger vilket ger översvämningar. Torka uppstår när det regnar mindre. Orkaner bildas av varm luft.</p>
       <p style="margin-top:8px"><strong>C:</strong> Översvämning: Varmare klimat smälter glaciärer och inlandsisar → havsnivån stiger → kuststäder översvämmas. Dessutom ökar avdunstningen → mer vattenånga i atmosfären → kraftigare regn och skyfall. Torka: Högre temperatur ökar avdunstningen från mark och vegetation → jordar torkar ut snabbare, och nederbördsmönster förändras så att vissa regioner får mindre regn. Orkan: Orkaner drivs av varm havsyta (&gt;26 °C); varmare hav ger mer energi till orkaner → fler och kraftigare orkaner.</p>
       <p style="margin-top:8px"><strong>A:</strong> Översvämning: Temperaturökning smälter glaciärer och polarisar → havsnivåhöjning på lång sikt. Kortsiktigt ökar avdunstningen → mer vattenånga i atmosfären (luften håller mer vattenånga vid högre temp.) → intensivare regn och extrema skyfall orsakar flodöversvämningar. Torka: Ökad avdunstning från mark och växter i kombination med förändrade vindmönster (jetströmmar) leder till att subtropiska högtrycksområden expanderar → nederbördsfattiga zoner breddas och torrperioderna förlängs. Orkan: Tropiska cykloner (orkaner) hämtar energi från havets yttemperatur via konvektiv avdunstning — varmare hav ger mer latent värme, vilket driver starkare uppvindar och lägre lufttryck i orkanens öga. Varmare hav utvidgar de latituder där orkaner kan bildas och underhållas.</p>
@@ -781,7 +784,7 @@ body::before {
     </div>
     <button type="button" class="btn-model" onclick="showModel('k8r4')">Visa exempelsvar (E/C/A)</button>
     <div class="model-ans" id="ma-k8r4">
-      <h4>Exempelsvar</h4>
+      <h3>Exempelsvar</h3>
       <p><strong>E:</strong> Big Bang är en teori om att universum uppstod i en enorm explosion för länge sedan. Universum har expanderat sedan dess.</p>
       <p style="margin-top:8px"><strong>C:</strong> Big Bang-teorin säger att universum startade för ca 13,8 miljarder år sedan som en extremt het och tät punkt som expanderade. Stöd 1: Galaxerna rör sig bort från oss (Hubbles lag) → universum expanderar → om vi spolar tillbaka måste allt ha startat samlat. Stöd 2: Den kosmiska bakgrundsstrålningen — ett svagt mikrovågssken från alla riktningar — är kvarlevan av det heta ljuset från Big Bang, nu nedkylt till 2,7 K.</p>
       <p style="margin-top:8px"><strong>A:</strong> Big Bang-teorin beskriver universums ursprung som en singularitet för ~13,8 miljarder år sedan med extremt hög energidensitet, följt av snabb expansion och avkylning. Bevis 1: Galaktisk rödflykt (Hubble 1929) — ljuset från fjärran galaxer är förskjutet mot röda våglängder, vilket visar att galaxerna rör sig bort med hastigheter proportionella mot avståndet. Extrapolerar man bakåt i tid konvergerar alla galaxer till en enda punkt. Bevis 2: Kosmisk bakgrundsstrålning (CMB) — förutsagd av teorin och uppmätt 1965; ett nästan perfekt jämnt mikrovågsglöd på 2,725 K från alla riktningar, tolkat som efterglöden från den heta plasman ~380&nbsp;000 år efter Big Bang när universum svalnat tillräckligt för att atomer kunde bildas och ljuset ”fri-kopplas”. Bevis 3: Abundansen av lätta grundämnen (75&nbsp;% väte, 25&nbsp;% helium) stämmer med vad Big Bang-nukleosyntesen förutsäger.</p>
@@ -794,6 +797,7 @@ body::before {
      TAB 4: NP-FRÅGOR
 ════════════════════════════════ -->
 <div class="section" id="sec-np">
+  <h2 class="tab-section-h2">NP-frågor</h2>
 
   <div class="np-intro">
     📋 Dessa frågor är hämtade direkt från eller utformade i stil med riktiga Nationella Prov. Öppna frågorna och försök svara i flera led — E, C och A visas när du öppnar.
