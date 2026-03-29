@@ -4,20 +4,34 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Arbete, Energi & Effekt — NP Fysik åk 9</title>
+<script src="theme-head.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{
+  --bg:#f4f3f8;--surface:#ebe9f0;--card:#ffffff;--border:#d9d5e3;
+  --accent:#7c3aed;--accent2:#d97706;--accent3:#16a34a;
+  --bad:#dc2626;--text:#16151c;--muted:#5b5968;
+  --good:#16a34a;--warn:#d97706;
+  --mono:'JetBrains Mono',monospace;--card2:#f0eef5;--border2:#c8c3d4;
+  --header-grad-start:#ede9fe;--golden-a:#fffbeb;--golden-b:#fef3c7;--golden-border:rgba(217,119,6,.35);
+  --np-grad-a:#f5f3ff;--np-grad-b:#ede9fe;--np-border:rgba(124,58,237,.35);
+  --card-back-muted:#4b5563;
+}
+[data-theme="dark"]{
   --bg:#0d0d0f;--surface:#161618;--card:#1e1e22;--border:#2a2a32;
   --accent:#a259ff;--accent2:#f5a623;--accent3:#39d353;
   --bad:#ff4d6d;--text:#e2e2f0;--muted:#6b6b80;
   --good:#39d353;--warn:#f5a623;
   --mono:'JetBrains Mono',monospace;--card2:#18181c;--border2:#33333c;
+  --header-grad-start:#1a0a2e;--golden-a:#1f1400;--golden-b:#2a1c00;--golden-border:rgba(245,166,35,.35);
+  --np-grad-a:#12091f;--np-grad-b:#1a1030;--np-border:rgba(162,89,255,.35);
+  --card-back-muted:#b4b4c4;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 
 /* HEADER (samma mönster som kapitel 7–9) */
-.header{background:linear-gradient(135deg,#1a0a2e 0%,var(--bg) 60%);border-bottom:1px solid var(--border);padding:2rem 1.5rem 1.5rem;position:relative;overflow:hidden;z-index:1}
+.header{background:linear-gradient(135deg,var(--header-grad-start) 0%,var(--bg) 60%);border-bottom:1px solid var(--border);padding:2rem 1.5rem 1.5rem;position:relative;overflow:hidden;z-index:1}
 .header::before{content:'⚙️';position:absolute;right:1.5rem;top:50%;transform:translateY(-50%);font-size:6rem;opacity:.06;pointer-events:none}
 .chapter-tag{font-family:'JetBrains Mono',var(--mono);font-size:.65rem;letter-spacing:.2em;color:var(--accent);text-transform:uppercase;margin-bottom:.5rem}
 .header h1{font-family:'Inter','Outfit',sans-serif;font-size:1.9rem;font-weight:700;color:var(--text);margin-bottom:.3rem;line-height:1.15}
@@ -60,7 +74,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 .fc{display:inline-block;background:rgba(162,89,255,.15);border:1px solid rgba(162,89,255,.3);border-radius:6px;padding:2px 8px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);margin:2px}
 
 /* GOLDEN RULE BOX */
-.golden{background:linear-gradient(135deg,#1f1400,#2a1c00);border:1px solid rgba(245,166,35,.35);border-radius:16px;padding:20px;margin-bottom:18px}
+.golden{background:linear-gradient(135deg,var(--golden-a),var(--golden-b));border:1px solid var(--golden-border);border-radius:16px;padding:20px;margin-bottom:18px}
 .golden h3{font-size:12px;font-weight:700;color:var(--accent2);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
 .golden-rule{font-size:17px;font-weight:700;color:var(--accent2);text-align:center;padding:12px;background:rgba(245,166,35,.08);border-radius:10px;margin-bottom:10px;font-family:'JetBrains Mono',monospace}
 .machine-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
@@ -100,11 +114,11 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 .card-side-label{font-family:var(--mono);font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem}
 .card-front .card-side-label{color:var(--accent)}
 .card-text{font-size:1rem;font-weight:600;line-height:1.5;color:var(--text);white-space:pre-line}
-.card-back .card-text{font-size:.88rem;font-weight:400;color:#cbd5e1}
+.card-back .card-text{font-size:.88rem;font-weight:400;color:var(--card-back-muted)}
 .card-hint{margin-top:1rem;font-size:.72rem;color:var(--muted)}
 .card-actions{display:flex;gap:.75rem;justify-content:center;margin-bottom:2.5rem;flex-wrap:wrap}
 .card-btn{font-family:'Outfit',sans-serif;font-size:.8rem;font-weight:600;padding:.55rem 1.3rem;border-radius:8px;border:1px solid var(--border2);background:var(--card2);color:var(--muted);cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:.4rem}
-.card-btn:hover{color:var(--text);border-color:#3a4562}
+.card-btn:hover{color:var(--text);border-color:var(--border2)}
 .card-btn.good{border-color:var(--good);color:var(--good);background:rgba(57,211,83,.07)}
 .card-btn.good:hover{background:rgba(57,211,83,.15)}
 .card-btn.skip{border-color:var(--warn);color:var(--warn);background:rgba(245,166,35,.07)}
@@ -165,7 +179,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 .grade-c{background:rgba(245,166,35,.2);color:var(--accent2)}
 .grade-a{background:rgba(57,211,83,.2);color:var(--accent3)}
 
-.np-card{background:linear-gradient(135deg,#12091f,#1a1030);border:1px solid rgba(162,89,255,.35);border-radius:16px;padding:22px;margin-bottom:16px}
+.np-card{background:linear-gradient(135deg,var(--np-grad-a),var(--np-grad-b));border:1px solid var(--np-border);border-radius:16px;padding:22px;margin-bottom:16px}
 .np-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
 .np-logo{background:var(--accent);color:#fff;font-weight:900;font-size:11px;padding:4px 8px;border-radius:6px;letter-spacing:1px}
 .np-year{color:var(--muted);font-size:12px}
@@ -178,10 +192,12 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 @media(max-width:600px){.header h1{font-size:1.5rem}}
 @media(max-width:500px){.fgrid{grid-template-columns:1fr 1fr}.eforms{grid-template-columns:1fr 1fr}.machine-row{flex-direction:column}}
 </style>
+<link rel="stylesheet" href="theme-ui.css">
 </head>
 <body>
 
 <div class="header">
+  <button type="button" class="theme-toggle" id="themeToggle" aria-label="Växla tema">🌙</button>
   <a href="index.html" class="back-link">← Tillbaka till översikten</a>
   <div class="chapter-tag">NP Fysik åk 9 · Kapitel 5</div>
   <h1>Arbete, Energi <span>&amp; Effekt</span></h1>
@@ -1171,5 +1187,6 @@ syncForstaaelseHeader();
 setTabProgressActive('begrepp');
 updateTabProgressStrips();
 </script>
+<script src="theme-toggle.js"></script>
 </body>
 </html>

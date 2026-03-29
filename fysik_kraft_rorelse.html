@@ -4,9 +4,52 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fysik åk 9 – Kraft & Rörelse</title>
+<script src="theme-head.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Lora:wght@400;600;700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
+    --bg: #f4f6fc;
+    --surface: #eef1f8;
+    --card: #ffffff;
+    --white: #ffffff;
+    --text: #141923;
+    --muted: #5c6578;
+    --border: #d8dee8;
+    --accent: #059669;
+    --accent-light: rgba(5, 150, 105, 0.1);
+    --accent-hover: #047857;
+    --accent-blue: #2563eb;
+    --green: #059669;
+    --green-light: rgba(5, 150, 105, 0.1);
+    --red: #dc2626;
+    --red-light: rgba(220, 38, 38, 0.1);
+    --orange: #ea580c;
+    --orange-light: rgba(234, 88, 12, 0.12);
+    --yellow-light: rgba(202, 138, 4, 0.08);
+    --warn: #ca8a04;
+    --good: var(--green);
+    --mono: ui-monospace, 'Cascadia Code', monospace;
+    --card2: #eef1f6;
+    --border2: #c5ced8;
+    --shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.1);
+    --radius: 10px;
+    --accent2: var(--accent-blue);
+    --accent3: var(--green);
+    --bad: var(--red);
+    --header-grad-start: #d1fae5;
+    --card-back-muted: #4b5563;
+    --formula-grad-a: #ecfdf5;
+    --formula-grad-b: #d1fae5;
+    --formula-card-text: #065f46;
+    --formula-border: rgba(5, 150, 105, 0.35);
+    --formula-item-bg: rgba(255, 255, 255, 0.88);
+    --formula-item-border: rgba(5, 150, 105, 0.2);
+    --formula-eq: #047857;
+    --formula-desc: #059669;
+    --formula-h3: #047857;
+  }
+  [data-theme="dark"] {
     --bg: #0b0f1a;
     --surface: #131825;
     --card: #1c2235;
@@ -33,17 +76,27 @@
     --shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
     --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.45);
     --radius: 10px;
-    /* Calc-aliases (matchar CSS-mönster från andra fysikfiler) */
     --accent2: var(--accent-blue);
     --accent3: var(--green);
     --bad: var(--red);
+    --header-grad-start: #021a14;
+    --card-back-muted: #cbd5e1;
+    --formula-grad-a: #042f2e;
+    --formula-grad-b: #0a3d35;
+    --formula-card-text: #fff;
+    --formula-border: rgba(6, 214, 160, 0.35);
+    --formula-item-bg: rgba(255, 255, 255, 0.08);
+    --formula-item-border: rgba(255, 255, 255, 0.12);
+    --formula-eq: #fff;
+    --formula-desc: #6ee7b7;
+    --formula-h3: #6ee7b7;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Source Sans 3', sans-serif; background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.6; min-height: 100vh; }
 
   /* HEADER (samma mönster som kapitel 7–9) */
   .header {
-    background: linear-gradient(135deg, #021a14 0%, var(--bg) 60%);
+    background: linear-gradient(135deg, var(--header-grad-start) 0%, var(--bg) 60%);
     border-bottom: 1px solid var(--border);
     padding: 2rem 1.5rem 1.5rem;
     position: relative;
@@ -220,7 +273,7 @@
   .card-side-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
   .card-front .card-side-label { color: var(--accent); }
   .card-text { font-family: 'Source Sans 3', sans-serif; font-size: 1rem; font-weight: 600; line-height: 1.5; color: var(--text); white-space: pre-line; }
-  .card-back .card-text { font-size: 0.9rem; font-weight: 400; color: #cbd5e1; }
+  .card-back .card-text { font-size: 0.9rem; font-weight: 400; color: var(--card-back-muted); }
   .card-hint { margin-top: 1rem; font-size: 0.72rem; color: var(--muted); }
   .card-actions { display: flex; gap: 0.75rem; justify-content: center; margin-bottom: 2.5rem; flex-wrap: wrap; }
   .card-btn { font-family: 'Source Sans 3', sans-serif; font-size: 0.8rem; font-weight: 600; padding: 0.55rem 1.3rem; border-radius: 8px; border: 1px solid var(--border2); background: var(--card2); color: var(--muted); cursor: pointer; transition: all 0.15s; display: flex; align-items: center; gap: 0.4rem; }
@@ -347,12 +400,12 @@
   .score-divider { width: 1px; height: 40px; background: var(--border); }
 
   /* FORMULA */
-  .formula-card { background: linear-gradient(135deg, #042f2e, #0a3d35); color: #fff; border-radius: var(--radius); padding: 20px 24px; margin-bottom: 28px; border: 1px solid rgba(6, 214, 160, 0.35); }
-  .formula-card h3 { font-family: 'Lora', serif; font-size: 16px; margin-bottom: 14px; color: #6ee7b7; }
+  .formula-card { background: linear-gradient(135deg, var(--formula-grad-a), var(--formula-grad-b)); color: var(--formula-card-text); border-radius: var(--radius); padding: 20px 24px; margin-bottom: 28px; border: 1px solid var(--formula-border); }
+  .formula-card h3 { font-family: 'Lora', serif; font-size: 16px; margin-bottom: 14px; color: var(--formula-h3); }
   .formula-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
-  .formula-item { background: rgba(255,255,255,.08); border-radius: 8px; padding: 12px 14px; border: 1px solid rgba(255,255,255,.12); }
-  .formula-eq { font-size: 20px; font-weight: 700; font-family: 'Lora', serif; color: #fff; margin-bottom: 4px; }
-  .formula-desc { font-size: 12px; color: #6ee7b7; }
+  .formula-item { background: var(--formula-item-bg); border-radius: 8px; padding: 12px 14px; border: 1px solid var(--formula-item-border); }
+  .formula-eq { font-size: 20px; font-weight: 700; font-family: 'Lora', serif; color: var(--formula-eq); margin-bottom: 4px; }
+  .formula-desc { font-size: 12px; color: var(--formula-desc); }
 
   /* NEWTON BOX */
   .newton-box { background: var(--card); border: 2px solid var(--border); border-radius: var(--radius); padding: 18px 22px; margin-bottom: 24px; }
@@ -369,10 +422,12 @@
     .header h1 { font-size: 1.5rem; }
   }
 </style>
+<link rel="stylesheet" href="theme-ui.css">
 </head>
 <body>
 
 <div class="header">
+  <button type="button" class="theme-toggle" id="themeToggle" aria-label="Växla tema">🌙</button>
   <a href="index.html" class="back-link">← Tillbaka till översikten</a>
   <div class="chapter-tag">NP Fysik åk 9 · Kapitel 2</div>
   <h1>Kraft <span>&amp; Rörelse</span></h1>
@@ -1429,5 +1484,6 @@ refreshForstaaelseScorePanel();
 setTabProgressActive('begrepp');
 updateTabProgressStrips();
 </script>
+<script src="theme-toggle.js"></script>
 </body>
 </html>

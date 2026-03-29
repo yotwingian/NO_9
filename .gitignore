@@ -3,6 +3,9 @@
 Thumbs.db
 desktop.ini
 
+# Lokala Cursor-specar (ska inte versioneras)
+cursor_ljuslage_toggle.md
+
 # Editor / IDE (ospecifika temporärfiler)
 *~
 *.swp

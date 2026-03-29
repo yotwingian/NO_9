@@ -4,9 +4,50 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fysik åk 9 – Elektricitet & Magnetism</title>
+<script src="theme-head.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Lora:wght@400;600;700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
+    --bg: #f4f6fc;
+    --surface: #eef1f8;
+    --card: #ffffff;
+    --white: #ffffff;
+    --text: #141923;
+    --muted: #5c6578;
+    --border: #d8dee8;
+    --accent: #2563eb;
+    --accent2: #0891b2;
+    --accent-light: rgba(58, 142, 255, 0.12);
+    --accent-hover: #1d4ed8;
+    --green: #059669;
+    --green-light: rgba(5, 150, 105, 0.1);
+    --red: #dc2626;
+    --red-light: rgba(220, 38, 38, 0.1);
+    --orange: #ea580c;
+    --orange-light: rgba(234, 88, 12, 0.12);
+    --yellow-light: rgba(202, 138, 4, 0.08);
+    --warn: #ca8a04;
+    --good: var(--green);
+    --mono: ui-monospace, 'Cascadia Code', monospace;
+    --card2: #eef1f6;
+    --border2: #c5ced8;
+    --shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.1);
+    --radius: 10px;
+    --bad: var(--red);
+    --accent3: var(--green);
+    --header-grad-start: #dbeafe;
+    --card-back-muted: #4b5563;
+    --formula-grad-a: #dbeafe;
+    --formula-grad-b: #e0f2fe;
+    --formula-card-text: #0f172a;
+    --formula-border: rgba(37, 99, 235, 0.35);
+    --formula-item-bg: rgba(255, 255, 255, 0.88);
+    --formula-item-border: rgba(37, 99, 235, 0.18);
+    --formula-eq: #0c4a6e;
+    --formula-desc: #0369a1;
+  }
+  [data-theme="dark"] {
     --bg: #0b0f1a;
     --surface: #131825;
     --card: #1c2235;
@@ -33,9 +74,18 @@
     --shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
     --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.45);
     --radius: 10px;
-    /* Alias så att calc-stilen kan återanvända samma klasser som i kapitel 4/5. */
     --bad: var(--red);
     --accent3: var(--green);
+    --header-grad-start: #020e2a;
+    --card-back-muted: #cbd5e1;
+    --formula-grad-a: #051525;
+    --formula-grad-b: #0a2040;
+    --formula-card-text: #fff;
+    --formula-border: rgba(58, 142, 255, 0.35);
+    --formula-item-bg: rgba(255, 255, 255, 0.08);
+    --formula-item-border: rgba(255, 255, 255, 0.12);
+    --formula-eq: #fff;
+    --formula-desc: #a8d4ff;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -51,7 +101,7 @@
 
   /* ── HEADER (samma mönster som kapitel 7–9) ── */
   .header {
-    background: linear-gradient(135deg, #020e2a 0%, var(--bg) 60%);
+    background: linear-gradient(135deg, var(--header-grad-start) 0%, var(--bg) 60%);
     border-bottom: 1px solid var(--border);
     padding: 2rem 1.5rem 1.5rem;
     position: relative;
@@ -311,7 +361,7 @@
   .card-back .card-text {
     font-size: 0.9rem;
     font-weight: 400;
-    color: #cbd5e1;
+    color: var(--card-back-muted);
   }
   .card-hint { margin-top: 1rem; font-size: 0.72rem; color: var(--muted); }
 
@@ -678,12 +728,12 @@
 
   /* ── FORMULA BOX ─────────────────────────── */
   .formula-card {
-    background: linear-gradient(135deg, #051525, #0a2040);
-    color: #fff;
+    background: linear-gradient(135deg, var(--formula-grad-a), var(--formula-grad-b));
+    color: var(--formula-card-text);
     border-radius: var(--radius);
     padding: 20px 24px;
     margin-bottom: 28px;
-    border: 1px solid rgba(58, 142, 255, 0.35);
+    border: 1px solid var(--formula-border);
   }
   .formula-card h3 {
     font-family: 'Lora', serif;
@@ -697,19 +747,19 @@
     gap: 12px;
   }
   .formula-item {
-    background: rgba(255,255,255,.08);
+    background: var(--formula-item-bg);
     border-radius: 8px;
     padding: 12px 14px;
-    border: 1px solid rgba(255,255,255,.12);
+    border: 1px solid var(--formula-item-border);
   }
   .formula-eq {
     font-size: 20px;
     font-weight: 700;
     font-family: 'Lora', serif;
-    color: #fff;
+    color: var(--formula-eq);
     margin-bottom: 4px;
   }
-  .formula-desc { font-size: 12px; color: #a8d4ff; }
+  .formula-desc { font-size: 12px; color: var(--formula-desc); }
 
   /* ── RESPONSIVE ──────────────────────────── */
   @media (max-width: 600px) {
@@ -720,10 +770,12 @@
     .header h1 { font-size: 1.5rem; }
   }
 </style>
+<link rel="stylesheet" href="theme-ui.css">
 </head>
 <body>
 
 <div class="header">
+  <button type="button" class="theme-toggle" id="themeToggle" aria-label="Växla tema">🌙</button>
   <a href="index.html" class="back-link">← Tillbaka till översikten</a>
   <div class="chapter-tag">NP Fysik åk 9 · Kapitel 1</div>
   <h1>Elektricitet <span>&amp; Magnetism</span></h1>
@@ -1903,5 +1955,6 @@ refreshForstaaelseScorePanel();
 setTabProgressActive('begrepp');
 updateTabProgressStrips();
 </script>
+<script src="theme-toggle.js"></script>
 </body>
 </html>

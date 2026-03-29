@@ -4,10 +4,30 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kärnfysik – NP Fysik åk 9</title>
+<script src="theme-head.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
 
 :root {
+  --bg: #f8f9fb;
+  --card: #ffffff;
+  --card2: #f1f3f7;
+  --border: #e2e6ef;
+  --border2: #d0d5e0;
+  --text: #1a1f2e;
+  --muted: #6b7280;
+  --accent: #ea580c;
+  --accent2: #f97316;
+  --good: #16a34a;
+  --accent3: var(--good);
+  --bad: #dc2626;
+  --warn: #ca8a04;
+  --blue: #2563eb;
+  --mono: 'JetBrains Mono', monospace;
+  --header-grad-start: #fff4e6;
+  --card-back-muted: #4b5563;
+}
+[data-theme="dark"] {
   --bg: #0d0f14;
   --card: #151820;
   --card2: #1a1e28;
@@ -23,6 +43,8 @@
   --warn: #eab308;
   --blue: #3b82f6;
   --mono: 'JetBrains Mono', monospace;
+  --header-grad-start: #1a0a00;
+  --card-back-muted: #cbd5e1;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -36,11 +58,12 @@ body {
 
 /* ── Header ── */
 .header {
-  background: linear-gradient(135deg, #1a0a00 0%, #0d0f14 60%);
+  background: linear-gradient(135deg, var(--header-grad-start) 0%, var(--bg) 60%);
   border-bottom: 1px solid var(--border);
   padding: 2rem 1.5rem 1.5rem;
   position: relative;
   overflow: hidden;
+  z-index: 1;
 }
 .header::before {
   content: '⚛';
@@ -280,7 +303,7 @@ body {
 .card-back .card-text {
   font-size: 0.9rem;
   font-weight: 400;
-  color: #cbd5e1;
+  color: var(--card-back-muted);
 }
 .card-hint {
   margin-top: 1rem;
@@ -744,11 +767,13 @@ body {
   .flashcard-scene { height: 200px; }
 }
 </style>
+<link rel="stylesheet" href="theme-ui.css">
 </head>
 <body>
 
 <!-- HEADER -->
 <div class="header">
+  <button type="button" class="theme-toggle" id="themeToggle" aria-label="Växla tema">🌙</button>
   <a href="index.html" class="back-link">← Tillbaka till översikten</a>
   <div class="chapter-tag">NP Fysik åk 9 · Kapitel 7</div>
   <h1>Kärn<span>fysik</span></h1>
@@ -1782,5 +1807,6 @@ applyRestoredCalc();
 setTabProgressActive('begrepp');
 updateTabProgressStrips();
 </script>
+<script src="theme-toggle.js"></script>
 </body>
 </html>

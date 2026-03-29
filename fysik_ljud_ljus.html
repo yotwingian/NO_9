@@ -4,20 +4,32 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ljud & Ljus — NP Fysik åk 9</title>
+<script src="theme-head.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{
+  --bg:#f0f7fa;--surface:#e2f0f5;--card:#ffffff;--border:#c5d8e0;
+  --accent:#0891b2;--accent2:#16a34a;--accent3:#d97706;
+  --bad:#dc2626;--text:#0f172a;--muted:#4a6570;
+  --good:#16a34a;--warn:#d97706;
+  --mono:'JetBrains Mono',monospace;--card2:#e8f4f8;--border2:#b8ced8;
+  --header-grad-start:#e0f2fe;--np-grad-a:#e0f7fa;--np-grad-b:#ecfeff;--np-border:rgba(8,145,178,.35);
+  --card-back-muted:#4b5563;
+}
+[data-theme="dark"]{
   --bg:#070d12;--surface:#0e1a22;--card:#162230;--border:#1e3040;
   --accent:#00e5ff;--accent2:#76ff7a;--accent3:#ffb347;
   --bad:#ff4d6d;--text:#d8eef8;--muted:#4a7080;
   --good:#76ff7a;--warn:#ffb347;
   --mono:'JetBrains Mono',monospace;--card2:#121a24;--border2:#2a3a4a;
+  --header-grad-start:#010d12;--np-grad-a:#020e16;--np-grad-b:#041825;--np-border:rgba(0,229,255,.3);
+  --card-back-muted:#cbd5e1;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 
 /* HEADER (samma mönster som kapitel 7–9) */
-.header{background:linear-gradient(135deg,#010d12 0%,var(--bg) 60%);border-bottom:1px solid var(--border);padding:2rem 1.5rem 1.5rem;position:relative;overflow:hidden;z-index:1}
+.header{background:linear-gradient(135deg,var(--header-grad-start) 0%,var(--bg) 60%);border-bottom:1px solid var(--border);padding:2rem 1.5rem 1.5rem;position:relative;overflow:hidden;z-index:1}
 .header::before{content:'🔊';position:absolute;right:1.5rem;top:50%;transform:translateY(-50%);font-size:6rem;opacity:.06;pointer-events:none}
 .chapter-tag{font-family:'JetBrains Mono',var(--mono);font-size:.65rem;letter-spacing:.2em;color:var(--accent);text-transform:uppercase;margin-bottom:.5rem}
 .header h1{font-family:'Inter','Outfit',sans-serif;font-size:1.9rem;font-weight:700;color:var(--text);margin-bottom:.3rem;line-height:1.15}
@@ -100,11 +112,11 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 .card-side-label{font-family:var(--mono);font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem}
 .card-front .card-side-label{color:var(--accent)}
 .card-text{font-size:1rem;font-weight:600;line-height:1.5;color:var(--text);white-space:pre-line}
-.card-back .card-text{font-size:.88rem;font-weight:400;color:#cbd5e1}
+.card-back .card-text{font-size:.88rem;font-weight:400;color:var(--card-back-muted)}
 .card-hint{margin-top:1rem;font-size:.72rem;color:var(--muted)}
 .card-actions{display:flex;gap:.75rem;justify-content:center;margin-bottom:2.5rem;flex-wrap:wrap}
 .card-btn{font-family:'Outfit',sans-serif;font-size:.8rem;font-weight:600;padding:.55rem 1.3rem;border-radius:8px;border:1px solid var(--border2);background:var(--card2);color:var(--muted);cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:.4rem}
-.card-btn:hover{color:var(--text);border-color:#3a4562}
+.card-btn:hover{color:var(--text);border-color:var(--border2)}
 .card-btn.good{border-color:var(--good);color:var(--good);background:rgba(118,255,122,.07)}
 .card-btn.good:hover{background:rgba(118,255,122,.15)}
 .card-btn.skip{border-color:var(--warn);color:var(--warn);background:rgba(255,179,71,.07)}
@@ -152,7 +164,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 .grade-c{background:rgba(255,179,71,.15);color:var(--accent3)}
 .grade-a{background:rgba(118,255,122,.15);color:var(--accent2)}
 
-.np-card{background:linear-gradient(135deg,#020e16,#041825);border:1px solid rgba(0,229,255,.3);border-radius:14px;padding:20px;margin-bottom:14px}
+.np-card{background:linear-gradient(135deg,var(--np-grad-a),var(--np-grad-b));border:1px solid var(--np-border);border-radius:14px;padding:20px;margin-bottom:14px}
 .np-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
 .np-logo{background:var(--accent);color:#000;font-weight:900;font-size:11px;padding:4px 8px;border-radius:5px;letter-spacing:1px}
 .np-year{color:var(--muted);font-size:12px}
@@ -161,10 +173,12 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 @media(max-width:600px){.header h1{font-size:1.5rem}}
 @media(max-width:480px){.ref-grid{grid-template-columns:1fr}.wave-compare{grid-template-columns:1fr}.optics-grid{grid-template-columns:1fr 1fr}}
 </style>
+<link rel="stylesheet" href="theme-ui.css">
 </head>
 <body>
 
 <div class="header">
+  <button type="button" class="theme-toggle" id="themeToggle" aria-label="Växla tema">🌙</button>
   <a href="index.html" class="back-link">← Tillbaka till översikten</a>
   <div class="chapter-tag">NP Fysik åk 9 · Kapitel 6</div>
   <h1>Ljud <span>&amp; Ljus</span></h1>
@@ -1118,5 +1132,6 @@ applyRestoredAnswers();
 setTabProgressActive('begrepp');
 updateTabProgressStrips();
 </script>
+<script src="theme-toggle.js"></script>
 </body>
 </html>

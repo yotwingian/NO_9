@@ -4,10 +4,30 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Energiförsörjning – NP Fysik åk 9</title>
+<script src="theme-head.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
 
 :root {
+  --bg: #f0fdf4;
+  --card: #ffffff;
+  --card2: #ecfdf5;
+  --border: #bbf7d0;
+  --border2: #86efac;
+  --text: #14532d;
+  --muted: #4d6b5a;
+  --accent: #16a34a;
+  --accent2: #22c55e;
+  --good: #16a34a;
+  --accent3: var(--good);
+  --bad: #dc2626;
+  --warn: #ca8a04;
+  --blue: #2563eb;
+  --mono: 'JetBrains Mono', monospace;
+  --header-grad-start: #dcfce7;
+  --card-back-muted: #4b5563;
+}
+[data-theme="dark"] {
   --bg: #080e0a;
   --card: #0d1510;
   --card2: #111c14;
@@ -23,6 +43,8 @@
   --warn: #eab308;
   --blue: #3b82f6;
   --mono: 'JetBrains Mono', monospace;
+  --header-grad-start: #031209;
+  --card-back-muted: #cbd5e1;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -209,7 +231,7 @@ body {
 .card-side-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
 .card-front .card-side-label { color: var(--accent); }
 .card-text { font-size: 1rem; font-weight: 600; line-height: 1.5; color: var(--text); }
-.card-back .card-text { font-size: 0.88rem; font-weight: 400; color: #cbd5e1; }
+.card-back .card-text { font-size: 0.88rem; font-weight: 400; color: var(--card-back-muted); }
 .card-hint { margin-top: 1rem; font-size: 0.72rem; color: var(--muted); }
 
 .card-actions { display: flex; gap: 0.75rem; justify-content: center; margin-bottom: 2.5rem; flex-wrap: wrap; }
@@ -360,11 +382,13 @@ body {
   .flashcard-scene { height: 200px; }
 }
 </style>
+<link rel="stylesheet" href="theme-ui.css">
 </head>
 <body>
 
 <!-- HEADER -->
 <div class="header">
+  <button type="button" class="theme-toggle" id="themeToggle" aria-label="Växla tema">🌙</button>
   <a href="index.html" class="back-link">← Tillbaka till översikten</a>
   <div class="chapter-tag">NP Fysik åk 9 · Kapitel 9</div>
   <h1>Energi<span>försörjning</span></h1>
@@ -1418,5 +1442,6 @@ applyRestoredCalc();
 setTabProgressActive('begrepp');
 updateTabProgressStrips();
 </script>
+<script src="theme-toggle.js"></script>
 </body>
 </html>

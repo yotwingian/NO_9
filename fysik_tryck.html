@@ -4,9 +4,34 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tryck — NP Fysik åk 9</title>
+<script src="theme-head.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root {
+  --bg: #f4f6fc;
+  --surface: #eef1f8;
+  --card: #ffffff;
+  --border: #d8dee8;
+  --accent: #3a8eff;
+  --accent2: #00b8d4;
+  --accent3: #06d6a0;
+  --bad: #ff4d6d;
+  --warn: #d97706;
+  --text: #141923;
+  --muted: #5c6578;
+  --good: #06d6a0;
+  --mono: 'JetBrains Mono', monospace;
+  --card2: #eef1f6;
+  --border2: #c5ced8;
+  --header-grad-start: #dbeafe;
+  --ark-grad-a: #e8f2fc;
+  --ark-grad-b: #dceaf8;
+  --np-grad-a: #e8eef8;
+  --np-grad-b: #f0f4fc;
+  --ark-border: rgba(58, 142, 255, 0.35);
+  --np-border: rgba(58, 142, 255, 0.35);
+}
+[data-theme="dark"] {
   --bg: #0b0f1a;
   --surface: #131825;
   --card: #1c2235;
@@ -22,12 +47,19 @@
   --mono: 'JetBrains Mono', monospace;
   --card2: #151a2a;
   --border2: #2a3148;
+  --header-grad-start: #020e2a;
+  --ark-grad-a: #051525;
+  --ark-grad-b: #0a2040;
+  --np-grad-a: #050f25;
+  --np-grad-b: #0b1530;
+  --ark-border: rgba(58, 142, 255, 0.3);
+  --np-border: rgba(58, 142, 255, 0.35);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 
 /* HEADER (samma mönster som kapitel 7–9) */
-.header{background:linear-gradient(135deg,#020e2a 0%,var(--bg) 60%);border-bottom:1px solid var(--border);padding:2rem 1.5rem 1.5rem;position:relative;overflow:hidden;z-index:1}
+.header{background:linear-gradient(135deg,var(--header-grad-start) 0%,var(--bg) 60%);border-bottom:1px solid var(--border);padding:2rem 1.5rem 1.5rem;position:relative;overflow:hidden;z-index:1}
 .header::before{content:'🌊';position:absolute;right:1.5rem;top:50%;transform:translateY(-50%);font-size:6rem;opacity:.06;pointer-events:none}
 .chapter-tag{font-family:'JetBrains Mono',var(--mono);font-size:.65rem;letter-spacing:.2em;color:var(--accent);text-transform:uppercase;margin-bottom:.5rem}
 .header h1{font-family:'Inter','Outfit',sans-serif;font-size:1.9rem;font-weight:700;color:var(--text);margin-bottom:.3rem;line-height:1.15}
@@ -69,7 +101,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 .formula-explain{font-size:12px;color:var(--text);line-height:1.5}
 
 /* ARKIMEDES BOX */
-.ark-box{background:linear-gradient(135deg,#051525,#0a2040);border:1px solid rgba(58,142,255,.3);border-radius:16px;padding:20px;margin-bottom:20px}
+.ark-box{background:linear-gradient(135deg,var(--ark-grad-a),var(--ark-grad-b));border:1px solid var(--ark-border);border-radius:16px;padding:20px;margin-bottom:20px}
 .ark-box h3{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
 .ark-row{display:flex;gap:10px;flex-wrap:wrap}
 .ark-case{flex:1;min-width:140px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center}
@@ -174,7 +206,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 .grade-a{background:rgba(6,214,160,.2);color:var(--accent3)}
 
 /* NP */
-.np-card{background:linear-gradient(135deg,#050f25,#0b1530);border:1px solid rgba(58,142,255,.35);border-radius:16px;padding:22px;margin-bottom:16px}
+.np-card{background:linear-gradient(135deg,var(--np-grad-a),var(--np-grad-b));border:1px solid var(--np-border);border-radius:16px;padding:22px;margin-bottom:16px}
 .np-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
 .np-logo{background:var(--accent);color:#fff;font-weight:900;font-size:11px;padding:4px 8px;border-radius:6px;letter-spacing:1px}
 .np-year{color:var(--muted);font-size:12px}
@@ -183,10 +215,12 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 @media(max-width:600px){.header h1{font-size:1.5rem}}
 @media(max-width:480px){.formula-grid{grid-template-columns:1fr}.ark-row{flex-direction:column}}
 </style>
+<link rel="stylesheet" href="theme-ui.css">
 </head>
 <body>
 
 <div class="header">
+  <button type="button" class="theme-toggle" id="themeToggle" aria-label="Växla tema">🌙</button>
   <a href="index.html" class="back-link">← Tillbaka till översikten</a>
   <div class="chapter-tag">NP Fysik åk 9 · Kapitel 4</div>
   <h1>Tryck <span>&amp; Lyftkraft</span></h1>
@@ -1181,5 +1215,6 @@ syncForstaaelseHeader();
 setTabProgressActive('begrepp');
 updateTabProgressStrips();
 </script>
+<script src="theme-toggle.js"></script>
 </body>
 </html>

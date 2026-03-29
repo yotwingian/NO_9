@@ -4,10 +4,25 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Studieplatformen — NP Åk 9</title>
+<script src="theme-head.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
 
 :root {
+  --bg: #f8f9fb;
+  --card: #ffffff;
+  --card2: #f1f3f7;
+  --border: #e2e6ef;
+  --border2: #d0d5e0;
+  --text: #1a1f2e;
+  --muted: #6b7280;
+  --mono: 'JetBrains Mono', monospace;
+  --hero-grad-top: #e8ecf4;
+  --hero-star: rgba(0, 0, 0, 0.12);
+  --ch-coming-bg: rgba(248, 249, 251, 0.92);
+}
+
+[data-theme="dark"] {
   --bg: #0a0c10;
   --card: #111318;
   --card2: #171b22;
@@ -15,7 +30,9 @@
   --border2: #272f42;
   --text: #e2e8f0;
   --muted: #64748b;
-  --mono: 'JetBrains Mono', monospace;
+  --hero-grad-top: #0d1020;
+  --hero-star: rgba(255, 255, 255, 0.35);
+  --ch-coming-bg: rgba(10, 12, 16, 0.72);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
@@ -23,19 +40,19 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
 .hero {
   padding: 3.5rem 1.5rem 2.5rem; text-align: center;
   border-bottom: 1px solid var(--border);
-  background: linear-gradient(180deg, #0d1020 0%, var(--bg) 100%);
+  background: linear-gradient(180deg, var(--hero-grad-top) 0%, var(--bg) 100%);
   position: relative; overflow: hidden;
 }
 .hero::before {
   content: ''; position: absolute; inset: 0; pointer-events: none;
   background-image:
-    radial-gradient(1px 1px at 15% 25%, rgba(255,255,255,0.4) 0%, transparent 100%),
-    radial-gradient(1px 1px at 40% 60%, rgba(255,255,255,0.3) 0%, transparent 100%),
-    radial-gradient(1px 1px at 70% 20%, rgba(255,255,255,0.35) 0%, transparent 100%),
-    radial-gradient(1px 1px at 85% 70%, rgba(255,255,255,0.25) 0%, transparent 100%),
-    radial-gradient(1px 1px at 28% 88%, rgba(255,255,255,0.2) 0%, transparent 100%),
-    radial-gradient(1px 1px at 92% 45%, rgba(255,255,255,0.3) 0%, transparent 100%),
-    radial-gradient(1px 1px at 8%  55%, rgba(255,255,255,0.2) 0%, transparent 100%);
+    radial-gradient(1px 1px at 15% 25%, var(--hero-star) 0%, transparent 100%),
+    radial-gradient(1px 1px at 40% 60%, color-mix(in srgb, var(--hero-star) 80%, transparent) 0%, transparent 100%),
+    radial-gradient(1px 1px at 70% 20%, var(--hero-star) 0%, transparent 100%),
+    radial-gradient(1px 1px at 85% 70%, color-mix(in srgb, var(--hero-star) 70%, transparent) 0%, transparent 100%),
+    radial-gradient(1px 1px at 28% 88%, color-mix(in srgb, var(--hero-star) 60%, transparent) 0%, transparent 100%),
+    radial-gradient(1px 1px at 92% 45%, color-mix(in srgb, var(--hero-star) 85%, transparent) 0%, transparent 100%),
+    radial-gradient(1px 1px at 8%  55%, color-mix(in srgb, var(--hero-star) 55%, transparent) 0%, transparent 100%);
 }
 .hero-tag { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
 .hero h1 { font-size: clamp(1.8rem, 5vw, 2.8rem); font-weight: 700; line-height: 1.15; margin-bottom: 0.6rem; }
@@ -65,7 +82,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
   border: 1px solid var(--border2); background: var(--card); color: var(--muted);
   cursor: pointer; transition: all 0.18s; white-space: nowrap;
 }
-.subject-btn:hover { color: var(--text); border-color: #3a4562; }
+.subject-btn:hover { color: var(--text); border-color: var(--border2); }
 .subject-btn.active { color: var(--text); border-color: var(--sb-color); background: color-mix(in srgb, var(--sb-color) 10%, transparent); }
 .subject-btn .sb-count { font-family: var(--mono); font-size: 0.62rem; background: var(--border2); padding: 0.1rem 0.4rem; border-radius: 8px; }
 .subject-btn.active .sb-count { background: color-mix(in srgb, var(--sb-color) 20%, transparent); color: var(--sb-color); }
@@ -91,7 +108,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
 }
 .ch-card:hover { transform: translateY(-3px); border-color: var(--border2); box-shadow: 0 8px 32px color-mix(in srgb, var(--cc) 12%, transparent); }
 .ch-card.coming { opacity: 0.4; pointer-events: none; background: repeating-linear-gradient(45deg, var(--card), var(--card) 10px, var(--card2) 10px, var(--card2) 20px); }
-.ch-card.coming::after { content: 'KOMMER SNART'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.2em; color: var(--muted); background: rgba(10,12,16,0.7); border-radius: 16px; }
+.ch-card.coming::after { content: 'KOMMER SNART'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.2em; color: var(--muted); background: var(--ch-coming-bg); border-radius: 16px; }
 .ch-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.8rem; }
 .ch-icon { font-size: 1.8rem; line-height: 1; }
 .ch-num { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); background: var(--card2); padding: 0.2rem 0.5rem; border-radius: 4px; border: 1px solid var(--border2); }
@@ -117,10 +134,12 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
   .chapters-grid { grid-template-columns: 1fr; }
 }
 </style>
+<link rel="stylesheet" href="theme-ui.css">
 </head>
 <body>
 
 <div class="hero">
+  <button type="button" class="theme-toggle" id="themeToggle" aria-label="Växla tema">🌙</button>
   <div class="hero-tag">Nationella Provet · Åk 9</div>
   <h1><span class="grad">Studieplatformen</span></h1>
   <p>Välj ämne och kapitel. Flashkort, förståelsequiz, resonemang och riktiga NP-frågor.</p>
@@ -319,5 +338,6 @@ function resetAll() {
 buildUI();
 window.addEventListener('focus', loadAllProgress);
 </script>
+<script src="theme-toggle.js"></script>
 </body>
 </html>

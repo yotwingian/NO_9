@@ -4,10 +4,29 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Universum – NP Fysik åk 9</title>
+<script src="theme-head.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
 
 :root {
+  --bg: #f5f3ff;
+  --card: #ffffff;
+  --card2: #ede9fe;
+  --border: #ddd6fe;
+  --border2: #c4b5fd;
+  --text: #1e1b2e;
+  --muted: #6b6280;
+  --accent: #7c3aed;
+  --accent2: #8b5cf6;
+  --good: #16a34a;
+  --bad: #dc2626;
+  --warn: #ca8a04;
+  --blue: #2563eb;
+  --mono: 'JetBrains Mono', monospace;
+  --header-grad-start: #ede9fe;
+  --card-back-muted: #4b5563;
+}
+[data-theme="dark"] {
   --bg: #080a12;
   --card: #0f1120;
   --card2: #141828;
@@ -22,6 +41,8 @@
   --warn: #eab308;
   --blue: #3b82f6;
   --mono: 'JetBrains Mono', monospace;
+  --header-grad-start: #0f0520;
+  --card-back-muted: #cbd5e1;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -33,11 +54,17 @@ body {
   min-height: 100vh;
 }
 
-/* Starfield */
+/* Starfield (endast mörkt läge) */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+}
+[data-theme="dark"] body::before {
+  opacity: 1;
   background-image:
     radial-gradient(1px 1px at 12% 18%, rgba(255,255,255,0.55) 0%, transparent 100%),
     radial-gradient(1px 1px at 33% 72%, rgba(255,255,255,0.35) 0%, transparent 100%),
@@ -53,13 +80,11 @@ body::before {
     radial-gradient(1px 1px at 79% 10%, rgba(255,255,255,0.4) 0%, transparent 100%),
     radial-gradient(1px 1px at 41% 95%, rgba(255,255,255,0.2) 0%, transparent 100%),
     radial-gradient(1px 1px at 68% 35%, rgba(255,255,255,0.3) 0%, transparent 100%);
-  pointer-events: none;
-  z-index: 0;
 }
 
 /* ── Header ── */
 .header {
-  background: linear-gradient(135deg, #0f0520 0%, #080a12 60%);
+  background: linear-gradient(135deg, var(--header-grad-start) 0%, var(--bg) 60%);
   border-bottom: 1px solid var(--border);
   padding: 2rem 1.5rem 1.5rem;
   position: relative;
@@ -336,7 +361,7 @@ body::before {
 }
 .card-front .card-side-label { color: var(--accent); }
 .card-text { font-size: 1rem; font-weight: 600; line-height: 1.5; color: var(--text); }
-.card-back .card-text { font-size: 0.88rem; font-weight: 400; color: #cbd5e1; }
+.card-back .card-text { font-size: 0.88rem; font-weight: 400; color: var(--card-back-muted); }
 .card-hint { margin-top: 1rem; font-size: 0.72rem; color: var(--muted); }
 
 .card-actions {
@@ -538,11 +563,13 @@ body::before {
   .lc-label { min-width: 70px; }
 }
 </style>
+<link rel="stylesheet" href="theme-ui.css">
 </head>
 <body>
 
 <!-- HEADER -->
 <div class="header">
+  <button type="button" class="theme-toggle" id="themeToggle" aria-label="Växla tema">🌙</button>
   <a href="index.html" class="back-link">← Tillbaka till översikten</a>
   <div class="chapter-tag">NP Fysik åk 9 · Kapitel 8</div>
   <h1>Uni<span>versum</span></h1>
@@ -1471,5 +1498,6 @@ applyRestoredQuiz();
 setTabProgressActive('begrepp');
 updateTabProgressStrips();
 </script>
+<script src="theme-toggle.js"></script>
 </body>
 </html>
