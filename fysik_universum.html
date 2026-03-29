@@ -489,16 +489,28 @@ body::before {
 }
 .reset-btn:hover { color: var(--accent); border-color: var(--accent); }
 
-/* ── Resonemang ── */
-.res-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 1.2rem; overflow: hidden; }
-.res-header { display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 1.4rem; cursor: pointer; user-select: none; gap: 1rem; }
-.res-header:hover { background: rgba(255,255,255,0.02); }
-.res-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; flex: 1; }
-.res-chevron { color: var(--muted); font-size: 0.8rem; transition: transform 0.25s; flex-shrink: 0; }
-.res-body { display: none; padding: 0 1.4rem 1.4rem; border-top: 1px solid var(--border); }
-.res-body.show { display: block; }
-.res-scenario { font-size: 0.84rem; color: var(--muted); line-height: 1.7; margin: 1rem 0; padding: 0.8rem 1rem; background: var(--card2); border-radius: 8px; border-left: 3px solid var(--border2); }
-.res-task { font-size: 0.88rem; font-weight: 600; color: var(--text); margin-bottom: 1rem; line-height: 1.5; }
+/* ── Resonemang (samma stil som kap 3–6) ── */
+.res-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.25rem 1.4rem; margin-bottom: 1.2rem; }
+.res-badge { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; margin-bottom: 10px; }
+.res-badge.np { background: rgba(58,142,255,0.2); color: var(--accent); }
+.res-badge.res { background: rgba(249,115,22,0.15); color: var(--warn); }
+.res-q { font-weight: 700; font-size: 0.95rem; line-height: 1.5; margin-bottom: 12px; }
+.res-context { background: var(--card2); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; padding: 12px 14px; margin-bottom: 14px; font-size: 0.84rem; color: var(--muted); line-height: 1.65; }
+.res-steps { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+.res-step { background: var(--card2); border: 1px solid var(--border2); border-radius: 10px; padding: 12px 14px; }
+.res-step label { font-size: 12px; font-weight: 700; color: var(--muted); display: block; margin-bottom: 6px; letter-spacing: 0.06em; text-transform: uppercase; }
+.res-textarea { width: 100%; background: transparent; border: none; color: var(--text); font-family: 'Inter', sans-serif; font-size: 0.82rem; resize: vertical; outline: none; min-height: 60px; line-height: 1.6; }
+.btn-model { background: transparent; border: 1px solid var(--accent2); color: var(--accent2); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-family: var(--mono); font-weight: 700; font-size: 12px; transition: all 0.2s; }
+.btn-model:hover { background: rgba(168,85,247,0.08); }
+.model-ans { margin-top: 10px; background: rgba(58,142,255,0.06); border: 1px solid rgba(58,142,255,0.22); border-radius: 10px; padding: 14px; font-size: 0.82rem; line-height: 1.65; display: none; }
+.model-ans.show { display: block; }
+.model-ans h4 { color: var(--accent2); font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px; }
+.grade-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+.grade { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 6px; }
+.grade-e { background: rgba(58,142,255,0.15); color: var(--accent); }
+.grade-c { background: rgba(249,115,22,0.12); color: var(--warn); }
+.grade-a { background: rgba(34,197,94,0.12); color: var(--good); }
+.res-chevron { color: var(--muted); font-size: 0.8rem; flex-shrink: 0; }
 .level-block { margin-bottom: 0.8rem; }
 .level-label { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.2rem 0.6rem; border-radius: 4px; display: inline-block; margin-bottom: 0.4rem; }
 .lvl-e { background: rgba(34,197,94,0.12); color: var(--good); border: 1px solid rgba(34,197,94,0.25); }
@@ -661,107 +673,91 @@ body::before {
     </p>
   </div>
 
-  <!-- Resonemang 1 -->
   <div class="res-card">
-    <div class="res-header" onclick="toggleRes('r1')">
-      <div class="res-title">🌍 Geocentrisk vs heliocentrisk världsbild</div>
-      <div class="res-chevron" id="ch-r1">▼</div>
+    <span class="res-badge np">NP 2018</span>
+    <div class="res-q">🌙 Ljusvågor eller ljudvågor för att mäta avstånd?</div>
+    <div class="res-context">För att mäta stora avstånd — till exempel mellan Jorden och Månen, eller mellan havsytan och havsbotten — kan ljusvågor eller ljudvågor användas.</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <label>Fråga</label>
+        <div style="font-size:0.84rem;line-height:1.6;color:var(--text);margin-bottom:8px">Vilket används för att mäta avståndet till Månen? Och vilket används för att mäta havsdjup? Förklara varför för vardera fallet.</div>
+        <label>Avstånd till Månen</label>
+        <textarea class="res-textarea" placeholder="Ljus eller ljud? Varför?"></textarea>
+      </div>
+      <div class="res-step">
+        <label>Havsdjup</label>
+        <textarea class="res-textarea" placeholder="Ljus eller ljud? Varför?"></textarea>
+      </div>
     </div>
-    <div class="res-body" id="r1">
-      <div class="res-scenario">
-        Under antiken trodde de flesta att jorden var universums centrum och att solen, planeterna och stjärnorna kretsade runt den. Kopernikus föreslog 1543 att solen istället stod i centrum.
-      </div>
-      <div class="res-task">Förklara skillnaden mellan geocentrisk och heliocentrisk världsbild, och resonera i två led kring varför det var svårt att acceptera den heliocentriska modellen.</div>
-      <div class="level-block">
-        <span class="level-label lvl-e">Nivå E</span>
-        <p>Geocentrisk = jorden i centrum. Heliocentrisk = solen i centrum. Det var svårt att acceptera för att det stred mot vad man trodde.</p>
-      </div>
-      <div class="level-block">
-        <span class="level-label lvl-c">Nivå C</span>
-        <p>Geocentrisk världsbild (Ptolemaios) hade stöd av kyrkan och passade den tidens observation att stjärnorna verkade röra sig runt jorden → att ifrågasätta den var farligt och provocerande. Galilei bekräftade heliocentrismen med teleskopobservationer men dömdes av inkvisitionen.</p>
-      </div>
-      <div class="level-block">
-        <span class="level-label lvl-a">Nivå A</span>
-        <p>Geocentrisk världsbild var socialt och religiöst förankrad → att hävda att jorden inte var centrum innebar att utmana kyrkans auktoritet, vilket kunde leda till förföljelse. Dessutom verkade det "självklart" att solen rörde sig eftersom vi ser den gå upp och ner → utan teleskop och matematiska modeller (Keplers lagar) fanns inga observerbara bevis för heliocentrismen, vilket försvårade vetenskaplig acceptans.</p>
-      </div>
+    <button type="button" class="btn-model" onclick="showModel('k8r1')">Visa exempelsvar (E/C/A)</button>
+    <div class="model-ans" id="ma-k8r1">
+      <h4>Exempelsvar</h4>
+      <p><strong>E:</strong> Till Månen används ljus. I havet används ljud. Ljud kan inte färdas i rymden.</p>
+      <p style="margin-top:8px"><strong>C:</strong> Ljusvågor används till Månen eftersom ljus kan färdas genom vakuum — rymden saknar luft. Ljudvågor däremot behöver ett medium (materia) för att fortplanta sig och kan inte färdas i vakuum. I havet används ljudvågor (ekolod) eftersom vatten är ett utmärkt medium för ljud, som färdas ca 1&nbsp;500 m/s där — och ljuset absorberas snabbt på djupt vatten.</p>
+      <p style="margin-top:8px"><strong>A:</strong> Ljusvågor är elektromagnetisk strålning och behöver inget medium — de fortplantar sig i vakuum med hastigheten 3×10<sup>8</sup> m/s. Därför används laserljus för att mäta avstånd till Månen (ca 384&nbsp;400 km); pulsen skickas och reflekteras mot retroreflektorer som Apollo-astronauterna lämnade, och restiden ger exakt avstånd. Ljudvågor är mekaniska vågor som kräver ett medium och kan inte existera i vakuum — de är oanvändbara i rymden. I havet fungerar ekolod utmärkt: vatten har hög densitet och låg kompressibilitet vilket gör att ljud färdas snabbt (~1&nbsp;500 m/s) och effektivt; pulsen studsar mot botten och returntiden ger djupet. Ljus fungerar däremot dåligt på stora havsdjup eftersom det absorberas och sprids i vatten.</p>
     </div>
   </div>
 
-  <!-- Resonemang 2 -->
   <div class="res-card">
-    <div class="res-header" onclick="toggleRes('r2')">
-      <div class="res-title">⭐ Solens framtid som röd jätte</div>
-      <div class="res-chevron" id="ch-r2">▼</div>
+    <span class="res-badge res">Resonemang</span>
+    <div class="res-q">⭐ Stjärnans livscykel</div>
+    <div class="res-context">En stjärna som vår Sol bildas ur ett gasmoln (nebulosa), och genomgår en lång livscykel innan den dör.</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <label>Fråga</label>
+        <div style="font-size:0.84rem;line-height:1.6;color:var(--text);margin-bottom:8px">Beskriv stjärnans livscykel i ordning — från nebulosa till slutstadiet. Förklara vad som händer och varför i varje steg.</div>
+        <label>Ditt svar</label>
+        <textarea class="res-textarea" placeholder="Nebulosa → … → slutstadium (nämn också massiva stjärnor om du kan)"></textarea>
+      </div>
     </div>
-    <div class="res-body" id="r2">
-      <div class="res-scenario">
-        Om ca 5 miljarder år beräknas solen ha förbrukat sitt väteförråd i kärnan. Solen kommer då att expandera till en röd jätte och sedan krympa till en vit dvärg.
-      </div>
-      <div class="res-task">Förklara vad som händer med solen och solsystemet när solen blir en röd jätte. Resonera i två led.</div>
-      <div class="level-block">
-        <span class="level-label lvl-e">Nivå E</span>
-        <p>Solen expanderar och blir en röd jätte. Det blir varmare i solsystemet.</p>
-      </div>
-      <div class="level-block">
-        <span class="level-label lvl-c">Nivå C</span>
-        <p>När vätebränslet i kärnan tar slut slutar fusionen att trycka ut → gravitationen tar över och kärnan krymper medan de yttre lagren expanderar kraftigt → solen sväller till en röd jätte och sväljer de inre planeterna inklusive troligen Merkurius och Venus.</p>
-      </div>
-      <div class="level-block">
-        <span class="level-label lvl-a">Nivå A</span>
-        <p>Fusionens strålningstryck balanserar gravitationen i en normal stjärna → när vätet i kärnan tar slut rubbas balansen och kärnan kollapsar under sin egen tyngd, vilket frigör energi och blåser upp de yttre skikten till en röd jätte vars radie kan nå jordens omloppsbana. Jordens temperatur stiger dramatiskt → oceanerna kokar bort, atmosfären försvinner och ytan smälter → planeten blir obeboelig långt innan den faktiskt sväljs.</p>
-      </div>
+    <button type="button" class="btn-model" onclick="showModel('k8r2')">Visa exempelsvar (E/C/A)</button>
+    <div class="model-ans" id="ma-k8r2">
+      <h4>Exempelsvar</h4>
+      <p><strong>E:</strong> En stjärna bildas ur gas, sedan lyser den länge som en vanlig stjärna, och till slut dör den och kan bli en vit dvärg eller svart hål.</p>
+      <p style="margin-top:8px"><strong>C:</strong> Nebulosa → tyngdkraften samlar ihop gas och damm → temperaturen stiger tills fusion startar → stjärnan lyser stabilt (som Solen nu) → när vätet tar slut sväller den till en röd jätte → yttre skal kastas ut (planetarisk nebulosa) → kärnan kvar som vit dvärg. Mer massiva stjärnor exploderar som supernova och lämnar neutronstjärna eller svart hål.</p>
+      <p style="margin-top:8px"><strong>A:</strong> 1. Nebulosa: gravitation komprimerar gas och damm → tryck och temperatur ökar. 2. Protostjärna: när kärntemperaturen når ~10 miljoner K startar vätets fusion till helium — energin skapar ett strålningstryck utåt som balanserar gravitationen → stjärnan i jämvikt (huvudserien). 3. Röd jätte: när vätereserven i kärnan töms kollapsar kärnan, ytterskiktet expanderar och svalnar → röd jätte. Heliumfusion kan starta. 4. Sollik stjärna: yttre skalen blåser ut som planetarisk nebulosa, kärnan kvar som vit dvärg (degenerat elektronsystem, svalnar gradvis). 5. Massiv stjärna: om massan &gt; 8 solmassor → supernova-explosion → neutronstjärna (degenerat neutronsystem) eller svart hål om massan är tillräcklig för att gravitationen övervinner allt.</p>
     </div>
   </div>
 
-  <!-- Resonemang 3 -->
   <div class="res-card">
-    <div class="res-header" onclick="toggleRes('r3')">
-      <div class="res-title">💥 Big Bang och universums expansion</div>
-      <div class="res-chevron" id="ch-r3">▼</div>
+    <span class="res-badge np">NP 2018</span>
+    <div class="res-q">🌪️ Naturkatastrofer och klimatförändring</div>
+    <div class="res-context">Det blir allt vanligare med naturkatastrofer: orkaner i Mexikanska golfen, översvämningar i Europa och torka i Australien. Det kan bero på att medeltemperaturen på Jorden har ökat.</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <label>Fråga</label>
+        <div style="font-size:0.84rem;line-height:1.6;color:var(--text);margin-bottom:8px">Förklara hur en ökad medeltemperatur påverkar uppkomsten av var och en av de tre naturkatastroferna: översvämning, torka och orkan.</div>
+        <label>Ditt svar</label>
+        <textarea class="res-textarea" placeholder="Översvämning … Torka … Orkan …"></textarea>
+      </div>
     </div>
-    <div class="res-body" id="r3">
-      <div class="res-scenario">
-        Astronomer har observerat att galaxer rör sig bort från oss — och ju längre bort de är, desto snabbare verkar de röra sig. Den kosmiska bakgrundsstrålningen är ett svagt mikrovågssken som fyller hela universum.
-      </div>
-      <div class="res-task">Förklara Big Bang-teorin och resonera i två led kring vilket bevis observationen av galax-rörelsen och bakgrundsstrålningen ger för teorin.</div>
-      <div class="level-block">
-        <span class="level-label lvl-e">Nivå E</span>
-        <p>Big Bang innebär att universum skapades i en stor explosion för ca 13,8 miljarder år sedan och har expanderat sedan dess.</p>
-      </div>
-      <div class="level-block">
-        <span class="level-label lvl-c">Nivå C</span>
-        <p>Om universum expanderar nu → måste det ha börjat i en liten punkt för länge sedan (Big Bang). Att galaxer rör sig bort stöder detta → om man "spelar filmen baklänges" samlas allt i en punkt.</p>
-      </div>
-      <div class="level-block">
-        <span class="level-label lvl-a">Nivå A</span>
-        <p>Galaxernas rörelse bort från oss (Hubbles lag) visar att rymden själv expanderar → om man extrapolerar bakåt i tid konvergerar allt till ett extremt hett och tätt tillstånd för ca 13,8 miljarder år sedan. Den kosmiska bakgrundsstrålningen är kvarlevan av det ursprungliga ljuset från ca 380 000 år efter Big Bang, när universum svalnat tillräckligt för att atomer kunde bildas → strålningens jämna fördelning och temperatur (~2,7 K) stämmer precis med Big Bang-modellens förutsägelse.</p>
-      </div>
+    <button type="button" class="btn-model" onclick="showModel('k8r3')">Visa exempelsvar (E/C/A)</button>
+    <div class="model-ans" id="ma-k8r3">
+      <h4>Exempelsvar</h4>
+      <p><strong>E:</strong> När det blir varmare smälter is och havsnivån stiger vilket ger översvämningar. Torka uppstår när det regnar mindre. Orkaner bildas av varm luft.</p>
+      <p style="margin-top:8px"><strong>C:</strong> Översvämning: Varmare klimat smälter glaciärer och inlandsisar → havsnivån stiger → kuststäder översvämmas. Dessutom ökar avdunstningen → mer vattenånga i atmosfären → kraftigare regn och skyfall. Torka: Högre temperatur ökar avdunstningen från mark och vegetation → jordar torkar ut snabbare, och nederbördsmönster förändras så att vissa regioner får mindre regn. Orkan: Orkaner drivs av varm havsyta (&gt;26 °C); varmare hav ger mer energi till orkaner → fler och kraftigare orkaner.</p>
+      <p style="margin-top:8px"><strong>A:</strong> Översvämning: Temperaturökning smälter glaciärer och polarisar → havsnivåhöjning på lång sikt. Kortsiktigt ökar avdunstningen → mer vattenånga i atmosfären (luften håller mer vattenånga vid högre temp.) → intensivare regn och extrema skyfall orsakar flodöversvämningar. Torka: Ökad avdunstning från mark och växter i kombination med förändrade vindmönster (jetströmmar) leder till att subtropiska högtrycksområden expanderar → nederbördsfattiga zoner breddas och torrperioderna förlängs. Orkan: Tropiska cykloner (orkaner) hämtar energi från havets yttemperatur via konvektiv avdunstning — varmare hav ger mer latent värme, vilket driver starkare uppvindar och lägre lufttryck i orkanens öga. Varmare hav utvidgar de latituder där orkaner kan bildas och underhållas.</p>
     </div>
   </div>
 
-  <!-- Resonemang 4 -->
   <div class="res-card">
-    <div class="res-header" onclick="toggleRes('r4')">
-      <div class="res-title">🔭 Exoplaneter och förutsättningar för liv</div>
-      <div class="res-chevron" id="ch-r4">▼</div>
+    <span class="res-badge res">Resonemang</span>
+    <div class="res-q">🌌 Big Bang och universums uppkomst</div>
+    <div class="res-context">Den vetenskapliga modellen för universums uppkomst kallas Big Bang. Universum expanderar fortfarande — fjärran galaxer rör sig bort från oss.</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <label>Fråga</label>
+        <div style="font-size:0.84rem;line-height:1.6;color:var(--text);margin-bottom:8px">Vad är Big Bang-teorin och vilka observationer stöder den? Resonera i minst två led.</div>
+        <label>Ditt svar</label>
+        <textarea class="res-textarea" placeholder="Teorin … Observation 1 … Observation 2 …"></textarea>
+      </div>
     </div>
-    <div class="res-body" id="r4">
-      <div class="res-scenario">
-        Astronomer har bekräftat tusentals exoplaneter — planeter runt andra stjärnor. Några befinner sig i den så kallade "beboeliga zonen" där flytande vatten kan existera.
-      </div>
-      <div class="res-task">Resonera i två led kring varför det är svårt att bekräfta om det finns liv på exoplaneter, och vad upptäckten av exoplaneter i beboeliga zonen ändå betyder.</div>
-      <div class="level-block">
-        <span class="level-label lvl-e">Nivå E</span>
-        <p>Exoplaneter är väldigt långt bort och svåra att studera. Att hitta planeter i beboeliga zonen ökar chansen att hitta liv.</p>
-      </div>
-      <div class="level-block">
-        <span class="level-label lvl-c">Nivå C</span>
-        <p>Exoplaneter är ljusår bort → att skicka rymdsonder dit är omöjligt med dagens teknik, och att detektera biosignaturer (t.ex. syre i atmosfären) kräver extremt känsliga teleskop. Men planeter i beboeliga zonen visar att förutsättningarna för vatten och liv kan finnas → ökar sannolikheten att liv inte är unikt för jorden.</p>
-      </div>
-      <div class="level-block">
-        <span class="level-label lvl-a">Nivå A</span>
-        <p>Exoplaneter detekteras indirekt (transit- eller radialhastighetmetoden) och ljuset tar tusentals år att nå oss → vi observerar planeten som den var förr i tiden, inte nu, och kan inte skicka prober. Dessutom är "bebyggelighet" mer än avstånd: en planet behöver rätt atmosfär, magnetfält och kemisk sammansättning. Trots detta innebär mångfalden av exoplaneter i beboeliga zoner statistiskt att miljontals kandidater finns i Vintergatan → det förändrar det vetenskapliga och filosofiska samtalet om livets ursprung och mångfald i universum.</p>
-      </div>
+    <button type="button" class="btn-model" onclick="showModel('k8r4')">Visa exempelsvar (E/C/A)</button>
+    <div class="model-ans" id="ma-k8r4">
+      <h4>Exempelsvar</h4>
+      <p><strong>E:</strong> Big Bang är en teori om att universum uppstod i en enorm explosion för länge sedan. Universum har expanderat sedan dess.</p>
+      <p style="margin-top:8px"><strong>C:</strong> Big Bang-teorin säger att universum startade för ca 13,8 miljarder år sedan som en extremt het och tät punkt som expanderade. Stöd 1: Galaxerna rör sig bort från oss (Hubbles lag) → universum expanderar → om vi spolar tillbaka måste allt ha startat samlat. Stöd 2: Den kosmiska bakgrundsstrålningen — ett svagt mikrovågssken från alla riktningar — är kvarlevan av det heta ljuset från Big Bang, nu nedkylt till 2,7 K.</p>
+      <p style="margin-top:8px"><strong>A:</strong> Big Bang-teorin beskriver universums ursprung som en singularitet för ~13,8 miljarder år sedan med extremt hög energidensitet, följt av snabb expansion och avkylning. Bevis 1: Galaktisk rödflykt (Hubble 1929) — ljuset från fjärran galaxer är förskjutet mot röda våglängder, vilket visar att galaxerna rör sig bort med hastigheter proportionella mot avståndet. Extrapolerar man bakåt i tid konvergerar alla galaxer till en enda punkt. Bevis 2: Kosmisk bakgrundsstrålning (CMB) — förutsagd av teorin och uppmätt 1965; ett nästan perfekt jämnt mikrovågsglöd på 2,725 K från alla riktningar, tolkat som efterglöden från den heta plasman ~380&nbsp;000 år efter Big Bang när universum svalnat tillräckligt för att atomer kunde bildas och ljuset ”fri-kopplas”. Bevis 3: Abundansen av lätta grundämnen (75&nbsp;% väte, 25&nbsp;% helium) stämmer med vad Big Bang-nukleosyntesen förutsäger.</p>
     </div>
   </div>
 
@@ -1154,7 +1150,7 @@ function resetTabResonemang() {
   const s = document.getElementById('sec-resonemang');
   if (!s) return;
   s.querySelectorAll('textarea, input[type="text"], input:not([type])').forEach(el => { el.value = ''; });
-  s.querySelectorAll('.model-ans.show, .model-answer.show, .feedback-box.show, .res-body.show').forEach(el => { el.classList.remove('show'); });
+  s.querySelectorAll('.model-ans.show, .model-answer.show, .feedback-box.show').forEach(el => { el.classList.remove('show'); });
 }
 
 function resetTabNp() {
@@ -1413,11 +1409,9 @@ function resetQuiz() {
 }
 
 // ── Toggles ──
-function toggleRes(id) {
-  const body = document.getElementById(id);
-  const ch = document.getElementById('ch-' + id);
-  body.classList.toggle('show');
-  ch.textContent = body.classList.contains('show') ? '▲' : '▼';
+function showModel(id) {
+  const el = document.getElementById('ma-' + id);
+  if (el) el.classList.toggle('show');
 }
 function toggleNP(id) {
   const body = document.getElementById(id);

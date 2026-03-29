@@ -534,58 +534,107 @@ body {
 }
 .reset-btn:hover { color: var(--accent); border-color: var(--accent); }
 
-/* ── Resonemang ── */
+/* ── Resonemang (samma stil som kap 3–6) ── */
 .res-card {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 14px;
+  padding: 1.25rem 1.4rem;
   margin-bottom: 1.2rem;
-  overflow: hidden;
 }
-.res-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.1rem 1.4rem;
+.res-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+.res-badge.np { background: rgba(58,142,255,0.2); color: var(--accent); }
+.res-badge.res { background: rgba(249,115,22,0.15); color: var(--warn); }
+.res-q { font-weight: 700; font-size: 0.95rem; line-height: 1.5; margin-bottom: 12px; }
+.res-context {
+  background: var(--card2);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  font-size: 0.84rem;
+  color: var(--muted);
+  line-height: 1.65;
+}
+.res-steps { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+.res-step {
+  background: var(--card2);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+.res-step label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 6px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.res-textarea {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  resize: vertical;
+  outline: none;
+  min-height: 60px;
+  line-height: 1.6;
+}
+.btn-model {
+  background: transparent;
+  border: 1px solid var(--accent2);
+  color: var(--accent2);
+  padding: 8px 16px;
+  border-radius: 8px;
   cursor: pointer;
-  user-select: none;
-  gap: 1rem;
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 12px;
+  transition: all 0.2s;
 }
-.res-header:hover { background: rgba(255,255,255,0.02); }
-.res-title {
-  font-size: 0.9rem;
-  font-weight: 600;
-  line-height: 1.4;
-  flex: 1;
+.btn-model:hover { background: rgba(0,212,255,0.08); }
+.model-ans {
+  margin-top: 10px;
+  background: rgba(58,142,255,0.06);
+  border: 1px solid rgba(58,142,255,0.22);
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 0.82rem;
+  line-height: 1.65;
+  display: none;
 }
+.model-ans.show { display: block; }
+.model-ans h4 {
+  color: var(--accent2);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.grade-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+.grade { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 6px; }
+.grade-e { background: rgba(58,142,255,0.15); color: var(--accent); }
+.grade-c { background: rgba(249,115,22,0.12); color: var(--warn); }
+.grade-a { background: rgba(34,197,94,0.12); color: var(--good); }
+
 .res-chevron {
   color: var(--muted);
   font-size: 0.8rem;
-  transition: transform 0.25s;
   flex-shrink: 0;
-}
-.res-body {
-  display: none;
-  padding: 0 1.4rem 1.4rem;
-  border-top: 1px solid var(--border);
-}
-.res-body.show { display: block; }
-.res-scenario {
-  font-size: 0.84rem;
-  color: var(--muted);
-  line-height: 1.7;
-  margin: 1rem 0;
-  padding: 0.8rem 1rem;
-  background: var(--card2);
-  border-radius: 8px;
-  border-left: 3px solid var(--border2);
-}
-.res-task {
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--text);
-  margin-bottom: 1rem;
-  line-height: 1.5;
 }
 .level-block {
   margin-bottom: 0.8rem;
@@ -918,113 +967,109 @@ body {
     <div class="infobox-title">💡 Hur man resonerar i flera led</div>
     <p>
       På NP krävs ofta resonemang i <strong>två led</strong>: <em>orsak → konsekvens</em>.<br>
-      Exempel: "<em>Radioaktivt avfall från kärnkraft är farligt i tusentals år</em> [Led 1] → 
+      Exempel: "<em>Radioaktivt avfall från kärnkraft är farligt i tusentals år</em> [Led 1] →
       <em>vilket gör det svårt att lagra säkert och kan förorena grundvatten</em> [Led 2]."<br><br>
       Nivå E = ett korrekt påstående. Nivå C = ett led. Nivå A = två väl utvecklade led.
     </p>
   </div>
 
-  <!-- Resonemang 1 -->
   <div class="res-card">
-    <div class="res-header" onclick="toggleRes('r1')">
-      <div class="res-title">🔬 Röntgenpersonalens skyddsrock (NP-typ)</div>
-      <div class="res-chevron" id="ch-r1">▼</div>
+    <span class="res-badge np">NP-liknande</span>
+    <div class="res-q">🔬 Röntgenpersonal och strålskydd</div>
+    <div class="res-context">Röntgenpersonal som dagligen röntgar patienter använder en skyddsrock av bly.</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <label>Fråga</label>
+        <div style="font-size:0.84rem;line-height:1.6;color:var(--text);margin-bottom:8px">Varför består skyddsrocken av just bly? Och varför måste personalen skydda kroppen överhuvudtaget — vad händer om de utsätts för strålning dag efter dag?</div>
+        <label>Ditt svar</label>
+        <textarea class="res-textarea" placeholder="Skriv ditt resonemang här..."></textarea>
+      </div>
     </div>
-    <div class="res-body" id="r1">
-      <div class="res-scenario">
-        Röntgenpersonal som dagligen röntgar patienter bär en skyddsrock av metallen bly.
-      </div>
-      <div class="res-task">Förklara (1) varför rocken består av bly, och (2) varför personalen måste skydda kroppen.</div>
-      <div class="level-block">
-        <span class="level-label lvl-e">Nivå E</span>
-        <p>Bly är ett tätt material som kan stoppa gammastrålning och röntgenstrålning. Personalen måste skydda sig för att strålningen är farlig.</p>
-      </div>
-      <div class="level-block">
-        <span class="level-label lvl-c">Nivå C</span>
-        <p>Bly har hög densitet och atomnummer vilket gör att det effektivt absorberar joniserande strålning. Röntgen- och gammastrålning är joniserande, vilket innebär att den kan slå loss elektroner ur celler och skada DNA.</p>
-      </div>
-      <div class="level-block">
-        <span class="level-label lvl-a">Nivå A</span>
-        <p>Bly absorberar gammastrålningen effektivt tack vare sin höga densitet och atomnummer → strålningen når inte kroppen. Daglig exponering för joniserande strålning ökar risken för DNA-skador i cellerna → detta kan leda till mutationer och i förlängningen cancer, varför fortlöpande skydd är nödvändigt.</p>
-      </div>
+    <button type="button" class="btn-model" onclick="showModel('k7r1')">Visa exempelsvar (E/C/A)</button>
+    <div class="model-ans" id="ma-k7r1">
+      <h4>Exempelsvar</h4>
+      <p><strong>E:</strong> Bly stoppar röntgenstrålning. Personalen måste skydda sig eftersom strålning är skadlig för kroppen.</p>
+      <p style="margin-top:8px"><strong>C:</strong> Bly är ett tätt material med hög densitet som absorberar joniserande strålning effektivt. Röntgenstrålning är joniserande, vilket innebär att den kan slå loss elektroner från atomer i kroppens celler. Vid upprepade doser ackumuleras skadan i DNA och kan leda till cellmutationer.</p>
+      <p style="margin-top:8px"><strong>A:</strong> Bly har hög atomnummer och densitet, vilket gör att det absorberar röntgenstrålarnas fotoner innan de når kroppen. Röntgenstrålning är joniserande strålning — den har tillräcklig energi för att jonisera atomer i levande vävnad. Även om en enstaka dos är liten, är risken kumulativ: daglig exponering ökar risken för DNA-skador som kan leda till cancer. Skyddsrocken skyddar de mest strålningskänsliga organen (benmärg, gonader) som är viktiga för blodbildning och fortplantning.</p>
     </div>
   </div>
 
-  <!-- Resonemang 2 -->
   <div class="res-card">
-    <div class="res-header" onclick="toggleRes('r2')">
-      <div class="res-title">⚡ Kärnkraftens påverkan på levnadsvillkor (NP 2018)</div>
-      <div class="res-chevron" id="ch-r2">▼</div>
+    <span class="res-badge np">NP 2018</span>
+    <div class="res-q">⚡ Kärnklyvningens påverkan på människan</div>
+    <div class="res-context">År 1938 upptäckte vetenskapsmän att det går att klyva atomkärnan hos uran. Vid kärnklyvningen sker en kedjereaktion som frigör enorma mängder energi.</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <label>Fråga</label>
+        <div style="font-size:0.84rem;line-height:1.6;color:var(--text);margin-bottom:8px">Förklara hur upptäckten av kärnklyvning har påverkat människors levnadsvillkor — resonera utifrån ett lokalt perspektiv OCH ett globalt perspektiv.</div>
+        <label>Lokalt perspektiv</label>
+        <textarea class="res-textarea" placeholder="Lokalt: orsak → konsekvens..."></textarea>
+      </div>
+      <div class="res-step">
+        <label>Globalt perspektiv</label>
+        <textarea class="res-textarea" placeholder="Globalt: orsak → konsekvens..."></textarea>
+      </div>
     </div>
-    <div class="res-body" id="r2">
-      <div class="res-scenario">
-        År 1938 upptäckte vetenskapsmän att det går att klyva atomkärnan hos uran. Vid kärnklyvningen sker en kedjereaktion som frigör stora mängder energi.
-      </div>
-      <div class="res-task">Förklara hur upptäckten av kärnklyvning har påverkat människors levnadsvillkor utifrån ett lokalt och ett globalt perspektiv.</div>
-      <div class="level-block">
-        <span class="level-label lvl-e">Nivå E</span>
-        <p>Lokalt: Kärnkraftverk ger el till samhället. Globalt: Kärnvapen utgör ett globalt hot.</p>
-      </div>
-      <div class="level-block">
-        <span class="level-label lvl-c">Nivå C</span>
-        <p>Lokalt: Kärnkraftverk producerar stora mängder el utan koldioxidutsläpp → ger billigare el och minskar luftföroreningar i regionen. Globalt: Kärnvapenutvecklingen innebär ett hot om massförstörelse → har lett till spänningar och kapprustning mellan stormakterna.</p>
-      </div>
-      <div class="level-block">
-        <span class="level-label lvl-a">Nivå A</span>
-        <p>Lokalt: Kärnkraftverk ger stabil och storskalig elproduktion utan direkta CO₂-utsläpp → samhällen nära kraftverket får tillgång till billig el som driver industri och välfärd, men riskerar samtidigt lokal strålningspåverkan vid eventuell olycka (Tjernobyl, Fukushima). Globalt: Kärnvapenteknik utgör ett existentiellt hot → det kalla krigets kärnvapenkapprustning skapade en världsordning byggd på "ömsesidig försäkrad förstörelse", vilket påverkat geopolitik och internationella avtal (t.ex. NPT) ända in i nutid.</p>
-      </div>
+    <button type="button" class="btn-model" onclick="showModel('k7r2')">Visa exempelsvar (E/C/A)</button>
+    <div class="model-ans" id="ma-k7r2">
+      <h4>Exempelsvar</h4>
+      <p><strong>E:</strong> Lokalt: Kärnkraftverk ger el till hushåll och industri. Globalt: Kärnvapen har förändrat världspolitiken.</p>
+      <p style="margin-top:8px"><strong>C:</strong> Lokalt: Kärnkraftverk producerar stora mängder el utan koldioxidutsläpp, vilket gjort el billigare och tillgängligare i länder som Sverige och Frankrike — det påverkar vardagen för miljoner människor direkt. Globalt: Kärnvapenutvecklingen efter 1945 skapade ett nytt säkerhetspolitiskt klimat (det kalla kriget) och risken för kärnvapenkrig påverkade hela världens geopolitik.</p>
+      <p style="margin-top:8px"><strong>A:</strong> Lokalt: Kärnkraftverk kan förse ett helt land med stabil baskraft utan koldioxidutsläpp under drift, vilket bidragit till lägre elpris och minskad luftförorening i regioner med kärnkraft. Samtidigt skapas radioaktivt avfall som måste lagras säkert i hundratusentals år — en lokal miljörisk och ett ansvar för kommande generationer. Globalt: Kärnvapnen som utvecklades ur samma fysik har förändrat maktbalansen i världen — kärnvapenmakterna avhåller sig från direkta konflikter (avskräckningsdoktrin), men spridningsrisken (proliferation) till instabila stater är ett globalt hot. Kärnkraftsolyckor som Tjernobyl och Fukushima visar att konsekvenserna kan vara gränsöverskridande.</p>
     </div>
   </div>
 
-  <!-- Resonemang 3 -->
   <div class="res-card">
-    <div class="res-header" onclick="toggleRes('r3')">
-      <div class="res-title">☢️ Hantering av radioaktivt avfall</div>
-      <div class="res-chevron" id="ch-r3">▼</div>
+    <span class="res-badge res">Resonemang</span>
+    <div class="res-q">📱 Mobiltelefoner och strålning</div>
+    <div class="res-context">Mobiltelefoner sänder ut elektromagnetisk strålning (radiovågor). WHO klassificerar denna strålning som "möjligen cancerframkallande" — den svagaste misstankegraden. Myndigheter rekommenderar handsfree, särskilt för barn.</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <label>Fråga</label>
+        <div style="font-size:0.84rem;line-height:1.6;color:var(--text);margin-bottom:8px">Resonera kring varför det ändå är klokt att följa försiktighetsrekommendationen — även om bevisen för skada är svaga. Använd två naturvetenskapliga led i ditt resonemang.</div>
+        <label>Ditt svar</label>
+        <textarea class="res-textarea" placeholder="Led 1 … Led 2 …"></textarea>
+      </div>
     </div>
-    <div class="res-body" id="r3">
-      <div class="res-scenario">
-        Ett kärnkraftverk producerar 30–50 ton radioaktivt avfall per år. Avfallet är radioaktivt i tiotusentals år och måste lagras säkert.
-      </div>
-      <div class="res-task">Resonera i två led kring två konsekvenser som det radioaktiva avfallet kan ha för miljön och samhället.</div>
-      <div class="level-block">
-        <span class="level-label lvl-e">Nivå E</span>
-        <p>Det radioaktiva avfallet är farligt länge och kan förorena miljön.</p>
-      </div>
-      <div class="level-block">
-        <span class="level-label lvl-c">Nivå C</span>
-        <p>1) Radioaktivt avfall avger joniserande strålning under lång tid → detta kan skada DNA hos levande organismer och ge upphov till cancer. 2) Avfallet måste lagras djupt under jord → om förvaret läcker kan grundvatten förorenas och dricksvatten bli farligt.</p>
-      </div>
-      <div class="level-block">
-        <span class="level-label lvl-a">Nivå A</span>
-        <p>1) Radioaktivt avfall med lång halveringstid (t.ex. plutonium ~24 000 år) avger joniserande strålning under en oöverskådlig framtid → biologiska organismer i närheten riskerar DNA-skador och mutationer, vilket kan påverka hela ekosystem. 2) Berggrundsförvar (t.ex. i Sverige) antas hålla i 100 000 år, men geologiska förändringar eller mänsklig aktivitet kan skada förvaret → om radioaktiva isotoper läcker ut i grundvatten sprids de i dricksvattenförsörjning och biosfären, med konsekvenser som är omöjliga att reparera.</p>
-      </div>
+    <button type="button" class="btn-model" onclick="showModel('k7r3')">Visa exempelsvar (E/C/A)</button>
+    <div class="model-ans" id="ma-k7r3">
+      <h4>Exempelsvar</h4>
+      <p><strong>E:</strong> Strålning från mobiltelefoner kan påverka kroppen. Barn är mer känsliga och bör därför använda handsfree.</p>
+      <p style="margin-top:8px"><strong>C:</strong> Radiovågor från mobiltelefoner absorberas delvis av kroppsvävnad och omvandlas till värme. Eftersom forskningen inte kan utesluta långtidseffekter, och barn har tunnare skallar och längre återstående exponeringstid, är försiktighetsrekommendationen rimlig även utan säkra bevis för skada.</p>
+      <p style="margin-top:8px"><strong>A:</strong> Mobiltelefoners radiovågor är icke-joniserande strålning — de har inte tillräcklig energi för att bryta kemiska bindningar eller jonisera atomer som röntgenstrålning. Den primära effekten är termisk: vävnad absorberar energin och värms upp. Försiktighetsrekommendationen motiveras av att långtidsstudier på barn saknas, att barns hjärna fortfarande utvecklas och att exponeringstiden under en livstid är längre för dagens barn än för tidigare generationer. Principen "försiktighet vid osäkerhet" är en etablerad vetenskaplig och etisk hållning när konsekvenserna potentiellt är allvarliga och irreversibla.</p>
     </div>
   </div>
 
-  <!-- Resonemang 4 -->
   <div class="res-card">
-    <div class="res-header" onclick="toggleRes('r4')">
-      <div class="res-title">🌞 Mediakritik — mobilstrålning (NP-typ)</div>
-      <div class="res-chevron" id="ch-r4">▼</div>
+    <span class="res-badge np">NP 2016/2017</span>
+    <div class="res-q">⚖️ Ställningstagande: Kärnkraft eller vattenkraft?</div>
+    <div class="res-context">Ett land behöver öka sin elproduktion. Två alternativ: fler kärnkraftverk eller fler vattenkraftverk.<br><br>
+      <strong>Fakta kärnkraft:</strong> ~25&nbsp;000&nbsp;000&nbsp;000 kWh/år per verk · 30–50 ton radioaktivt avfall/år · 3 olyckor på 40 år · uranreserver beräknas räcka 2&nbsp;500 år.<br><br>
+      <strong>Fakta vattenkraft:</strong> ~80&nbsp;000&nbsp;000 kWh/år per verk · förnybar energikälla · kräver dammar som lägger landområden under vatten · varierar med vattentillgång.</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <label>Ditt ställningstagande</label>
+        <textarea class="res-textarea" placeholder="Jag väljer kärnkraft / vattenkraft eftersom …"></textarea>
+      </div>
+      <div class="res-step">
+        <label>Resonemang 1 FÖR ditt val (två led)</label>
+        <textarea class="res-textarea" placeholder="Fakta → konsekvens …"></textarea>
+      </div>
+      <div class="res-step">
+        <label>Resonemang 2 FÖR ditt val (två led)</label>
+        <textarea class="res-textarea" placeholder="Fakta → konsekvens …"></textarea>
+      </div>
+      <div class="res-step">
+        <label>Resonemang EMOT något av alternativen (två led)</label>
+        <textarea class="res-textarea" placeholder="Mot kärnkraft eller mot vattenkraft …"></textarea>
+      </div>
     </div>
-    <div class="res-body" id="r4">
-      <div class="res-scenario">
-        En artikel hävdar att mobiltelefoners elektromagnetiska strålning orsakar hjärncancer. En person säger att det finns stora risker, en annan att WHO:s forskning inte funnit bevis.
-      </div>
-      <div class="res-task">a) Ge ett exempel på hur mobilstrålning kan påverka människan enligt texten. b) Resonera kring textens trovärdighet utifrån två olika perspektiv.</div>
-      <div class="level-block">
-        <span class="level-label lvl-e">Nivå E</span>
-        <p>a) Mobilstrålning kan orsaka huvudvärk eller sömnsvårigheter. b) Texten är från en tidning och kan vara vinklad.</p>
-      </div>
-      <div class="level-block">
-        <span class="level-label lvl-c">Nivå C</span>
-        <p>a) Enligt texten kan exponering för mobilstrålning leda till hjärncancer eller försämrat minne. b) Källkritik: Artikeln refererar WHO som är en trovärdig vetenskaplig organisation → ökar trovärdigheten. Men en av experterna representerar en organisation med ekonomiskt intresse i frågan (Strålskyddsstiftelsen) → kan vara partisk.</p>
-      </div>
-      <div class="level-block">
-        <span class="level-label lvl-a">Nivå A</span>
-        <p>a) Texten uppger att mobilstrålning klassificerats som "möjligen cancerframkallande" av WHO/IARC → kan innebära ökad risk för hörselnervstumörer. b) Trovärdighet positivt: WHO:s klassificering baseras på en 10-årig vetenskaplig studie → ger hög tillförlitlighet eftersom det är oberoende forskning med stort underlag. Trovärdighet negativt: En av källorna (Mona Nilsson) är ordförande i en organisation som aktivt arbetar mot elektromagnetisk strålning → organisationen har ett tydligt syfte att öka oro, vilket kan snedvrida informationen och urvalstolerans.</p>
-      </div>
+    <button type="button" class="btn-model" onclick="showModel('k7r4')">Visa exempelsvar (E/C/A) — exempel för kärnkraft</button>
+    <div class="model-ans" id="ma-k7r4">
+      <h4>Exempelsvar (utgångspunkt kärnkraft — du kan också välja vattenkraft med motsvarande struktur)</h4>
+      <p><strong>E (kärnkraft):</strong> Kärnkraft producerar mycket el. Det ger inga koldioxidutsläpp. Men det finns radioaktivt avfall.</p>
+      <p style="margin-top:8px"><strong>C (kärnkraft):</strong> FÖR: Kärnkraft producerar 300 gånger mer energi per anläggning än vattenkraft → ett fåtal verk kan förse hela landet med el. FÖR: Under drift släpper kärnkraft inte ut koldioxid → bidrar inte till växthuseffekten. EMOT vattenkraft: Dammar lägger stora landytor under vatten → ekosystem och livsmiljöer för djur och växter förstörs permanent.</p>
+      <p style="margin-top:8px"><strong>A (kärnkraft):</strong> FÖR: Med 25 miljarder kWh per verk och år kan ett land täcka nationell elenergibehov med ett fåtal anläggningar, vilket ger en stabil och planerbar elproduktion oberoende av väder och årstid. FÖR: Kärnkraftens livscykelutsläpp av koldioxid är bland de lägsta av alla energikällor → ett viktigt bidrag i omställningen bort från fossila bränslen. EMOT kärnkraft: Det radioaktiva avfallet (30–50 ton/år) förblir farligt i hundratusentals år och kräver djupförvar i geologiskt stabila bergrum — en miljö- och säkerhetsrisk som kommande generationer ärver utan att ha haft nytta av energin.</p>
     </div>
   </div>
 </div>
@@ -1361,7 +1406,7 @@ function resetTabResonemang() {
   const s = document.getElementById('sec-resonemang');
   if (!s) return;
   s.querySelectorAll('textarea, input[type="text"], input:not([type])').forEach(el => { el.value = ''; });
-  s.querySelectorAll('.model-ans.show, .model-answer.show, .res-body.show').forEach(el => { el.classList.remove('show'); });
+  s.querySelectorAll('.model-ans.show, .model-answer.show').forEach(el => { el.classList.remove('show'); });
 }
 
 function resetTabNp() {
@@ -1667,11 +1712,9 @@ function applyRestoredCalc() {
 }
 
 // ── Toggles ──
-function toggleRes(id) {
-  const body = document.getElementById(id);
-  const ch = document.getElementById('ch-' + id);
-  const show = body.classList.toggle('show');
-  ch.textContent = show ? '▲' : '▼';
+function showModel(id) {
+  const el = document.getElementById('ma-' + id);
+  if (el) el.classList.toggle('show');
 }
 
 function toggleNP(id) {

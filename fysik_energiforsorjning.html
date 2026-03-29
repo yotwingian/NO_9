@@ -301,16 +301,28 @@ body {
   border-radius: 5px; cursor: pointer; letter-spacing: 0.08em; transition: all 0.15s;
 }
 .reset-btn:hover { color: var(--accent); border-color: var(--accent); }
-/* ── Resonemang ── */
-.res-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 1.2rem; overflow: hidden; }
-.res-header { display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 1.4rem; cursor: pointer; user-select: none; gap: 1rem; }
-.res-header:hover { background: rgba(255,255,255,0.02); }
-.res-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; flex: 1; }
+/* ── Resonemang (samma stil som kap 3–6) ── */
+.res-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.25rem 1.4rem; margin-bottom: 1.2rem; }
+.res-badge { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; margin-bottom: 10px; }
+.res-badge.np { background: rgba(58,142,255,0.2); color: var(--accent); }
+.res-badge.res { background: rgba(249,115,22,0.15); color: var(--warn); }
+.res-q { font-weight: 700; font-size: 0.95rem; line-height: 1.5; margin-bottom: 12px; }
+.res-context { background: var(--card2); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; padding: 12px 14px; margin-bottom: 14px; font-size: 0.84rem; color: var(--muted); line-height: 1.65; }
+.res-steps { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+.res-step { background: var(--card2); border: 1px solid var(--border2); border-radius: 10px; padding: 12px 14px; }
+.res-step label { font-size: 12px; font-weight: 700; color: var(--muted); display: block; margin-bottom: 6px; letter-spacing: 0.06em; text-transform: uppercase; }
+.res-textarea { width: 100%; background: transparent; border: none; color: var(--text); font-family: 'Inter', sans-serif; font-size: 0.82rem; resize: vertical; outline: none; min-height: 60px; line-height: 1.6; }
+.btn-model { background: transparent; border: 1px solid var(--accent2); color: var(--accent2); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-family: var(--mono); font-weight: 700; font-size: 12px; transition: all 0.2s; }
+.btn-model:hover { background: rgba(34,197,94,0.08); }
+.model-ans { margin-top: 10px; background: rgba(58,142,255,0.06); border: 1px solid rgba(58,142,255,0.22); border-radius: 10px; padding: 14px; font-size: 0.82rem; line-height: 1.65; display: none; }
+.model-ans.show { display: block; }
+.model-ans h4 { color: var(--accent2); font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px; }
+.grade-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+.grade { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 6px; }
+.grade-e { background: rgba(58,142,255,0.15); color: var(--accent); }
+.grade-c { background: rgba(249,115,22,0.12); color: var(--warn); }
+.grade-a { background: rgba(34,197,94,0.12); color: var(--good); }
 .res-chevron { color: var(--muted); font-size: 0.8rem; flex-shrink: 0; }
-.res-body { display: none; padding: 0 1.4rem 1.4rem; border-top: 1px solid var(--border); }
-.res-body.show { display: block; }
-.res-scenario { font-size: 0.84rem; color: var(--muted); line-height: 1.7; margin: 1rem 0; padding: 0.8rem 1rem; background: var(--card2); border-radius: 8px; border-left: 3px solid var(--border2); }
-.res-task { font-size: 0.88rem; font-weight: 600; color: var(--text); margin-bottom: 1rem; line-height: 1.5; }
 .level-block { margin-bottom: 0.8rem; }
 .level-label { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.2rem 0.6rem; border-radius: 4px; display: inline-block; margin-bottom: 0.4rem; }
 .lvl-e { background: rgba(34,197,94,0.12); color: var(--good); border: 1px solid rgba(34,197,94,0.25); }
@@ -589,111 +601,109 @@ body {
     </p>
   </div>
 
-  <!-- Resonemang 1 -->
   <div class="res-card">
-    <div class="res-header" onclick="toggleRes('r1')">
-      <div class="res-title">🌿 Val av energikälla för tomatodlare (NP 2016)</div>
-      <div class="res-chevron" id="ch-r1">▼</div>
+    <span class="res-badge np">NP 2016/2017</span>
+    <div class="res-q">🛢️ Minska beroendet av fossila bränslen</div>
+    <div class="res-context">Världens befolkning behöver bidra till ett minskat beroende av fossila bränslen.</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <label>Fråga</label>
+        <div style="font-size:0.84rem;line-height:1.6;color:var(--text);margin-bottom:8px">Argumentera för varför det är viktigt att minska beroendet av fossila bränslen. Resonera utifrån två olika naturvetenskapliga perspektiv i två led vardera.</div>
+        <label>Perspektiv 1 (t.ex. klimat)</label>
+        <textarea class="res-textarea" placeholder="Led 1 … Led 2 …"></textarea>
+      </div>
+      <div class="res-step">
+        <label>Perspektiv 2 (t.ex. resurser)</label>
+        <textarea class="res-textarea" placeholder="Led 1 … Led 2 …"></textarea>
+      </div>
     </div>
-    <div class="res-body" id="r1">
-      <div class="res-scenario">
-        En tomatodlare vill förlänga odlingssäsongen och behöver värma upp sitt växthus. På gården finns tillgång till vind, strömmande vatten och värme i marken.<br><br>
-        <strong>Vindkraft:</strong> 25 000 kWh/år, 1 kWh rörelseenergi → 0,4 kWh värme, buller ~35 dB, påverkar luftlevande arter, livslängd 20–25 år.<br>
-        <strong>Vattenkraft:</strong> 100 000 kWh/år, 1 kWh → 0,8 kWh värme, buller ~30 dB, påverkar vattenlevande arter, livslängd 40–50 år.<br>
-        <strong>Bergvärme:</strong> 50 000 kWh/år, 1 kWh → 3 kWh värme, buller ~40–55 dB, påverkar marklevande arter, livslängd 15 år.
-      </div>
-      <div class="res-task">Rekommendera en energikälla. Resonera i två led kring tre fördelar och en nackdel med ditt val.</div>
-      <div class="level-block">
-        <span class="level-label lvl-e">Nivå E</span>
-        <p>Jag väljer vattenkraft för att den producerar mest energi och har lägst buller.</p>
-      </div>
-      <div class="level-block">
-        <span class="level-label lvl-c">Nivå C</span>
-        <p>Jag rekommenderar vattenkraft. Fördel 1: Producerar 100 000 kWh/år → täcker odlarens värmebehov bättre än alternativen. Fördel 2: Omvandlar 80% av rörelseenergin till värme → mer effektiv värmekälla än vindkraft (40%). Nackdel: Påverkar vattenlevande arters levnadsvillkor → kan kräva miljötillstånd och åtgärder.</p>
-      </div>
-      <div class="level-block">
-        <span class="level-label lvl-a">Nivå A</span>
-        <p>Jag rekommenderar vattenkraft. Fördel 1: 100 000 kWh/år är fyra gånger mer än vindkraft → ger säkrare och stabil energiförsörjning för hela säsongen. Fördel 2: Verkningsgraden 80% (0,8 kWh värme per kWh el) gör att mindre energi går till spillo → lägre driftskostnad per grad uppvärmning. Fördel 3: Livslängd 40–50 år → investeringen är lönsam långsiktigt och ger stabila förutsättningar. Nackdel: Turbinerna kan förändra vattenflödet → påverkar fiskars lek och vattenlevande organisms livsmiljö, vilket kan kräva kostsamma skyddsåtgärder.</p>
-      </div>
+    <button type="button" class="btn-model" onclick="showModel('k9r1')">Visa exempelsvar (E/C/A)</button>
+    <div class="model-ans" id="ma-k9r1">
+      <h4>Exempelsvar</h4>
+      <p><strong>E:</strong> Fossila bränslen ger koldioxid som är dåligt för miljön. De tar slut också.</p>
+      <p style="margin-top:8px"><strong>C:</strong> Klimatperspektiv: Förbränning av fossila bränslen frigör koldioxid som lagrats i miljontals år → halten CO₂ i atmosfären ökar → växthuseffekten förstärks → medeltemperaturen stiger → extremväder och havsnivåhöjning. Resursperspektiv: Fossila bränslen är icke-förnybara → de bildas på geologiska tidsskalor (miljoner år) → när de är slut finns inga mer → energiförsörjningen kraschar om vi inte ställt om i tid.</p>
+      <p style="margin-top:8px"><strong>A:</strong> Klimatperspektiv: Fossila bränslen (kol, olja, naturgas) innehåller kol som bundits ur atmosfären för hundratals miljoner år sedan. Vid förbränning frigörs CO₂ tillbaka på årtionden — en flödesrubbning som atmosfären inte hinner anpassa sig till → CO₂-halten ökar (från 280 ppm förindustriellt till &gt;420 ppm idag) → förstärkt växthuseffekt → temperaturökning med kaskadeffekter (glaciärsmältning, havsförsurning, extremväder). Resursperspektiv: Fossila bränslen är ändliga — de bildas under geologiska tidsperioder och bryts på industriell skala sedan 1800-talet. Oljepeak och gasfyndigheternas ändlighet innebär att priserna stiger och geopolitiska konflikter om resurser ökar → samhällen som inte ställt om till förnybara alternativ drabbas av energifattigdom och instabilitet.</p>
     </div>
   </div>
 
-  <!-- Resonemang 2 -->
   <div class="res-card">
-    <div class="res-header" onclick="toggleRes('r2')">
-      <div class="res-title">☢️ Kärnkraft eller vattenkraft? (NP 2017)</div>
-      <div class="res-chevron" id="ch-r2">▼</div>
+    <span class="res-badge np">NP 2017/2018</span>
+    <div class="res-q">🛞 Ställningstagande: Dubbade eller dubbfria vinterdäck?</div>
+    <div class="res-context">I Sverige ska bilar ha vinterdäck 1 dec–31 mars. Dubbade vs dubbfria — båda har för- och nackdelar.<br><br>
+      <strong>Fakta dubbade:</strong> 0,85 l/mil · ~20 mikrogram partiklar/m³ luft · 40 m bromssträcka på is · 73 dB ljudnivå · slits 2 mm/1000 km.<br>
+      <strong>Fakta dubbfria:</strong> 0,80 l/mil · ~2 mikrogram partiklar/m³ · 50 m bromssträcka på is · 68 dB · slits 3 mm/1000 km.</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <label>Ditt ställningstagande</label>
+        <textarea class="res-textarea" placeholder="Jag väljer dubbade / dubbfria …"></textarea>
+      </div>
+      <div class="res-step">
+        <label>Resonemang 1 FÖR (två led)</label>
+        <textarea class="res-textarea" placeholder="Fakta → konsekvens …"></textarea>
+      </div>
+      <div class="res-step">
+        <label>Resonemang 2 FÖR (två led)</label>
+        <textarea class="res-textarea" placeholder="Fakta → konsekvens …"></textarea>
+      </div>
+      <div class="res-step">
+        <label>Resonemang EMOT något av alternativen (två led)</label>
+        <textarea class="res-textarea" placeholder="Mot dubbade eller mot dubbfria …"></textarea>
+      </div>
     </div>
-    <div class="res-body" id="r2">
-      <div class="res-scenario">
-        <strong>Kärnkraft:</strong> ~25 000 000 000 kWh/år · Bränsle: uran (räcker ~2500 år) · 30–50 ton radioaktivt avfall/år · 3 olyckor de senaste 40 åren.<br>
-        <strong>Vattenkraft:</strong> ~80 000 000 kWh/år per kraftverk · Bränsle: strömmande vatten · Inga direkta utsläpp · Stora landmassor kan hamna under vatten.
-      </div>
-      <div class="res-task">Ta ställning för kärnkraft eller vattenkraft. Formulera två resonemang i två led för ditt val och ett resonemang mot något av alternativen.</div>
-      <div class="level-block">
-        <span class="level-label lvl-e">Nivå E</span>
-        <p>Jag väljer kärnkraft för att den producerar mest el och inte ger CO₂-utsläpp.</p>
-      </div>
-      <div class="level-block">
-        <span class="level-label lvl-c">Nivå C</span>
-        <p>Jag väljer kärnkraft. För: Producerar 25 miljarder kWh/år — ca 300 gånger mer per kraftverk än vattenkraft → räcker för att försörja en stor del av ett lands elbehov. För: Inga direkta koldioxidutsläpp under drift → bidrar inte till den förstärkta växthuseffekten. Mot vattenkraft: Dammar leder till att stora landmassor hamnar under vatten → förstör ekosystem och kan tvinga befolkningar att flytta.</p>
-      </div>
-      <div class="level-block">
-        <span class="level-label lvl-a">Nivå A</span>
-        <p>Jag väljer kärnkraft. För 1: 25 000 000 000 kWh/år per kraftverk är enormt — det möjliggör storskalig elproduktion på liten markyta → kan ersätta hundratals kolkraftverk och drastiskt minska koldioxidutsläppen globalt. För 2: Inga direkta CO₂-utsläpp → kärnkraft är ett av de kraftslag med lägst livscykel-utsläpp, vilket är avgörande för att nå klimatmål. Mot vattenkraft: Att stora landmassor hamnar under vatten förstör biologisk mångfald och kan frigöra metangas från sönderfallande vegetation → metangas är en kraftigare växthusgas än CO₂, vilket minskar vattenkraftens klimatfördel.</p>
-      </div>
+    <button type="button" class="btn-model" onclick="showModel('k9r2')">Visa exempelsvar (E/C/A)</button>
+    <div class="model-ans" id="ma-k9r2">
+      <h4>Exempelsvar</h4>
+      <p><strong>E (dubbfria):</strong> Jag väljer dubbfria. De ger mindre partiklar i luften, vilket är bra för miljön. De drar också lite mindre bränsle. Men de bromsar lite längre på is.</p>
+      <p style="margin-top:8px"><strong>C (dubbfria):</strong> FÖR: Dubbfria däck river upp 10 gånger färre partiklar från asfalten (2 vs 20 μg/m³) → bättre luftkvalitet i städer → färre luftvägssjukdomar. FÖR: Lägre bränsleförbrukning (0,80 vs 0,85 l/mil) → mindre koldioxidutsläpp per körd mil → lägre klimatpåverkan. EMOT dubbade: Dubbarnas slitage på asfalt frigör fina partiklar som är särskilt skadliga för barn och äldre med luftvägssjukdomar.</p>
+      <p style="margin-top:8px"><strong>A (dubbade):</strong> FÖR: Dubbade däck ger 40 m bromssträcka på is jämfört med 50 m för dubbfria — 10 meters kortare bromssträcka kan vara skillnaden mellan en olycka och ett undvikande vid låga hastigheter på isiga vägar, vilket är primär trafiksäkerhet. FÖR: Sverige har långa vintrar med is och hårdpackad snö i inlandet; dubbens mekaniska grepp mot isskorpan ger ett fysikaliskt förankrat friktionsgrepp som lamellmönstret i dubbfria däck inte kan matcha på ren is. EMOT dubbfria: Dubbfria däck slits 50&nbsp;% snabbare (3 mm vs 2 mm per 1000 km) → kortare livslängd → fler däckbyten → mer resursåtgång och avfall, vilket delvis motverkar den lägre bränsleförbrukningen ur ett livscykelperspektiv.</p>
     </div>
   </div>
 
-  <!-- Resonemang 3 -->
   <div class="res-card">
-    <div class="res-header" onclick="toggleRes('r3')">
-      <div class="res-title">🚛 Minska beroendet av fossila bränslen (NP 2017)</div>
-      <div class="res-chevron" id="ch-r3">▼</div>
+    <span class="res-badge np">NP 2017/2018</span>
+    <div class="res-q">🏠 Passivhus och energieffektivisering</div>
+    <div class="res-context">Passivhus är hus utan traditionellt uppvärmningssystem. De utnyttjar värme från kylskåp, spis, datorer och solinstrålning. Energiförbrukning: ~70 kWh/m² och år, att jämföra med Boverkets krav på 110 kWh/m² för vanliga hus.</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <label>a) Naturvetenskaplig fördel</label>
+        <textarea class="res-textarea" placeholder="Ge ett exempel … Med koppling till energi eller klimat …"></textarea>
+      </div>
+      <div class="res-step">
+        <label>b) Källkritik — Miljönytta.se (Svenskt Näringsliv)</label>
+        <textarea class="res-textarea" placeholder="Två perspektiv på trovärdighet …"></textarea>
+      </div>
     </div>
-    <div class="res-body" id="r3">
-      <div class="res-scenario">
-        Världens befolkning behöver bidra till ett minskat beroende av fossila bränslen.
-      </div>
-      <div class="res-task">Argumentera för varför det är viktigt att minska beroendet av fossila bränslen. Utgå från dina kunskaper om fossila bränslen och resonera i två led kring två olika naturvetenskapliga perspektiv.</div>
-      <div class="level-block">
-        <span class="level-label lvl-e">Nivå E</span>
-        <p>Fossila bränslen ger koldioxidutsläpp som orsakar växthuseffekten. De tar också slut.</p>
-      </div>
-      <div class="level-block">
-        <span class="level-label lvl-c">Nivå C</span>
-        <p>Klimatperspektiv: Förbränning av fossila bränslen frigör lagrad koldioxid → halten CO₂ i atmosfären ökar → förstärkt växthuseffekt → global uppvärmning med extremväder som följd. Resursperspektiv: Fossila bränslen är ändliga resurser som tar miljoner år att bildas → när de tar slut finns ingen ersättning om inte förnybara alternativ byggts ut i tid.</p>
-      </div>
-      <div class="level-block">
-        <span class="level-label lvl-a">Nivå A</span>
-        <p>Klimatperspektiv: Kol, olja och naturgas innehåller kol som bundits ur atmosfären för hundratals miljoner år sedan → förbränning frigör detta kol som CO₂ på decennier, vilket atmosfären inte kan absorbera i samma takt → CO₂-koncentrationen stiger, förstärkt växthuseffekt, havsnivåer stiger och extrema väderhändelser ökar i frekvens och intensitet. Resursperspektiv: Fossila bränslen är icke-förnybara — de nybildas på geologisk tidsskala → om samhället inte ställer om till förnybara energikällor i tid riskeras energibrist vid utvinningspeak, vilket driver upp priser och skapar geopolitiska konflikter om kvarvarande tillgångar.</p>
-      </div>
+    <button type="button" class="btn-model" onclick="showModel('k9r3')">Visa exempelsvar (E/C/A)</button>
+    <div class="model-ans" id="ma-k9r3">
+      <h4>Exempelsvar</h4>
+      <p><strong>E:</strong> a) Passivhus använder mindre energi, vilket är bra för miljön. b) Sidan drivs av ett näringsorgan som kan vilja sälja något. Det kan göra informationen vinklad.</p>
+      <p style="margin-top:8px"><strong>C:</strong> a) Passivhus förbrukar ~36&nbsp;% mindre energi per m² än vanliga hus (70 vs 110 kWh/m² och år) → lägre koldioxidutsläpp om energin kommer från fossila källor → minskad klimatpåverkan. b) Perspektiv 1 (avsändare): Källan är Svenskt Näringsliv — ett intresseorgan för företag. De kan ha ekonomiska intressen av att framhäva byggsektorns miljöarbete, vilket kan innebära att nackdelar med passivhus tonas ned. Perspektiv 2 (ålder): Artikeln är från 2008 — byggnormer och teknik har förändrats sedan dess, nyare data kan ge en annan bild.</p>
+      <p style="margin-top:8px"><strong>A:</strong> a) Passivhus minimerar värmeförluster genom välisolerad klimatskärm (väggar, tak, fönster med lågt U-värde) och värmeåtervinning från ventilationsluft. Termodynamiskt innebär det att energiflödet ut ur byggnaden minskar drastiskt (Q = U·A·ΔT) → behovet av tillförd energi minskar med &gt;35&nbsp;% → lägre primärenergianvändning och utsläpp under hela byggnadens livstid. b) Trovärdighet perspektiv 1 (intressekonflikt): Miljönytta.se drivs av Svenskt Näringsliv vars syfte är att gynna svenska företag — inklusive byggbranschen. Framställningen kan vara selektiv: positiva resultat lyfts, potentiella nackdelar (höga byggkostnader, fuktproblem i täta konstruktioner) nämns inte, vilket minskar trovärdigheten för en nyanserad vetenskaplig bedömning. b) Trovärdighet perspektiv 2 (primärkälla saknas): Siffrorna (70 kWh/m²) hänvisas inte till oberoende vetenskapliga mätningar eller peer-reviewade studier — det är en webbartikel utan källhänvisningar, vilket gör det svårt att verifiera påståendena oberoende.</p>
     </div>
   </div>
 
-  <!-- Resonemang 4 -->
   <div class="res-card">
-    <div class="res-header" onclick="toggleRes('r4')">
-      <div class="res-title">🚗 Transport och miljökonsekvenser (NP 2016)</div>
-      <div class="res-chevron" id="ch-r4">▼</div>
+    <span class="res-badge np">NP 2017/2018</span>
+    <div class="res-q">☀️ Solstrålning och hälsa</div>
+    <div class="res-context">I solstrålning ingår synligt ljus, värmestrålning och ultraviolett strålning (UV-strålning).</div>
+    <div class="res-steps">
+      <div class="res-step">
+        <label>Fråga</label>
+        <div style="font-size:0.84rem;line-height:1.6;color:var(--text);margin-bottom:8px">Argumentera för varför det är viktigt att inte utsätta sig för stora mängder solstrålning. Ditt svar ska innehålla två resonemang i två led — ett om värmestrålning och ett om UV-strålning.</div>
+        <label>Värmestrålning</label>
+        <textarea class="res-textarea" placeholder="Två led: mekanism → konsekvens …"></textarea>
+      </div>
+      <div class="res-step">
+        <label>UV-strålning</label>
+        <textarea class="res-textarea" placeholder="Två led: mekanism → konsekvens …"></textarea>
+      </div>
     </div>
-    <div class="res-body" id="r4">
-      <div class="res-scenario">
-        Produkter importeras till Sverige med flygplan. Transporter med flygplan påverkar miljön negativt. Tänk dig att produkter istället transporteras med tåg, lastbil eller båt.
-      </div>
-      <div class="res-task">Välj ett av transportsätten tåg, lastbil eller båt. Resonera i två led kring två konsekvenser som bytet av transportsätt kan få på miljön.</div>
-      <div class="level-block">
-        <span class="level-label lvl-e">Nivå E</span>
-        <p>Jag väljer tåg. Det ger mindre utsläpp och är mer miljövänligt än flyg.</p>
-      </div>
-      <div class="level-block">
-        <span class="level-label lvl-c">Nivå C</span>
-        <p>Jag väljer tåg. Konsekvens 1: Tåg ger betydligt lägre CO₂-utsläpp per tonkilometer än flyg → minskar den totala koldioxidhalten i atmosfären och bromsar klimatförändringarna. Konsekvens 2: Elmotordrivna tåg kan drivas av förnybar el → om andelen förnybar el ökar kan transportsektorn bli nästan utsläppsfri.</p>
-      </div>
-      <div class="level-block">
-        <span class="level-label lvl-a">Nivå A</span>
-        <p>Jag väljer tåg. Konsekvens 1: Tåg släpper ut ca 14 g CO₂/personkm jämfört med flygets ~285 g → en dramatisk minskning av koldioxidutsläppen per transport, vilket direkt minskar bidraget till den förstärkta växthuseffekten och global temperaturhöjning. Konsekvens 2: Tågtrafik på räls minskar behovet av motorvägsbyggen och parkeringsytor → naturmarker och habitat bevaras bättre, vilket skyddar biologisk mångfald och ekosystemtjänster som pollinering och vattenrening som vi är beroende av.</p>
-      </div>
+    <button type="button" class="btn-model" onclick="showModel('k9r4')">Visa exempelsvar (E/C/A)</button>
+    <div class="model-ans" id="ma-k9r4">
+      <h4>Exempelsvar</h4>
+      <p><strong>E:</strong> Solen strålar ut UV som kan ge hudcancer. Värmestrålning kan ge solsting.</p>
+      <p style="margin-top:8px"><strong>C:</strong> UV-strålning: UV-strålning har kort våglängd och hög energi → kan skada DNA i hudceller → ökad risk för hudcancer (melanom). Värmestrålning: Infraröd strålning absorberas av kroppen som värme → vid kraftig exponering stiger kroppstemperaturen → risk för värmeslag och uttorkning, som kan vara livsfarligt.</p>
+      <p style="margin-top:8px"><strong>A:</strong> UV-strålning: UV-B-strålning (280–315 nm) har tillräcklig fotonenergi för att bryta kovalenta bindningar i DNA-molekylen → bidrar till tymindimerbildning → om DNA-reparationsmekanismerna inte hinner rätta till skadan kan mutationer ackumuleras i hudceller → okontrollerad celldelning → hudcancer (basalcellscancer, skivepitelcancer, melanom). Risken ökar vid upprepade brännskador. Värmestrålning: Infraröd strålning (IR) absorberas effektivt av kroppsvävnad och omvandlas till termisk energi. Vid långvarig intensiv exponering (t.ex. direkt sol utan skydd) kan kroppens termoreglering (svettning, vasodilation) inte kompensera → kärntemperaturen stiger &gt; 40&nbsp;°C → denaturering av enzymer och proteiner → värmeslag med risk för organsvikt och dödsfall. Dehydrering vid svettning förvärrar situationen ytterligare.</p>
     </div>
   </div>
 
@@ -717,7 +727,10 @@ body {
     </div>
     <div class="np-body" id="np1">
       <div class="np-scenario">
-        Se faktablad i Resonemang-fliken. Energikällorna jämförs utifrån aspekterna energi, miljö och allmänt.
+        En tomatodlare vill förlänga odlingssäsongen och behöver värma växthuset. På gården finns vind, strömmande vatten och värme i marken.<br><br>
+        <strong>Vindkraft:</strong> 25&nbsp;000 kWh/år, 1 kWh rörelseenergi → 0,4 kWh värme, buller ~35 dB, påverkar luftlevande arter, livslängd 20–25 år.<br>
+        <strong>Vattenkraft:</strong> 100&nbsp;000 kWh/år, 1 kWh → 0,8 kWh värme, buller ~30 dB, påverkar vattenlevande arter, livslängd 40–50 år.<br>
+        <strong>Bergvärme:</strong> 50&nbsp;000 kWh/år, 1 kWh → 3 kWh värme, buller ~40–55 dB, påverkar marklevande arter, livslängd 15 år.
       </div>
       <div class="np-task">Rekommendera en av energikällorna. Resonera i två led kring tre fördelar och en nackdel. Var saklig och använd naturvetenskapliga argument.</div>
       <div class="level-block" style="margin-top:0.8rem">
@@ -1039,7 +1052,7 @@ function resetTabResonemang() {
   const s = document.getElementById('sec-resonemang');
   if (!s) return;
   s.querySelectorAll('textarea, input[type="text"], input:not([type])').forEach(el => { el.value = ''; });
-  s.querySelectorAll('.model-ans.show, .model-answer.show, .res-body.show').forEach(el => { el.classList.remove('show'); });
+  s.querySelectorAll('.model-ans.show, .model-answer.show').forEach(el => { el.classList.remove('show'); });
 }
 
 function resetTabNp() {
@@ -1338,11 +1351,9 @@ function applyRestoredCalc() {
   }
 }
 
-function toggleRes(id) {
-  const body = document.getElementById(id);
-  const ch = document.getElementById('ch-' + id);
-  body.classList.toggle('show');
-  ch.textContent = body.classList.contains('show') ? '▲' : '▼';
+function showModel(id) {
+  const el = document.getElementById('ma-' + id);
+  if (el) el.classList.toggle('show');
 }
 function toggleNP(id) {
   const body = document.getElementById(id);
