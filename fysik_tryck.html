@@ -35,13 +35,18 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 .header p{font-size:.85rem;color:var(--muted);line-height:1.5}
 .back-link{position:relative;z-index:2;display:inline-flex;align-items:center;gap:.4rem;font-family:'JetBrains Mono',var(--mono);font-size:.72rem;font-weight:600;letter-spacing:.04em;color:var(--muted);text-decoration:none;margin-bottom:.75rem;padding:.45rem .85rem;border-radius:8px;border:1px solid var(--border2);background:rgba(255,255,255,.04);transition:color .15s,border-color .15s,background .15s}.back-link:hover{color:var(--accent);border-color:var(--accent);background:rgba(255,255,255,.07)}
 
-.progress-wrap{padding:.9rem 1.5rem;background:var(--card);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:1rem;position:relative;z-index:1}
-.progress-bar-bg{flex:1;height:6px;background:var(--border2);border-radius:3px;overflow:hidden}
-.progress-bar-fg{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:3px;transition:width .4s ease;width:0%}
-#progressText{font-family:'JetBrains Mono',var(--mono);font-size:.7rem;color:var(--muted);white-space:nowrap}
+.tab-progress-area{padding:.65rem 1.5rem;background:var(--card);border-bottom:1px solid var(--border);position:relative;z-index:1}
+.tab-progress-strip{display:none;align-items:center;gap:.75rem;flex-wrap:wrap}
+.tab-progress-strip.active{display:flex}
+.tab-progress-strip--actions-only{justify-content:flex-end}
+.tab-progress-bar-bg{flex:1;min-width:72px;height:6px;background:var(--border2);border-radius:3px;overflow:hidden}
+.tab-progress-bar-fg{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0%;transition:width .35s ease}
+.tab-progress-text{font-family:'JetBrains Mono',var(--mono);font-size:.68rem;color:var(--muted);white-space:nowrap}
+.tab-reset-btn{font-family:'JetBrains Mono',var(--mono);font-size:.62rem;padding:.28rem .65rem;border:1px solid var(--border2);background:transparent;color:var(--muted);border-radius:5px;cursor:pointer;letter-spacing:.06em;flex-shrink:0;transition:all .15s}
+.tab-reset-btn:hover{color:var(--accent);border-color:var(--accent)}
+.chapter-footer{margin-top:2.5rem;padding:1.25rem 1.5rem 2rem;border-top:1px solid var(--border);text-align:center;background:var(--bg)}
 .reset-btn{font-family:'JetBrains Mono',var(--mono);font-size:.65rem;padding:.3rem .8rem;border:1px solid var(--border2);background:transparent;color:var(--muted);border-radius:5px;cursor:pointer;letter-spacing:.08em;transition:all .15s}
 .reset-btn:hover{color:var(--accent);border-color:var(--accent)}
-.progress-wrap .reset-btn{flex-shrink:0}
 
 .tabs{display:flex;background:var(--card);border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
@@ -188,18 +193,35 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
   <p>Tryckformeln · Arkimedes princip · Lufttryck · Övertryck/undertryck · Vakuum</p>
 </div>
 
-<div class="progress-wrap">
-  <div class="progress-bar-bg"><div class="progress-bar-fg" id="mainProgress"></div></div>
-  <span id="progressText">0 av 47 klara</span>
-  <button type="button" class="reset-btn" onclick="resetChapter()">Nollställ kapitel</button>
-</div>
-
 <div class="tabs">
   <button class="tab-btn active" onclick="showTab('begrepp',event)">🃏 Begrepp</button>
   <button class="tab-btn" onclick="showTab('forstaaelse',event)">💡 Förståelse</button>
   <button class="tab-btn" onclick="showTab('rakna',event)">🔢 Räkna</button>
   <button class="tab-btn" onclick="showTab('resonemang',event)">🧠 Resonemang</button>
   <button class="tab-btn" onclick="showTab('np',event)">📋 NP-Frågor</button>
+</div>
+<div class="tab-progress-area">
+  <div class="tab-progress-strip active" data-tab="begrepp">
+    <div class="tab-progress-bar-bg"><div class="tab-progress-bar-fg" id="tpBar-begrepp"></div></div>
+    <span class="tab-progress-text" id="tpText-begrepp">0 av 0 kända</span>
+    <button type="button" class="tab-reset-btn" onclick="resetTabBegrepp()">↺ Nollställ</button>
+  </div>
+  <div class="tab-progress-strip" data-tab="forstaaelse">
+    <div class="tab-progress-bar-bg"><div class="tab-progress-bar-fg" id="tpBar-forstaaelse"></div></div>
+    <span class="tab-progress-text" id="tpText-forstaaelse">0 av 0 rätt</span>
+    <button type="button" class="tab-reset-btn" onclick="resetTabForstaaelse()">↺ Nollställ</button>
+  </div>
+  <div class="tab-progress-strip" data-tab="rakna">
+    <div class="tab-progress-bar-bg"><div class="tab-progress-bar-fg" id="tpBar-rakna"></div></div>
+    <span class="tab-progress-text" id="tpText-rakna">0 av 0 rätt</span>
+    <button type="button" class="tab-reset-btn" onclick="resetTabRakna()">↺ Nollställ</button>
+  </div>
+  <div class="tab-progress-strip tab-progress-strip--actions-only" data-tab="resonemang">
+    <button type="button" class="tab-reset-btn" onclick="resetTabResonemang()">↺ Nollställ</button>
+  </div>
+  <div class="tab-progress-strip tab-progress-strip--actions-only" data-tab="np">
+    <button type="button" class="tab-reset-btn" onclick="resetTabNp()">↺ Nollställ</button>
+  </div>
 </div>
 
 <!-- ===== BEGREPP ===== -->
@@ -713,6 +735,10 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
   </div>
 </div>
 
+<footer class="chapter-footer">
+  <button type="button" class="reset-btn" onclick="resetChapter()">Nollställ hela kapitlet</button>
+</footer>
+
 <script>
 const STORAGE_KEY = 'fysik_tryck';
 const quizItems = Array(21).fill(null);
@@ -908,6 +934,114 @@ const fbTexts={
 };
 
 const fAnswered={};
+const calcAnswered={};
+const FORSTA_FQ_HTML={};
+const NP_MC_HTML={};
+(function(){
+  document.querySelectorAll('#sec-forstaaelse .fq-card').forEach(card=>{
+    if(!card.querySelector('.fq-opts'))return;
+    const fb=card.querySelector('.fq-feedback'); if(!fb||!fb.id.startsWith('fb-'))return;
+    FORSTA_FQ_HTML[fb.id.slice(3)]=card.innerHTML;
+  });
+  document.querySelectorAll('#sec-np [id^="fb-NP"]').forEach(fb=>{
+    const card=fb.closest('.np-card'); if(card) NP_MC_HTML[fb.id.slice(3)]=card.innerHTML;
+  });
+})();
+const HAS_RAKNA_TAB=true; const CALC_COUNT=5; const FORSTA_TAB='forstaaelse';
+function forstaaelseSectionEl(){return document.getElementById('sec-forstaaelse')||document.getElementById('sec-forsta');}
+function getForstaaelseQuizProgress(){
+  const sec=forstaaelseSectionEl(); if(!sec)return{right:0,total:0};
+  let right=0,total=0;
+  sec.querySelectorAll('.fq-card').forEach(card=>{
+    if(!card.querySelector('.fq-opts'))return;
+    total++;
+    if(card.classList.contains('answered-correct'))right++;
+  });
+  return{right,total};
+}
+function getCalcProgress(){
+  const right=Object.values(calcAnswered).filter(v=>v&&v.correct).length;
+  return{right,total:CALC_COUNT};
+}
+function setTabProgressActive(tabName){
+  document.querySelectorAll('.tab-progress-strip').forEach(el=>{
+    el.classList.toggle('active',el.getAttribute('data-tab')===tabName);
+  });
+}
+function syncForstaaelseHeader(){
+  const p=getForstaaelseQuizProgress();
+  const fs=document.getElementById('fScore');if(fs)fs.textContent=String(p.right);
+  const fp=document.getElementById('fPct');if(fp)fp.textContent=p.total?Math.round((p.right/p.total)*100)+'%':'0%';
+  const ft=document.getElementById('fTotal');if(ft)ft.textContent=String(p.total);
+}
+function updateTabProgressStrips(){
+  const good=Object.values(cardStates).filter(v=>v==='good').length;
+  const nCards=allCards.length;
+  const bBar=document.getElementById('tpBar-begrepp');const bTx=document.getElementById('tpText-begrepp');
+  if(bBar)bBar.style.width=nCards?Math.min(100,Math.round((good/nCards)*100))+'%':'0%';
+  if(bTx)bTx.textContent=good+' av '+nCards+' kända';
+  const fq=getForstaaelseQuizProgress();
+  const fBar=document.getElementById('tpBar-'+FORSTA_TAB);const fTx=document.getElementById('tpText-'+FORSTA_TAB);
+  if(fBar)fBar.style.width=fq.total?Math.min(100,Math.round((fq.right/fq.total)*100))+'%':'0%';
+  if(fTx)fTx.textContent=fq.right+' av '+fq.total+' rätt';
+  const cBar=document.getElementById('tpBar-rakna');const cTx=document.getElementById('tpText-rakna');
+  if(cBar&&cTx){
+    const c=getCalcProgress();
+    cBar.style.width=c.total?Math.min(100,Math.round((c.right/c.total)*100))+'%':'0%';
+    cTx.textContent=c.right+' av '+c.total+' rätt';
+  }
+}
+function resetTabBegrepp(){
+  if(!confirm('Nollställa Begrepp (alla kort blir otränade)?'))return;
+  allCards.forEach((_,i)=>{cardStates[i]='unseen';});
+  repeatMode=false;currentCard=0;renderCard();updateMainProgress();
+}
+function resetTabForstaaelse(){
+  if(!confirm('Nollställa Förståelse (flerval)?'))return;
+  Object.keys(FORSTA_FQ_HTML).forEach(id=>{delete fAnswered[id];});
+  Object.keys(FORSTA_FQ_HTML).forEach(id=>{
+    const fb=document.getElementById('fb-'+id);const card=fb&&fb.closest('.fq-card');
+    if(card&&FORSTA_FQ_HTML[id])card.innerHTML=FORSTA_FQ_HTML[id];
+  });
+  syncForstaaelseHeader();updateMainProgress();
+}
+function resetTabResonemang(){
+  if(!confirm('Nollställa textfält och dölja modellsvar på Resonemang-fliken?'))return;
+  const s=document.getElementById('sec-resonemang');if(!s)return;
+  s.querySelectorAll('textarea,input[type="text"],input:not([type])').forEach(el=>{el.value='';});
+  s.querySelectorAll('.model-ans.show').forEach(el=>{el.classList.remove('show');});
+}
+function resetTabNp(){
+  if(!confirm('Nollställa NP-fliken (inkl. flerval)?'))return;
+  Object.keys(NP_MC_HTML).forEach(id=>{delete fAnswered[id];});
+  const s=document.getElementById('sec-np');if(!s)return;
+  s.querySelectorAll('.np-card').forEach(card=>{
+    const fb=card.querySelector('.fq-feedback');
+    if(!fb)return;
+    const id=fb.id.slice(3);
+    if(NP_MC_HTML[id])card.innerHTML=NP_MC_HTML[id];
+  });
+  s.querySelectorAll('textarea,.res-textarea').forEach(el=>{el.value='';});
+  s.querySelectorAll('.model-ans.show').forEach(el=>{el.classList.remove('show');});
+  syncForstaaelseHeader();updateMainProgress();
+}
+function resetTabRakna(){
+  if(!confirm('Nollställa alla räkneuppgifter på Räkna-fliken?'))return;
+  Object.keys(calcAnswered).forEach(k=>{delete calcAnswered[k];});
+  for(let i=1;i<=CALC_COUNT;i++){
+    const id='r'+i;const inp=document.getElementById(id);const res=document.getElementById(id+'-res');
+    if(inp)inp.disabled=false;if(res){res.textContent='';res.className='calc-result';}
+  }
+  updateMainProgress();
+}
+function applyRestoredCalc(){
+  for(let i=1;i<=5;i++){
+    const id='r'+i;if(calcAnswered[id]===undefined)continue;
+    const res=document.getElementById(id+'-res');const inp=document.getElementById(id);
+    if(res){res.textContent=calcAnswered[id].msg;res.className='calc-result show '+(calcAnswered[id].correct?'ok':'err');}
+    if(inp)inp.disabled=true;
+  }
+}
 function fAns(btn,correct,id){
   if(fAnswered[id]!==undefined)return;
   const isRight = !!correct;
@@ -920,12 +1054,9 @@ function fAns(btn,correct,id){
   if(!isRight) btn.classList.add('wrong');
   const fb=document.getElementById('fb-'+id);
   if(fb){fb.textContent=isRight?fbTexts[id].ok:fbTexts[id].err;fb.className='fq-feedback show '+(isRight?'ok':'err');}
-  const qEl = btn.closest('.fq-card');
+  const qEl = btn.closest('.fq-card')||btn.closest('.np-card');
   if(qEl) qEl.classList.add(isRight ? 'answered-correct' : 'answered-wrong');
-  if(isRight){
-    const s=document.getElementById('fScore');if(s)s.textContent=Object.values(fAnswered).filter(v=>v===true).length;
-    const p=document.getElementById('fPct');if(p)p.textContent=Math.round((Object.values(fAnswered).filter(v=>v===true).length/Object.keys(fAnswered).length)*100)+'%';
-  }
+  syncForstaaelseHeader();
   updateMainProgress();
 }
 function applyRestoredAnswers(){
@@ -939,27 +1070,27 @@ function applyRestoredAnswers(){
       o.disabled = true;
       if((o.getAttribute('onclick') || '').includes("true,'" + id + "'")) o.classList.add('correct');
     });
-    const qEl = optsWrap.closest('.fq-card');
+    const qEl = optsWrap.closest('.fq-card')||optsWrap.closest('.np-card');
     if(qEl) qEl.classList.add(isRight ? 'answered-correct' : 'answered-wrong');
     if(fb && fbTexts[id]){
       fb.textContent = isRight ? fbTexts[id].ok : fbTexts[id].err;
       fb.className = 'fq-feedback show ' + (isRight ? 'ok' : 'err');
     }
   });
-  const right = Object.values(fAnswered).filter(v => v === true || v === 'true').length;
-  const answered = Object.keys(fAnswered).length;
-  const s=document.getElementById('fScore'); if(s) s.textContent=right;
-  const p=document.getElementById('fPct'); if(p) p.textContent=(answered?Math.round((right/answered)*100):0)+'%';
+  syncForstaaelseHeader();
 }
 
 function chk(inputId,correct,resultId,okMsg,errMsg,tol){
+  if(calcAnswered[inputId]!==undefined)return;
   const val=parseFloat(document.getElementById(inputId).value);
   const el=document.getElementById(resultId);
   if(isNaN(val)){el.textContent='Ange ett tal.';el.className='calc-result show err';return;}
   const ok=Math.abs(val-correct)<=tol;
   el.textContent=ok?okMsg:errMsg;
   el.className='calc-result show '+(ok?'ok':'err');
-  if(ok)updateMainProgress();
+  calcAnswered[inputId]={correct:ok,msg:ok?okMsg:errMsg};
+  const inp=document.getElementById(inputId);if(inp)inp.disabled=true;
+  updateMainProgress();
 }
 
 function showModel(id){document.getElementById('ma-'+id).classList.toggle('show')}
@@ -969,20 +1100,22 @@ function showTab(name,e){
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('sec-'+name).classList.add('active');
   if(e)e.currentTarget.classList.add('active');
+  setTabProgressActive(name);
 }
 
 function updateMainProgress() {
-  const good   = Object.values(cardStates).filter(v => v === 'good').length;
-  const fRight = Object.values(fAnswered).filter(v => v === true).length;
-  const total  = allCards.length + quizItems.length;
-  const pct    = Math.min(100, Math.round(((good + fRight) / total) * 100));
-  document.getElementById('mainProgress').style.width = pct + '%';
-  document.getElementById('progressText').textContent = (good + fRight) + ' av ' + total + ' klara';
+  const good = Object.values(cardStates).filter(v => v === 'good').length;
+  const fProg = getForstaaelseQuizProgress();
+  const cProg = getCalcProgress();
+  const total = allCards.length + fProg.total + cProg.total;
+  const pct = total ? Math.min(100, Math.round(((good + fProg.right + cProg.right) / total) * 100)) : 0;
   localStorage.setItem(STORAGE_KEY + '_progress', JSON.stringify({
-    pct, good, fRight, total,
+    pct, good, fRight: fProg.right, calcRight: cProg.right, total,
     cardStates: Object.assign({}, cardStates),
-    fAnswered:  Object.assign({}, fAnswered),
+    fAnswered: Object.assign({}, fAnswered),
+    calcAnswered: Object.assign({}, calcAnswered),
   }));
+  updateTabProgressStrips();
 }
 
 function restoreProgress() {
@@ -1000,6 +1133,7 @@ function restoreProgress() {
       });
     }
     if (data.fAnswered)  Object.entries(data.fAnswered).forEach(([k,v])  => { fAnswered[k] = v; });
+    if (data.calcAnswered) Object.entries(data.calcAnswered).forEach(([k,v]) => { calcAnswered[k] = v; });
   } catch(e) {}
 }
 
@@ -1008,18 +1142,44 @@ function resetChapter() {
   localStorage.removeItem(STORAGE_KEY + '_progress');
   allCards.forEach((_, i) => { cardStates[i] = 'unseen'; });
   Object.keys(fAnswered).forEach(k => { delete fAnswered[k]; });
+  Object.keys(calcAnswered).forEach(k => { delete calcAnswered[k]; });
+  for (let i = 1; i <= CALC_COUNT; i++) {
+    const id = 'r' + i;
+    const inp = document.getElementById(id);
+    const res = document.getElementById(id + '-res');
+    if (inp) inp.disabled = false;
+    if (res) { res.textContent = ''; res.className = 'calc-result'; }
+  }
+  Object.keys(FORSTA_FQ_HTML).forEach(id => {
+    const fb = document.getElementById('fb-' + id);
+    const card = fb && fb.closest('.fq-card');
+    if (card && FORSTA_FQ_HTML[id]) card.innerHTML = FORSTA_FQ_HTML[id];
+  });
+  document.querySelectorAll('#sec-np .np-card').forEach(card => {
+    const fb = card.querySelector('.fq-feedback');
+    if (!fb) return;
+    const id = fb.id.slice(3);
+    if (NP_MC_HTML[id]) card.innerHTML = NP_MC_HTML[id];
+  });
+  document.querySelectorAll('#sec-resonemang textarea, #sec-np textarea').forEach(el => { el.value = ''; });
+  document.querySelectorAll('#sec-resonemang .model-ans.show, #sec-np .model-ans.show').forEach(el => { el.classList.remove('show'); });
   currentCard = 0;
   repeatMode = false;
   if (typeof quizCorrect !== 'undefined') { quizCorrect = 0; quizAnswered = 0; }
   renderCard();
   if (typeof buildQuiz === 'function') buildQuiz();
   if (typeof applyRestoredQuiz === 'function') applyRestoredQuiz();
+  syncForstaaelseHeader();
   updateMainProgress();
 }
 
 restoreProgress();
 renderCard();
 applyRestoredAnswers();
+applyRestoredCalc();
+syncForstaaelseHeader();
+setTabProgressActive('begrepp');
+updateTabProgressStrips();
 </script>
 </body>
 </html>

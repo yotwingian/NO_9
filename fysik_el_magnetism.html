@@ -111,35 +111,45 @@
     background: rgba(255, 255, 255, 0.07);
   }
 
-  .progress-wrap {
-    padding: 0.9rem 1.5rem;
+  .tab-progress-area {
+    padding: 0.65rem 1.5rem;
     background: var(--card);
     border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 1rem;
     position: relative;
     z-index: 1;
   }
-  .progress-bar-bg {
-    flex: 1;
-    height: 6px;
-    background: var(--border2);
-    border-radius: 3px;
-    overflow: hidden;
-  }
-  .progress-bar-fg {
+  .tab-progress-strip { display: none; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+  .tab-progress-strip.active { display: flex; }
+  .tab-progress-strip--actions-only { justify-content: flex-end; }
+  .tab-progress-bar-bg { flex: 1; min-width: 72px; height: 6px; background: var(--border2); border-radius: 3px; overflow: hidden; }
+  .tab-progress-bar-fg {
     height: 100%;
-    background: linear-gradient(90deg, var(--accent), var(--accent2));
     border-radius: 3px;
-    transition: width 0.4s ease;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
     width: 0%;
+    transition: width 0.35s ease;
   }
-  #progressText {
+  .tab-progress-text { font-family: 'JetBrains Mono', var(--mono); font-size: 0.68rem; color: var(--muted); white-space: nowrap; }
+  .tab-reset-btn {
     font-family: 'JetBrains Mono', var(--mono);
-    font-size: 0.7rem;
+    font-size: 0.62rem;
+    padding: 0.28rem 0.65rem;
+    border: 1px solid var(--border2);
+    background: transparent;
     color: var(--muted);
-    white-space: nowrap;
+    border-radius: 5px;
+    cursor: pointer;
+    letter-spacing: 0.06em;
+    flex-shrink: 0;
+    transition: all 0.15s;
+  }
+  .tab-reset-btn:hover { color: var(--accent); border-color: var(--accent); }
+  .chapter-footer {
+    margin-top: 2.5rem;
+    padding: 1.25rem 1.5rem 2rem;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    background: var(--bg);
   }
   .reset-btn {
     font-family: 'JetBrains Mono', var(--mono);
@@ -154,7 +164,6 @@
     transition: all 0.15s;
   }
   .reset-btn:hover { color: var(--accent); border-color: var(--accent); }
-  .progress-wrap .reset-btn { flex-shrink: 0; }
 
   /* ── TABS ────────────────────────────────── */
   .tabs {
@@ -721,18 +730,36 @@
   <p>Ohms lag · Kretsar · Serie &amp; parallell · Transformator · Generator</p>
 </div>
 
-<div class="progress-wrap">
-  <div class="progress-bar-bg"><div class="progress-bar-fg" id="mainProgress"></div></div>
-  <span id="progressText">0 av 50 klara</span>
-  <button type="button" class="reset-btn" onclick="resetChapter()">Nollställ kapitel</button>
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('begrepp', event)">🃏 Begrepp <span class="tab-count" id="badge-begrepp">28</span></button>
+  <button class="tab-btn" onclick="showTab('forstaaelse', event)">💡 Förståelse <span class="tab-count" id="badge-forstaaelse">12</span></button>
+  <button class="tab-btn" onclick="showTab('rakna', event)">🔢 Räkna <span class="tab-count" id="badge-rakna">5</span></button>
+  <button class="tab-btn" onclick="showTab('resonemang', event)">🧠 Resonemang <span class="tab-count" id="badge-resonemang">6</span></button>
+  <button class="tab-btn" onclick="showTab('np', event)">📋 NP-Frågor <span class="tab-count" id="badge-np">4</span></button>
 </div>
 
-<div class="tabs">
-  <button class="tab-btn active" onclick="showTab('begrepp')">🃏 Begrepp <span class="tab-count" id="badge-begrepp">28</span></button>
-  <button class="tab-btn" onclick="showTab('forstaaelse')">💡 Förståelse <span class="tab-count" id="badge-forstaaelse">12</span></button>
-  <button class="tab-btn" onclick="showTab('rakna')">🔢 Räkna <span class="tab-count" id="badge-rakna">5</span></button>
-  <button class="tab-btn" onclick="showTab('resonemang')">🧠 Resonemang <span class="tab-count" id="badge-resonemang">6</span></button>
-  <button class="tab-btn" onclick="showTab('np')">📋 NP-Frågor <span class="tab-count" id="badge-np">4</span></button>
+<div class="tab-progress-area">
+  <div class="tab-progress-strip active" data-tab="begrepp">
+    <div class="tab-progress-bar-bg"><div class="tab-progress-bar-fg" id="tpBar-begrepp"></div></div>
+    <span class="tab-progress-text" id="tpText-begrepp">0 av 0 kända</span>
+    <button type="button" class="tab-reset-btn" onclick="resetTabBegrepp()">↺ Nollställ</button>
+  </div>
+  <div class="tab-progress-strip" data-tab="forstaaelse">
+    <div class="tab-progress-bar-bg"><div class="tab-progress-bar-fg" id="tpBar-forstaaelse"></div></div>
+    <span class="tab-progress-text" id="tpText-forstaaelse">0 av 0 rätt</span>
+    <button type="button" class="tab-reset-btn" onclick="resetTabForstaaelse()">↺ Nollställ</button>
+  </div>
+  <div class="tab-progress-strip" data-tab="rakna">
+    <div class="tab-progress-bar-bg"><div class="tab-progress-bar-fg" id="tpBar-rakna"></div></div>
+    <span class="tab-progress-text" id="tpText-rakna">0 av 0 rätt</span>
+    <button type="button" class="tab-reset-btn" onclick="resetTabRakna()">↺ Nollställ</button>
+  </div>
+  <div class="tab-progress-strip tab-progress-strip--actions-only" data-tab="resonemang">
+    <button type="button" class="tab-reset-btn" onclick="resetTabResonemang()">↺ Nollställ</button>
+  </div>
+  <div class="tab-progress-strip tab-progress-strip--actions-only" data-tab="np">
+    <button type="button" class="tab-reset-btn" onclick="resetTabNp()">↺ Nollställ</button>
+  </div>
 </div>
 
 <!-- ══════════════════════════════════════════
@@ -1282,6 +1309,10 @@
 </div>
 </div><!-- /content -->
 
+<footer class="chapter-footer">
+  <button type="button" class="reset-btn" onclick="resetChapter()">Nollställ hela kapitlet</button>
+</footer>
+
 <script>
 const STORAGE_KEY = 'fysik_el_magnetism';
 const quizItems = Array(12).fill(null);
@@ -1491,22 +1522,206 @@ function nextCard() {
 // ══════════════════════════════════════════
 let fScore = 0;
 const fAnswered = {};
+const calcAnswered = {};
+const FORSTA_MC_HTML = {};
+const NP2_MC_HTML = (function () {
+  const fb = document.getElementById('fb-np2');
+  const card = fb && fb.closest('.np-card');
+  return card ? card.innerHTML : '';
+})();
+
+(function initForstaaelseMcTemplates() {
+  document.querySelectorAll('#sec-forstaaelse .question-card').forEach(card => {
+    if (card.querySelector('.mc-options')) FORSTA_MC_HTML[card.id] = card.innerHTML;
+  });
+})();
+
+const HAS_RAKNA_TAB = true;
+const CALC_COUNT = 5;
+const FORSTA_TAB = 'forstaaelse';
+
+function forstaaelseSectionEl() {
+  return document.getElementById('sec-forstaaelse') || document.getElementById('sec-forsta');
+}
+
+function getForstaaelseQuizProgress() {
+  const sec = forstaaelseSectionEl();
+  if (!sec) return { right: 0, total: 0 };
+  let right = 0, total = 0;
+  sec.querySelectorAll('.question-card').forEach(card => {
+    if (!card.querySelector('.mc-options')) return;
+    const id = card.id;
+    total++;
+    if (fAnswered[id] === true || fAnswered[id] === 'true') right++;
+  });
+  return { right, total };
+}
+
+function getCalcProgress() {
+  if (!HAS_RAKNA_TAB || !CALC_COUNT) return { right: 0, total: 0 };
+  const right = Object.values(calcAnswered).filter(v => v && v.correct).length;
+  return { right, total: CALC_COUNT };
+}
+
+function setTabProgressActive(tabName) {
+  document.querySelectorAll('.tab-progress-strip').forEach(el => {
+    el.classList.toggle('active', el.getAttribute('data-tab') === tabName);
+  });
+}
+
+function updateTabProgressStrips() {
+  const good = Object.values(cardStates).filter(v => v === 'good').length;
+  const nCards = allCards.length;
+  const bBar = document.getElementById('tpBar-begrepp');
+  const bTx = document.getElementById('tpText-begrepp');
+  if (bBar) bBar.style.width = nCards ? Math.min(100, Math.round((good / nCards) * 100)) + '%' : '0%';
+  if (bTx) bTx.textContent = good + ' av ' + nCards + ' kända';
+
+  const fq = getForstaaelseQuizProgress();
+  const fBar = document.getElementById('tpBar-' + FORSTA_TAB);
+  const fTx = document.getElementById('tpText-' + FORSTA_TAB);
+  if (fBar) fBar.style.width = fq.total ? Math.min(100, Math.round((fq.right / fq.total) * 100)) + '%' : '0%';
+  if (fTx) fTx.textContent = fq.right + ' av ' + fq.total + ' rätt';
+
+  const cBar = document.getElementById('tpBar-rakna');
+  const cTx = document.getElementById('tpText-rakna');
+  if (cBar && cTx) {
+    const c = getCalcProgress();
+    cBar.style.width = c.total ? Math.min(100, Math.round((c.right / c.total) * 100)) + '%' : '0%';
+    cTx.textContent = c.right + ' av ' + c.total + ' rätt';
+  }
+}
+
+function refreshForstaaelseScorePanel() {
+  const p = getForstaaelseQuizProgress();
+  const fs = document.getElementById('fScore');
+  const fp = document.getElementById('fPct');
+  const ft = document.getElementById('fTotal');
+  fScore = p.right;
+  if (fs) fs.textContent = String(p.right);
+  if (fp) fp.textContent = p.total ? Math.round((p.right / p.total) * 100) + '%' : '0%';
+  if (ft) ft.textContent = String(p.total);
+}
+
+function applyRestoredForstaaelseMc() {
+  document.querySelectorAll('#sec-forstaaelse .question-card').forEach(card => {
+    if (!card.querySelector('.mc-options')) return;
+    const qId = card.id;
+    const st = fAnswered[qId];
+    if (st !== true && st !== false && st !== 'true' && st !== 'false') return;
+    const wasRight = st === true || st === 'true';
+    const options = card.querySelectorAll('.mc-option');
+    options.forEach(o => { o.classList.add('disabled'); o.onclick = null; });
+    options.forEach(o => {
+      const oLetter = o.querySelector('.mc-letter').textContent;
+      if (isCorrectOption(qId, oLetter)) o.classList.add('correct');
+    });
+    const fb = document.getElementById('fb-' + qId);
+    if (!fb) return;
+    if (wasRight) {
+      const corrLet = ['A', 'B', 'C', 'D'].find(L => isCorrectOption(qId, L)) || 'A';
+      fb.className = 'feedback-box correct show';
+      fb.innerHTML = '✅ <strong>Rätt!</strong> ' + getCorrectFeedback(qId, corrLet);
+      card.classList.add('done');
+    } else {
+      fb.className = 'feedback-box wrong show';
+      fb.innerHTML = '❌ <strong>Fel.</strong> ' + (getWrongFeedback(qId, '') || '');
+    }
+  });
+  refreshForstaaelseScorePanel();
+}
+
+function applyRestoredNp2Mc() {
+  const st = fAnswered['np2'];
+  if (st !== true && st !== false && st !== 'true' && st !== 'false') return;
+  const wasRight = st === true || st === 'true';
+  const card = document.getElementById('fb-np2') && document.getElementById('fb-np2').closest('.np-card');
+  if (!card) return;
+  const options = card.querySelectorAll('.mc-option');
+  options.forEach(o => { o.classList.add('disabled'); o.onclick = null; });
+  options.forEach(o => {
+    const oLetter = o.querySelector('.mc-letter').textContent;
+    if (isCorrectOption('np2', oLetter)) o.classList.add('correct');
+  });
+  const fb = document.getElementById('fb-np2');
+  if (fb) {
+    fb.className = 'feedback-box ' + (wasRight ? 'correct' : 'wrong') + ' show';
+    fb.innerHTML = (wasRight ? '✅ <strong>Rätt!</strong> ' : '❌ <strong>Fel.</strong> ') + (wasRight ? getCorrectFeedback('np2', 'A') : getWrongFeedback('np2', ''));
+  }
+}
+
+function resetTabBegrepp() {
+  if (!confirm('Nollställa Begrepp (alla kort blir otränade)?')) return;
+  allCards.forEach((_, i) => { cardStates[i] = 'unseen'; });
+  repeatMode = false;
+  currentCard = 0;
+  renderCard();
+  updateMainProgress();
+}
+
+function resetTabForstaaelse() {
+  if (!confirm('Nollställa Förståelse (flerval och poäng)?')) return;
+  Object.keys(fAnswered).forEach(k => { if (k.startsWith('fq')) delete fAnswered[k]; });
+  Object.keys(FORSTA_MC_HTML).forEach(id => {
+    const c = document.getElementById(id);
+    if (c && FORSTA_MC_HTML[id]) {
+      c.innerHTML = FORSTA_MC_HTML[id];
+      c.classList.remove('done');
+    }
+  });
+  refreshForstaaelseScorePanel();
+  updateMainProgress();
+}
+
+function resetTabResonemang() {
+  if (!confirm('Nollställa textfält och dölja visade svar på Resonemang-fliken?')) return;
+  const s = document.getElementById('sec-resonemang');
+  if (!s) return;
+  s.querySelectorAll('textarea, input[type="text"], input:not([type])').forEach(el => { el.value = ''; });
+  s.querySelectorAll('.model-ans.show, .model-answer.show, .feedback-box.info.show').forEach(el => { el.classList.remove('show'); });
+}
+
+function resetTabNp() {
+  if (!confirm('Nollställa textfält, flerval np2 och dölja visade svar på NP-fliken?')) return;
+  delete fAnswered['np2'];
+  const s = document.getElementById('sec-np');
+  if (!s) return;
+  s.querySelectorAll('textarea, input[type="text"], input:not([type])').forEach(el => { el.value = ''; });
+  s.querySelectorAll('.model-answer.show').forEach(el => { el.classList.remove('show'); });
+  if (NP2_MC_HTML) {
+    const np2Card = document.getElementById('fb-np2') && document.getElementById('fb-np2').closest('.np-card');
+    if (np2Card) np2Card.innerHTML = NP2_MC_HTML;
+  }
+  updateMainProgress();
+}
+
+function resetTabRakna() {
+  if (!confirm('Nollställa alla räkneuppgifter på Räkna-fliken?')) return;
+  Object.keys(calcAnswered).forEach(k => { delete calcAnswered[k]; });
+  for (let i = 1; i <= CALC_COUNT; i++) {
+    const id = 'r' + i;
+    const inp = document.getElementById(id);
+    const res = document.getElementById(id + '-res');
+    if (inp) inp.disabled = false;
+    if (res) { res.textContent = ''; res.className = 'calc-result'; }
+  }
+  updateMainProgress();
+}
 
 function checkMC(el, qId, isCorrect, letter) {
-  if (fAnswered[qId]) return;
-  fAnswered[qId] = true;
+  if (fAnswered[qId] !== undefined) return;
+  fAnswered[qId] = isCorrect;
   const options = el.parentElement.querySelectorAll('.mc-option');
   options.forEach(o => { o.classList.add('disabled'); o.onclick = null; });
   const fb = document.getElementById('fb-' + qId);
+  const cardEl = document.getElementById(qId);
   if (isCorrect) {
     el.classList.add('correct');
     fb.className = 'feedback-box correct show';
     fb.innerHTML = '✅ <strong>Rätt!</strong> ' + getCorrectFeedback(qId, letter);
-    fScore++;
-    document.getElementById(qId).classList.add('done');
+    if (cardEl) cardEl.classList.add('done');
   } else {
     el.classList.add('wrong');
-    // highlight correct
     options.forEach(o => {
       const oLetter = o.querySelector('.mc-letter').textContent;
       if (isCorrectOption(qId, oLetter)) o.classList.add('correct');
@@ -1514,9 +1729,7 @@ function checkMC(el, qId, isCorrect, letter) {
     fb.className = 'feedback-box wrong show';
     fb.innerHTML = '❌ <strong>Fel.</strong> ' + getWrongFeedback(qId, letter);
   }
-  document.getElementById('fScore').textContent = fScore;
-  const total = Object.keys(fAnswered).filter(k => !k.startsWith('np')).length;
-  document.getElementById('fPct').textContent = total > 0 ? Math.round((fScore / total) * 100) + '%' : '0%';
+  refreshForstaaelseScorePanel();
   updateMainProgress();
 }
 
@@ -1554,7 +1767,6 @@ function getWrongFeedback(qId, letter) {
 // ══════════════════════════════════════════
 // RÄKNING (calc) logic
 // ══════════════════════════════════════════
-const calcAnswered = {};
 function chk(inputId, correct, resultId, okMsg, errMsg, tol) {
   if (calcAnswered[inputId] !== undefined) return; // redan besvarad
 
@@ -1597,30 +1809,31 @@ function showModel(qId) {
 // ══════════════════════════════════════════
 // TABS
 // ══════════════════════════════════════════
-function showTab(name) {
+function showTab(name, e) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('sec-' + name).classList.add('active');
-  event.currentTarget.classList.add('active');
+  const btn = (e && e.currentTarget) || document.querySelector('.tab-btn[onclick*="' + name + '"]');
+  if (btn) btn.classList.add('active');
+  setTabProgressActive(name);
 }
 
 // ══════════════════════════════════════════
 // MAIN PROGRESS
 // ══════════════════════════════════════════
 function updateMainProgress() {
-  const good   = Object.values(cardStates).filter(v => v === 'good').length;
-  const fRight = Object.entries(fAnswered).filter(([k,v]) => v === true && !k.startsWith('np')).length;
-  const calcRight = Object.values(calcAnswered).filter(v => v && v.correct).length;
-  const total  = allCards.length + quizItems.length + 5; // 5 calc-uppgifter i "Räkna"
-  const pct    = Math.min(100, Math.round(((good + fRight + calcRight) / total) * 100));
-  document.getElementById('mainProgress').style.width = pct + '%';
-  document.getElementById('progressText').textContent = (good + fRight + calcRight) + ' av ' + total + ' klara';
+  const good = Object.values(cardStates).filter(v => v === 'good').length;
+  const fProg = getForstaaelseQuizProgress();
+  const cProg = getCalcProgress();
+  const total = allCards.length + fProg.total + cProg.total;
+  const pct = total ? Math.min(100, Math.round(((good + fProg.right + cProg.right) / total) * 100)) : 0;
   localStorage.setItem(STORAGE_KEY + '_progress', JSON.stringify({
-    pct, good, fRight, calcRight, total,
+    pct, good, fRight: fProg.right, calcRight: cProg.right, total,
     cardStates: Object.assign({}, cardStates),
-    fAnswered:  Object.assign({}, fAnswered),
+    fAnswered: Object.assign({}, fAnswered),
     calcAnswered: Object.assign({}, calcAnswered),
   }));
+  updateTabProgressStrips();
 }
 
 function restoreProgress() {
@@ -1656,19 +1869,39 @@ function resetChapter() {
     const res = document.getElementById(id + '-res');
     if (res) { res.textContent = ''; res.className = 'calc-result'; }
   }
+  Object.keys(FORSTA_MC_HTML).forEach(id => {
+    const c = document.getElementById(id);
+    if (c && FORSTA_MC_HTML[id]) {
+      c.innerHTML = FORSTA_MC_HTML[id];
+      c.classList.remove('done');
+    }
+  });
+  if (NP2_MC_HTML) {
+    const np2Card = document.getElementById('fb-np2') && document.getElementById('fb-np2').closest('.np-card');
+    if (np2Card) np2Card.innerHTML = NP2_MC_HTML;
+  }
+  document.querySelectorAll('#sec-resonemang textarea, #sec-np textarea').forEach(el => { el.value = ''; });
+  document.querySelectorAll('#sec-resonemang .model-answer.show, #sec-np .model-answer.show, #sec-resonemang .feedback-box.info.show').forEach(el => { el.classList.remove('show'); });
   currentCard = 0;
   repeatMode = false;
+  fScore = 0;
   if (typeof quizCorrect !== 'undefined') { quizCorrect = 0; quizAnswered = 0; }
   renderCard();
   if (typeof buildQuiz === 'function') buildQuiz();
   if (typeof applyRestoredQuiz === 'function') applyRestoredQuiz();
+  refreshForstaaelseScorePanel();
   updateMainProgress();
 }
 
 // Init
 restoreProgress();
+applyRestoredForstaaelseMc();
+applyRestoredNp2Mc();
 applyRestoredCalc();
 renderCard();
+refreshForstaaelseScorePanel();
+setTabProgressActive('begrepp');
+updateTabProgressStrips();
 </script>
 </body>
 </html>

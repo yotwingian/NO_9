@@ -96,34 +96,61 @@ body {
   background: rgba(255, 255, 255, 0.07);
 }
 
-/* ── Progress bar ── */
-.progress-wrap {
-  padding: 0.9rem 1.5rem;
+/* Tab-specifik progress */
+.tab-progress-area {
+  padding: 0.65rem 1.5rem;
   background: var(--card);
   border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  gap: 1rem;
 }
-.progress-bar-bg {
+.tab-progress-strip {
+  display: none;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.tab-progress-strip.active { display: flex; }
+.tab-progress-strip--actions-only { justify-content: flex-end; }
+.tab-progress-bar-bg {
   flex: 1;
+  min-width: 72px;
   height: 6px;
   background: var(--border2);
   border-radius: 3px;
   overflow: hidden;
 }
-.progress-bar-fg {
+.tab-progress-bar-fg {
   height: 100%;
-  background: linear-gradient(90deg, var(--accent), var(--accent2));
   border-radius: 3px;
-  transition: width 0.4s ease;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
   width: 0%;
+  transition: width 0.35s ease;
 }
-#progressText {
+.tab-progress-text {
   font-family: var(--mono);
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   color: var(--muted);
   white-space: nowrap;
+}
+.tab-reset-btn {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  padding: 0.28rem 0.65rem;
+  border: 1px solid var(--border2);
+  background: transparent;
+  color: var(--muted);
+  border-radius: 5px;
+  cursor: pointer;
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+.tab-reset-btn:hover { color: var(--accent); border-color: var(--accent); }
+.chapter-footer {
+  margin-top: 2.5rem;
+  padding: 1.25rem 1.5rem 2rem;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  background: var(--bg);
 }
 
 /* ── Tabs ── */
@@ -506,7 +533,6 @@ body {
   transition: all 0.15s;
 }
 .reset-btn:hover { color: var(--accent); border-color: var(--accent); }
-.progress-wrap .reset-btn { flex-shrink: 0; }
 
 /* ── Resonemang ── */
 .res-card {
@@ -680,13 +706,6 @@ body {
   <p>Atom · Radioaktivitet · Strålning · Fission &amp; Fusion · Kärnkraft · E = mc²</p>
 </div>
 
-<!-- PROGRESS -->
-<div class="progress-wrap">
-  <div class="progress-bar-bg"><div class="progress-bar-fg" id="mainProgress"></div></div>
-  <span id="progressText">0 av 0 klara</span>
-  <button type="button" class="reset-btn" onclick="resetChapter()">Nollställ kapitel</button>
-</div>
-
 <!-- TABS -->
 <div class="tabs">
   <button class="tab-btn active" onclick="showTab('begrepp',event)">🃏 Begrepp <span class="tab-count" id="tc-begrepp">22</span></button>
@@ -694,6 +713,30 @@ body {
   <button class="tab-btn" onclick="showTab('rakna',event)">🔢 Räkna <span class="tab-count">5</span></button>
   <button class="tab-btn" onclick="showTab('resonemang',event)">🧠 Resonemang <span class="tab-count">4</span></button>
   <button class="tab-btn" onclick="showTab('np',event)">📋 NP-frågor <span class="tab-count">4</span></button>
+</div>
+
+<div class="tab-progress-area">
+  <div class="tab-progress-strip active" data-tab="begrepp">
+    <div class="tab-progress-bar-bg"><div class="tab-progress-bar-fg" id="tpBar-begrepp"></div></div>
+    <span class="tab-progress-text" id="tpText-begrepp">0 av 0 kända</span>
+    <button type="button" class="tab-reset-btn" onclick="resetTabBegrepp()">↺ Nollställ</button>
+  </div>
+  <div class="tab-progress-strip" data-tab="forsta">
+    <div class="tab-progress-bar-bg"><div class="tab-progress-bar-fg" id="tpBar-forsta"></div></div>
+    <span class="tab-progress-text" id="tpText-forsta">0 av 0 rätt</span>
+    <button type="button" class="tab-reset-btn" onclick="resetTabForstaaelse()">↺ Nollställ</button>
+  </div>
+  <div class="tab-progress-strip" data-tab="rakna">
+    <div class="tab-progress-bar-bg"><div class="tab-progress-bar-fg" id="tpBar-rakna"></div></div>
+    <span class="tab-progress-text" id="tpText-rakna">0 av 0 rätt</span>
+    <button type="button" class="tab-reset-btn" onclick="resetTabRakna()">↺ Nollställ</button>
+  </div>
+  <div class="tab-progress-strip tab-progress-strip--actions-only" data-tab="resonemang">
+    <button type="button" class="tab-reset-btn" onclick="resetTabResonemang()">↺ Nollställ</button>
+  </div>
+  <div class="tab-progress-strip tab-progress-strip--actions-only" data-tab="np">
+    <button type="button" class="tab-reset-btn" onclick="resetTabNp()">↺ Nollställ</button>
+  </div>
 </div>
 
 <!-- ════════════════════════════════
@@ -1100,6 +1143,10 @@ body {
 
 </div>
 
+<footer class="chapter-footer">
+  <button type="button" class="reset-btn" onclick="resetChapter()">Nollställ hela kapitlet</button>
+</footer>
+
 <!-- ════════════════════════════════
      JAVASCRIPT
 ════════════════════════════════ -->
@@ -1229,12 +1276,122 @@ const calcAnswered = {};
 let quizCorrect = 0;
 let quizAnswered = 0;
 
+const HAS_RAKNA_TAB = true;
+const CALC_COUNT = 5;
+const FORSTA_TAB = 'forsta';
+
+function forstaaelseSectionEl() {
+  return document.getElementById('sec-forstaaelse') || document.getElementById('sec-forsta');
+}
+
+function getForstaaelseQuizProgress() {
+  const qc = document.getElementById('quizContainer');
+  if (qc && typeof quizItems !== 'undefined' && quizItems.length) {
+    const right = Object.values(fAnswered).filter(v => v === true || v === 'true').length;
+    return { right, total: quizItems.length };
+  }
+  const sec = forstaaelseSectionEl();
+  if (!sec) return { right: 0, total: 0 };
+  const cards = sec.querySelectorAll('.fq-card, .question-card, .f-question');
+  let right = 0;
+  cards.forEach(c => { if (c.classList.contains('answered-correct')) right++; });
+  return { right, total: cards.length };
+}
+
+function getCalcProgress() {
+  if (!HAS_RAKNA_TAB || !CALC_COUNT) return { right: 0, total: 0 };
+  const right = Object.values(calcAnswered).filter(v => v && v.correct).length;
+  return { right, total: CALC_COUNT };
+}
+
+function setTabProgressActive(tabName) {
+  document.querySelectorAll('.tab-progress-strip').forEach(el => {
+    el.classList.toggle('active', el.getAttribute('data-tab') === tabName);
+  });
+}
+
+function updateTabProgressStrips() {
+  const good = Object.values(cardStates).filter(v => v === 'good').length;
+  const nCards = allCards.length;
+  const bBar = document.getElementById('tpBar-begrepp');
+  const bTx = document.getElementById('tpText-begrepp');
+  if (bBar) bBar.style.width = nCards ? Math.min(100, Math.round((good / nCards) * 100)) + '%' : '0%';
+  if (bTx) bTx.textContent = good + ' av ' + nCards + ' kända';
+
+  const fq = getForstaaelseQuizProgress();
+  const fBar = document.getElementById('tpBar-' + FORSTA_TAB);
+  const fTx = document.getElementById('tpText-' + FORSTA_TAB);
+  if (fBar) fBar.style.width = fq.total ? Math.min(100, Math.round((fq.right / fq.total) * 100)) + '%' : '0%';
+  if (fTx) fTx.textContent = fq.right + ' av ' + fq.total + ' rätt';
+
+  const cBar = document.getElementById('tpBar-rakna');
+  const cTx = document.getElementById('tpText-rakna');
+  if (cBar && cTx) {
+    const c = getCalcProgress();
+    cBar.style.width = c.total ? Math.min(100, Math.round((c.right / c.total) * 100)) + '%' : '0%';
+    cTx.textContent = c.right + ' av ' + c.total + ' rätt';
+  }
+}
+
+function resetTabBegrepp() {
+  if (!confirm('Nollställa Begrepp (alla kort blir otränade)?')) return;
+  allCards.forEach((_, i) => { cardStates[i] = 'unseen'; });
+  repeatMode = false;
+  currentCard = 0;
+  renderCard();
+  updateMainProgress();
+}
+
+function resetTabForstaaelse() {
+  if (!confirm('Nollställa Förståelse (frågor och svar)?')) return;
+  if (typeof buildQuiz === 'function') {
+    Object.keys(fAnswered).forEach(k => delete fAnswered[k]);
+    quizCorrect = 0;
+    quizAnswered = 0;
+    buildQuiz();
+    if (typeof applyRestoredQuiz === 'function') applyRestoredQuiz();
+    const qs = document.getElementById('quizScore');
+    if (qs) qs.textContent = 'Rätt: 0 / 0';
+  }
+  updateMainProgress();
+}
+
+function resetTabResonemang() {
+  if (!confirm('Nollställa textfält och dölja visade svar på Resonemang-fliken?')) return;
+  const s = document.getElementById('sec-resonemang');
+  if (!s) return;
+  s.querySelectorAll('textarea, input[type="text"], input:not([type])').forEach(el => { el.value = ''; });
+  s.querySelectorAll('.model-ans.show, .model-answer.show, .res-body.show').forEach(el => { el.classList.remove('show'); });
+}
+
+function resetTabNp() {
+  if (!confirm('Nollställa textfält och dölja visade svar på NP-fliken?')) return;
+  const s = document.getElementById('sec-np');
+  if (!s) return;
+  s.querySelectorAll('textarea, input[type="text"], input:not([type])').forEach(el => { el.value = ''; });
+  s.querySelectorAll('.model-ans.show, .model-answer.show, .np-body.show').forEach(el => { el.classList.remove('show'); });
+}
+
+function resetTabRakna() {
+  if (!confirm('Nollställa alla räkneuppgifter på Räkna-fliken?')) return;
+  Object.keys(calcAnswered).forEach(k => { delete calcAnswered[k]; });
+  for (let i = 1; i <= CALC_COUNT; i++) {
+    const id = 'r' + i;
+    const inp = document.getElementById(id);
+    const res = document.getElementById(id + '-res');
+    if (inp) inp.disabled = false;
+    if (res) { res.textContent = ''; res.className = 'calc-result'; }
+  }
+  updateMainProgress();
+}
+
 // ── Navigation ──
 function showTab(name, e) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('sec-' + name).classList.add('active');
   if (e) e.currentTarget.classList.add('active');
+  setTabProgressActive(name);
 }
 
 // ── Flashcards ──
@@ -1526,19 +1683,18 @@ function toggleNP(id) {
 
 // ── Progress ──
 function updateMainProgress() {
-  const good   = Object.values(cardStates).filter(v => v === 'good').length;
-  const fRight = Object.values(fAnswered).filter(v => v === true).length;
-  const calcRight = Object.values(calcAnswered).filter(v => v && v.correct).length;
-  const total  = allCards.length + quizItems.length + 5; // 5 calc-uppgifter i "Räkna"
-  const pct    = Math.min(100, Math.round(((good + fRight + calcRight) / total) * 100));
-  document.getElementById('mainProgress').style.width = pct + '%';
-  document.getElementById('progressText').textContent = (good + fRight + calcRight) + ' av ' + total + ' klara';
+  const good = Object.values(cardStates).filter(v => v === 'good').length;
+  const fProg = getForstaaelseQuizProgress();
+  const cProg = getCalcProgress();
+  const total = allCards.length + fProg.total + cProg.total;
+  const pct = total ? Math.min(100, Math.round(((good + fProg.right + cProg.right) / total) * 100)) : 0;
   localStorage.setItem(STORAGE_KEY + '_progress', JSON.stringify({
-    pct, good, fRight, calcRight, total,
+    pct, good, fRight: fProg.right, calcRight: cProg.right, total,
     cardStates: Object.assign({}, cardStates),
-    fAnswered:  Object.assign({}, fAnswered),
+    fAnswered: Object.assign({}, fAnswered),
     calcAnswered: Object.assign({}, calcAnswered),
   }));
+  updateTabProgressStrips();
 }
 
 function restoreProgress() {
@@ -1580,6 +1736,8 @@ renderCard();
 buildQuiz();
 applyRestoredQuiz();
 applyRestoredCalc();
+setTabProgressActive('begrepp');
+updateTabProgressStrips();
 </script>
 </body>
 </html>
